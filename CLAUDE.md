@@ -16,7 +16,7 @@ npm run lint         # eslint . (next lint no longer exists in Next 16)
 npm run typecheck    # next typegen && tsc --noEmit (typegen creates the LayoutProps/PageProps globals; also checks message keys via global.ts)
 npm test             # vitest run
 npx vitest run path/to/file.test.ts   # single test file
-npm run worker       # tsx src/worker/index.ts (pg-boss worker, loads .env itself)
+npm run worker       # tsx src/worker/index.ts (pg-boss worker, loads .env itself; outside production it scores every tender for every profile at startup)
 
 docker compose up -d           # compose.yaml: local Postgres 18 (user/pass/db all "beaverbids")
 npm run db:migrate             # prisma migrate dev (creates a migration and applies it)
@@ -30,7 +30,7 @@ npx shadcn add <component>     # add a shadcn/ui component into src/components/u
 
 CI (`.github/workflows/ci.yml`) runs lint, typecheck, test and prisma-validate as four named checks on every pull request, with a Postgres 18 service for the tests.
 
-Playwright is installed as a dev dependency but has no config yet. Vitest config is `vitest.config.mts` with the `@/` alias; tests live next to the code as `*.test.ts`. Files named `*.int.test.ts` hit the real database through `DATABASE_URL` and skip themselves when it is unset.
+Playwright is installed as a dev dependency but has no config yet. Vitest config is `vitest.config.mts` with the `@/` alias and two projects: unit tests (`*.test.ts`, next to the code, run in parallel) and integration tests (`*.int.test.ts`, run afterwards one file at a time because they share the fixture rows). Integration tests hit the real database through `DATABASE_URL` and skip themselves when it is unset.
 
 ## Architecture
 
@@ -38,7 +38,9 @@ Playwright is installed as a dev dependency but has no config yet. Vitest config
 
 **Fixtures.** `fixtures/tenders.json` is fictional data attached to a `fixtures` source row that is never active, so it cannot be mistaken for CanadaBuys notices. Dates are day offsets resolved at seed time. The seed and the M2 golden set read it through `fixtureTenderInputs(now)` in `src/lib/seed/fixtures.ts`.
 
-**API.** Route handlers only parse, authenticate and serialize; the query logic lives in `src/lib` (for example `src/lib/opportunities.ts`). Errors use `apiError()` from `src/lib/api.ts` so every route returns `{ error: { code, message } }`. `GET /api/opportunities` paginates with a keyset cursor on closing date and id; the score is a placeholder with a null total until M2 writes real rows.
+**API.** Route handlers only parse, authenticate and serialize; the query logic lives in `src/lib` (for example `src/lib/opportunities.ts`). Errors use `apiError()` from `src/lib/api.ts` so every route returns `{ error: { code, message } }`. `GET /api/opportunities` paginates with a keyset cursor on closing date and id and returns the stored score when one exists (a placeholder with a null total otherwise). `sort=score` still orders by closing date; the score keyset is an M3 follow-up.
+
+**Scoring (M2).** `src/lib/scoring` is pure TypeScript: `scoreTender(tender, profile, now)` runs `requirements.ts` (a deterministic text extractor: certifications, bond, clearance, Canadian data residency, set-aside, after-hours, references, bilingual, category keyword hits) and one function per factor under `factors/` (category 40, location 20, size 15, timeline 15, credentials 10), then the gate (`gate.ts`: province mismatch or set-aside only) and the band. Each factor returns `points`, `max` and `facts`; `reasons.ts` turns the facts into `{ code, params, text }` reasons in three lists (inFavour, gaps, ruleOut) plus a two or three line summary, from fixed English templates with labels in `labels.ts`. No AI in the MVP. `run.ts` (`scoreAll`) upserts the `score` table with `modelVersion` from `score.ts`; bump it when a rule changes. The worker registers `score-all` and `score-profile` (`src/worker/jobs/scoring`, queue names in `src/lib/queues.ts`, stately policy with singleton keys, nightly 06:15 Toronto placeholder until M4 chains it after the import). `fixtures/golden.json` holds 20 tender and profile pairs with expected bands; `golden.test.ts` must keep passing, and a pair that changes band needs a note in the PR. The sample pair (FIXTURE-0001 and `SAMPLE_PROFILE` in `src/lib/seed/sample-profile.ts`) must score 92 with 38, 19, 14, 12 and 9.
 
 **One Next.js app, two processes.** The website, login app, and REST API (route handlers under `src/app/api/`) ship together as `beaverbids-web`. Long-running work (CanadaBuys CSV ingest, AI scoring via MixRoute, SES email) runs in a separate `beaverbids-worker` process started by `src/worker/index.ts`, with jobs queued in PostgreSQL via pg-boss. Never do scraping, scoring, or email sends inside a page or route handler; enqueue a job instead. Code shared by web and worker (db client, zod schemas, s3, ses, auth) lives in `src/lib/`.
 
