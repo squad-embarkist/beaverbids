@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: beaverbids
+      POSTGRES_PASSWORD: beaverbids
+      POSTGRES_DB: beaverbids
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql
+volumes:
+  dbdata:
