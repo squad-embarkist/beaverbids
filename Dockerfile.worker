@@ -1,0 +1,21 @@
+# BeaverBids worker (pg-boss jobs). Coolify resource: beaverbids-worker.
+# Carries the Prisma CLI, so the same image can run `npm run db:deploy` as the
+# pre-deploy command before web and worker start.
+# Files are copied with ownership set up front: a chown -R afterwards would
+# duplicate the whole install into a second layer.
+
+FROM node:24-alpine
+RUN apk add --no-cache libc6-compat \
+    && mkdir -p /app && chown node:node /app
+WORKDIR /app
+USER node
+
+COPY --chown=node:node package.json package-lock.json ./
+# tsx and prisma are runtime dependencies, so dev tooling stays out.
+RUN npm ci --omit=dev
+
+COPY --chown=node:node . .
+RUN npx prisma generate
+
+ENV NODE_ENV=production
+CMD ["node_modules/.bin/tsx", "src/worker/index.ts"]
