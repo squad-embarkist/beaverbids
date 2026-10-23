@@ -23,21 +23,26 @@ npm run db:migrate             # prisma migrate dev (creates a migration and app
 npm run db:deploy              # prisma migrate deploy (CI and Coolify pre-deploy command)
 npm run db:generate            # regenerate the client into src/generated/prisma
 npm run db:validate            # prisma validate
+npm run db:seed                # 55 fictional tenders from fixtures/tenders.json plus, outside production, dev@beaverbids.test / beaverbids-dev with the sample profile
 npx auth@latest generate --config src/lib/auth.ts -y   # refresh Better Auth models in schema.prisma
 npx shadcn add <component>     # add a shadcn/ui component into src/components/ui
 ```
 
 CI (`.github/workflows/ci.yml`) runs lint, typecheck, test and prisma-validate as four named checks on every pull request, with a Postgres 18 service for the tests.
 
-Playwright is installed as a dev dependency but has no config yet. Vitest config is `vitest.config.mts` with the `@/` alias; tests live next to the code as `*.test.ts`.
+Playwright is installed as a dev dependency but has no config yet. Vitest config is `vitest.config.mts` with the `@/` alias; tests live next to the code as `*.test.ts`. Files named `*.int.test.ts` hit the real database through `DATABASE_URL` and skip themselves when it is unset.
 
 ## Architecture
 
 `docs/BEAVERBIDS_ARCHITECTURE.md` is the source of truth for stack decisions, folder layout, hosting, and branching. Read it before adding a dependency or a top-level folder. Better Auth, Zod, next-intl, Sentry and pg-boss are wired (M0). Zustand and React Hook Form arrive with the questionnaire in M3.
 
+**Fixtures.** `fixtures/tenders.json` is fictional data attached to a `fixtures` source row that is never active, so it cannot be mistaken for CanadaBuys notices. Dates are day offsets resolved at seed time. The seed and the M2 golden set read it through `fixtureTenderInputs(now)` in `src/lib/seed/fixtures.ts`.
+
+**API.** Route handlers only parse, authenticate and serialize; the query logic lives in `src/lib` (for example `src/lib/opportunities.ts`). Errors use `apiError()` from `src/lib/api.ts` so every route returns `{ error: { code, message } }`. `GET /api/opportunities` paginates with a keyset cursor on closing date and id; the score is a placeholder with a null total until M2 writes real rows.
+
 **One Next.js app, two processes.** The website, login app, and REST API (route handlers under `src/app/api/`) ship together as `beaverbids-web`. Long-running work (CanadaBuys CSV ingest, AI scoring via MixRoute, SES email) runs in a separate `beaverbids-worker` process started by `src/worker/index.ts`, with jobs queued in PostgreSQL via pg-boss. Never do scraping, scoring, or email sends inside a page or route handler; enqueue a job instead. Code shared by web and worker (db client, zod schemas, s3, ses, auth) lives in `src/lib/`.
 
-**Database.** Prisma 7 with PostgreSQL. The CLI config is `prisma7.config.ts` (non-default name, but Prisma auto-loads it) and it reads `DATABASE_URL` from `.env` via dotenv. The generated client is written to `src/generated/prisma/` (gitignored), so run `npx prisma generate` after cloning or changing the schema. Import the client from there, not from `@prisma/client`. The schema holds the Better Auth models (User with language, digestOptIn, digestConsentAt; Session; Account; Verification). Product tables arrive in M1.
+**Database.** Prisma 7 with PostgreSQL. The CLI config is `prisma7.config.ts` (non-default name, but Prisma auto-loads it) and it reads `DATABASE_URL` from `.env` via dotenv. The generated client is written to `src/generated/prisma/` (gitignored), so run `npx prisma generate` after cloning or changing the schema. Import the client from there, not from `@prisma/client`. The schema holds the Better Auth models plus the M1 product tables: CompanyProfile (one per user, the five questionnaire steps), Source, IngestRun, Tender (unique on source plus external id) and Score (unique on tender plus profile). Option codes stored in string columns are validated against `src/lib/schemas/vocab.ts`. Money is whole CAD dollars. Later phases add draftProfile, savedTender, digest and event.
 
 **UI.** shadcn/ui with the `base-nova` style, which is built on `@base-ui/react`, not Radix. Components are in `src/components/ui/` and are ours to edit. `cn` is re-exported from the `cn` npm package via `@/lib/utils`. Tailwind v4 is wired through the `@tailwindcss/turbopack` loader in `next.config.ts` and theme tokens live in `src/app/globals.css`; there is no `tailwind.config`. Icons come from `lucide-react`. Path alias `@/`* maps to `src/`*.
 
