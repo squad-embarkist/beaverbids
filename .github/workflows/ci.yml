@@ -1,0 +1,75 @@
+name: CI
+
+# Four named checks on every pull request: lint, typecheck, test and
+# prisma-validate. Mark all four as required in the branch protection rules
+# for development, staging and main.
+
+on:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DATABASE_URL: postgresql://beaverbids:beaverbids@localhost:5432/beaverbids?schema=public
+  BETTER_AUTH_SECRET: ci-only-secret-not-used-anywhere-else-0123456789
+  BETTER_AUTH_URL: http://localhost:3000
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  checks:
+    name: ${{ matrix.check }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        check: [lint, typecheck, test, prisma-validate]
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: beaverbids
+          POSTGRES_PASSWORD: beaverbids
+          POSTGRES_DB: beaverbids
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U beaverbids"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run db:generate
+
+      - name: prisma validate
+        if: matrix.check == 'prisma-validate'
+        run: npm run db:validate
+
+      - name: lint
+        if: matrix.check == 'lint'
+        run: npm run lint
+
+      - name: typecheck
+        if: matrix.check == 'typecheck'
+        run: npm run typecheck
+
+      - name: migrate
+        if: matrix.check == 'test'
+        run: npm run db:deploy
+
+      - name: test
+        if: matrix.check == 'test'
+        run: npm test

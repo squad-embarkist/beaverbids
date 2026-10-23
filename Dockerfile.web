@@ -1,0 +1,48 @@
+# BeaverBids web app (pages + API). Coolify resource: beaverbids-web.
+# Multi-stage: install, build with Next.js standalone output, run as non-root.
+# Migrations are NOT run here. Run `npm run db:deploy` once per deploy from the
+# worker image (Coolify pre-deploy command) before starting web and worker.
+
+FROM node:24-alpine AS base
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# ---- dependencies ----------------------------------------------------------
+FROM base AS deps
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# ---- build -----------------------------------------------------------------
+FROM base AS builder
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+# Optional at build time: source map upload to Sentry and the release name.
+ARG SENTRY_AUTH_TOKEN
+ARG SENTRY_ORG
+ARG SENTRY_PROJECT
+ARG SENTRY_RELEASE
+ARG NEXT_PUBLIC_SENTRY_DSN
+ARG NEXT_PUBLIC_SENTRY_ENVIRONMENT
+ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN \
+    SENTRY_ORG=$SENTRY_ORG \
+    SENTRY_PROJECT=$SENTRY_PROJECT \
+    SENTRY_RELEASE=$SENTRY_RELEASE \
+    NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN \
+    NEXT_PUBLIC_SENTRY_ENVIRONMENT=$NEXT_PUBLIC_SENTRY_ENVIRONMENT
+RUN npx prisma generate && npm run build
+
+# ---- runtime ---------------------------------------------------------------
+FROM base AS runner
+ENV NODE_ENV=production \
+    PORT=3000 \
+    HOSTNAME=0.0.0.0
+RUN addgroup -S -g 1001 nodejs && adduser -S -u 1001 -G nodejs nextjs
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+USER nextjs
+EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+  CMD wget -qO- http://127.0.0.1:3000/api/health || exit 1
+CMD ["node", "server.js"]
