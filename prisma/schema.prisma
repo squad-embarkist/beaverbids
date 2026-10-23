@@ -223,7 +223,7 @@ model Score {
   eligible     Boolean        @default(true)
   /// { category, location, size, timeline, credentials } points
   factors      Json
-  /// { inFavour: string[], gaps: string[], ruleOut: string[] }
+  /// { inFavour, gaps, ruleOut: { code, params, text }[], summary: string[] }, see src/lib/scoring/reasons.ts
   reasons      Json
   modelVersion String
   scoredAt     DateTime       @default(now())
