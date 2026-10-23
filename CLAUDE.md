@@ -13,7 +13,7 @@ npm run dev          # next dev (Turbopack) on http://localhost:3000
 npm run build        # production build (standalone output for Docker)
 npm run start        # serve the production build
 npm run lint         # eslint . (next lint no longer exists in Next 16)
-npm run typecheck    # tsc --noEmit (also type-checks message keys via global.ts)
+npm run typecheck    # next typegen && tsc --noEmit (typegen creates the LayoutProps/PageProps globals; also checks message keys via global.ts)
 npm test             # vitest run
 npx vitest run path/to/file.test.ts   # single test file
 npm run worker       # tsx src/worker/index.ts (pg-boss worker, loads .env itself)
