@@ -60,7 +60,8 @@ const BILINGUAL = /\b(bilingual|bilingue|in english and french|en anglais et en 
 // proponents are encouraged" is not a set-aside. The group runs to the end
 // of the clause or to "under" / "pursuant", whichever comes first.
 const SET_ASIDE_PATTERNS = [
-  /\bset[- ]aside (?:for |under )?(?:the )?([a-z][a-z -]{2,80}?)(?= under | pursuant | in accordance |[.,;:(]|$)/,
+  // "set aside from the trade agreements" is an exemption, not a group.
+  /\bset[- ]aside (?!from\b)(?:for |under )?(?:the )?([a-z][a-z -]{2,80}?)(?= under | pursuant | in accordance |[.,;:(]|$)/,
   /\breserved for (?:the )?([a-z][a-z -]{2,80}?)(?= under | pursuant |[.,;:(]|$)/,
   /\blimited to ([a-z][a-z -]{2,60}?(?:businesses|suppliers|firms|vendors|enterprises|bidders))\b/,
   /\b(?:reserve|reservee?) (?:aux|a la|a des) ([a-z][a-z -]{2,80}?)(?=[.,;:(]|$)/,

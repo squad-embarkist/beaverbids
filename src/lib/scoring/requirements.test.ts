@@ -113,12 +113,14 @@ describe("detectSetAside", () => {
     ["reserved for the canadian aboriginal businesses listed in the directory.", "canadian aboriginal businesses listed in the directory"],
     ["participation is limited to small and medium enterprises.", "small and medium enterprises"],
     ["ce marche est reserve aux entreprises autochtones.", "entreprises autochtones"],
+    ["the requirement will be subject to the set aside under the federal government procurement strategy for aboriginal business (psab).", "federal government procurement strategy for aboriginal business"],
   ])("detects %j", (text, group) => {
     expect(detectSetAside(text)).toBe(group);
   });
 
   it.each([
     "indigenous-owned proponents are encouraged.",
+    "this procurement is set aside from the international trade agreements under the provision each has for set asides for small and minority businesses.",
     "responses are limited to 20 pages.",
     "the budget set aside for this work is $1m.",
   ])("ignores %j", (text) => {
