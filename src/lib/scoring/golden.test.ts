@@ -11,9 +11,17 @@ import { scoreTender } from "./score";
 const cases = loadGoldenCases();
 
 describe("golden set", () => {
-  it("has 20 pairs with unique ids", () => {
-    expect(cases).toHaveLength(20);
-    expect(new Set(cases.map((c) => c.pair.id)).size).toBe(20);
+  it("has 23 pairs with unique ids", () => {
+    expect(cases).toHaveLength(23);
+    expect(new Set(cases.map((c) => c.pair.id)).size).toBe(23);
+  });
+
+  it("has at least two eligible pairs that the category cap lowers", () => {
+    const lowered = cases.filter((c) => {
+      const result = scoreTender(c.tender, c.profile, c.now);
+      return result.eligible && result.cap && result.cap.uncappedTotal > result.total;
+    });
+    expect(lowered.length).toBeGreaterThanOrEqual(2);
   });
 
   it("covers every band and both gate outcomes", () => {
@@ -36,6 +44,10 @@ describe("golden set", () => {
     expect(result.band, `band (total ${result.total})`).toBe(pair.expectedBand);
     if (pair.expectedTotal != null) expect(result.total).toBe(pair.expectedTotal);
     if (pair.expectedFactors) expect(result.factors).toEqual(pair.expectedFactors);
+    if (pair.expectedCapped != null) expect(Boolean(result.cap), "capped").toBe(pair.expectedCapped);
+    // The factors are stored as computed; only the total is capped.
+    const sum = Object.values(result.factors).reduce((a, b) => a + b, 0);
+    expect(result.cap ? result.cap.uncappedTotal : result.total).toBe(sum);
 
     const reasons = buildReasons(result, tender);
     expect(reasons.summary.length).toBeGreaterThanOrEqual(2);
@@ -48,5 +60,6 @@ describe("golden set", () => {
     expect(result.total).toBe(92);
     expect(result.band).toBe("HIGH");
     expect(result.factors).toEqual({ category: 38, location: 19, size: 14, timeline: 12, credentials: 9 });
+    expect(result.cap).toBeNull();
   });
 });

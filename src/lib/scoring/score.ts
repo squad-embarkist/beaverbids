@@ -6,11 +6,20 @@ import { scoreSize } from "./factors/size";
 import { scoreTimeline } from "./factors/timeline";
 import { checkGate } from "./gate";
 import { extractRequirements } from "./requirements";
-import type { ScoreResult, ScoringProfile, ScoringTender } from "./types";
+import type { ScoreCap, ScoreResult, ScoringProfile, ScoringTender } from "./types";
 
 // Bump when a rule changes so the worker can tell stale rows apart and a
 // clean rescore can be triggered.
-export const MODEL_VERSION = "rules-1";
+// rules-1: the five factors, gate and bands (Oct 23, 2026).
+// rules-2: category cap (Oct 24, 2026, docs/plans/m2-category-cap.md).
+export const MODEL_VERSION = "rules-2";
+
+// Category cap: with fewer than `threshold` category points the total is
+// capped at `limit`, so the band is Low. A tender for work the company does
+// not do must never show as a Medium fit on location, size, timeline and
+// credentials alone. Buyer-type points by themselves (8) can never reach
+// the threshold; category.test.ts guards that.
+export const CATEGORY_CAP = { threshold: 10, limit: 49 } as const;
 
 // The whole engine in one pure call: extract facts from the text, run the
 // five factors, apply the gate and the band. No database, no clock other
@@ -31,7 +40,13 @@ export function scoreTender(tender: ScoringTender, profile: ScoringProfile, now:
     timeline: timeline.points,
     credentials: credentials.points,
   };
-  const total = factors.category + factors.location + factors.size + factors.timeline + factors.credentials;
+  const uncappedTotal = factors.category + factors.location + factors.size + factors.timeline + factors.credentials;
+  const cap: ScoreCap | null =
+    factors.category < CATEGORY_CAP.threshold
+      ? { code: "categoryCap", threshold: CATEGORY_CAP.threshold, limit: CATEGORY_CAP.limit, uncappedTotal }
+      : null;
+  // The factors stay as computed; only the total is capped.
+  const total = cap ? Math.min(uncappedTotal, cap.limit) : uncappedTotal;
   const gate = checkGate(tender, profile, requirements);
 
   return {
@@ -41,6 +56,7 @@ export function scoreTender(tender: ScoringTender, profile: ScoringProfile, now:
     band: gate.eligible ? bandForTotal(total) : "LOW",
     eligible: gate.eligible,
     factors,
+    cap,
     gate,
     requirements,
     details: { category, location, size, timeline, credentials },

@@ -115,6 +115,28 @@ describe("buildReasons templates", () => {
   });
 });
 
+describe("category cap reason", () => {
+  it("leads the gaps and the summary's concern line on a capped result", () => {
+    const t = tender({ categoryCodes: ["commercial-construction"], buyerType: "federal", description: "Supply of office chairs." });
+    const result = scoreTender(t, profile(), NOW);
+    expect(result.cap).not.toBeNull();
+    const reasons = buildReasons(result, t);
+    expect(reasons.gaps[0]).toEqual({
+      code: "categoryCap",
+      params: { limit: 49 },
+      text: "No category match, so this tender is capped at Low",
+    });
+    expect(reasons.summary[1]).toBe("No category match, so this tender is capped at Low");
+  });
+
+  it("is absent from an uncapped result", () => {
+    const reasons = reasonsFor();
+    for (const list of [reasons.inFavour, reasons.gaps, reasons.ruleOut]) {
+      expect(list.map((r) => r.code)).not.toContain("categoryCap");
+    }
+  });
+});
+
 describe("referenceCount", () => {
   it.each([
     ["provide three references of similar size", 3],

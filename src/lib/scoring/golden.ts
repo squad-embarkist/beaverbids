@@ -33,6 +33,7 @@ const pairSchema = z.object({
   expectedEligible: z.boolean(),
   expectedBand: scoreBand,
   expectedTotal: z.number().int().min(0).max(100).optional(),
+  expectedCapped: z.boolean().optional(),
   expectedFactors: factorPointsSchema.optional(),
 });
 

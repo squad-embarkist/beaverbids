@@ -70,11 +70,21 @@ export type GateBlocker =
   | { code: "regionMismatch"; region: string }
   | { code: "setAside"; group: string };
 
+// Recorded whenever the category cap rule applies, even when it did not
+// lower the total, so the screen can explain a Low band.
+export type ScoreCap = {
+  code: "categoryCap";
+  threshold: number;
+  limit: number;
+  uncappedTotal: number;
+};
+
 export type ScoreResult = {
   total: number;
   band: ScoreBand;
   eligible: boolean;
   factors: FactorPoints;
+  cap: ScoreCap | null;
   gate: GateResult;
   requirements: Requirements;
   details: {
