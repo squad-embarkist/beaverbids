@@ -86,6 +86,21 @@ describe("extractRequirements", () => {
     expect(hits["it-managed-services-cloud"]).toEqual(["help desk", "cloud", "network", "data centre"]);
   });
 
+  it.each([
+    ["Janitorial Services for Municipal Buildings", "custom-software-saas", "build"],
+    ["a 20-year capital program", "custom-software-saas", "api"],
+    ["sealift to remote communities", "facilities-janitorial", "sealift"],
+  ])("does not match %j as the keyword %j inside a longer word", (text, category, keyword) => {
+    expect(extract(text).keywordHits[category as "custom-software-saas"] ?? []).not.toContain(keyword);
+  });
+
+  it.each([
+    ["We build portals and open APIs", "custom-software-saas", ["portal", "build", "api"]],
+    ["Managed networks across 12 sites", "it-managed-services-cloud", ["network"]],
+  ])("matches whole words and plurals in %j", (text, category, expected) => {
+    expect(extract(text).keywordHits[category as "custom-software-saas"]).toEqual(expected);
+  });
+
   it("finds no keywords in unrelated text", () => {
     expect(extract("Supply of office chairs.").keywordHits["it-managed-services-cloud"]).toBeUndefined();
   });

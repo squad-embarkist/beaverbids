@@ -74,6 +74,23 @@ export function detectSetAside(text: string): string | null {
   return null;
 }
 
+// Keywords match whole words (with an optional plural "s"), never
+// substrings: "Buildings" is not "build" and "capital program" is not "api".
+// Built once at module load.
+const KEYWORD_MATCHERS: Record<CategoryCode, { variant: string; pattern: RegExp }[][]> = Object.fromEntries(
+  CATEGORY_CODES.map((code) => [
+    code,
+    CATEGORY_KEYWORDS[code].map((phrase) =>
+      phrase.split("|").map((variant) => ({ variant, pattern: wordPattern(variant) })),
+    ),
+  ]),
+) as Record<CategoryCode, { variant: string; pattern: RegExp }[][]>;
+
+export function wordPattern(phrase: string): RegExp {
+  const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`\\b${escaped}s?\\b`);
+}
+
 export function extractRequirements(tender: { title: string; description: string }): Requirements {
   const text = normalizeText(`${tender.title}. ${tender.description}`);
 
@@ -85,8 +102,8 @@ export function extractRequirements(tender: { title: string; description: string
   // list) so reasons can quote it.
   const keywordHits: Partial<Record<CategoryCode, string[]>> = {};
   for (const code of CATEGORY_CODES) {
-    const hits = CATEGORY_KEYWORDS[code]
-      .map((phrase) => phrase.split("|").find((variant) => text.includes(variant)))
+    const hits = KEYWORD_MATCHERS[code]
+      .map((variants) => variants.find(({ pattern }) => pattern.test(text))?.variant)
       .filter((hit): hit is string => hit != null);
     if (hits.length > 0) keywordHits[code] = hits;
   }
