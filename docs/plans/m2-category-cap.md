@@ -1,6 +1,6 @@
 # M2 change: category cap
 
-Status: decided Oct 24, 2026. Implementation plan still to be reviewed.
+Status: built Oct 24, 2026 on feature/m2-scoring (threshold: under 10 category points, option B; reason code `categoryCap`; word-boundary keyword fix included as its own commit; sample reader built, CanadaBuys golden batch waits for the M4 parser).
 Source of truth: docs/development-guide.md, Scoring engine section.
 
 ## Decision
@@ -177,7 +177,14 @@ In `src/lib/scoring/run.int.test.ts`:
 
 In `src/lib/scoring/run.test.ts`: `scoreRow` stamps "rules-2".
 
-### Decision needed before code
+### Decisions taken (Oct 24, 2026)
+
+1. Threshold B: cap when category points are under 10. `category.test.ts` fails if buyer-type points alone ever reach the threshold.
+2. The word-boundary keyword fix shipped first as its own commit, with tests for "Buildings" against "build" and "capital program" against "api". It moved no golden score.
+3. Reason code `categoryCap`, text "No category match, so this tender is capped at Low" (no trailing period, matching the other templates). The cap is recorded whenever the rule applies, even when the total was already under 49.
+4. The test-only reader for the sample file is built (`src/lib/scoring/canadabuys-sample.ts`); the CanadaBuys golden batch waits for the M4 parser.
+
+### Decision needed before code (resolved above, kept for the record)
 
 1. Threshold: A (= 0, as decided, does not fix the recreation centre), B (under 10, recommended) or C (no category code matched).
 2. Whether to include the word-boundary keyword fix in the same pull request.
@@ -226,7 +233,7 @@ Added Oct 24, 2026: 20 rows, 67 columns, 157 KB, the trimmed copy the guide asks
 | GSIN only | Rows 7, 11, 12, 13, 20 |
 | Region variants | `National Capital Region (NCR)` (row 1), `World` opportunity with `British Columbia` delivery (row 5), `Ontario (except NCR)` (row 10), a city, `Wainwright` (row 19), 14 regions on separate lines including `Nunavut Territory` and `Quebec (except NCR)` (row 20), and 10 rows with both region columns empty |
 | Entity province variants | `Ontario`, `ON`, `MB`, `AB`, `Quebec`, `Nova Scotia`, `Alberta` |
-| Non-bid notice types | Row 12 Request for Information, row 13 Advance Contract Award Notice, 10 rows with an empty notice type (all MERX) |
+| Non-bid notice types | Row 12 Request for Information, row 13 Advance Contract Award Notice, 8 rows with an empty notice type (all MERX) |
 | Past closing dates while Open | Rows 14 (Nov 2025), 15 (May 2026), 20 (Sep 2026) |
 | Far future closing dates | Rows 3 (2029), 10 (2028), 7 and 11 (2065), 16 (2074) |
 | Closing time without a zone | Every row, e.g. `2026-10-26T14:00:00` |
@@ -242,6 +249,12 @@ Two notes on the file itself:
 
 - Done on purpose (Oct 24, 2026): the contracting officer's contact details were blanked before the file was committed. Six columns are empty in every row: `contactInfoName-informationsContactNom`, `contactInfoEmail-informationsContactCourriel`, `contactInfoPhone-contactInfoTelephone`, `contactInfoFax`, and the English and French `contactInfoAddressLine` columns (79 values removed, every other cell unchanged, verified by re-parsing). The city, province, postal code and country columns stay because they describe an office, not a person. The data is public under the Open Government Licence, but the parser never stores contact details, so the fixture does not need them, and the sample reader test asserts they stay blank.
 - The header names are the bilingual CanadaBuys originals (`title-titre-eng`, `tenderClosingDate-appelOffresDateCloture`). The adapter should reference them from one column map so a renamed header fails loudly in the parser test instead of silently producing empty fields.
+
+Found while building the reader test (Oct 24, 2026):
+
+- Conditional and partial set-asides. Row 3 says tenders under the source list "may be set aside for Indigenous businesses" and row 20 applies the PSAB set-aside to one value band of a standing offer. The extractor reports both as set-asides and the phase 1 gate then blocks the whole notice for every profile, since it cannot tell a conditional clause from a firm one and the profile has no field to claim Indigenous business status. Conservative, but on the real file this hides notices that most firms can bid on. Follow-up for M3 or M4: an Indigenous business flag on the profile, and a softer reading ("may be set aside", "subject to the set aside for requirements between $X and $Y") that lands under "could rule you out" instead of the gate.
+- "Set aside from the international trade agreements" is an exemption, not a group set-aside. The pattern now ignores "set aside from", with a test row; before the fix a notice carrying only that boilerplate would have been gated for everyone.
+- Only 8 of the 20 rows have an empty notice type, not 10 as first written above (corrected).
 
 How scoring reuses it, in two steps:
 

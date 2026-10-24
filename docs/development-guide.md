@@ -21,9 +21,9 @@ The MVP is one loop: sign in, take the questionnaire, get daily CanadaBuys tende
 | --- | --- |
 | Sign in and create account | Instant score on the landing page (pasted tender link, PDF or website) |
 | 5 step questionnaire saved as the company profile | Monday email digest, unsubscribe and consent tracking |
-| Daily import of the CanadaBuys open data file | Saved and hidden tabs, bookmarks |
+| Daily import of CanadaBuys first, then BC Bid, Alberta, Saskatchewan, New Brunswick and Nova Scotia, one source at a time, each after its terms check | Saved and hidden tabs, bookmarks |
 | Tender list scored out of 100, sorted by score | AI written reasons, proposal writer, editor, pipeline board |
-| Listing detail with the five factor breakdown | French copy, Stripe, provincial portals as extra source adapters |
+| Listing detail with the five factor breakdown | French copy, Stripe |
 
 | Milestone | What changes for the MVP |
 | --- | --- |
@@ -190,7 +190,11 @@ Every tender gets a score out of 100 for a given company profile, made of five f
 | Timeline and capacity | 15 | Enough time to respond and deliver | Days until close against the profile's preferred lead time, plus stated capacity |
 | Credentials | 10 | Certifications, security clearance, past work asked for | Share of required credentials the profile lists |
 
+**Category cap.** A tender with fewer than 10 category points has its total capped at 49, so it is always a Low fit. Location, size, timeline and credentials alone must never lift work the company does not do into Medium. The five factor values are stored as computed; only the total is capped, and the stored reasons carry a `categoryCap` entry so the screen can say why. Decided Oct 24, 2026 (docs/plans/m2-category-cap.md), modelVersion rules-2.
+
 **Bands:** 75 to 100 High, 50 to 74 Medium, under 50 Low. Chips and colours on the screens use these bands.
+
+**Category cap (decided Oct 24, 2026).** If category match earns 0 points, the total is capped at 49, so the tender always shows as Low. Without this, a tender with no category match could still reach 58 from location, size, timing and credentials alone and show as Medium. The cap changes the number itself, so the score and the band always agree. The golden set must include pairs that prove the cap, and any change to this rule updates the golden set, the brief and this guide together. Still open: whether a very low but non-zero category score (for example under 10 of 40) needs the same cap. Review the fixture tenders under 10 before deciding.
 
 **Eligibility gate.** A hard requirement the company cannot meet (a required licence, a region restriction, a set-aside for another group) sets `eligible = false`. The listing still saves, but it shows as "Not eligible" with the reason and does not appear in the default list or the digest.
 
@@ -271,14 +275,32 @@ Phase 1 launches on one source: the CanadaBuys open tender file, which is publis
 - Keep a small sample CSV in `fixtures/` so the parser has tests that run offline.
 - Jobs are safe to rerun: a retry must never duplicate a tender or a score.
 
-**Source adapters.** Build ingestion so more sources can be added later without touching scoring or the screens. Each source is one adapter with four parts: fetch the data, parse it into the shared tender shape, give every tender a stable external id, and own one row in the source table. Only the CanadaBuys adapter is built in the MVP.
+**What the CanadaBuys file actually contains** (profile of the open tender notices file received Oct 24, 2026: 897 notices, 67 columns, plus a 5 row sample of the new notices file with the same columns). Use this as the parser and scoring reference.
+
+| Finding | Detail | What it means for the build |
+| --- | --- | --- |
+| One row per notice | No duplicate reference numbers. The amendment number shows the latest version (516 of 897 were amended) | Upsert on source plus referenceNumber. A new version replaces the row |
+| No contract value column | Only 11% of descriptions mention a dollar amount | The size factor is "unknown" for most tenders. Keep the partial points rule and show "value not stated" |
+| Category codes are patchy | UNSPSC on 85%, GSIN on 5%, neither on 11% (96 rows). Values start with "\*" and can hold several codes on separate lines | Strip the asterisk and split on new lines. Tenders with no code must still be able to earn category points from title and description words, or the category cap will wrongly hide them |
+| Regions are messy | Delivery region on 87%, opportunity region on 43%. Values include Canada, World, National Capital Region, provinces, cities (Ottawa, Montréal, Edmonton) and "(except NCR)". Entity province appears as Quebec, Québec, QC, Ontario, ON and ONTARIO | Needs one normalization table for provinces and regions before scoring |
+| Not every notice is a bid | 98 are clearly not bids (68 requests for information, 21 advance contract award notices, 7 not applicable, 2 directed contracts) and 110 have no notice type | Store the notice type. Hide non-bid types from the scored list by default |
+| Status cannot be trusted alone | All 897 say Open, yet 121 have closing dates before Oct 24, 2026 and 41 close in 2031 or later (some in 2100, likely standing arrangements) | Hide anything past its closing date. Treat far future dates as ongoing, not as a real deadline |
+| Closing time has no time zone | Format is like 2026-11-13T14:00:00 | Confirm the zone in the data dictionary before showing dates to users |
+| Links are incomplete | The notice link is filled for only 45% (407 rows), and every one points off CanadaBuys: Ariba (311) or MERX (96). Attachments are filled for 42% | The listing detail needs a fallback link. MERX documents may carry fees |
+| Text needs cleaning | 109 descriptions (12%) contain HTML entities or tags. English and French are in separate columns. Descriptions contain line breaks | Use a real CSV parser, decode entities and strip tags before the keyword rules run |
+| Buyers are concentrated | 76 buyers. Public Works (PSPC) has 391 notices and National Defence has 128, together 58% | Buyer-type points matter a lot, so check them against this mix |
+| IT-related volume | 99 notices have UNSPSC codes starting with 43 or 81 | Useful as a first sanity check for the sample IT profile |
+
+Sample files should go into fixtures/ as a small trimmed copy (about 20 rows), not the 5.9 MB original.
+
+**Source adapters.** Build ingestion so more sources can be added later without touching scoring or the screens. Each source is one adapter with four parts: fetch the data, parse it into the shared tender shape, give every tender a stable external id, and own one row in the source table. CanadaBuys is built first, and the provincial adapters follow one at a time inside the MVP. The MVP target is six sources feeding one scored list.
 
 | Source | Likely method | When | Gate before any code |
 | --- | --- | --- | --- |
 | CanadaBuys (federal) | Open data CSV | MVP | Open Government Licence - Canada |
-| Alberta, Saskatchewan, New Brunswick, Nova Scotia, BC Bid | Look for an open data feed or API first; scrape only if the portal allows it | After the MVP, one source at a time | Terms review or written permission saved in docs/permissions |
+| Alberta, Saskatchewan, New Brunswick, Nova Scotia, BC Bid | Look for an open data feed or API first; scrape only if the portal allows it | In the MVP, one source at a time after CanadaBuys | Terms review or written permission saved in docs/permissions |
 
-I have not checked the terms or feeds of the provincial portals yet, so the methods above are a plan, not a finding.
+Findings on Oct 24, 2026, from public pages and one third-party guide, not legal advice: only CanadaBuys offers an official open feed for current tenders. Nova Scotia publishes live notices on a web page with no feed, and its open data covers awarded tenders only. BC Bid, Alberta and Saskatchewan appear to need browser scraping. New Brunswick is unconfirmed. The terms of use of every portal except CanadaBuys are still unchecked, so each one needs a terms review or written permission before any code. A portal that is not cleared is skipped, never forced.
 
 - Scoring and screens read only the tender table, never a source's own format.
 - Each source runs as its own scheduled job and writes its own ingestRun, so one failing source never stops another.

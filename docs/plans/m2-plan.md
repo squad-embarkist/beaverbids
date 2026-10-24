@@ -116,4 +116,4 @@ What landed, and where it differs from the plan above:
 - Vitest now runs two projects: unit tests in parallel, then `*.int.test.ts` one file at a time, because the two integration tests share the fixture rows.
 - The sample pair scores 92 with 38, 19, 14, 12 and 9; all 20 golden pairs match their expected band and eligibility; 246 tests pass; the real worker wrote 55 score rows for the dev profile in 148 ms.
 
-Open for tuning (not changed, flagged for the team): a tender with no category match can still reach Medium when the other factors are met, because category is 40 of 100 and the rest are easy to earn. Golden pairs `sample-construction-far-above-range` (58) and `sample-consulting-roadmap` (66) record this. Options are a Low band whenever category points are zero, or a higher Medium threshold.
+Follow-up decided Oct 24, 2026 (docs/plans/m2-category-cap.md): a tender with fewer than 10 category points is capped at 49 and shows as Low, modelVersion rules-2. Golden pairs `sample-construction-far-above-range` and `sample-consulting-roadmap`, which this note first flagged at 58 and 66, now sit at 49.
