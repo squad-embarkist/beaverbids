@@ -27,7 +27,7 @@ function fakeDb(profiles: ReturnType<typeof profile>[], tenders: ReturnType<type
 describe("scoreRow", () => {
   it("builds a score row with factors, reasons and the model version", () => {
     const row = scoreRow({ id: "t1", ...tender() }, { id: "p1", ...profile() }, NOW);
-    expect(row).toMatchObject({ tenderId: "t1", profileId: "p1", band: "HIGH", eligible: true, modelVersion: "rules-1", scoredAt: NOW });
+    expect(row).toMatchObject({ tenderId: "t1", profileId: "p1", band: "HIGH", eligible: true, modelVersion: "rules-2", scoredAt: NOW });
     expect(row.factors).toEqual(expect.objectContaining({ category: expect.any(Number) }));
     expect(row.reasons).toEqual(expect.objectContaining({ inFavour: expect.any(Array), summary: expect.any(Array) }));
   });
@@ -39,12 +39,12 @@ describe("scoreAll", () => {
 
     const summary = await scoreAll(db, { now: NOW });
 
-    expect(summary).toEqual({ profiles: 2, tenders: 2, scored: 4, modelVersion: "rules-1" });
+    expect(summary).toEqual({ profiles: 2, tenders: 2, scored: 4, modelVersion: "rules-2" });
     expect(mocks.tender.findMany).toHaveBeenCalledWith(expect.objectContaining({ where: { closesAt: { gt: NOW } } }));
     expect(upserts).toHaveLength(4);
     expect(upserts[0]).toMatchObject({
       where: { tenderId_profileId: { tenderId: "t0", profileId: "p0" } },
-      create: { tenderId: "t0", profileId: "p0", modelVersion: "rules-1" },
+      create: { tenderId: "t0", profileId: "p0", modelVersion: "rules-2" },
     });
     const pairs = upserts.map((u) => (u as { where: { tenderId_profileId: { tenderId: string; profileId: string } } }).where.tenderId_profileId);
     expect(pairs).toEqual([

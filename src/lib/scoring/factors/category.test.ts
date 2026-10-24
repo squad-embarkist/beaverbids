@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { profile, requirements, tender } from "../test-helpers";
-import { scoreCategory } from "./category";
+import { CATEGORY_CAP } from "../score";
+import { CATEGORY_SPLIT, scoreCategory } from "./category";
 
 describe("scoreCategory (40)", () => {
   it.each([
@@ -48,6 +49,15 @@ describe("scoreCategory (40)", () => {
     const result = scoreCategory(tender(t), profile(p), requirements(r));
     expect(result.points).toBe(expected);
     expect(result.max).toBe(40);
+  });
+
+  it("never lets buyer-type points alone reach the category cap threshold", () => {
+    // The cap (docs/plans/m2-category-cap.md) assumes a right buyer with the
+    // wrong category stays under 10. This fails if the split ever changes.
+    expect(CATEGORY_SPLIT.buyer).toBeLessThan(CATEGORY_CAP.threshold);
+    const result = scoreCategory(tender({ categoryCodes: ["commercial-construction"] }), profile(), requirements());
+    expect(result.facts).toMatchObject({ codePoints: 0, buyerPoints: CATEGORY_SPLIT.buyer, keywordPoints: 0 });
+    expect(result.points).toBeLessThan(CATEGORY_CAP.threshold);
   });
 
   it("exposes the sub-points and the matched codes in its facts", () => {

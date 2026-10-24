@@ -62,6 +62,20 @@ describe.skipIf(!databaseUrl)("scoreAll against PostgreSQL", () => {
     expect(score.modelVersion).toBe(MODEL_VERSION);
   });
 
+  it("stores the recreation centre tender capped at 49, Low, with the factors uncapped and the cap reason", async () => {
+    const recCentre = await prisma.tender.findFirstOrThrow({ where: { externalId: "FIXTURE-0026" } });
+    const score = await prisma.score.findUniqueOrThrow({ where: { tenderId_profileId: { tenderId: recCentre.id, profileId } } });
+    expect(score.total).toBe(49);
+    expect(score.band).toBe("LOW");
+    expect(score.eligible).toBe(true);
+    expect(score.factors).toMatchObject({ category: 8 });
+    const reasons = score.reasons as { gaps: { code: string }[] };
+    expect(reasons.gaps[0]?.code).toBe("categoryCap");
+
+    const versions = await prisma.score.findMany({ where: { profileId }, select: { modelVersion: true }, distinct: ["modelVersion"] });
+    expect(versions).toEqual([{ modelVersion: "rules-2" }]);
+  });
+
   it("shows up in GET /api/opportunities as a real score", async () => {
     const page = await listOpportunities(prisma, {
       query: opportunitiesQuerySchema.parse({ q: "city of sample", limit: "5" }),
