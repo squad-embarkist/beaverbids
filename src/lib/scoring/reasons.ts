@@ -145,7 +145,7 @@ export function buildReasons(result: ScoreResult, tender: { title: string; descr
 
   // The cap explains a Low band better than any single gap, so it leads.
   if (result.cap) {
-    gaps.unshift(reason("categoryCap", { limit: result.cap.limit }, "No category match, so this tender is capped at Low"));
+    gaps.unshift(reason("categoryCap", { limit: result.cap.limit }, "Too little category match, so this tender is capped at Low"));
   }
 
   return { inFavour, gaps, ruleOut, summary: summarize(inFavour, gaps, ruleOut) };

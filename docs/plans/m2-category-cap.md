@@ -181,7 +181,7 @@ In `src/lib/scoring/run.test.ts`: `scoreRow` stamps "rules-2".
 
 1. Threshold B: cap when category points are under 10. `category.test.ts` fails if buyer-type points alone ever reach the threshold.
 2. The word-boundary keyword fix shipped first as its own commit, with tests for "Buildings" against "build" and "capital program" against "api". It moved no golden score.
-3. Reason code `categoryCap`, text "No category match, so this tender is capped at Low" (no trailing period, matching the other templates). The cap is recorded whenever the rule applies, even when the total was already under 49.
+3. Reason code `categoryCap`, text "No category match, so this tender is capped at Low" (no trailing period, matching the other templates). Reworded Oct 26 to "Too little category match, so this tender is capped at Low", since a partial code match can be capped too. The cap is recorded whenever the rule applies, even when the total was already under 49.
 4. The test-only reader for the sample file is built (`src/lib/scoring/canadabuys-sample.ts`); the CanadaBuys golden batch waits for the M4 parser.
 
 ### Decisions taken (Oct 26, 2026, after the code review)

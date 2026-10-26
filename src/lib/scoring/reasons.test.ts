@@ -127,9 +127,19 @@ describe("category cap reason", () => {
     expect(reasons.gaps[0]).toEqual({
       code: "categoryCap",
       params: { limit: 49 },
-      text: "No category match, so this tender is capped at Low",
+      text: "Too little category match, so this tender is capped at Low",
     });
     expect(reasons.summary[1]).toEqual(reasons.gaps[0]);
+  });
+
+  it("does not contradict a partial match: one of three codes matched is still capped", () => {
+    const t = tender({ categoryCodes: ["it-managed-services-cloud", "commercial-construction", "facilities-janitorial"], description: "Supply of office chairs." });
+    const result = scoreTender(t, profile(), NOW);
+    expect(result.details.category.facts.codePoints).toBe(8);
+    expect(result.cap).not.toBeNull();
+    const reasons = buildReasons(result, t);
+    expect(reasons.inFavour[0].code).toBe("categoryMatch");
+    expect(reasons.gaps[0].text).toBe("Too little category match, so this tender is capped at Low");
   });
 
   it("is absent from an uncapped result", () => {
