@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node";
 import type { PgBoss } from "pg-boss";
 import { log } from "@/lib/log";
 import { QUEUES, SCORE_ALL_SINGLETON_KEY, type ScoreAllJob, type ScoreProfileJob } from "@/lib/queues";
@@ -24,17 +25,15 @@ export async function registerScoringJobs(boss: Boss, db: ScoringDb, { schedule,
   await boss.createQueue(QUEUES.scoreAll, QUEUE_OPTIONS);
   await boss.createQueue(QUEUES.scoreProfile, QUEUE_OPTIONS);
 
-  await boss.work<ScoreAllJob>(QUEUES.scoreAll, async ([job]) => {
-    const started = Date.now();
-    const summary = await scoreAll(db);
-    log.info("score-all finished", { jobId: job.id, reason: job.data.reason, ms: Date.now() - started, ...summary });
-  });
+  await boss.work<ScoreAllJob>(QUEUES.scoreAll, ([job]) =>
+    runJob(QUEUES.scoreAll, job.id, { reason: job.data.reason }, () => scoreAll(db)),
+  );
 
-  await boss.work<ScoreProfileJob>(QUEUES.scoreProfile, async ([job]) => {
-    const started = Date.now();
-    const summary = await scoreAll(db, { profileId: job.data.profileId });
-    log.info("score-profile finished", { jobId: job.id, profileId: job.data.profileId, ms: Date.now() - started, ...summary });
-  });
+  await boss.work<ScoreProfileJob>(QUEUES.scoreProfile, ([job]) =>
+    runJob(QUEUES.scoreProfile, job.id, { profileId: job.data.profileId, reason: job.data.reason }, () =>
+      scoreAll(db, { profileId: job.data.profileId }),
+    ),
+  );
 
   if (schedule) {
     const data: ScoreAllJob = { reason: "schedule" };
@@ -43,6 +42,21 @@ export async function registerScoringJobs(boss: Boss, db: ScoringDb, { schedule,
 
   if (startupRun) {
     await enqueueScoreAll(boss, "startup");
+  }
+}
+
+// Logs the outcome either way and reports a failure to Sentry before
+// rethrowing, so pg-boss still marks the job failed and retries it. Without
+// this a thrown error went nowhere: pg-boss records it on the job row only.
+async function runJob(queue: string, jobId: string, fields: Record<string, unknown>, run: () => Promise<Record<string, unknown>>) {
+  const started = Date.now();
+  try {
+    const summary = await run();
+    log.info(`${queue} finished`, { jobId, ...fields, ms: Date.now() - started, ...summary });
+  } catch (error) {
+    log.error(`${queue} failed`, { jobId, ...fields, ms: Date.now() - started, error: String(error) });
+    Sentry.captureException(error, { tags: { queue }, extra: { jobId, ...fields } });
+    throw error;
   }
 }
 
