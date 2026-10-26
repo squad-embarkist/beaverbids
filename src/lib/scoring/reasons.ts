@@ -29,7 +29,9 @@ export type ReasonSet = {
   summary: Reason[];
 };
 
-const REFERENCE_COUNT = /\b(one|two|three|four|five|six|\d+) (?:client |customer |project )?references?\b/;
+// Same exclusions as REFERENCES in requirements.ts: "2 reference numbers"
+// is not two references.
+const REFERENCE_COUNT = /\b(one|two|three|four|five|six|\d+) (?:client |customer |project )?references?\b(?! numbers?\b| nos?\b| to\b)/;
 const COUNT_WORDS: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
 
 export function referenceCount(text: string): number | null {

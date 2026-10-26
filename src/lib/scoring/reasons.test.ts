@@ -158,6 +158,9 @@ describe("referenceCount", () => {
     ["two client references", 2],
     ["5 references", 5],
     ["references required", null],
+    ["quote the 2 reference numbers on the envelope", null],
+    ["provide client references. Quote the 2 reference numbers on the envelope.", null],
+    ["see the 3 references to the standard", null],
   ])("%j -> %s", (text, expected) => {
     expect(referenceCount(text)).toBe(expected);
   });
