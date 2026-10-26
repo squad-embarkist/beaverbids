@@ -56,21 +56,33 @@ const AFTER_HOURS = /\b(24\s?\/\s?7|24 hours a day|24-hour|24 hour|after-hours|a
 const REFERENCES = /\b(references?|reference projects?|prior (?:\w+ )?(?:deployments|experience)|comparable size|similar size)\b/;
 const BILINGUAL = /\b(bilingual|bilingue|in english and french|en anglais et en francais|english and french)\b/;
 
-// Set-asides only when the text reserves the work. "Indigenous-owned
-// proponents are encouraged" is not a set-aside. The group runs to the end
-// of the clause or to "under" / "pursuant", whichever comes first.
+// Set-asides only when the text reserves the work for a kind of supplier.
+// "Indigenous-owned proponents are encouraged" is not a set-aside, and
+// neither is "funding has been set aside for this project" or "time is set
+// aside for questions": the captured group must name suppliers or a known
+// program. The group runs to the end of the clause or to "under" /
+// "pursuant", whichever comes first.
+//
+// A conditional set-aside ("tenders may be set aside for Indigenous
+// businesses") still counts. Softening that, and letting a profile claim
+// Indigenous business status, is a follow-up in docs/plans/m2-category-cap.md.
 const SET_ASIDE_PATTERNS = [
   // "set aside from the trade agreements" is an exemption, not a group.
-  /\bset[- ]aside (?!from\b)(?:for |under )?(?:the )?([a-z][a-z -]{2,80}?)(?= under | pursuant | in accordance |[.,;:(]|$)/,
-  /\breserved for (?:the )?([a-z][a-z -]{2,80}?)(?= under | pursuant |[.,;:(]|$)/,
-  /\blimited to ([a-z][a-z -]{2,60}?(?:businesses|suppliers|firms|vendors|enterprises|bidders))\b/,
-  /\b(?:reserve|reservee?) (?:aux|a la|a des) ([a-z][a-z -]{2,80}?)(?=[.,;:(]|$)/,
+  /\bset[- ]aside (?!from\b)(?:for |under )?(?:the )?([a-z][a-z -]{2,80}?)(?= under | pursuant | in accordance |[.,;:(]|$)/g,
+  /\breserved for (?:the )?([a-z][a-z -]{2,80}?)(?= under | pursuant |[.,;:(]|$)/g,
+  /\blimited to ([a-z][a-z -]{2,60}?(?:businesses|suppliers|firms|vendors|enterprises|bidders))\b/g,
+  /\b(?:reserve|reservee?) (?:aux|a la|a des) ([a-z][a-z -]{2,80}?)(?=[.,;:(]|$)/g,
 ];
+
+const SET_ASIDE_GROUP =
+  /\b(?:business(?:es)?|suppliers?|firms?|vendors?|enterprises?|bidders?|contractors?|proponents?|organi[sz]ations?|compan(?:y|ies)|corporations?|entreprises?|fournisseurs?|entrepreneurs?|psib|psab|sme|smes)\b/;
 
 export function detectSetAside(text: string): string | null {
   for (const pattern of SET_ASIDE_PATTERNS) {
-    const match = pattern.exec(text);
-    if (match) return match[1].trim() || "a specific group";
+    for (const match of text.matchAll(pattern)) {
+      const group = match[1].trim();
+      if (SET_ASIDE_GROUP.test(group)) return group;
+    }
   }
   return null;
 }

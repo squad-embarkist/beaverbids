@@ -123,11 +123,20 @@ describe("detectSetAside", () => {
     "this procurement is set aside from the international trade agreements under the provision each has for set asides for small and minority businesses.",
     "responses are limited to 20 pages.",
     "the budget set aside for this work is $1m.",
+    "funding has been set aside for this project.",
+    "time is set aside for questions at the end of the site visit.",
+    "the boardroom is reserved for the evaluation committee.",
+    "parking is reserved for staff; bidders must use the visitor lot.",
   ])("ignores %j", (text) => {
-    // "the budget set aside for this work" reads as money, not a group:
-    // the text must say set aside *for* a group right after the phrase.
-    const result = detectSetAside(text);
-    expect(result === null || result === "this work").toBe(true);
+    expect(detectSetAside(text)).toBeNull();
+  });
+
+  it("takes the first clause that names a group, not the first clause", () => {
+    expect(detectSetAside("funding is set aside for this work. the contract is set aside for indigenous businesses.")).toBe("indigenous businesses");
+  });
+
+  it("still flags a conditional set-aside, pending the follow-up in the plan", () => {
+    expect(detectSetAside("tenders may be set aside for indigenous businesses in accordance with the psib.")).toBe("indigenous businesses");
   });
 });
 
