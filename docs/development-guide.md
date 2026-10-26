@@ -190,7 +190,7 @@ Every tender gets a score out of 100 for a given company profile, made of five f
 | Timeline and capacity | 15 | Enough time to respond and deliver | Days until close against the profile's preferred lead time, plus stated capacity |
 | Credentials | 10 | Certifications, security clearance, past work asked for | Share of required credentials the profile lists |
 
-**Category cap.** A tender with fewer than 10 category points has its total capped at 49, so it is always a Low fit. Location, size, timeline and credentials alone must never lift work the company does not do into Medium. The five factor values are stored as computed; only the total is capped, and the stored reasons carry a `categoryCap` entry so the screen can say why. Decided Oct 24, 2026 (docs/plans/m2-category-cap.md), modelVersion rules-2.
+**Category cap.** A tender with fewer than 10 points from category codes and keywords has its total capped at 49, so it is always a Low fit. Buyer-type points do not count towards that threshold: a right buyer says nothing about the work. Location, size, timeline and credentials alone must never lift work the company does not do into Medium. The five factor values are stored as computed; only the total is capped, and the stored reasons carry a `categoryCap` entry so the screen can say why. Decided Oct 24, 2026, threshold narrowed to code plus keyword points Oct 26 (docs/plans/m2-category-cap.md), modelVersion rules-2.
 
 **Bands:** 75 to 100 High, 50 to 74 Medium, under 50 Low. Chips and colours on the screens use these bands.
 

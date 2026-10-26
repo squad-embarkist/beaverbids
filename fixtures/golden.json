@@ -378,6 +378,16 @@
       "expectedBand": "LOW",
       "expectedTotal": 47,
       "expectedCapped": true
+    },
+    {
+      "id": "sample-facilities-help-desk-capped",
+      "note": "Right buyer (municipal, 8) plus one generic keyword (help desk, 2) on a facilities tender: category 10 but code plus keyword points 2, so the cap applies. Was 64 Medium before the cap read match points only.",
+      "profile": "sample",
+      "tender": "FIXTURE-0043",
+      "expectedEligible": true,
+      "expectedBand": "LOW",
+      "expectedTotal": 49,
+      "expectedCapped": true
     }
   ]
 }

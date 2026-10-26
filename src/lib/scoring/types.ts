@@ -71,10 +71,12 @@ export type GateBlocker =
   | { code: "setAside"; group: string };
 
 // Recorded whenever the category cap rule applies, even when it did not
-// lower the total, so the screen can explain a Low band.
+// lower the total, so the screen can explain a Low band. `matchPoints` is
+// what the rule measured: code plus keyword points, never buyer points.
 export type ScoreCap = {
   code: "categoryCap";
   threshold: number;
+  matchPoints: number;
   limit: number;
   uncappedTotal: number;
 };

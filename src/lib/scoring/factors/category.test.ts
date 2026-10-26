@@ -52,8 +52,10 @@ describe("scoreCategory (40)", () => {
   });
 
   it("never lets buyer-type points alone reach the category cap threshold", () => {
-    // The cap (docs/plans/m2-category-cap.md) assumes a right buyer with the
-    // wrong category stays under 10. This fails if the split ever changes.
+    // The cap (docs/plans/m2-category-cap.md) reads code plus keyword points
+    // and ignores buyer points, so this guard is belt and braces: it fails
+    // if the split ever changes so that a right buyer alone looks like a
+    // category match.
     expect(CATEGORY_SPLIT.buyer).toBeLessThan(CATEGORY_CAP.threshold);
     const result = scoreCategory(tender({ categoryCodes: ["commercial-construction"] }), profile(), requirements());
     expect(result.facts).toMatchObject({ codePoints: 0, buyerPoints: CATEGORY_SPLIT.buyer, keywordPoints: 0 });
