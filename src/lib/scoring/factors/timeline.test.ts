@@ -24,6 +24,8 @@ describe("scoreTimeline (15)", () => {
     { name: "after-hours with a team of 1 to 5", t: {}, p: { capacity: "1-5" }, r: { afterHours: true }, expected: 10 + 2 },
     { name: "after-hours with a team of 11 to 25", t: {}, p: { capacity: "11-25" }, r: { afterHours: true }, expected: 15 },
     { name: "after-hours with no team size given", t: {}, p: { capacity: null }, r: { afterHours: true }, expected: 15 },
+    { name: "after-hours with a prototype key as the team size", t: {}, p: { capacity: "constructor" }, r: { afterHours: true }, expected: 15 },
+    { name: "after-hours with an unknown band", t: {}, p: { capacity: "toString" }, r: { afterHours: true }, expected: 15 },
   ])("$name", ({ t, p, r, expected }) => {
     const result = scoreTimeline(tender(t), profile(p), requirements(r), NOW);
     expect(result.points).toBe(expected);
