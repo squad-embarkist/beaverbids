@@ -9,7 +9,7 @@ import {
   type CanadaBuysSampleRow,
 } from "./canadabuys-sample";
 import { extractRequirements } from "./requirements";
-import { CATEGORY_CAP, scoreTender } from "./score";
+import { CATEGORY_CAP, categoryMatchPoints, scoreTender } from "./score";
 
 // The extractor and the cap against real CanadaBuys text. The adapter's
 // normalization (codes, regions, buyer types) does not exist yet, so the
@@ -141,7 +141,7 @@ describe("the category cap on real rows (text-only scoring, sample IT profile)",
       const row = byRow(n);
       const result = scoreTender(textOnlyTender(row), SAMPLE_PROFILE, NOW);
       const hasCode = row.unspsc.length + row.gsin.length > 0;
-      expect(hasCode || result.factors.category >= CATEGORY_CAP.threshold, `${row.referenceNumber} ${row.title}`).toBe(true);
+      expect(hasCode || categoryMatchPoints(result.details.category) >= CATEGORY_CAP.threshold, `${row.referenceNumber} ${row.title}`).toBe(true);
     }
   });
 

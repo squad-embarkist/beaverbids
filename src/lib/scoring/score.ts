@@ -12,14 +12,21 @@ import type { ScoreCap, ScoreResult, ScoringProfile, ScoringTender } from "./typ
 // clean rescore can be triggered.
 // rules-1: the five factors, gate and bands (Oct 23, 2026).
 // rules-2: category cap (Oct 24, 2026, docs/plans/m2-category-cap.md).
+//          Oct 26: the cap reads code plus keyword points only (same version,
+//          nothing was deployed).
 export const MODEL_VERSION = "rules-2";
 
-// Category cap: with fewer than `threshold` category points the total is
-// capped at `limit`, so the band is Low. A tender for work the company does
-// not do must never show as a Medium fit on location, size, timeline and
-// credentials alone. Buyer-type points by themselves (8) can never reach
-// the threshold; category.test.ts guards that.
+// Category cap: with fewer than `threshold` points from category codes and
+// keywords the total is capped at `limit`, so the band is Low. A tender for
+// work the company does not do must never show as a Medium fit on location,
+// size, timeline and credentials alone. Buyer-type points say nothing about
+// the work, so they do not count towards the threshold: a right buyer plus
+// one generic keyword used to slip past it.
 export const CATEGORY_CAP = { threshold: 10, limit: 49 } as const;
+
+export function categoryMatchPoints(category: { facts: { codePoints: number; keywordPoints: number } }): number {
+  return category.facts.codePoints + category.facts.keywordPoints;
+}
 
 // The whole engine in one pure call: extract facts from the text, run the
 // five factors, apply the gate and the band. No database, no clock other
@@ -41,9 +48,10 @@ export function scoreTender(tender: ScoringTender, profile: ScoringProfile, now:
     credentials: credentials.points,
   };
   const uncappedTotal = factors.category + factors.location + factors.size + factors.timeline + factors.credentials;
+  const matchPoints = categoryMatchPoints(category);
   const cap: ScoreCap | null =
-    factors.category < CATEGORY_CAP.threshold
-      ? { code: "categoryCap", threshold: CATEGORY_CAP.threshold, limit: CATEGORY_CAP.limit, uncappedTotal }
+    matchPoints < CATEGORY_CAP.threshold
+      ? { code: "categoryCap", threshold: CATEGORY_CAP.threshold, matchPoints, limit: CATEGORY_CAP.limit, uncappedTotal }
       : null;
   // The factors stay as computed; only the total is capped.
   const total = cap ? Math.min(uncappedTotal, cap.limit) : uncappedTotal;

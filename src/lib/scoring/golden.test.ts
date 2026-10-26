@@ -4,16 +4,16 @@ import { loadGoldenCases } from "./golden";
 import { buildReasons } from "./reasons";
 import { scoreTender } from "./score";
 
-// The golden set: 20 fixture tender and profile pairs with the expected
+// The golden set: 24 fixture tender and profile pairs with the expected
 // band. A rule change that moves a pair across a band fails here and needs
 // a note in the pull request.
 
 const cases = loadGoldenCases();
 
 describe("golden set", () => {
-  it("has 23 pairs with unique ids", () => {
-    expect(cases).toHaveLength(23);
-    expect(new Set(cases.map((c) => c.pair.id)).size).toBe(23);
+  it("has 24 pairs with unique ids", () => {
+    expect(cases).toHaveLength(24);
+    expect(new Set(cases.map((c) => c.pair.id)).size).toBe(24);
   });
 
   it("has at least two eligible pairs that the category cap lowers", () => {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { bandForTotal } from "@/lib/schemas/vocab";
 import { checkGate } from "./gate";
-import { CATEGORY_CAP, MODEL_VERSION, scoreTender } from "./score";
+import { CATEGORY_CAP, MODEL_VERSION, categoryMatchPoints, scoreTender } from "./score";
 import { NOW, daysFromNow, profile, requirements, tender } from "./test-helpers";
 
 describe("checkGate", () => {
@@ -105,7 +105,7 @@ describe("scoreTender", () => {
       expect(result.total).toBe(49);
       expect(result.band).toBe("LOW");
       expect(result.eligible).toBe(true);
-      expect(result.cap).toEqual({ code: "categoryCap", threshold: 10, limit: 49, uncappedTotal: 59 });
+      expect(result.cap).toEqual({ code: "categoryCap", threshold: 10, matchPoints: 0, limit: 49, uncappedTotal: 59 });
     });
 
     it("leaves a total already under 49 unchanged but still records the cap", () => {
@@ -121,16 +121,39 @@ describe("scoreTender", () => {
       expect(result.band).toBe("LOW");
     });
 
+    // The threshold reads code plus keyword points. Buyer points never count:
+    // a municipal janitorial tender must not reach Medium for a municipal IT
+    // firm because the buyer is right and "service" is in the text.
     it.each([
-      { name: "buyer match alone (8)", t: { categoryCodes: ["commercial-construction"], description: "Supply of office chairs." }, category: 8, capped: true },
-      { name: "unknown buyer plus three keywords (9)", t: { categoryCodes: ["commercial-construction"], buyerType: null, description: "Help desk, network and cloud." }, category: 9, capped: true },
-      { name: "buyer match plus one keyword (10)", t: { categoryCodes: ["commercial-construction"], description: "Cloud hosting." }, category: 10, capped: false },
-      { name: "one matched code with nothing else (24)", t: { buyerType: "federal", description: "Supply of office chairs." }, category: 24, capped: false },
-    ] as const)("$name", ({ t, category, capped }) => {
+      { name: "buyer match alone (8, match 0)", t: { categoryCodes: ["commercial-construction"], description: "Supply of office chairs." }, category: 8, match: 0, capped: true },
+      { name: "unknown buyer plus three keywords (9, match 5)", t: { categoryCodes: ["commercial-construction"], buyerType: null, description: "Help desk, network and cloud." }, category: 9, match: 5, capped: true },
+      { name: "buyer match plus one keyword (10, match 2)", t: { categoryCodes: ["commercial-construction"], description: "Cloud hosting." }, category: 10, match: 2, capped: true },
+      { name: "buyer match plus four keywords (14, match 6)", t: { categoryCodes: ["commercial-construction"], description: "Help desk, network, cloud and data centre." }, category: 14, match: 6, capped: true },
+      { name: "wrong buyer, no code, all five keywords (32, match 32)", t: { categoryCodes: [], buyerType: "federal", description: "Managed services: help desk, network, cloud and data centre." }, category: 32, match: 32, capped: false },
+      { name: "one matched code with nothing else (24)", t: { buyerType: "federal", description: "Supply of office chairs." }, category: 24, match: 24, capped: false },
+    ] as const)("$name", ({ t, category, match, capped }) => {
       const result = scoreTender(tender(t), profile(), NOW);
       expect(result.factors.category).toBe(category);
+      expect(categoryMatchPoints(result.details.category)).toBe(match);
       expect(Boolean(result.cap)).toBe(capped);
+      if (capped) expect(result.cap?.matchPoints).toBe(match);
       if (!capped) expect(result.total).toBe(Object.values(result.factors).reduce((a, b) => a + b, 0));
+    });
+
+    it("caps a right buyer with one generic keyword: the escape the review found", () => {
+      // Municipal medical-equipment profile meets a municipal janitorial
+      // tender whose text says "service".
+      const t = tender({
+        categoryCodes: ["facilities-janitorial"],
+        buyerType: "municipal",
+        description: "Janitorial service for three arenas. Supplier to post a performance bond.",
+      });
+      const p = profile({ categories: ["medical-equipment-pharma"], buyerTypes: ["municipal"], bonding: true });
+      const result = scoreTender(t, p, NOW);
+      expect(result.details.category.facts.buyerPoints).toBe(8);
+      expect(result.cap).not.toBeNull();
+      expect(result.total).toBeLessThanOrEqual(49);
+      expect(result.band).toBe("LOW");
     });
 
     it("keeps the gate separate: a capped and gated tender is ineligible with a capped total", () => {
