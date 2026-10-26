@@ -175,6 +175,22 @@ describe("summarize", () => {
     expect(summaryCodes([r("f1")], [r("g1")], [r("r1")])).toEqual(["f1", "r1"]);
   });
 
+  it("pads from the remaining blockers and gaps when nothing is in favour", () => {
+    expect(summaryCodes([], [], [r("r1"), r("r2")])).toEqual(["r1", "r2"]);
+    expect(summaryCodes([], [r("g1")], [r("r1")])).toEqual(["r1", "g1"]);
+    expect(summaryCodes([r("f1")], [], [])).toEqual(["f1"]);
+  });
+
+  it("is one line only when the whole result has one reason", () => {
+    // No buyer, no lead time, no value range, nothing in the text: the
+    // category match is the only reason there is.
+    const t = tender({ buyerType: null, valueMin: null, valueMax: null, description: "Managed IT." });
+    const p = profile({ sizeMin: null, sizeMax: null, timelinePref: null });
+    const reasons = buildReasons(scoreTender(t, p, NOW), t);
+    expect([...reasons.inFavour, ...reasons.gaps, ...reasons.ruleOut]).toHaveLength(1);
+    expect(codes(reasons.summary)).toEqual(["categoryMatch"]);
+  });
+
   it("falls back to gaps when nothing is in favour", () => {
     expect(summaryCodes([], [r("g1"), r("g2"), r("g3")], [])).toEqual(["g1", "g2", "g3"]);
   });

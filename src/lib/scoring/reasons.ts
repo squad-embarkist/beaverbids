@@ -151,6 +151,10 @@ export function buildReasons(result: ScoreResult, tender: { title: string; descr
 
 // Two or three lines for the list row: the top point in favour, then the
 // top blocker or gap, then a second point in favour when there is one.
+// With fewer than two lines so far it pads from the remaining blockers and
+// gaps. The category always yields one reason, so the summary is only ever
+// shorter than two lines when a tender produces exactly one reason in all:
+// no buyer type, no lead time, no value range and nothing in the text.
 export function summarize(inFavour: Reason[], gaps: Reason[], ruleOut: Reason[]): Reason[] {
   const lines: Reason[] = [];
   const concern = ruleOut[0] ?? gaps[0];
