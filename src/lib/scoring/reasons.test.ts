@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { loadGoldenCases } from "./golden";
-import { buildReasons, referenceCount, summarize, type Reason } from "./reasons";
+import { REASON_CODES, buildReasons, referenceCount, renderReason, summarize, type Reason, type ReasonCode } from "./reasons";
 import { scoreTender } from "./score";
 import { NOW, daysFromNow, profile, tender } from "./test-helpers";
 
@@ -152,6 +152,32 @@ describe("category cap reason", () => {
   });
 });
 
+describe("renderReason: the stored text is a fallback, never an override", () => {
+  const stored: Reason = { code: "timelineTight", params: { days: 9, lead: 10 }, text: "Closes in 9 days, under your 10 day lead time" };
+
+  it("renders from the message for the code when one exists", () => {
+    const messages = { timelineTight: ({ days, lead }: Record<string, string | number>) => `Ferme dans ${days} jours, sous votre délai de ${lead} jours` };
+    expect(renderReason(stored, messages)).toBe("Ferme dans 9 jours, sous votre délai de 10 jours");
+  });
+
+  it("falls back to the stored English text only when the code has no message", () => {
+    expect(renderReason(stored, {})).toBe(stored.text);
+    expect(renderReason(stored, { categoryMatch: () => "unused" })).toBe(stored.text);
+  });
+
+  it("only emits codes from REASON_CODES, so messages can cover every one", () => {
+    const seen = new Set<string>();
+    for (const c of loadGoldenCases()) {
+      const reasons = buildReasons(scoreTender(c.tender, c.profile, c.now), c.tender);
+      for (const r of [...reasons.inFavour, ...reasons.gaps, ...reasons.ruleOut, ...reasons.summary]) {
+        expect(REASON_CODES, r.code).toContain(r.code);
+        seen.add(r.code);
+      }
+    }
+    expect(seen.size).toBeGreaterThan(10);
+  });
+});
+
 describe("referenceCount", () => {
   it.each([
     ["provide three references of similar size", 3],
@@ -167,7 +193,7 @@ describe("referenceCount", () => {
 });
 
 describe("summarize", () => {
-  const r = (code: string): Reason => ({ code, params: {}, text: code });
+  const r = (code: string): Reason => ({ code: code as ReasonCode, params: {}, text: code });
   const summaryCodes = (...args: Parameters<typeof summarize>) => codes(summarize(...args));
 
   it("takes favour, concern, favour", () => {
