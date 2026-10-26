@@ -104,6 +104,9 @@ export function roundPoints(value: number): number {
   return Math.round(value);
 }
 
+// A value that is not a number (a NaN from bad input) clamps to 0 rather
+// than poisoning the total.
 export function clampPoints(value: number, max: number): number {
+  if (!Number.isFinite(value)) return 0;
   return Math.min(max, Math.max(0, value));
 }

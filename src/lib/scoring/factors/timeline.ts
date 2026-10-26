@@ -26,8 +26,13 @@ export function daysUntil(closesAt: Date, now: Date): number {
   return Math.max(0, roundPoints((closesAt.getTime() - now.getTime()) / DAY_MS));
 }
 
-// After-hours coverage (24/7, on-call) stretches a small team.
-const AFTER_HOURS_CAPACITY: Record<string, number> = { "1-5": 2, "6-10": 3 };
+// After-hours coverage (24/7, on-call) stretches a small team. A Map, not
+// an object, so a profile value such as "constructor" can never read a
+// prototype property and poison the total.
+const AFTER_HOURS_CAPACITY = new Map<string, number>([
+  ["1-5", 2],
+  ["6-10", 3],
+]);
 
 export function scoreTimeline(tender: ScoringTender, profile: ScoringProfile, requirements: Requirements, now: Date): TimelineResult {
   const daysLeft = daysUntil(tender.closesAt, now);
@@ -40,9 +45,7 @@ export function scoreTimeline(tender: ScoringTender, profile: ScoringProfile, re
 
   const capacity = profile.capacity ?? null;
   const capacityPoints =
-    requirements.afterHours && capacity != null && capacity in AFTER_HOURS_CAPACITY
-      ? AFTER_HOURS_CAPACITY[capacity]
-      : TIMELINE_SPLIT.capacity;
+    requirements.afterHours && capacity != null ? (AFTER_HOURS_CAPACITY.get(capacity) ?? TIMELINE_SPLIT.capacity) : TIMELINE_SPLIT.capacity;
 
   return {
     points: clampPoints(timePoints + capacityPoints, FACTOR_MAX.timeline),
