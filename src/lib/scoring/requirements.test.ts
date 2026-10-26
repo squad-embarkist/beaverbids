@@ -121,7 +121,6 @@ describe("detectSetAside", () => {
     ["this procurement is set aside for indigenous businesses under the procurement strategy for indigenous business.", "indigenous businesses"],
     ["set-aside under the psib.", "psib"],
     ["reserved for the canadian aboriginal businesses listed in the directory.", "canadian aboriginal businesses listed in the directory"],
-    ["participation is limited to small and medium enterprises.", "small and medium enterprises"],
     ["ce marche est reserve aux entreprises autochtones.", "entreprises autochtones"],
     ["the requirement will be subject to the set aside under the federal government procurement strategy for aboriginal business (psab).", "federal government procurement strategy for aboriginal business"],
   ])("detects %j", (text, group) => {
@@ -137,6 +136,10 @@ describe("detectSetAside", () => {
     "time is set aside for questions at the end of the site visit.",
     "the boardroom is reserved for the evaluation committee.",
     "parking is reserved for staff; bidders must use the visitor lot.",
+    "participation is limited to small and medium enterprises.",
+    "this procurement is set aside for canadian small and medium enterprises.",
+    "reserved for small businesses under the small business set aside program.",
+    "ce marche est reserve aux petites et moyennes entreprises.",
   ])("ignores %j", (text) => {
     expect(detectSetAside(text)).toBeNull();
   });
