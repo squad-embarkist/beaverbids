@@ -1,6 +1,6 @@
 # M2 change: category cap
 
-Status: built Oct 24, 2026 on feature/m2-scoring (threshold: under 10 category points, option B; reason code `categoryCap`; word-boundary keyword fix included as its own commit; sample reader built, CanadaBuys golden batch waits for the M4 parser).
+Status: built Oct 24, 2026 on feature/m2-scoring (threshold: under 10 category points, option B; reason code `categoryCap`; word-boundary keyword fix included as its own commit; sample reader built, CanadaBuys golden batch waits for the M4 parser). Revised Oct 26, 2026 after code review: the threshold reads code plus keyword points only (see Decisions taken, Oct 26).
 Source of truth: docs/development-guide.md, Scoring engine section.
 
 ## Decision
@@ -184,6 +184,40 @@ In `src/lib/scoring/run.test.ts`: `scoreRow` stamps "rules-2".
 3. Reason code `categoryCap`, text "No category match, so this tender is capped at Low" (no trailing period, matching the other templates). The cap is recorded whenever the rule applies, even when the total was already under 49.
 4. The test-only reader for the sample file is built (`src/lib/scoring/canadabuys-sample.ts`); the CanadaBuys golden batch waits for the M4 parser.
 
+### Decisions taken (Oct 26, 2026, after the code review)
+
+1. The cap threshold reads code plus keyword points only. Buyer-type points (8 for a right buyer) plus one generic keyword (2) reached 10 and let a municipal janitorial tender show Medium to a municipal IT firm. `categoryMatchPoints()` in `score.ts` is the measured value and `result.cap.matchPoints` records it. Still rules-2: nothing is deployed. No existing golden pair moved (every capped pair already had 0 code and keyword points; every uncapped pair had 24 code points). On the seeded database two rows move: FIXTURE-0043 Integrated Facilities Management for the sample profile, 64 Medium to 49 Low (buyer match plus "help desk"), now golden pair `sample-facilities-help-desk-capped`; and FIXTURE-0040 Dental Equipment for the Manitoba logistics profile, 69 to 49 (buyer match plus "delivery"), not in the golden set. The `category.test.ts` guard on buyer points stays as belt and braces.
+2. The summary is stored as reason objects (`{ code, params, text }[]`), the same objects as the three lists, so the list row renders in French from the stored row. Schema comment updated; no migration, the column is JSON.
+3. Five fixes as separate commits: a set-aside must name a kind of supplier (funding, time and rooms are no longer set-asides, and the extractor scans every clause); bare "reference" ("Terms of Reference", "reference number", "for reference") no longer docks experience points; the French P.Eng. pattern needs the licence ("ingenieur agree", "Ordre des ingenieurs"), not the word for an engineer; score-all and score-profile log a failure with the job id and report it to Sentry before rethrowing; the after-hours capacity lookup is a Map and `clampPoints` turns a non-finite value into 0.
+4. Conditional and partial set-asides (rows 3 and 20): scoped below, not small, not in this pull request.
+5. The three deferred review items are recorded below as M4 follow-ups.
+
+### Conditional and partial set-asides: scope (Oct 26, 2026)
+
+What the two sample rows say, after normalization:
+
+- Row 3, Open Construction Source List for CFB Halifax: "tenders may be set aside for indigenous businesses in accordance with the procurement strategy for indigenous business (psib). in such cases ... the merx advertisement will clearly state that the opportunity is reserved for indigenous businesses under psib ... if you are forming a joint venture (jv) to bid on a contract set aside for indigenous businesses, at least one member ...". Three phrases: one with "may be", two inside conditional sentences ("in such cases", "if you are forming").
+- Row 20, Hazardous Waste Disposal Services: two supply streams, a general one open to "any supplier, including indigenous suppliers", and a PSAB one; "for requirements estimated between $40,000.00 to $100,000.00 ... will be subject to the set aside under the federal government procurement strategy for aboriginal business (psab)". Firm language, for one value band of one stream.
+
+Why there is no small fix: ignoring "may be set aside" releases neither row. Row 3 still carries two firm-looking phrases in conditional sentences, and row 20's tier clause is firm. The only safe reading needs to know whether the profile can claim the set-aside, which the profile cannot say yet, and a softer reading of conditional clauses so the notice is shown with a warning instead of hidden.
+
+The fix, about one day across two milestones:
+
+1. Profile (M3, with the questionnaire): `indigenousBusiness Boolean @default(false)` on companyProfile, one question in the credentials step ("Is your business Indigenous-owned and listed in the Indigenous Business Directory?"), Zod schema, migration, `ScoringProfile.indigenousBusiness`. About 2 to 3 hours.
+2. Extractor (M4, same pull request as the notice-type gate): `setAside` becomes `{ group, kind: "indigenous" | "other", firm: boolean } | null`. `kind` is "indigenous" when the group contains indigenous, aboriginal, autochtone, PSIB or PSAB. `firm` is false when every matching clause is governed by "may be", "might be", "could be", "in such cases", "if ..." or a value-band clause ("for requirements estimated between $X and $Y", "below $X"). About 2 hours with tests on rows 3 and 20 and crafted text.
+3. Gate and reasons: gate only when `firm` and the profile cannot claim the group (kind other, or kind indigenous and `indigenousBusiness` false). A non-firm set-aside goes to "could rule you out" as `setAsideConditional`, "May be set aside for {group}", without gating. An Indigenous profile on an Indigenous set-aside gets an in-favour reason instead. About 2 hours with tests.
+4. Golden set: the Manitoba logistics profile (Indigenous-owned in its description) against `national-consultancy-set-aside`'s tender becomes eligible once it claims the flag; `national-consultancy-set-aside` stays gated; rows 3 and 20 join the CanadaBuys batch as "shown with a warning". Docs: guide gate paragraph, this plan. About 1 hour.
+
+No backfill is needed: the next score-all rewrites every row.
+
+### M4 follow-ups from the Oct 26 code review
+
+| Item | What the review found | Fix and when |
+| --- | --- | --- |
+| `scoreAll` memory | `run.ts` builds every profile and tender row in memory before writing, and calls `extractRequirements` once per pair rather than once per tender. With 900 open notices that is 900 rows per profile, fine for tens of profiles, a memory risk in the hundreds on an 8 GB shared server | Extract once per tender, then score and flush per profile (batch upserts inside the profile loop). Do it in M4 with the adapter, when real volumes exist, and measure the nightly run |
+| score-all and score-profile overlap | Both jobs upsert the same (tenderId, profileId) rows in transactions. A profile job running during the nightly score-all can deadlock on the unique index, which Postgres resolves by aborting one transaction; pg-boss then retries it | Order the rows in every batch by tenderId then profileId so both jobs take locks in the same order, or have score-profile defer while a score-all job is active. Decide in M4 when the import chains score-all |
+| Duplicated day arithmetic | `DAY_MS` and the day offset helper live in `src/lib/seed/fixtures.ts`, `factors/timeline.ts`, `test-helpers.ts` and `golden.ts` | One `src/lib/dates.ts` with `DAY_MS`, `daysFrom` and `daysUntil`; a chore commit at any time, no behaviour change |
+
 ### Decision needed before code (resolved above, kept for the record)
 
 1. Threshold: A (= 0, as decided, does not fix the recreation centre), B (under 10, recommended) or C (no category code matched).
@@ -252,7 +286,7 @@ Two notes on the file itself:
 
 Found while building the reader test (Oct 24, 2026):
 
-- Conditional and partial set-asides. Row 3 says tenders under the source list "may be set aside for Indigenous businesses" and row 20 applies the PSAB set-aside to one value band of a standing offer. The extractor reports both as set-asides and the phase 1 gate then blocks the whole notice for every profile, since it cannot tell a conditional clause from a firm one and the profile has no field to claim Indigenous business status. Conservative, but on the real file this hides notices that most firms can bid on. Follow-up for M3 or M4: an Indigenous business flag on the profile, and a softer reading ("may be set aside", "subject to the set aside for requirements between $X and $Y") that lands under "could rule you out" instead of the gate.
+- Conditional and partial set-asides. Row 3 says tenders under the source list "may be set aside for Indigenous businesses" and row 20 applies the PSAB set-aside to one value band of a standing offer. The extractor reports both as set-asides and the phase 1 gate then blocks the whole notice for every profile, since it cannot tell a conditional clause from a firm one and the profile has no field to claim Indigenous business status. Conservative, but on the real file this hides notices that most firms can bid on. Scoped Oct 26, 2026 under "Conditional and partial set-asides: scope" above: an Indigenous business flag on the profile (M3) and a softer reading of conditional clauses that lands under "could rule you out" instead of the gate (M4).
 - "Set aside from the international trade agreements" is an exemption, not a group set-aside. The pattern now ignores "set aside from", with a test row; before the fix a notice carrying only that boilerplate would have been gated for everyone.
 - Only 8 of the 20 rows have an empty notice type, not 10 as first written above (corrected).
 
