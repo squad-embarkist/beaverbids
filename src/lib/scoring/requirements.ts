@@ -53,7 +53,12 @@ const BOND = /\b(bid bond|performance bond|performance and labour|bonds? (are |i
 const CLEARANCE = /\b(security clearance|reliability (status|clearance|screening)|reliability level|secret clearance|top secret|enhanced reliability|habilitation de securite)\b/;
 const RESIDENCY = /\b(data (must|shall|will) (stay|remain|reside) in canada|data residency|canadian cloud region|hosted in canada|storage in canada|stored in canada|data sovereignty)\b/;
 const AFTER_HOURS = /\b(24\s?\/\s?7|24 hours a day|24-hour|24 hour|after-hours|after hours|on-call|on call|365 days)\b/;
-const REFERENCES = /\b(references?|reference projects?|prior (?:\w+ )?(?:deployments|experience)|comparable size|similar size)\b/;
+// References as in past clients, never "Terms of Reference", a reference
+// number or "for reference". The plural is taken as client references
+// unless the words around it say otherwise; the singular needs a client or
+// project word beside it.
+const REFERENCES =
+  /\b(?:(?<!terms of |cross |by |with |in |for )references(?! numbers?\b| nos?\b| to\b| are made\b)|(?:client|customer|project|contract|past|previous|professional) references?|references? (?:projects?|letters?|checks?|contacts?|sites?)|provide (?:a |one )?reference|prior (?:\w+ )?(?:deployments|experience)|comparable size|similar size)\b/;
 const BILINGUAL = /\b(bilingual|bilingue|in english and french|en anglais et en francais|english and french)\b/;
 
 // Set-asides only when the text reserves the work for a kind of supplier.
