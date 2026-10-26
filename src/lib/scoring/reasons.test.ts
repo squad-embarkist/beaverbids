@@ -73,6 +73,8 @@ describe("buildReasons templates", () => {
   it("flags a missing certification with the alternatives", () => {
     const reasons = reasonsFor(tender({ description: "ISO 27001 or SOC 2 required." }));
     expect(reasons.ruleOut[0].text).toBe("Requires SOC 2 or ISO 27001, which you do not list");
+    const licence = reasonsFor(tender({ description: "Drawings must be sealed by a licensed professional engineer." }));
+    expect(licence.ruleOut[0].text).toBe("Requires a professional engineering licence, which you do not list");
   });
 
   it("says when the category is outside the profile and the buyer is not on the list", () => {
