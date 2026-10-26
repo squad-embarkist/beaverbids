@@ -82,13 +82,19 @@ const SET_ASIDE_PATTERNS = [
 ];
 
 const SET_ASIDE_GROUP =
-  /\b(?:business(?:es)?|suppliers?|firms?|vendors?|enterprises?|bidders?|contractors?|proponents?|organi[sz]ations?|compan(?:y|ies)|corporations?|entreprises?|fournisseurs?|entrepreneurs?|psib|psab|sme|smes)\b/;
+  /\b(?:business(?:es)?|suppliers?|firms?|vendors?|enterprises?|bidders?|contractors?|proponents?|organi[sz]ations?|compan(?:y|ies)|corporations?|entreprises?|fournisseurs?|entrepreneurs?|psib|psab)\b/;
+
+// A set-aside for small or medium businesses never gates: those are the
+// suppliers the product serves. A softer "could rule you out" line for
+// large firms belongs to the conditional set-aside work in
+// docs/plans/m2-category-cap.md.
+const SMALL_BUSINESS_GROUP = /\b(?:small (?:and|or|to) medium|small business(?:es)?|smes?|pmes?|petites? (?:et|ou) moyennes?)\b/;
 
 export function detectSetAside(text: string): string | null {
   for (const pattern of SET_ASIDE_PATTERNS) {
     for (const match of text.matchAll(pattern)) {
       const group = match[1].trim();
-      if (SET_ASIDE_GROUP.test(group)) return group;
+      if (SET_ASIDE_GROUP.test(group) && !SMALL_BUSINESS_GROUP.test(group)) return group;
     }
   }
   return null;

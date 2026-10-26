@@ -208,6 +208,8 @@ The fix, about one day across two milestones:
 3. Gate and reasons: gate only when `firm` and the profile cannot claim the group (kind other, or kind indigenous and `indigenousBusiness` false). A non-firm set-aside goes to "could rule you out" as `setAsideConditional`, "May be set aside for {group}", without gating. An Indigenous profile on an Indigenous set-aside gets an in-favour reason instead. About 2 hours with tests.
 4. Golden set: the Manitoba logistics profile (Indigenous-owned in its description) against `national-consultancy-set-aside`'s tender becomes eligible once it claims the flag; `national-consultancy-set-aside` stays gated; rows 3 and 20 join the CanadaBuys batch as "shown with a warning". Docs: guide gate paragraph, this plan. About 1 hour.
 
+Small and medium business set-asides (decided Oct 26, 2026): they never gate. The extractor drops a group that reads as small or medium business or enterprise, in English or French, because those are the suppliers the product serves. A softer "could rule you out" line for large firms, once the profile can say how large the company is, belongs to this conditional set-aside work, not to the gate.
+
 No backfill is needed: the next score-all rewrites every row.
 
 ### M4 follow-ups from the Oct 26 code review
