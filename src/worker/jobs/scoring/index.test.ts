@@ -1,8 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
 import { QUEUES, SCORE_ALL_SINGLETON_KEY } from "@/lib/queues";
 
-const scoreAll = vi.hoisted(() => vi.fn(async () => ({ profiles: 1, tenders: 2, scored: 2, modelVersion: "rules-1" })));
+const scoreAll = vi.hoisted(() => vi.fn(async () => ({ profiles: 1, tenders: 2, scored: 2, modelVersion: "rules-2" })));
 vi.mock("@/lib/scoring/run", () => ({ scoreAll }));
+
+const captureException = vi.hoisted(() => vi.fn());
+vi.mock("@sentry/node", () => ({ captureException }));
 
 import { SCORE_ALL_CRON, SCORE_ALL_TZ, enqueueScoreProfile, registerScoringJobs } from "./index";
 
@@ -57,6 +60,21 @@ describe("registerScoringJobs", () => {
 
     await boss.handlers.get(QUEUES.scoreProfile)!([{ id: "j2", data: { profileId: "p1", reason: "profileUpdated" } }]);
     expect(scoreAll).toHaveBeenLastCalledWith(db, { profileId: "p1" });
+  });
+
+  it("logs a failed job, reports it to Sentry and rethrows so pg-boss retries", async () => {
+    const boss = fakeBoss();
+    await registerScoringJobs(boss, db, { schedule: false, startupRun: false });
+    const error = new Error("database gone");
+    scoreAll.mockRejectedValueOnce(error);
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    await expect(boss.handlers.get(QUEUES.scoreProfile)!([{ id: "j3", data: { profileId: "p1", reason: "profileUpdated" } }])).rejects.toBe(error);
+
+    expect(captureException).toHaveBeenCalledWith(error, { tags: { queue: QUEUES.scoreProfile }, extra: { jobId: "j3", profileId: "p1", reason: "profileUpdated" } });
+    const line = JSON.parse(consoleError.mock.calls[0][0] as string);
+    expect(line).toMatchObject({ level: "error", message: `${QUEUES.scoreProfile} failed`, jobId: "j3", profileId: "p1", error: "Error: database gone" });
+    consoleError.mockRestore();
   });
 
   it("keys a profile job on the profile id", async () => {
