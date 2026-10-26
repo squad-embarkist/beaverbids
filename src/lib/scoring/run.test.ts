@@ -30,6 +30,8 @@ describe("scoreRow", () => {
     expect(row).toMatchObject({ tenderId: "t1", profileId: "p1", band: "HIGH", eligible: true, modelVersion: "rules-2", scoredAt: NOW });
     expect(row.factors).toEqual(expect.objectContaining({ category: expect.any(Number) }));
     expect(row.reasons).toEqual(expect.objectContaining({ inFavour: expect.any(Array), summary: expect.any(Array) }));
+    const reasons = row.reasons as { summary: { code: string; text: string }[] };
+    expect(reasons.summary[0]).toEqual({ code: expect.any(String), params: expect.any(Object), text: expect.any(String) });
   });
 });
 
