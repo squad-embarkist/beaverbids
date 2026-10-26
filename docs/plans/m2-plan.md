@@ -117,3 +117,5 @@ What landed, and where it differs from the plan above:
 - The sample pair scores 92 with 38, 19, 14, 12 and 9; all 20 golden pairs match their expected band and eligibility; 246 tests pass; the real worker wrote 55 score rows for the dev profile in 148 ms.
 
 Follow-up decided Oct 24, 2026 (docs/plans/m2-category-cap.md): a tender with fewer than 10 category points is capped at 49 and shows as Low, modelVersion rules-2. Golden pairs `sample-construction-far-above-range` and `sample-consulting-roadmap`, which this note first flagged at 58 and 66, now sit at 49.
+
+Revised Oct 26, 2026 after the code review (same plan file, "Decisions taken, Oct 26"): the cap threshold reads code plus keyword points only, the summary is stored as reason objects, and five extractor, worker and factor fixes landed as separate commits. The golden set is 24 pairs.
