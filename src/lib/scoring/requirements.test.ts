@@ -67,7 +67,14 @@ describe("extractRequirements", () => {
     ["must show municipal or transit references", true],
     ["at least two prior EHR deployments of comparable size", true],
     ["Prior hospital experience is mandatory", true],
+    ["Bidders must provide a reference for each project listed", true],
+    ["Two client references and one reference letter", true],
     ["Three-year term", false],
+    ["The Terms of Reference are attached as Annex A", false],
+    ["Quote the reference number on all correspondence", false],
+    ["Drawings are provided for reference only", false],
+    ["References to the National Building Code mean the 2020 edition", false],
+    ["Pricing is cross referenced with Annex B; see also the list of cross references", false],
   ])("referencesRequired for %j is %s", (text, expected) => {
     expect(extract(text).referencesRequired).toBe(expected);
   });
