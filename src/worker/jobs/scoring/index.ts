@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/node";
 import type { PgBoss } from "pg-boss";
 import { log } from "@/lib/log";
-import { QUEUES, SCORE_ALL_SINGLETON_KEY, type ScoreAllJob, type ScoreProfileJob } from "@/lib/queues";
+import { QUEUES, SCORE_ALL_SINGLETON_KEY, enqueueScoreAll, type ScoreAllJob, type ScoreProfileJob } from "@/lib/queues";
 import { scoreAll } from "@/lib/scoring/run";
 
 // Scoring jobs. `score-all` rescores every open tender for every profile;
@@ -58,14 +58,4 @@ async function runJob(queue: string, jobId: string, fields: Record<string, unkno
     Sentry.captureException(error, { tags: { queue }, extra: { jobId, ...fields } });
     throw error;
   }
-}
-
-export async function enqueueScoreAll(boss: Pick<PgBoss, "send">, reason: ScoreAllJob["reason"]) {
-  const data: ScoreAllJob = { reason };
-  return boss.send(QUEUES.scoreAll, data, { singletonKey: SCORE_ALL_SINGLETON_KEY });
-}
-
-export async function enqueueScoreProfile(boss: Pick<PgBoss, "send">, profileId: string, reason: ScoreProfileJob["reason"]) {
-  const data: ScoreProfileJob = { profileId, reason };
-  return boss.send(QUEUES.scoreProfile, data, { singletonKey: profileId });
 }

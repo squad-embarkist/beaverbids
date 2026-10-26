@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { QUEUES, SCORE_ALL_SINGLETON_KEY } from "@/lib/queues";
+import { QUEUES, SCORE_ALL_SINGLETON_KEY, enqueueScoreProfile } from "@/lib/queues";
 
 const scoreAll = vi.hoisted(() => vi.fn(async () => ({ profiles: 1, tenders: 2, scored: 2, modelVersion: "rules-2" })));
 vi.mock("@/lib/scoring/run", () => ({ scoreAll }));
@@ -7,7 +7,7 @@ vi.mock("@/lib/scoring/run", () => ({ scoreAll }));
 const captureException = vi.hoisted(() => vi.fn());
 vi.mock("@sentry/node", () => ({ captureException }));
 
-import { SCORE_ALL_CRON, SCORE_ALL_TZ, enqueueScoreProfile, registerScoringJobs } from "./index";
+import { SCORE_ALL_CRON, SCORE_ALL_TZ, registerScoringJobs } from "./index";
 
 type Handler = (jobs: { id: string; data: unknown }[]) => Promise<void>;
 
