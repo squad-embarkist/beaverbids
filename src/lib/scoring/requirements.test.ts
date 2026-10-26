@@ -17,6 +17,9 @@ describe("extractRequirements", () => {
     ["ISO 9001 quality system", ["ISO 9001"]],
     ["Professional engineering licence in Ontario required", ["P.Eng."]],
     ["Health Canada licences required", ["Health Canada licence"]],
+    ["Les plans doivent être signés par un ingénieur agréé", ["P.Eng."]],
+    ["Le soumissionnaire doit être membre de l'Ordre des ingénieurs du Québec", ["P.Eng."]],
+    ["Le gestionnaire de projet travaillera avec l'ingénieur du ministère", []],
     ["No certification named", []],
   ])("certifications in %j", (text, expected) => {
     expect(extract(text).certifications).toEqual(expected);
