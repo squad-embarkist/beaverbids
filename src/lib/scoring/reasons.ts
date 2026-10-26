@@ -42,10 +42,6 @@ function reason(code: string, params: Record<string, string | number>, text: str
   return { code, params, text };
 }
 
-function capitalize(text: string): string {
-  return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
 export function buildReasons(result: ScoreResult, tender: { title: string; description: string }): ReasonSet {
   const { category, location, size, timeline, credentials } = result.details;
   const inFavour: Reason[] = [];
@@ -132,7 +128,9 @@ export function buildReasons(result: ScoreResult, tender: { title: string; descr
     inFavour.push(reason("certificationHeld", { certification: label }, `You hold ${label}, which is required`));
   } else if (credentials.facts.certificationStatus === "missing") {
     const label = credentials.facts.requiredCertifications.map((c) => labelFor(CERTIFICATION_LABELS, c)).join(" or ");
-    ruleOut.push(reason("certificationMissing", { certification: label }, `Requires ${capitalize(label)}, which you do not list`));
+    // Labels carry their own article ("a Health Canada licence"), so the
+    // template never changes their case.
+    ruleOut.push(reason("certificationMissing", { certification: label }, `Requires ${label}, which you do not list`));
   }
   if (credentials.facts.referencesRequired) {
     const count = referenceCount(`${tender.title} ${tender.description}`);
