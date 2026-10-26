@@ -16,11 +16,55 @@ import type { ScoreResult } from "./types";
 // summary gives the list row two or three of the same reasons, so it too
 // can be rendered in either language from the stored row.
 
+// Every code a reason can carry. Adding a template below means adding its
+// code here, which is the list the next-intl messages must cover.
+export const REASON_CODES = [
+  "categoryMatch",
+  "categoryMiss",
+  "categoryUnknown",
+  "categoryCap",
+  "buyerMatch",
+  "buyerMiss",
+  "regionMismatch",
+  "setAside",
+  "languageMismatch",
+  "bilingualRequired",
+  "bondRequired",
+  "clearanceRequired",
+  "residencyRequired",
+  "valueInRange",
+  "valueAbove",
+  "valueBelow",
+  "valueUnknown",
+  "timelineOk",
+  "timelineTight",
+  "afterHoursCapacity",
+  "certificationHeld",
+  "certificationMissing",
+  "referencesRequested",
+] as const;
+
+export type ReasonCode = (typeof REASON_CODES)[number];
+export type ReasonParams = Record<string, string | number>;
+
+// `text` is the English fallback only. The screens render a reason from
+// the next-intl message keyed by `code`, with `params`, and use the stored
+// text only when no message exists for the code (see renderReason). A
+// wording change therefore never needs a rescore.
 export type Reason = {
-  code: string;
-  params: Record<string, string | number>;
+  code: ReasonCode;
+  params: ReasonParams;
   text: string;
 };
+
+export type ReasonMessages = Partial<Record<ReasonCode, (params: ReasonParams) => string>>;
+
+// The one rule for showing a reason: a message for the code wins, the
+// stored English text is the fallback. M3 wires next-intl into `messages`.
+export function renderReason(reason: Reason, messages: ReasonMessages): string {
+  const message = messages[reason.code];
+  return message ? message(reason.params) : reason.text;
+}
 
 export type ReasonSet = {
   inFavour: Reason[];
@@ -40,7 +84,7 @@ export function referenceCount(text: string): number | null {
   return COUNT_WORDS[match[1]] ?? Number.parseInt(match[1], 10);
 }
 
-function reason(code: string, params: Record<string, string | number>, text: string): Reason {
+function reason(code: ReasonCode, params: ReasonParams, text: string): Reason {
   return { code, params, text };
 }
 
