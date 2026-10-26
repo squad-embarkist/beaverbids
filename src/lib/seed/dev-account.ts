@@ -34,6 +34,3 @@ export async function seedDevAccount(db: PrismaClient): Promise<{ userId: string
 
   return { userId: user.id, profileId: profile.id };
 }
-
-// Re-exported so existing imports keep working.
-export { SAMPLE_PROFILE } from "./sample-profile";
