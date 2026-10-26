@@ -41,12 +41,15 @@ describe("buildReasons on the sample pair", () => {
     ]);
   });
 
-  it("writes a three line summary", () => {
-    expect(reasons.summary).toEqual([
+  it("writes a three line summary of reason objects, so the list row can be rendered in French too", () => {
+    expect(codes(reasons.summary)).toEqual(["categoryMatch", "bondRequired", "buyerMatch"]);
+    expect(reasons.summary.map((r) => r.text)).toEqual([
       "Matches your category: IT managed services and cloud",
       "A bond is required and your answers say no bonding",
       "Municipal buyers are on your list",
     ]);
+    expect(reasons.summary[0]).toBe(reasons.inFavour[0]);
+    for (const line of reasons.summary) expect(line).toEqual({ code: expect.any(String), params: expect.any(Object), text: expect.any(String) });
   });
 });
 
@@ -126,7 +129,7 @@ describe("category cap reason", () => {
       params: { limit: 49 },
       text: "No category match, so this tender is capped at Low",
     });
-    expect(reasons.summary[1]).toBe("No category match, so this tender is capped at Low");
+    expect(reasons.summary[1]).toEqual(reasons.gaps[0]);
   });
 
   it("is absent from an uncapped result", () => {
@@ -150,16 +153,22 @@ describe("referenceCount", () => {
 
 describe("summarize", () => {
   const r = (code: string): Reason => ({ code, params: {}, text: code });
+  const summaryCodes = (...args: Parameters<typeof summarize>) => codes(summarize(...args));
 
   it("takes favour, concern, favour", () => {
-    expect(summarize([r("f1"), r("f2"), r("f3")], [r("g1")], [r("r1")])).toEqual(["f1", "r1", "f2"]);
+    expect(summaryCodes([r("f1"), r("f2"), r("f3")], [r("g1")], [r("r1")])).toEqual(["f1", "r1", "f2"]);
   });
 
   it("prefers a blocker over a gap", () => {
-    expect(summarize([r("f1")], [r("g1")], [r("r1")])).toEqual(["f1", "r1"]);
+    expect(summaryCodes([r("f1")], [r("g1")], [r("r1")])).toEqual(["f1", "r1"]);
   });
 
   it("falls back to gaps when nothing is in favour", () => {
-    expect(summarize([], [r("g1"), r("g2"), r("g3")], [])).toEqual(["g1", "g2", "g3"]);
+    expect(summaryCodes([], [r("g1"), r("g2"), r("g3")], [])).toEqual(["g1", "g2", "g3"]);
+  });
+
+  it("returns the same objects as the lists, not copies", () => {
+    const favour = r("f1");
+    expect(summarize([favour], [], [])[0]).toBe(favour);
   });
 });

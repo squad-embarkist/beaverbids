@@ -13,7 +13,8 @@ import type { ScoreResult } from "./types";
 // Each reason keeps its code and params beside the English text so the UI
 // can render French later without rescoring. Three lists match the listing
 // detail ("in your favour", "gaps to close", "could rule you out") and the
-// summary gives the list row two or three short lines.
+// summary gives the list row two or three of the same reasons, so it too
+// can be rendered in either language from the stored row.
 
 export type Reason = {
   code: string;
@@ -25,7 +26,7 @@ export type ReasonSet = {
   inFavour: Reason[];
   gaps: Reason[];
   ruleOut: Reason[];
-  summary: string[];
+  summary: Reason[];
 };
 
 const REFERENCE_COUNT = /\b(one|two|three|four|five|six|\d+) (?:client |customer |project )?references?\b/;
@@ -152,16 +153,16 @@ export function buildReasons(result: ScoreResult, tender: { title: string; descr
 
 // Two or three lines for the list row: the top point in favour, then the
 // top blocker or gap, then a second point in favour when there is one.
-export function summarize(inFavour: Reason[], gaps: Reason[], ruleOut: Reason[]): string[] {
-  const lines: string[] = [];
+export function summarize(inFavour: Reason[], gaps: Reason[], ruleOut: Reason[]): Reason[] {
+  const lines: Reason[] = [];
   const concern = ruleOut[0] ?? gaps[0];
-  if (inFavour[0]) lines.push(inFavour[0].text);
-  if (concern) lines.push(concern.text);
-  if (inFavour[1]) lines.push(inFavour[1].text);
+  if (inFavour[0]) lines.push(inFavour[0]);
+  if (concern) lines.push(concern);
+  if (inFavour[1]) lines.push(inFavour[1]);
   if (lines.length < 2) {
     for (const extra of [...ruleOut.slice(1), ...gaps.slice(ruleOut[0] ? 0 : 1)]) {
       if (lines.length >= 3) break;
-      lines.push(extra.text);
+      lines.push(extra);
     }
   }
   return lines.slice(0, 3);
