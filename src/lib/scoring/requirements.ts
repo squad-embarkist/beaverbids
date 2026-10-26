@@ -38,7 +38,9 @@ const CERTIFICATION_PATTERNS: [CertificationCode, RegExp][] = [
   ["SOC 2", /\bsoc\s?2\b/],
   ["ISO 27001", /\biso\s?27001\b/],
   ["ISO 9001", /\biso\s?9001\b/],
-  ["P.Eng.", /\b(professional engineering licen[cs]e|p\.?\s?eng\b|licensed professional engineer|ingenieur)/],
+  // French: the licence, not the word for an engineer, which any notice
+  // about a department engineer would carry.
+  ["P.Eng.", /\b(professional engineering licen[cs]e|p\.?\s?eng\b|licensed professional engineer|ingenieure?s? (?:agree|professionnel)|ordre des ingenieurs|membre de l'oiq)/],
   ["Health Canada licence", /\bhealth canada licen[cs]e/],
 ];
 
