@@ -1,11 +1,9 @@
 import * as Sentry from "@sentry/node";
 import { PgBoss } from "pg-boss";
+import { prisma } from "@/lib/db";
 import { log } from "@/lib/log";
-
-// Queue names live here so the web app and the worker agree on them.
-export const QUEUES = {
-  heartbeat: "heartbeat",
-} as const;
+import { QUEUES } from "@/lib/queues";
+import { registerScoringJobs } from "./jobs/scoring";
 
 const HEARTBEAT_CRON = "* * * * *";
 
@@ -35,10 +33,18 @@ export async function main() {
   // One beat right away so a fresh deploy shows life before the first cron tick.
   await boss.send(QUEUES.heartbeat, { reason: "startup" });
 
+  // Outside production a fresh database gets scores within seconds of the
+  // worker starting; production waits for the schedule (M4: the import).
+  await registerScoringJobs(boss, prisma, {
+    schedule: true,
+    startupRun: process.env.NODE_ENV !== "production",
+  });
+
   const shutdown = async (signal: string) => {
     log.info("worker stopping", { signal });
     try {
       await boss.stop({ graceful: true, timeout: 10_000 });
+      await prisma.$disconnect();
       await Sentry.flush(2_000);
     } finally {
       process.exit(0);

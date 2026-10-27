@@ -2,7 +2,7 @@
 // Runs in CI against the Postgres service after `prisma migrate deploy`,
 // and locally against `docker compose up -d`. Skipped when DATABASE_URL is unset.
 import "dotenv/config";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/generated/prisma/client";
 import { listOpportunities } from "@/lib/opportunities";
@@ -15,16 +15,14 @@ describe.skipIf(!databaseUrl)("seedFixtures against PostgreSQL", () => {
   const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: databaseUrl }) });
   const now = new Date();
 
-  beforeAll(async () => {
-    // Clean slate for the fixtures source only; other data is left alone.
-    await prisma.source.deleteMany({ where: { code: FIXTURE_SOURCE.code } });
-  });
-
+  // Nothing is deleted: the fixtures source row is shared with the dev
+  // account's scores, and deleting it would cascade to them. The seed is an
+  // upsert, so the assertions hold on a fresh database and on a reused one.
   afterAll(async () => {
     await prisma.$disconnect();
   });
 
-  it("loads every fixture tender on a clean database and is safe to rerun", async () => {
+  it("loads every fixture tender and is safe to rerun", async () => {
     const expected = fixtureTenderInputs(now).length;
 
     const first = await seedFixtures(prisma, { now });
