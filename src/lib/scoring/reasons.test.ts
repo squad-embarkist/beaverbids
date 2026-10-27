@@ -97,6 +97,14 @@ describe("buildReasons templates", () => {
     expect(reasons.gaps.map((r) => r.text)).toContain("Bilingual delivery is required");
   });
 
+  it("calls a close under the lead time tight even when rounding gives full points", () => {
+    const reasons = reasonsFor(tender({ closesAt: daysFromNow(19) }), profile({ timelinePref: 20 }));
+    expect(reasons.inFavour.map((r) => r.code)).not.toContain("timelineOk");
+    expect(reasons.gaps).toContainEqual({ code: "timelineTight", params: { days: 19, lead: 20 }, text: "Closes in 19 days, under your 20 day lead time" });
+    const exact = reasonsFor(tender({ closesAt: daysFromNow(20) }), profile({ timelinePref: 20 }));
+    expect(exact.inFavour.map((r) => r.code)).toContain("timelineOk");
+  });
+
   it("asks for references without a count when the text gives none", () => {
     const reasons = reasonsFor(tender({ description: "References required." }));
     expect(reasons.gaps.map((r) => r.text)).toContain("References are requested");

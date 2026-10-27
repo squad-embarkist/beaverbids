@@ -153,9 +153,11 @@ export function buildReasons(result: ScoreResult, tender: { title: string; descr
   }
 
   // ---- timeline and capacity ---------------------------------------------
+  // Compares days, not points: 19 days against a 20-day lead time rounds to
+  // full points but is still under the lead time.
   const { daysLeft, leadDays } = timeline.facts;
   if (leadDays != null && leadDays > 0) {
-    if (timeline.facts.timePoints === TIMELINE_SPLIT.time) {
+    if (daysLeft >= leadDays) {
       inFavour.push(reason("timelineOk", { days: daysLeft }, `Closes in ${daysLeft} days, inside your lead time`));
     } else {
       gaps.push(
