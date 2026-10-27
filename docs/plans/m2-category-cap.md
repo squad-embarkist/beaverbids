@@ -220,6 +220,27 @@ No backfill is needed: the next score-all rewrites every row.
 | score-all and score-profile overlap | Both jobs upsert the same (tenderId, profileId) rows in transactions. A profile job running during the nightly score-all can deadlock on the unique index, which Postgres resolves by aborting one transaction; pg-boss then retries it | Order the rows in every batch by tenderId then profileId so both jobs take locks in the same order, or have score-profile defer while a score-all job is active. Decide in M4 when the import chains score-all |
 | Duplicated day arithmetic | `DAY_MS` and the day offset helper live in `src/lib/seed/fixtures.ts`, `factors/timeline.ts`, `test-helpers.ts` and `golden.ts` | One `src/lib/dates.ts` with `DAY_MS`, `daysFrom` and `daysUntil`; a chore commit at any time, no behaviour change |
 
+### Decisions taken (Oct 27, 2026, third code review)
+
+1. The integration tests upsert the fixtures and never delete the fixtures source row, which cascaded to every fixture tender and score.
+2. The timeline reason compares days, not rounded points.
+3. docs/development-guide.md carries one category cap paragraph.
+4. Four extractor over-matches fixed with tests: "reserved for" needs a procurement subject in the clause, bilingual needs a requirement verb or a service noun, "24 hour" counts only as coverage, ISO/IEC 27001 is recognized.
+5. Reason params store codes, not English labels; the UI labels them in the viewer's language. `certificationMissing` carries the list of codes.
+6. The cap rule for coded tenders does not change. The finding (a tender carrying any code the profile does not list can never clear the cap on keywords alone, while the same text with no code can) is answered by the M4 acceptance check below, not by a rules change now.
+7. M2 review rounds stop here. Any remaining finding goes to this plan as a follow-up unless it is data loss, wrong gating or High severity.
+
+### M4 acceptance check: coded tenders and the cap (added Oct 27, 2026)
+
+Before the M4 import is called done, with the adapter and the real file:
+
+1. Score the full CanadaBuys open file (the Oct 24 profile: 897 notices) for the sample IT profile.
+2. Review every notice whose UNSPSC starts with 43 or 81 (99 in that file) and list any good match that the cap wrongly holds at Low. The expected cause is a code the profile does not list on a notice whose text matches well.
+3. Sample the capped notices across the rest of the file and confirm they are work the sample company does not do.
+4. Map profile categories to UNSPSC by code prefix (segment or family, the first two or four digits), not by exact code, in the adapter's normalization table, so a coarse or sibling code still earns code points. Rerun steps 1 to 3 after the mapping.
+
+The check passes when no 43 or 81 notice that reads as managed IT, cybersecurity or custom software is capped, and the sampled capped notices are all outside the profile's categories. A failure reopens the cap rule for coded tenders (letting keyword points count fully when no code matches is the candidate change, with a golden recheck), not before.
+
 ### Decision needed before code (resolved above, kept for the record)
 
 1. Threshold: A (= 0, as decided, does not fix the recreation centre), B (under 10, recommended) or C (no category code matched).
