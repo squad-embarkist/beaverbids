@@ -14,6 +14,7 @@ describe("normalizeText", () => {
 describe("extractRequirements", () => {
   it.each([
     ["SOC 2 Type II or ISO 27001", ["SOC 2", "ISO 27001"]],
+    ["certified to ISO/IEC 27001:2022", ["ISO 27001"]],
     ["ISO 9001 quality system", ["ISO 9001"]],
     ["Professional engineering licence in Ontario required", ["P.Eng."]],
     ["Health Canada licences required", ["Health Canada licence"]],
@@ -60,7 +61,11 @@ describe("extractRequirements", () => {
     ["a 24/7 network operations centre", true],
     ["Business hours coverage with an after-hours on-call option", true],
     ["365 days a year", true],
+    ["24-hour emergency delivery to 90 sites", true],
+    ["24 hour support line", true],
     ["Monthly reporting", false],
+    ["Bidders must give 24-hour notice before site visits", false],
+    ["Questions received within 24 hours of the closing date will not be answered", false],
   ])("afterHours for %j is %s", (text, expected) => {
     expect(extract(text).afterHours).toBe(expected);
   });
@@ -85,8 +90,14 @@ describe("extractRequirements", () => {
   it.each([
     ["Bilingual service required", true],
     ["User support must be offered in English and French", true],
+    ["Deliverables will be submitted in both official languages", true],
+    ["Training in English and French for 300 staff", true],
     ["application mobile bilingue", true],
+    ["Les rapports doivent être fournis en anglais et en français", true],
     ["English only", false],
+    ["This notice is available in English and French", false],
+    ["Cet avis est disponible en anglais et en français", false],
+    ["Documents are available in both official languages on request", false],
   ])("bilingualRequired for %j is %s", (text, expected) => {
     expect(extract(text).bilingualRequired).toBe(expected);
   });
@@ -120,8 +131,10 @@ describe("detectSetAside", () => {
   it.each([
     ["this procurement is set aside for indigenous businesses under the procurement strategy for indigenous business.", "indigenous businesses"],
     ["set-aside under the psib.", "psib"],
-    ["reserved for the canadian aboriginal businesses listed in the directory.", "canadian aboriginal businesses listed in the directory"],
+    ["this procurement is reserved for the canadian aboriginal businesses listed in the directory.", "canadian aboriginal businesses listed in the directory"],
+    ["the opportunity is reserved for indigenous businesses under psib.", "indigenous businesses"],
     ["ce marche est reserve aux entreprises autochtones.", "entreprises autochtones"],
+    ["cette demande de propositions est reservee aux fournisseurs autochtones.", "fournisseurs autochtones"],
     ["the requirement will be subject to the set aside under the federal government procurement strategy for aboriginal business (psab).", "federal government procurement strategy for aboriginal business"],
   ])("detects %j", (text, group) => {
     expect(detectSetAside(text)).toBe(group);
@@ -136,6 +149,9 @@ describe("detectSetAside", () => {
     "time is set aside for questions at the end of the site visit.",
     "the boardroom is reserved for the evaluation committee.",
     "parking is reserved for staff; bidders must use the visitor lot.",
+    "the loading dock is reserved for contractors between 7 and 9 am.",
+    "a lane on the site is reserved for suppliers delivering under the contract.",
+    "le quai de chargement est reserve aux entrepreneurs.",
     "participation is limited to small and medium enterprises.",
     "this procurement is set aside for canadian small and medium enterprises.",
     "reserved for small businesses under the small business set aside program.",
@@ -156,7 +172,7 @@ describe("detectSetAside", () => {
 describe("certificationCodesFor", () => {
   it.each([
     ["SOC 2 Type II", ["SOC 2"]],
-    ["ISO/IEC 27001:2022", []],
+    ["ISO/IEC 27001:2022", ["ISO 27001"]],
     ["ISO 27001", ["ISO 27001"]],
     ["P.Eng. (Ontario)", ["P.Eng."]],
     ["COR safety certification", []],
