@@ -241,6 +241,22 @@ Before the M4 import is called done, with the adapter and the real file:
 
 The check passes when no 43 or 81 notice that reads as managed IT, cybersecurity or custom software is capped, and the sampled capped notices are all outside the profile's categories. A failure reopens the cap rule for coded tenders (letting keyword points count fully when no code matches is the candidate change, with a golden recheck), not before.
 
+### Follow-ups from the Oct 27 code review (recorded under the stop rule)
+
+The one wrong-gating finding was fixed in this pull request: "limited to pre-qualified suppliers" and "reserved for suppliers holding a supply arrangement" no longer count as set-asides, because a qualification status is not a kind of supplier. The rest wait, as decided.
+
+| Item | What the review found | Fix and when |
+| --- | --- | --- |
+| `score-profile` payload | The job data is not parsed; a missing `profileId` turns the job into a full rescore of every profile under a singleton key sized for one | Zod schema for both job shapes in `src/lib/queues.ts`, parsed in the handler and in `enqueueScoreProfile`. M3, when `PUT /api/profile` enqueues the job |
+| Duplicate category codes | `codePoints` is a ratio of two un-deduplicated arrays; two UNSPSC codes mapping to one category would halve the share and could push a true match under the cap | Dedupe both lists with a Set in `factors/category.ts`. M4, with the prefix mapping, since that is where duplicates arise |
+| `scoreAll` memory and repeated extraction | Already listed above (M4 follow-ups) | Unchanged |
+| Bare "on call" | "based on call volumes" counts as after-hours coverage and docks capacity points | Require a coverage noun ("on call support", "on call rotation") or keep the hyphen through normalization. Points only, M4 extractor pass |
+| Bare "bilingual" | "the notice is bilingual" counts as bilingual delivery and costs two language points | Same delivery or service context as the other bilingual branches. Points only, M4 extractor pass |
+| `createQueue` options | pg-boss `createQueue` is a no-op once the queue exists, so later changes to expiry or retries never reach a deployed database | Call `updateQueue` after `createQueue`, or create only when `getQueue` is null. M4, before the first deploy of the worker |
+| `referenceCount` context | The count regex runs over raw text and can take its number from an unrelated sentence ("Section 2 references the annex") | Run it over `normalizeText` and anchor it to the client or project context. Cosmetic, M4 extractor pass |
+| Day arithmetic | Already listed above (M4 follow-ups) | Unchanged |
+| `fixtures.int.test.ts` count | Without the clean-slate delete, a renamed fixture id would leave a stale row and fail the count on a reused database | Compare the stored externalId set to the fixture set, or delete fixture tenders not in the file while keeping the source row. Test only, with the next fixture change |
+
 ### Decision needed before code (resolved above, kept for the record)
 
 1. Threshold: A (= 0, as decided, does not fix the recreation centre), B (under 10, recommended) or C (no category code matched).
