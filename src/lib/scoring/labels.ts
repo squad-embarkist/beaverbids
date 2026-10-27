@@ -1,10 +1,10 @@
 import type { BuyerTypeCode, CategoryCode, RegionCode, TeamSizeBand } from "@/lib/schemas/vocab";
 import type { CertificationCode } from "./requirements";
 
-// English labels for the fixed reason templates. The UI gets its own
-// messages (EN and FR) through next-intl in M3; reasons keep a `code` and
-// `params` beside the text so they can be rendered in French later without
-// rescoring.
+// English labels for the fallback text of the fixed reason templates. The
+// stored params carry the codes, never these labels: the UI labels a code
+// in the viewer's language through next-intl (M3), so these tables are the
+// English fallback and the list the French messages must cover.
 
 export const CATEGORY_LABELS: Record<CategoryCode, string> = {
   "it-managed-services-cloud": "IT managed services and cloud",
