@@ -119,3 +119,5 @@ What landed, and where it differs from the plan above:
 Follow-up decided Oct 24, 2026 (docs/plans/m2-category-cap.md): a tender with fewer than 10 category points is capped at 49 and shows as Low, modelVersion rules-2. Golden pairs `sample-construction-far-above-range` and `sample-consulting-roadmap`, which this note first flagged at 58 and 66, now sit at 49.
 
 Revised Oct 26, 2026 after the code review (same plan file, "Decisions taken, Oct 26"): the cap threshold reads code plus keyword points only, the summary is stored as reason objects, and five extractor, worker and factor fixes landed as separate commits. The golden set is 24 pairs.
+
+Revised Oct 27, 2026 after the third code review (same plan file, "Decisions taken, Oct 27"): reason params store codes, not labels; the integration tests no longer delete the fixtures source; four extractor over-matches and the timeline reason are fixed. M2 review rounds stop there; remaining findings go to the plan unless they are data loss, wrong gating or High severity. The cap rule for coded tenders is checked against the full CanadaBuys file in M4 ("M4 acceptance check").
