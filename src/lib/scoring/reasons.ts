@@ -45,7 +45,10 @@ export const REASON_CODES = [
 ] as const;
 
 export type ReasonCode = (typeof REASON_CODES)[number];
-export type ReasonParams = Record<string, string | number>;
+// Params hold codes (category, buyer type, region, team size band,
+// certification), never English labels, so a French message can label them
+// itself. Only `group` (a set-aside) quotes the tender's own words.
+export type ReasonParams = Record<string, string | number | string[]>;
 
 // `text` is the English fallback only. The screens render a reason from
 // the next-intl message keyed by `code`, with `params`, and use the stored
@@ -96,29 +99,31 @@ export function buildReasons(result: ScoreResult, tender: { title: string; descr
 
   // ---- category and buyer ------------------------------------------------
   if (category.facts.matchedCodes.length > 0) {
-    const label = labelFor(CATEGORY_LABELS, category.facts.matchedCodes[0]);
-    inFavour.push(reason("categoryMatch", { category: label }, `Matches your category: ${label}`));
+    const code = category.facts.matchedCodes[0];
+    inFavour.push(reason("categoryMatch", { category: code }, `Matches your category: ${labelFor(CATEGORY_LABELS, code)}`));
   } else if (category.facts.tenderCodes.length > 0) {
-    const label = labelFor(CATEGORY_LABELS, category.facts.tenderCodes[0]);
-    gaps.push(reason("categoryMiss", { category: label }, `Outside your categories: ${label}`));
+    const code = category.facts.tenderCodes[0];
+    gaps.push(reason("categoryMiss", { category: code }, `Outside your categories: ${labelFor(CATEGORY_LABELS, code)}`));
   } else {
     gaps.push(reason("categoryUnknown", {}, "The notice names no category, so the match rests on keywords"));
   }
 
   if (category.facts.buyerType) {
-    const label = labelFor(BUYER_TYPE_LABELS, category.facts.buyerType);
+    const code = category.facts.buyerType;
+    const label = labelFor(BUYER_TYPE_LABELS, code);
     if (category.facts.buyerMatch === "match") {
-      inFavour.push(reason("buyerMatch", { buyerType: label }, `${label} buyers are on your list`));
+      inFavour.push(reason("buyerMatch", { buyerType: code }, `${label} buyers are on your list`));
     } else if (category.facts.buyerMatch === "miss") {
-      gaps.push(reason("buyerMiss", { buyerType: label }, `${label} buyers are not on your list`));
+      gaps.push(reason("buyerMiss", { buyerType: code }, `${label} buyers are not on your list`));
     }
   }
 
   // ---- gate and location -------------------------------------------------
   for (const blocker of result.gate.blockers) {
     if (blocker.code === "regionMismatch") {
-      const label = labelFor(REGION_LABELS, blocker.region);
-      ruleOut.push(reason("regionMismatch", { region: label }, `Outside the provinces you work in: ${label}`));
+      ruleOut.push(
+        reason("regionMismatch", { region: blocker.region }, `Outside the provinces you work in: ${labelFor(REGION_LABELS, blocker.region)}`),
+      );
     } else {
       ruleOut.push(reason("setAside", { group: blocker.group }, `Set aside for ${blocker.group}`));
     }
@@ -166,19 +171,21 @@ export function buildReasons(result: ScoreResult, tender: { title: string; descr
     }
   }
   if (timeline.facts.afterHours && timeline.facts.capacity && timeline.facts.capacityPoints < TIMELINE_SPLIT.capacity) {
-    const band = labelFor(TEAM_SIZE_LABELS, timeline.facts.capacity);
-    gaps.push(reason("afterHoursCapacity", { band }, `24/7 coverage goes beyond a team of ${band}`));
+    const band = timeline.facts.capacity;
+    gaps.push(reason("afterHoursCapacity", { band }, `24/7 coverage goes beyond a team of ${labelFor(TEAM_SIZE_LABELS, band)}`));
   }
 
   // ---- credentials -------------------------------------------------------
   if (credentials.facts.certificationStatus === "held") {
-    const label = labelFor(CERTIFICATION_LABELS, credentials.facts.heldCertifications[0]);
-    inFavour.push(reason("certificationHeld", { certification: label }, `You hold ${label}, which is required`));
+    const code = credentials.facts.heldCertifications[0];
+    inFavour.push(reason("certificationHeld", { certification: code }, `You hold ${labelFor(CERTIFICATION_LABELS, code)}, which is required`));
   } else if (credentials.facts.certificationStatus === "missing") {
-    const label = credentials.facts.requiredCertifications.map((c) => labelFor(CERTIFICATION_LABELS, c)).join(" or ");
+    const codes = credentials.facts.requiredCertifications;
     // Labels carry their own article ("a Health Canada licence"), so the
-    // template never changes their case.
-    ruleOut.push(reason("certificationMissing", { certification: label }, `Requires ${label}, which you do not list`));
+    // template never changes their case. The message gets the list of codes
+    // and joins them in its own language.
+    const label = codes.map((c) => labelFor(CERTIFICATION_LABELS, c)).join(" or ");
+    ruleOut.push(reason("certificationMissing", { certifications: codes }, `Requires ${label}, which you do not list`));
   }
   if (credentials.facts.referencesRequired) {
     const count = referenceCount(`${tender.title} ${tender.description}`);

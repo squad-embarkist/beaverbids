@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { loadGoldenCases } from "./golden";
-import { REASON_CODES, buildReasons, referenceCount, renderReason, summarize, type Reason, type ReasonCode } from "./reasons";
+import { BUYER_TYPE_LABELS, CATEGORY_LABELS, CERTIFICATION_LABELS, REGION_LABELS, TEAM_SIZE_LABELS } from "./labels";
+import { REASON_CODES, buildReasons, referenceCount, renderReason, summarize, type Reason, type ReasonCode, type ReasonParams } from "./reasons";
 import { scoreTender } from "./score";
 import { NOW, daysFromNow, profile, tender } from "./test-helpers";
 
@@ -19,10 +20,10 @@ describe("buildReasons on the sample pair", () => {
   it("puts the category and buyer first in your favour", () => {
     expect(reasons.inFavour[0]).toEqual({
       code: "categoryMatch",
-      params: { category: "IT managed services and cloud" },
+      params: { category: "it-managed-services-cloud" },
       text: "Matches your category: IT managed services and cloud",
     });
-    expect(reasons.inFavour[1].text).toBe("Municipal buyers are on your list");
+    expect(reasons.inFavour[1]).toEqual({ code: "buyerMatch", params: { buyerType: "municipal" }, text: "Municipal buyers are on your list" });
     expect(codes(reasons.inFavour)).toEqual(["categoryMatch", "buyerMatch", "valueInRange", "certificationHeld"]);
   });
 
@@ -56,7 +57,7 @@ describe("buildReasons on the sample pair", () => {
 describe("buildReasons templates", () => {
   it("names the province that rules a tender out", () => {
     const reasons = reasonsFor(tender({ region: "QC" }));
-    expect(reasons.ruleOut[0]).toEqual({ code: "regionMismatch", params: { region: "Quebec" }, text: "Outside the provinces you work in: Quebec" });
+    expect(reasons.ruleOut[0]).toEqual({ code: "regionMismatch", params: { region: "QC" }, text: "Outside the provinces you work in: Quebec" });
   });
 
   it("names the set-aside group", () => {
@@ -72,7 +73,11 @@ describe("buildReasons templates", () => {
 
   it("flags a missing certification with the alternatives", () => {
     const reasons = reasonsFor(tender({ description: "ISO 27001 or SOC 2 required." }));
-    expect(reasons.ruleOut[0].text).toBe("Requires SOC 2 or ISO 27001, which you do not list");
+    expect(reasons.ruleOut[0]).toEqual({
+      code: "certificationMissing",
+      params: { certifications: ["SOC 2", "ISO 27001"] },
+      text: "Requires SOC 2 or ISO 27001, which you do not list",
+    });
     const licence = reasonsFor(tender({ description: "Drawings must be sealed by a licensed professional engineer." }));
     expect(licence.ruleOut[0].text).toBe("Requires a professional engineering licence, which you do not list");
   });
@@ -108,6 +113,33 @@ describe("buildReasons templates", () => {
   it("asks for references without a count when the text gives none", () => {
     const reasons = reasonsFor(tender({ description: "References required." }));
     expect(reasons.gaps.map((r) => r.text)).toContain("References are requested");
+  });
+
+  it("stores codes in params and labels only in the English text", () => {
+    const reasons = reasonsFor(tender({ description: "SOC 2 required. 24/7 support." }), profile({ capacity: "6-10", certifications: ["SOC 2 Type II"] }));
+    expect(reasons.inFavour).toContainEqual({ code: "certificationHeld", params: { certification: "SOC 2" }, text: "You hold SOC 2, which is required" });
+    expect(reasons.gaps).toContainEqual({ code: "afterHoursCapacity", params: { band: "6-10" }, text: "24/7 coverage goes beyond a team of 6 to 10" });
+    const miss = reasonsFor(tender({ categoryCodes: ["commercial-construction"], buyerType: "federal" }));
+    expect(miss.gaps).toContainEqual({ code: "categoryMiss", params: { category: "commercial-construction" }, text: "Outside your categories: Commercial construction" });
+    expect(miss.gaps).toContainEqual({ code: "buyerMiss", params: { buyerType: "federal" }, text: "Federal buyers are not on your list" });
+  });
+
+  it("never stores an English label in params across the golden set", () => {
+    // "SOC 2" is its own label, so only labels that differ from their code count.
+    const labels = new Set(
+      [CATEGORY_LABELS, BUYER_TYPE_LABELS, REGION_LABELS, TEAM_SIZE_LABELS, CERTIFICATION_LABELS]
+        .flatMap((table) => Object.entries(table))
+        .filter(([code, label]) => code !== label)
+        .map(([, label]) => label),
+    );
+    for (const c of loadGoldenCases()) {
+      const reasons = buildReasons(scoreTender(c.tender, c.profile, c.now), c.tender);
+      for (const r of [...reasons.inFavour, ...reasons.gaps, ...reasons.ruleOut]) {
+        for (const value of Object.values(r.params)) {
+          for (const v of Array.isArray(value) ? value : [value]) expect(labels.has(String(v)), `${c.pair.id} ${r.code} ${v}`).toBe(false);
+        }
+      }
+    }
   });
 
   it("always has two or three summary lines across the golden set", () => {
@@ -164,7 +196,7 @@ describe("renderReason: the stored text is a fallback, never an override", () =>
   const stored: Reason = { code: "timelineTight", params: { days: 9, lead: 10 }, text: "Closes in 9 days, under your 10 day lead time" };
 
   it("renders from the message for the code when one exists", () => {
-    const messages = { timelineTight: ({ days, lead }: Record<string, string | number>) => `Ferme dans ${days} jours, sous votre délai de ${lead} jours` };
+    const messages = { timelineTight: ({ days, lead }: ReasonParams) => `Ferme dans ${days} jours, sous votre délai de ${lead} jours` };
     expect(renderReason(stored, messages)).toBe("Ferme dans 9 jours, sous votre délai de 10 jours");
   });
 
