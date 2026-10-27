@@ -105,11 +105,22 @@ const SET_ASIDE_GROUP =
 // docs/plans/m2-category-cap.md.
 const SMALL_BUSINESS_GROUP = /\b(?:small (?:and|or|to) medium|small business(?:es)?|smes?|pmes?|petites? (?:et|ou) moyennes?)\b/;
 
+// "Limited to pre-qualified suppliers holding a standing offer" is a
+// qualification status, not a kind of supplier: any firm can qualify. Such
+// a group is not a set-aside unless it also names an identity group
+// ("registered Indigenous businesses").
+const QUALIFICATION_GROUP =
+  /\b(?:pre ?qualified|qualified|registered|eligible|approved|authori[sz]ed|licen[cs]ed|certified|existing|current|incumbent|selected|invited|shortlisted|holders?|holding|standing offers?|supply arrangements?|prequalifies|titulaires?|detenteurs?|offres? a commandes?|arrangements? en matiere d'approvisionnement)\b/;
+const IDENTITY_GROUP =
+  /\b(?:indigenous|aboriginal|autochtones?|first nations?|premieres? nations?|inuit|metis|psib|psab|women|femmes|minorit(?:y|ies|es?)|veterans?|black|noirs?|disabilit(?:y|ies)|handicap)\b/;
+
 export function detectSetAside(text: string): string | null {
   for (const pattern of SET_ASIDE_PATTERNS) {
     for (const match of text.matchAll(pattern)) {
       const group = match[1].trim();
-      if (SET_ASIDE_GROUP.test(group) && !SMALL_BUSINESS_GROUP.test(group)) return group;
+      if (!SET_ASIDE_GROUP.test(group) || SMALL_BUSINESS_GROUP.test(group)) continue;
+      if (QUALIFICATION_GROUP.test(group) && !IDENTITY_GROUP.test(group)) continue;
+      return group;
     }
   }
   return null;

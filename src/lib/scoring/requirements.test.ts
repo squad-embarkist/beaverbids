@@ -135,6 +135,7 @@ describe("detectSetAside", () => {
     ["the opportunity is reserved for indigenous businesses under psib.", "indigenous businesses"],
     ["ce marche est reserve aux entreprises autochtones.", "entreprises autochtones"],
     ["cette demande de propositions est reservee aux fournisseurs autochtones.", "fournisseurs autochtones"],
+    ["this contract is set aside for registered indigenous businesses.", "registered indigenous businesses"],
     ["the requirement will be subject to the set aside under the federal government procurement strategy for aboriginal business (psab).", "federal government procurement strategy for aboriginal business"],
   ])("detects %j", (text, group) => {
     expect(detectSetAside(text)).toBe(group);
@@ -152,6 +153,10 @@ describe("detectSetAside", () => {
     "the loading dock is reserved for contractors between 7 and 9 am.",
     "a lane on the site is reserved for suppliers delivering under the contract.",
     "le quai de chargement est reserve aux entrepreneurs.",
+    "participation is limited to pre qualified suppliers holding a standing offer.",
+    "bidding is limited to qualified bidders.",
+    "this requirement is reserved for suppliers holding a tbips supply arrangement.",
+    "ce marche est reserve aux fournisseurs titulaires d'une offre a commandes.",
     "participation is limited to small and medium enterprises.",
     "this procurement is set aside for canadian small and medium enterprises.",
     "reserved for small businesses under the small business set aside program.",
