@@ -36,7 +36,8 @@ export function normalizeText(text: string): string {
 
 const CERTIFICATION_PATTERNS: [CertificationCode, RegExp][] = [
   ["SOC 2", /\bsoc\s?2\b/],
-  ["ISO 27001", /\biso\s?27001\b/],
+  // "ISO/IEC 27001:2022" is the standard's full name.
+  ["ISO 27001", /\biso(?:\s?\/\s?iec)?\s?27001\b/],
   ["ISO 9001", /\biso\s?9001\b/],
   // French: the licence, not the word for an engineer, which any notice
   // about a department engineer would carry.
@@ -54,14 +55,20 @@ export function certificationCodesFor(certification: string): CertificationCode[
 const BOND = /\b(bid bond|performance bond|performance and labour|bonds? (are |is )?required|bonding|garantie de soumission|cautionnement)\b/;
 const CLEARANCE = /\b(security clearance|reliability (status|clearance|screening)|reliability level|secret clearance|top secret|enhanced reliability|habilitation de securite)\b/;
 const RESIDENCY = /\b(data (must|shall|will) (stay|remain|reside) in canada|data residency|canadian cloud region|hosted in canada|storage in canada|stored in canada|data sovereignty)\b/;
-const AFTER_HOURS = /\b(24\s?\/\s?7|24 hours a day|24-hour|24 hour|after-hours|after hours|on-call|on call|365 days)\b/;
+// "24 hour" only as coverage, never as "24-hour notice before site visits".
+const AFTER_HOURS =
+  /\b(24\s?\/\s?7|24 hours? (?:a day|per day|a day,? 7 days|coverage|support|service|operations?|monitoring|availability|help ?desk|hotline|emergency|response (?:line|centre|center|team))|after hours|on call|365 days)\b/;
 // References as in past clients, never "Terms of Reference", a reference
 // number or "for reference". The plural is taken as client references
 // unless the words around it say otherwise; the singular needs a client or
 // project word beside it.
 const REFERENCES =
   /\b(?:(?<!terms of |cross |by |with |in |for )references(?! numbers?\b| nos?\b| to\b| are made\b)|(?:client|customer|project|contract|past|previous|professional) references?|references? (?:projects?|letters?|checks?|contacts?|sites?)|provide (?:a |one )?reference|prior (?:\w+ )?(?:deployments|experience)|comparable size|similar size)\b/;
-const BILINGUAL = /\b(bilingual|bilingue|in english and french|en anglais et en francais|english and french)\b/;
+// Bilingual delivery, not the "This notice is available in English and
+// French" line that most federal notices carry. The phrase has to sit on a
+// requirement verb or on a service noun.
+const BILINGUAL =
+  /\b(bilingual|bilingue|(?:must|shall|will|to|required to) be (?:provided|delivered|available|offered|supported|performed|conducted|supplied|submitted)(?: \w+){0,3} in (?:both )?(?:official languages|english and french|french and english)|(?:services?|support|deliverables?|documentation|training|staff|personnel) in (?:both )?(?:official languages|english and french|french and english)|(?:doivent|devront|devra|doit) etre (?:fournis?|offerts?|livres?|disponibles?|soumis(?:es)?)(?: \w+){0,3} (?:en anglais et en francais|en francais et en anglais|dans les deux langues officielles))\b/;
 
 // Set-asides only when the text reserves the work for a kind of supplier.
 // "Indigenous-owned proponents are encouraged" is not a set-aside, and
@@ -73,12 +80,20 @@ const BILINGUAL = /\b(bilingual|bilingue|in english and french|en anglais et en 
 // A conditional set-aside ("tenders may be set aside for Indigenous
 // businesses") still counts. Softening that, and letting a profile claim
 // Indigenous business status, is a follow-up in docs/plans/m2-category-cap.md.
+//
+// "Reserved for" is everyday English ("the loading dock is reserved for
+// contractors"), so it only counts when the clause says what is reserved:
+// the procurement, contract, requirement or opportunity. "Set aside" is
+// procurement vocabulary and needs no subject.
+const PROCUREMENT_SUBJECT =
+  "(?:procurements?|solicitations?|requirements?|contracts?|tenders?|bids?|opportunit(?:y|ies)|competitions?|notices?|rfps?|rfqs?|work|request for (?:proposals?|quotations?|standing offers?|supply arrangements?))";
+const PROCUREMENT_SUBJECT_FR = "(?:marches?|appels? d'offres|contrats?|approvisionnements?|demandes? de propositions|besoins?|exigences?|concours|travaux)";
 const SET_ASIDE_PATTERNS = [
   // "set aside from the trade agreements" is an exemption, not a group.
   /\bset[- ]aside (?!from\b)(?:for |under )?(?:the )?([a-z][a-z -]{2,80}?)(?= under | pursuant | in accordance |[.,;:(]|$)/g,
-  /\breserved for (?:the )?([a-z][a-z -]{2,80}?)(?= under | pursuant |[.,;:(]|$)/g,
+  new RegExp(`\\b${PROCUREMENT_SUBJECT}\\b[^.;:]{0,40}?\\breserved for (?:the )?([a-z][a-z -]{2,80}?)(?= under | pursuant |[.,;:(]|$)`, "g"),
   /\blimited to ([a-z][a-z -]{2,60}?(?:businesses|suppliers|firms|vendors|enterprises|bidders))\b/g,
-  /\b(?:reserve|reservee?) (?:aux|a la|a des) ([a-z][a-z -]{2,80}?)(?=[.,;:(]|$)/g,
+  new RegExp(`\\b${PROCUREMENT_SUBJECT_FR}\\b[^.;:]{0,40}?\\b(?:reserve|reservee?s?) (?:aux|a la|a des) ([a-z][a-z -]{2,80}?)(?=[.,;:(]|$)`, "g"),
 ];
 
 const SET_ASIDE_GROUP =
