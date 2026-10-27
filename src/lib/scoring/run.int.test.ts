@@ -7,7 +7,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/generated/prisma/client";
 import { listOpportunities } from "@/lib/opportunities";
 import { opportunitiesQuerySchema } from "@/lib/schemas/opportunities";
-import { FIXTURE_SOURCE, SAMPLE_TENDER_EXTERNAL_ID, seedFixtures } from "@/lib/seed/fixtures";
+import { SAMPLE_TENDER_EXTERNAL_ID, seedFixtures } from "@/lib/seed/fixtures";
 import { SAMPLE_PROFILE } from "@/lib/seed/sample-profile";
 import { MODEL_VERSION } from "./score";
 import { scoreAll } from "./run";
@@ -21,7 +21,9 @@ describe.skipIf(!databaseUrl)("scoreAll against PostgreSQL", () => {
   let profileId = "";
 
   beforeAll(async () => {
-    await prisma.source.deleteMany({ where: { code: FIXTURE_SOURCE.code } });
+    // Upsert the fixtures in place. Deleting the fixtures source row would
+    // cascade to every fixture tender and every score on them, including the
+    // dev account's, on each local `npm test`.
     await prisma.user.deleteMany({ where: { email: TEST_EMAIL } });
     await seedFixtures(prisma, { now });
     // A bare user row (no Better Auth) carrying the sample profile.
@@ -31,12 +33,14 @@ describe.skipIf(!databaseUrl)("scoreAll against PostgreSQL", () => {
   });
 
   afterAll(async () => {
+    // The test user cascades to its profile and that profile's scores only.
     await prisma.user.deleteMany({ where: { email: TEST_EMAIL } });
     await prisma.$disconnect();
   });
 
   it("writes one score per open tender for the profile, and reruns without duplicates", async () => {
     const openTenders = await prisma.tender.count({ where: { closesAt: { gt: now } } });
+    expect(openTenders).toBeGreaterThan(0);
 
     const first = await scoreAll(prisma, { profileId, now });
     expect(first).toMatchObject({ profiles: 1, tenders: openTenders, scored: openTenders, modelVersion: MODEL_VERSION });
