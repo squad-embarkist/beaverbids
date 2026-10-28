@@ -1,5 +1,5 @@
 {
-  "_fixture": "GOLDEN SCORING SET. Fictional profiles scored against the fictional tenders in fixtures/tenders.json, resolved against the fixed `now` below. Expected bands were written from the rules in docs/plans/m2-plan.md before the engine ran, then updated for the category cap in docs/plans/m2-category-cap.md (rules-2: under 10 category points caps the total at 49). `expectedCapped` says whether the cap rule applies to a pair. A change that moves a pair across a band needs a note in the pull request.",
+  "_fixture": "GOLDEN SCORING SET. Fictional profiles scored against the fictional tenders in fixtures/tenders.json, resolved against the fixed `now` below. Expected bands were written from the rules in docs/plans/m2-plan.md before the engine ran, then updated for the category cap in docs/plans/m2-category-cap.md (rules-2: under 10 category points caps the total at 49). `expectedCapped` says whether the cap rule applies to a pair. rules-3 (Oct 28, 2026): a clearance held on the profile satisfies a clearance requirement; the two national-consultancy program-evaluation pairs pin the difference. A change that moves a pair across a band needs a note in the pull request.",
   "now": "2026-10-23T12:00:00.000Z",
   "profiles": {
     "sample": {
@@ -149,6 +149,30 @@
       "timelinePref": 21,
       "certifications": [],
       "bonding": false
+    },
+    "national-consultancy-cleared": {
+      "name": "Northstar Advisory Group (Reliability cleared)",
+      "headOfficeProvince": "ON",
+      "capacity": "11-25",
+      "categories": [
+        "management-consulting"
+      ],
+      "buyerTypes": [
+        "federal",
+        "provincial",
+        "crown-utility"
+      ],
+      "description": "Bilingual program evaluation and strategy work for federal departments, with a Reliability-cleared team.",
+      "languages": "EN_FR",
+      "regions": [
+        "CA"
+      ],
+      "sizeMin": 100000,
+      "sizeMax": 1000000,
+      "timelinePref": 10,
+      "certifications": [],
+      "bonding": false,
+      "securityClearance": "reliability"
     }
   },
   "pairs": [
@@ -308,12 +332,13 @@
     },
     {
       "id": "national-consultancy-program-evaluation",
-      "note": "Bilingual national firm, no published value, Reliability clearance costs points because phase 1 cannot confirm it.",
+      "note": "Bilingual national firm, no published value, Reliability clearance required and none held: the clearance check costs location points (83 against 86 for the cleared profile).",
       "profile": "national-consultancy",
       "tender": "FIXTURE-0054",
       "expectedEligible": true,
       "expectedBand": "HIGH",
-      "expectedCapped": false
+      "expectedCapped": false,
+      "expectedTotal": 83
     },
     {
       "id": "national-consultancy-set-aside",
@@ -388,6 +413,16 @@
       "expectedBand": "LOW",
       "expectedTotal": 49,
       "expectedCapped": true
+    },
+    {
+      "id": "national-consultancy-cleared-program-evaluation",
+      "note": "Same pair as national-consultancy-program-evaluation with a Reliability clearance on the profile (rules-3): the clearance check is met, so location scores full points and clearanceHeld lands in your favour.",
+      "profile": "national-consultancy-cleared",
+      "tender": "FIXTURE-0054",
+      "expectedEligible": true,
+      "expectedBand": "HIGH",
+      "expectedCapped": false,
+      "expectedTotal": 86
     }
   ]
 }

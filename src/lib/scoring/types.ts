@@ -26,6 +26,11 @@ export type ScoringProfile = {
   timelinePref?: number | null;
   certifications: readonly string[];
   bonding: boolean;
+  // Highest clearance held (CLEARANCE_LEVELS), null or absent for none.
+  securityClearance?: string | null;
+  // Stored from M3; the gate and the conditional set-aside reading use it
+  // in M4 (docs/plans/m2-category-cap.md). No score effect yet.
+  indigenousBusiness?: boolean;
 };
 
 export type ScoringTender = {

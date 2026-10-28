@@ -48,9 +48,10 @@ export function eligibilityChecks(requirements: Requirements, profile: ScoringPr
   const checks: EligibilityCheck[] = [];
   if (requirements.residencyCanada) checks.push({ code: "residencyCanada", satisfied: Boolean(profile.headOfficeProvince) });
   if (requirements.bondRequired) checks.push({ code: "bond", satisfied: profile.bonding });
-  // Phase 1 has no clearance field on the profile, so a clearance is never
-  // confirmed. It costs points here and shows under "could rule you out".
-  if (requirements.clearanceRequired) checks.push({ code: "clearance", satisfied: false });
+  // Any clearance on the profile satisfies the check (rules-3): the
+  // extractor only detects that one is required, not which level. The
+  // level is stored so a later rule can compare it.
+  if (requirements.clearanceRequired) checks.push({ code: "clearance", satisfied: Boolean(profile.securityClearance) });
   return checks;
 }
 

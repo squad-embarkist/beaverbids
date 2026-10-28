@@ -50,7 +50,8 @@ describe("scoreLocation (20)", () => {
     { name: "bilingual text on an English notice counts as bilingual", t: {}, p: {}, r: { bilingualRequired: true }, expected: 18 },
     { name: "bilingual profile covers everything", t: { language: "FR" }, p: { languages: "EN_FR" }, r: {}, expected: 20 },
     { name: "bond required and held", t: {}, p: { bonding: true }, r: { bondRequired: true }, expected: 20 },
-    { name: "clearance is never confirmed in phase 1", t: {}, p: {}, r: { clearanceRequired: true }, expected: 17 },
+    { name: "clearance required and none held", t: {}, p: {}, r: { clearanceRequired: true }, expected: 17 },
+    { name: "clearance required and any level held (rules-3)", t: {}, p: { securityClearance: "reliability" }, r: { clearanceRequired: true }, expected: 20 },
     {
       name: "residency needs a head office province",
       t: {},

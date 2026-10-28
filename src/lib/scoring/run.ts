@@ -72,6 +72,8 @@ export async function scoreAll(db: Db, { profileId, now = new Date(), batchSize 
       timelinePref: true,
       certifications: true,
       bonding: true,
+      securityClearance: true,
+      indigenousBusiness: true,
     },
   });
 
