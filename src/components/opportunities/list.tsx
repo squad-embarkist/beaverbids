@@ -56,7 +56,7 @@ export async function OpportunityList({ items, now }: { items: OpportunityItem[]
       <table className="hidden w-full table-fixed border-collapse md:table">
         <caption className="sr-only">{t("listLabel")}</caption>
         <colgroup>
-          <col className="w-28" />
+          <col className="w-36" />
           <col />
           <col className="w-36" />
           <col className="w-32" />
