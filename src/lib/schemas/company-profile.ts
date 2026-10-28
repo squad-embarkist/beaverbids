@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
   buyerTypeCode,
   categoryCode,
+  clearanceLevel,
   languageCode,
   provinceCode,
   regionCode,
@@ -53,6 +54,8 @@ const sizeRule = {
 const credentialsShape = {
   certifications: z.array(z.string().trim().min(1).max(100)).max(50).default([]),
   bonding: z.boolean().default(false),
+  securityClearance: clearanceLevel.nullish(),
+  indigenousBusiness: z.boolean().default(false),
 };
 
 export const profileBasicsSchema = z.object(basicsShape);
@@ -80,3 +83,47 @@ export const QUESTIONNAIRE_STEPS = [
   "credentials",
 ] as const;
 export type QuestionnaireStep = (typeof QUESTIONNAIRE_STEPS)[number];
+export const questionnaireStep = z.enum(QUESTIONNAIRE_STEPS);
+
+export function isQuestionnaireStep(value: string): value is QuestionnaireStep {
+  return (QUESTIONNAIRE_STEPS as readonly string[]).includes(value);
+}
+
+// 1-based position of a step, which is what CompanyProfile.questionnaireStep
+// records as the highest step completed.
+export function stepNumber(step: QuestionnaireStep): number {
+  return QUESTIONNAIRE_STEPS.indexOf(step) + 1;
+}
+
+export function stepAfter(step: QuestionnaireStep): QuestionnaireStep | null {
+  return QUESTIONNAIRE_STEPS[QUESTIONNAIRE_STEPS.indexOf(step) + 1] ?? null;
+}
+
+export function stepBefore(step: QuestionnaireStep): QuestionnaireStep | null {
+  return QUESTIONNAIRE_STEPS[QUESTIONNAIRE_STEPS.indexOf(step) - 1] ?? null;
+}
+
+// The first step a user still has to complete, from the stored count.
+export function nextIncompleteStep(questionnaireStep: number): QuestionnaireStep | null {
+  return QUESTIONNAIRE_STEPS[Math.max(0, questionnaireStep)] ?? null;
+}
+
+export const STEP_SCHEMAS = {
+  basics: profileBasicsSchema,
+  work: profileWorkSchema,
+  regions: profileRegionsSchema,
+  size: profileSizeSchema,
+  credentials: profileCredentialsSchema,
+} as const;
+
+// Body of PUT /api/profile: one step at a time, so the form for a step and
+// the route check the same rules and a payload from another step is refused.
+export const profileStepSaveSchema = z.discriminatedUnion("step", [
+  z.object({ step: z.literal("basics"), answers: profileBasicsSchema }),
+  z.object({ step: z.literal("work"), answers: profileWorkSchema }),
+  z.object({ step: z.literal("regions"), answers: profileRegionsSchema }),
+  z.object({ step: z.literal("size"), answers: profileSizeSchema }),
+  z.object({ step: z.literal("credentials"), answers: profileCredentialsSchema }),
+]);
+
+export type ProfileStepSave = z.infer<typeof profileStepSaveSchema>;

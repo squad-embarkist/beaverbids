@@ -13,7 +13,11 @@ export const formats = {
     short: { day: "numeric", month: "short", year: "numeric" },
   },
   number: {
-    cad: { style: "currency", currency: "CAD", maximumFractionDigits: 0 },
+    // "$250,000": the narrow symbol, since "CAD" is only said when a currency
+    // is unclear (docs/ui-ux-guide.md).
+    cad: { style: "currency", currency: "CAD", currencyDisplay: "narrowSymbol", maximumFractionDigits: 0 },
+    // "$250K", "$1.2M" for list rows and summaries.
+    cadCompact: { style: "currency", currency: "CAD", currencyDisplay: "narrowSymbol", notation: "compact", maximumFractionDigits: 1 },
   },
 } satisfies Formats;
 

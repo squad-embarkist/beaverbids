@@ -161,7 +161,7 @@ Nine tables carry phase 1, beside the ones Better Auth and `pg-boss` create for 
 | Table | Key columns | Notes |
 | --- | --- | --- |
 | `draftProfile` | sessionToken, answers (JSON), instantScoreCache | Pre-signup answers; merged into `companyProfile` on signup |
-| `companyProfile` | userId, name, categories (array), regions (array), sizeMin, sizeMax, certifications (array), capacity, timelinePref | The five questionnaire steps feed this |
+| `companyProfile` | userId, name, categories (array), regions (array), sizeMin, sizeMax, certifications (array), capacity, timelinePref, securityClearance, indigenousBusiness | The five questionnaire steps feed this. Clearance and the Indigenous-business flag were added in M3 (docs/plans/m2-category-cap.md) |
 | `source` | code (canadabuys at launch), name, baseUrl, active, lastSuccessAt | One row per data source; more rows only with written permission |
 | `ingestRun` | sourceId, startedAt, finishedAt, status, rowsFound, error | Drives the failure and zero-row alerts |
 | `tender` | sourceId, externalId, title, buyer, description, categoryCodes, region, valueMin, valueMax, publishedAt, closesAt, language, officialUrl, rawFileKey | Unique on sourceId plus externalId |
@@ -225,7 +225,7 @@ REST route handlers under `/api`, one small file per endpoint in `src/app/api`. 
 | `POST /api/profile/claim-draft` | User | Merge the draft into a company profile after signup | Company profile |
 | `GET /api/me` | User | Current user, language and digest setting | User object |
 | `GET /api/profile` | User | Read the company profile | Profile |
-| `PUT /api/profile` | User | Update the profile; queues a rescore job | Profile |
+| `PUT /api/profile` | User | Save one questionnaire step, body `{ step, answers }` checked with that step's Zod schema; queues a rescore of that profile only (M3) | Profile plus `rescoreQueued` |
 | `GET /api/opportunities` | User | Scored list. Query: `band`, `region`, `category`, `valueMin`, `valueMax`, `closesBefore`, `sort` (score or closing), `cursor`, `q` | Page of tenders with score summary |
 | `GET /api/opportunities/{id}` | User | Listing detail | Tender, score total, factors, reasons, official URL |
 | `POST /api/opportunities/{id}/save` | User | Save a listing | Saved state |

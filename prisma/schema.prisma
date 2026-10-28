@@ -138,6 +138,10 @@ model CompanyProfile {
   /// Step 5, credentials
   certifications     String[] @default([])
   bonding            Boolean  @default(false)
+  securityClearance  String?  // clearance level code, see CLEARANCE_LEVELS; null means none
+  /// Listed in the Indigenous Business Directory. Stored from M3; the gate
+  /// and the conditional set-aside reading use it in M4 (docs/plans/m2-category-cap.md).
+  indigenousBusiness Boolean  @default(false)
   /// Highest questionnaire step completed, 0 to 5
   questionnaireStep  Int      @default(0)
   createdAt          DateTime @default(now())
@@ -199,7 +203,10 @@ model Tender {
   publishedAt   DateTime
   closesAt      DateTime
   language      Language @default(EN)
-  officialUrl   String
+  /// Link to the notice on the source portal. Null when the source file has
+  /// no link (more than half of CanadaBuys notices); the screen falls back
+  /// to the source's own site plus the reference number.
+  officialUrl   String?
   rawFileKey    String?  // S3 key of the raw daily file this row came from
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

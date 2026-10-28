@@ -3,7 +3,8 @@ import { NextResponse, type NextRequest } from "next/server";
 
 // Optimistic check only: it looks for the session cookie and never touches
 // the database. Every protected page still verifies the real session with
-// getCurrentUser() from src/lib/session.ts.
+// getCurrentUser() from src/lib/session.ts. /dashboard stays matched so a
+// signed-out visitor on the old address lands on sign in, not the redirect.
 //
 // The check runs in one direction on purpose. Sending a visitor WITH a cookie
 // away from /sign-in would loop whenever the cookie is stale (the session was
@@ -20,5 +21,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ["/dashboard/:path*", "/questionnaire/:path*", "/opportunities/:path*"],
 };

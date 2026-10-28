@@ -4,7 +4,9 @@ import { APIError } from "better-auth/api";
 import { redirect } from "next/navigation";
 import type { ZodError } from "zod";
 import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/db";
 import { log } from "@/lib/log";
+import { nextIncompleteStep } from "@/lib/schemas/company-profile";
 import {
   createAccountSchema,
   isAuthErrorKey,
@@ -65,13 +67,23 @@ export async function signInAction(
     return { fieldErrors: fieldErrorsFrom(parsed.error), values };
   }
 
+  let userId: string;
   try {
-    await auth.api.signInEmail({ body: parsed.data });
+    const result = await auth.api.signInEmail({ body: parsed.data });
+    userId = result.user.id;
   } catch (error) {
     return { formError: errorKeyFrom(error), values };
   }
 
-  redirect("/dashboard");
+  redirect(await destinationFor(userId));
+}
+
+// Where a sign-in lands: the scored list, or the first questionnaire step
+// still to finish.
+async function destinationFor(userId: string): Promise<string> {
+  const profile = await prisma.companyProfile.findUnique({ where: { userId }, select: { questionnaireStep: true } });
+  const pending = nextIncompleteStep(profile?.questionnaireStep ?? 0);
+  return pending ? `/questionnaire/${pending}` : "/opportunities";
 }
 
 export async function createAccountAction(
@@ -98,5 +110,5 @@ export async function createAccountAction(
     return { formError: errorKeyFrom(error), values };
   }
 
-  redirect("/dashboard");
+  redirect("/questionnaire/basics");
 }
