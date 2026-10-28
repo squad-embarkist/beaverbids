@@ -1,6 +1,6 @@
 # M3 Core screens: build plan
 
-Oct 27, 2026 · Status: proposed, waiting for approval
+Oct 27, 2026, re-checked Oct 28 against `development` after the landing page merge · Status: proposed, waiting for approval
 
 Milestone M3 from docs/development-guide.md, scoped as requested: four screens on fixture data (sign in and create account, the five-step questionnaire, the opportunities list, the listing detail), built with shadcn/ui and Tailwind from the tokens in docs/ui-ux-guide.md and the lo-fi wireframes in docs/wireframes/. Plus the pieces those screens need underneath: the score keyset in `GET /api/opportunities`, `GET` and `PUT /api/profile` validated with Zod, the security clearance question and the Indigenous-business flag on the profile, reasons rendered from next-intl messages keyed by reason code, and the official notice link with a fallback.
 
@@ -79,7 +79,7 @@ The certification checkboxes store the same strings the extractor recognises (`c
 
 Each step shows one H1, the mono "STEP 2 OF 5" counter with `aria-current="step"` on the rail, the progress announced through a visually hidden live region, visible labels on every field, errors tied by `aria-describedby`, and a 44 px primary button that sits at the bottom on phones.
 
-shadcn additions: `radio-group` and `textarea` through `npx shadcn add`, restyled to the tokens (44 px, 4 px radius, 2 px asphalt focus border).
+shadcn additions: `radio-group` and `textarea` through `npx shadcn add`, restyled to the tokens (44 px tall, square corners from the radius tokens, 2 px asphalt focus border).
 
 ## Opportunities list
 
@@ -155,7 +155,7 @@ Changed: `prisma/schema.prisma`, `src/lib/schemas/vocab.ts`, `company-profile.ts
 
 Removed: `src/app/dashboard/*` (redirect kept).
 
-Dependencies (current versions on Oct 27, 2026, each read from its official docs before use): `react-hook-form` 7.91.0, `@hookform/resolvers` 6.0.1, `zustand` 5.0.16; dev `@axe-core/playwright` 4.14.0. `@playwright/test` 1.64.1 is already installed.
+Dependencies (current versions on Oct 28, 2026, each read from its official docs before use): `react-hook-form` 7.91.0, `@hookform/resolvers` 6.0.2, `zustand` 5.0.16; dev `@axe-core/playwright` 4.14.0. `@playwright/test` 1.64.1 is already installed.
 
 ## Playwright
 
