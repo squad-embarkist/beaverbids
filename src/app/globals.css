@@ -3,9 +3,10 @@
 @import "shadcn/tailwind.css";
 
 /*
-  BeaverBids design tokens, from docs/ui-ux-guide.md.
-  Every colour, radius and type size a component uses comes from here.
-  Dark mode is out of the MVP; the tokens make it a later addition.
+  BeaverBids design tokens, from docs/ui-ux-guide.md, which follows the Figma
+  file "Beaver bids website" (frame 1:957). Every colour, radius and type size
+  a component uses comes from here. Dark mode is out of the MVP; the tokens
+  make it a later addition.
 */
 
 @theme inline {
@@ -14,8 +15,11 @@
   --color-signal-press: var(--signal-press);
   --color-asphalt: var(--asphalt);
   --color-paper: var(--paper);
+  --color-stone: var(--stone);
+  --color-stone-light: var(--stone-light);
   --color-surface: var(--surface);
   --color-line: var(--line);
+  --color-line-dark: var(--line-dark);
   --color-ink-muted: var(--ink-muted);
 
   /* Score bands. Always shown with the number or band word, never alone. */
@@ -31,7 +35,7 @@
   --color-popover: var(--surface);
   --color-popover-foreground: var(--asphalt);
   --color-primary: var(--signal);
-  --color-primary-foreground: var(--surface);
+  --color-primary-foreground: var(--asphalt);
   --color-secondary: var(--paper);
   --color-secondary-foreground: var(--asphalt);
   --color-muted: var(--paper);
@@ -43,11 +47,14 @@
   --color-input: var(--line);
   --color-ring: var(--asphalt);
 
-  /* Type: Archivo for headlines and body, IBM Plex Mono for labels and data */
+  /* Type: Archivo for headlines and body, IBM Plex Mono for labels and data.
+     Archivo is one variable font with the width axis: font-expanded (125)
+     for headlines, font-condensed (75) for buttons and card titles. */
   --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
+  /* App screens */
   --text-display: 2.5rem;
   --text-display--line-height: 2.75rem;
   --text-h1: 1.75rem;
@@ -62,27 +69,114 @@
   --text-score-sm: 2rem;
   --text-score-sm--line-height: 1;
 
-  /* Radius: 4 px on controls, 8 px on cards. No pills except score chips. */
-  --radius: 4px;
-  --radius-sm: 4px;
-  --radius-md: 4px;
-  --radius-lg: 4px;
-  --radius-xl: 8px;
-  --radius-2xl: 8px;
-  --radius-card: 8px;
+  /* Landing page headlines (expanded ExtraBold) */
+  --text-hero: 5.4rem;
+  --text-hero--line-height: 0.92;
+  --text-hero--letter-spacing: -0.01em;
+  --text-hero-md: 4.5rem;
+  --text-hero-md--line-height: 0.92;
+  --text-hero-md--letter-spacing: -0.01em;
+  --text-hero-sm: 4rem;
+  --text-hero-sm--line-height: 0.92;
+  --text-hero-sm--letter-spacing: -0.01em;
+  --text-hero-xs: 2.75rem;
+  --text-hero-xs--line-height: 0.92;
+  --text-hero-xs--letter-spacing: -0.01em;
+  --text-section: 3rem;
+  --text-section--line-height: 1;
+  --text-section--letter-spacing: -0.01em;
+  --text-section-lg: 3.25rem;
+  --text-section-lg--line-height: 0.98;
+  --text-section-lg--letter-spacing: -0.01em;
+  --text-section-sm: 2rem;
+  --text-section-sm--line-height: 1;
+  --text-section-sm--letter-spacing: -0.01em;
+  --text-figure: 4.5rem;
+  --text-figure--line-height: 1;
+  --text-figure--letter-spacing: -0.01em;
+  --text-figure-sm: 2.5rem;
+  --text-figure-sm--line-height: 1;
+  --text-figure-sm--letter-spacing: -0.01em;
+  --text-wordmark: 1.25rem;
+  --text-wordmark--line-height: 1.75rem;
+  --text-wordmark--letter-spacing: -0.01em;
+  --text-wordmark-lg: 1.5rem;
+  --text-wordmark-lg--line-height: 2rem;
+  --text-wordmark-lg--letter-spacing: -0.01em;
 
-  /* Controls are 44 px tall */
-  --spacing-control: 2.75rem;
+  /* Landing page condensed titles and buttons (condensed Bold, uppercase) */
+  --text-card-title: 1.5rem;
+  --text-card-title--line-height: 2rem;
+  --text-card-title--letter-spacing: 0.025em;
+  --text-portal: 1.125rem;
+  --text-portal--line-height: 1.75rem;
+  --text-portal--letter-spacing: 0.025em;
+  --text-button: 1rem;
+  --text-button--line-height: 1.5rem;
+  --text-button--letter-spacing: 0.025em;
+  --text-button-sm: 0.875rem;
+  --text-button-sm--line-height: 1.25rem;
+  --text-button-sm--letter-spacing: 0.025em;
+
+  /* Landing page body (Archivo normal width) */
+  --text-lead: 1.125rem;
+  --text-lead--line-height: 1.625;
+  --text-body-15: 0.9375rem;
+  --text-body-15--line-height: 1.625;
+  --text-list-15: 0.9375rem;
+  --text-list-15--line-height: 1.5;
+  --text-caption: 0.875rem;
+  --text-caption--line-height: 1.375;
+  --text-footer: 0.875rem;
+  --text-footer--line-height: 1.625;
+  --text-coverage-lead: 1rem;
+  --text-coverage-lead--line-height: 1.625;
+
+  /* Landing page mono labels */
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.125rem;
+  --text-eyebrow--letter-spacing: 0.2em;
+  --text-mono-xs: 0.6875rem;
+  --text-mono-xs--line-height: 1.03125rem;
+  --text-mono-xs--letter-spacing: 0.18em;
+  --text-mono-md: 0.8125rem;
+  --text-mono-md--line-height: 1.21875rem;
+  --text-mono-md--letter-spacing: 0.06em;
+  --text-tag: 0.625rem;
+  --text-tag--line-height: 0.9375rem;
+  --text-tag--letter-spacing: 0.2em;
+  --text-step: 0.875rem;
+  --text-step--line-height: 1.25rem;
+  --text-note: 0.6875rem;
+  --text-note--line-height: 1.117rem;
+  --text-note--letter-spacing: 0.04em;
+
+  /* Radius: square corners everywhere. Score chips are the one rounded shape. */
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-card: 0px;
+
+  /* Controls: inputs are 50 px tall, the primary button 56 px */
+  --spacing-control: 3.125rem;
+  --spacing-button: 3.5rem;
+  --spacing-header: 4.5625rem;
 }
 
 :root {
-  --signal: #d2311f;
-  --signal-press: #b52a1a;
-  --asphalt: #23221f;
-  --paper: #f3f1ec;
+  --signal: #d52b1e;
+  --signal-press: #b8251a;
+  --asphalt: #23231f;
+  --paper: #f4f2ed;
+  --stone: #cbc7be;
+  --stone-light: #dedbd3;
   --surface: #ffffff;
-  --line: #d9d5cb;
-  --ink-muted: #6b675e;
+  --line: rgb(35 35 31 / 0.15);
+  --line-dark: rgb(124 121 112 / 0.3);
+  --ink-muted: #7c7970;
   --band-high: #2e7d4f;
   --band-medium: #b7791f;
   --band-low: #8a867c;
@@ -93,7 +187,13 @@
     @apply border-border;
   }
   html {
-    @apply font-sans;
+    @apply font-sans scroll-smooth;
+    scroll-padding-top: var(--spacing-header);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
   body {
     @apply bg-background text-foreground text-base leading-6;
@@ -107,6 +207,19 @@
   font-stretch: 125%;
 }
 
+@utility font-condensed {
+  font-stretch: 75%;
+}
+
 @utility label-mono {
   @apply font-mono text-label uppercase font-medium text-ink-muted;
+}
+
+/* A headline line set on a signal block: asphalt text, block starts at the
+   column edge, text inset 6 px (Figma "Amber" layers). */
+@utility highlight {
+  display: inline-block;
+  background-color: var(--signal);
+  color: var(--asphalt);
+  padding: 0.06em 6px;
 }

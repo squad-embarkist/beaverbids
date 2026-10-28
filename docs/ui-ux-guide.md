@@ -1,6 +1,6 @@
 # BeaverBids UI/UX and Brand Guide
 
-Oct 23, 2026 · @CJD
+Oct 23, 2026 · @CJD · Updated Oct 28, 2026 to match the Figma file "Beaver bids website" (frame "beaverbids - direction 2 - updated with canada colors", node 1:957)
 
 BeaverBids should feel like a sharp, trustworthy tool for Canadian suppliers: loud where it matters (the score), quiet everywhere else. This guide fixes the visual and interaction rules taken from the lo-fi wireframes so design and development build the same product.
 
@@ -16,39 +16,44 @@ The look is road-sign confident: signal red on asphalt and warm paper, heavy exp
 
 ## Colour
 
-Three brand colours carry the identity; the rest are neutrals and score bands that support them. The first three come from the wireframes. Rows marked proposed are my additions to cover states the wireframes do not show, so confirm them before they ship.
+Three brand colours carry the identity; the rest are neutrals and score bands that support them. The values come from the Figma file (Oct 28, 2026), which uses the Canada flag red. Rows marked proposed cover states the file does not show, so confirm them before they ship.
 
 | Token | Hex | Role | Source |
 | --- | --- | --- | --- |
-| `--signal` | #D2311F | Primary buttons, the score figure, active nav, links on hover | Wireframes |
-| `--asphalt` | #23221F | Body text, headlines, dark panels, primary borders | Wireframes |
-| `--paper` | #F3F1EC | Page background | Wireframes |
-| `--surface` | #FFFFFF | Cards, inputs, tables sitting on paper | Proposed |
-| `--line` | #D9D5CB | Hairline borders and dividers | Proposed |
-| `--muted` | #6B675E | Secondary text, helper text, placeholders | Proposed |
-| `--signal-press` | #B52A1A | Hover and pressed state for red | Proposed |
+| `--signal` | #D52B1E | Primary buttons, the score figure, headline highlight blocks, active nav, links on hover | Figma |
+| `--asphalt` | #23231F | Body text, headlines, dark panels, button text on red | Figma |
+| `--paper` | #F4F2ED | Page background, the request-a-demo form panel, input fill | Figma |
+| `--stone` | #CBC7BE | Landing hero, demo and request-a-demo backgrounds; body text on asphalt at 75 to 80 percent | Figma |
+| `--stone-light` | #DEDBD3 | Landing audience card fill | Figma |
+| `--surface` | #FFFFFF | App cards and tables sitting on paper. Not used on the landing page | Proposed |
+| `--line` | asphalt at 15 percent | Hairline borders and dividers on light backgrounds | Figma |
+| `--line-dark` | #7C7970 at 30 percent | Hairlines on asphalt (40 percent for the step rules) | Figma |
+| `--muted` | #7C7970 | Secondary text, mono labels, placeholders (at 60 percent) | Figma |
+| `--signal-press` | #B8251A | Hover and pressed state for red | Proposed |
 | `--band-high` | #2E7D4F | Score 75 to 100 | Proposed |
 | `--band-medium` | #B7791F | Score 50 to 74 | Proposed |
 | `--band-low` | #8A867C | Score under 50 | Proposed |
 
 **Rules**
 
-- Red is for one primary action per screen and for the score. It is never a body text colour or a large background wash.
+- Red is for one primary action per screen, for the score, and for the highlighted headline line on the landing page (a signal block with asphalt text, inset 6 px). It is never a body text colour or a large background wash.
+- No corner radius anywhere. Score chips are the one rounded shape.
 - Band colours appear only on score chips and breakdown bars, and always with the number or band word beside them, never colour alone.
 - Define every colour as a CSS variable in Tailwind's theme so the dev team never types a raw hex in a component.
 - Dark mode is out of the MVP. Build with tokens so it can be added later.
 
-**Contrast.** White on signal red is about 5:1 and asphalt on paper is about 14:1, both above the 4.5:1 minimum for body text. Check the three band colours on white before launch; amber and grey are the likeliest to fail for small text.
+**Contrast.** Asphalt on paper is about 14:1 and asphalt on stone about 9:1, both above the 4.5:1 minimum for body text. Two values from the Figma file are known to fall short and are kept as drawn until design confirms them: muted #7C7970 is about 3.9:1 on paper, 3.6:1 on asphalt and 2.6:1 on stone, under 4.5:1 for the 11 and 12 px mono labels; asphalt text on the signal button is about 3.2:1 at 16 px bold, which passes only the 3:1 large-text threshold. Check the three band colours on white before launch; amber and grey are the likeliest to fail for small text.
 
 ## Typography
 
-Two families from the wireframes plus one for reading text. Load all three through `next/font` so there is no layout shift.
+Two families, three cuts of Archivo. Archivo is one variable font with the width axis, loaded once through `next/font` with IBM Plex Mono, so there is no layout shift.
 
 | Use | Family | Weight | Notes |
 | --- | --- | --- | --- |
-| Headlines, the score figure | Archivo Expanded | 700 to 800 | Sentence case, tight leading |
-| Labels, tags, table headers, tender numbers | IBM Plex Mono | 400 to 500 | Uppercase for labels, small letter spacing |
-| Body, forms, buttons | Archivo (normal width) | 400 to 600 | Proposed. Keeps long text readable |
+| Headlines, the score figure, the wordmark | Archivo ExtraBold at width 125 (`font-expanded`) | 800 | Uppercase on the landing page, tight leading, -1 percent tracking |
+| Buttons, card titles, portal names | Archivo Bold at width 75 (`font-condensed`) | 700 | Uppercase, 2.5 percent tracking |
+| Labels, tags, table headers, tender numbers, nav, form labels | IBM Plex Mono | 400 to 500 | Uppercase for labels, wide letter spacing (12 to 22 percent) |
+| Body, forms | Archivo at width 100 | 400 to 600 | Keeps long text readable |
 
 | Style | Size / line height | Use |
 | --- | --- | --- |
@@ -59,6 +64,16 @@ Two families from the wireframes plus one for reading text. Load all three throu
 | Small | 14 / 20 px | Helper text, table cells |
 | Label (mono) | 12 / 16 px, uppercase | Tags, column headers, step counters |
 | Score | 56 px detail, 32 px list | The /100 figure |
+| Landing hero H1 | 86.4 / 79.5 px (72 at 1024, 64 at 768, 44 on phones) | Stop reading portals |
+| Landing section H2 | 48 / 48 px (52 on the demo section, 32 on phones) | Section headlines, stat figures |
+| Landing figure | 72 / 72 px (40 on phones) | 6 HRS |
+| Landing card H3 (condensed) | 24 / 32 px | Step and audience titles |
+| Landing portal name (condensed) | 18 / 28 px | Coverage grid |
+| Landing button (condensed) | 16 / 24 px; 14 / 20 px in the header | All buttons |
+| Landing lead | 18 / 29 px | Hero, demo, request a demo |
+| Landing body | 15 / 24 px | Steps and audience cards |
+| Landing mono eyebrow | 12 / 18 px, uppercase | Section labels, nav, ticker |
+| Landing mono small | 11 / 16.5 px, uppercase; 13 / 19.5 px facts; 10 / 15 px tags | Form labels, copyright, RE lines, card tags |
 
 **Rules**
 
@@ -75,7 +90,7 @@ Use Tailwind's 4 px scale and keep the grid simple: a lot of paper, firm borders
 | Spacing scale | 4, 8, 12, 16, 24, 32, 48, 64 px |
 | Page width | 1200 px max content, 16 px side gutters on phones, 32 px on desktop |
 | Grid | 12 columns on desktop, single column under 768 px |
-| Radius | 4 px on inputs, buttons and tags; 8 px on cards. No pill shapes except score chips |
+| Radius | 0 everywhere: inputs, buttons, tags and cards are square. Score chips are the one rounded shape |
 | Borders | 1 px `--line` by default; 2 px `--asphalt` for selected and focus states |
 | Elevation | None by default. One soft shadow only for menus and dialogs |
 | Breakpoints | 640, 768, 1024, 1280 px |
@@ -92,12 +107,12 @@ Build on shadcn/ui and restyle it with the tokens above, so there is one compone
 
 | Component | Spec |
 | --- | --- |
-| Primary button | Signal red fill, white text, 44 px tall, 4 px radius. One per screen |
-| Secondary button | Paper fill, 2 px asphalt border, asphalt text |
+| Primary button | Signal red fill, asphalt text in condensed bold uppercase, 56 px tall with 28 px side padding, square. 40 px tall in the landing header (44 px on phones). One per screen |
+| Secondary button | No fill, 1 px asphalt border at 40 percent, asphalt text in condensed bold uppercase, same height |
 | Text button | Asphalt text, underline on hover. Used for Skip and Back |
-| Input and select | White fill, 1 px line border, 44 px tall. Focus: 2 px asphalt border plus a visible ring |
+| Input and select | Paper fill, 1 px muted border at 40 percent, 50 px tall, square, mono uppercase label above. Focus: 2 px asphalt outline plus a visible ring |
 | Option card (questionnaire) | White card, 1 px line border; selected: 2 px asphalt border and a check mark |
-| Tag | Mono uppercase 12 px, 1 px border, 4 px radius. Used for category, region, closing soon |
+| Tag | Mono uppercase 12 px, 1 px border, square. Used for category, region, closing soon. Landing card tags: 10 px mono, signal on asphalt |
 | Score chip | Rounded, band colour fill, number in Archivo Expanded. See the next section |
 | Table row | 56 px tall, hairline divider, whole row is clickable, keyboard focusable |
 | Progress bar | 4 px asphalt track filled in red, with a mono counter such as "STEP 2 OF 5" |
@@ -145,7 +160,8 @@ The simple MVP has four screens. Everything else in the wireframes is a later ph
 | Questionnaire (5 steps) | MVP | One question group per screen, large option cards, progress bar on top, Back and Next at the bottom. Answers save on each step so a user can return |
 | Opportunities list | MVP | Table on desktop, cards on phones. Score chip first, then title, buyer, region, closing date. Sorted by score |
 | Listing detail | MVP | Large score, five-factor bars, short reasons, tender facts, and a link out to the CanadaBuys notice |
-| Landing and instant score | Later | Pasted tender link or PDF plus a website. Needs its own build, see the Development Guide |
+| Landing page | Built (Oct 28, 2026) | Figma frame 1:957, exactly as drawn: sticky header, hero with the 6 px signal rule and photo column, ticker, problem stats, three steps, demo, audience cards, coverage grid, request-a-demo form (plain email link), footer. Photos are placeholders in `public/landing/` until licensed originals exist. Tablet and phone rules in docs/plans/landing-plan.md |
+| Instant score | Later | Pasted tender link or PDF plus a website. Needs its own build, see the Development Guide |
 | Proposal editor | Later | Split view, draft on the left, tender requirements on the right |
 | Pipeline board | Later | Columns by stage with draggable cards |
 | Mobile instant score | Later | Single column version of the landing flow |
@@ -183,7 +199,7 @@ All strings live in translation files from day one with next-intl. English ships
 
 Target WCAG 2.2 AA. These checks belong in each pull request that touches the interface.
 
-- [ ] Text contrast is at least 4.5:1; large text and icons at least 3:1
+- [ ] Text contrast is at least 4.5:1; large text and icons at least 3:1 (two known exceptions from the Figma file are listed under Colour)
 - [ ] Every control works by keyboard, with a visible focus ring
 - [ ] Touch targets are at least 44 px
 - [ ] Score and bands are never conveyed by colour alone
@@ -195,4 +211,4 @@ Target WCAG 2.2 AA. These checks belong in each pull request that touches the in
 - [ ] All colours and type come from tokens, no raw hex values in components
 - [ ] Copy uses Canadian spelling, no em dashes, and lives in translation files
 
-**Open items for design to confirm:** the proposed neutral and band colours, the body typeface, and the exact five questionnaire steps against the final wireframes.
+**Open items for design to confirm:** the band colours, the muted label contrast and the asphalt-on-red button contrast from the Figma file, and the exact five questionnaire steps against the final wireframes.

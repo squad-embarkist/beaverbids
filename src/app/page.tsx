@@ -1,38 +1,45 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { buttonVariants } from "@/components/ui/button";
-import { Wordmark } from "@/components/wordmark";
+import { Audience } from "@/components/landing/audience";
+import { Coverage } from "@/components/landing/coverage";
+import { Demo } from "@/components/landing/demo";
+import { DemoRequest } from "@/components/landing/demo-request";
+import { Hero } from "@/components/landing/hero";
+import { Problem } from "@/components/landing/problem";
+import { SiteFooter } from "@/components/landing/site-footer";
+import { SiteHeader } from "@/components/landing/site-header";
+import { Steps } from "@/components/landing/steps";
+import { demoRequestEmail } from "@/lib/demo-request";
 
-// M0 placeholder. The landing page with the instant score is built in M3.
+// The landing page, built from the Figma file "Beaver bids website" (frame
+// 1:957). Copy lives in messages/en.json under Landing. On staging
+// NEXT_PUBLIC_SITE_NOINDEX=1 keeps search engines off the unapproved copy.
+export const metadata: Metadata =
+  process.env.NEXT_PUBLIC_SITE_NOINDEX === "1" ? { robots: { index: false, follow: false } } : {};
+
 export default async function HomePage() {
-  const t = await getTranslations("Home");
+  const t = await getTranslations("Landing");
+  const email = demoRequestEmail();
 
   return (
-    <main className="flex flex-1 flex-col">
-      <header className="bg-asphalt text-paper">
-        <div className="mx-auto flex h-14 w-full max-w-[1200px] items-center justify-between px-4 md:px-8">
-          <Wordmark />
-          <Link href="/sign-in" className="text-sm font-medium underline-offset-4 hover:underline">
-            {t("signIn")}
-          </Link>
-        </div>
-      </header>
-
-      <section className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col justify-center gap-6 px-4 py-16 md:px-8">
-        <h1 className="max-w-2xl font-heading font-expanded text-display font-extrabold text-asphalt">
-          {t("headline")}
-        </h1>
-        <p className="max-w-xl text-lg leading-7 text-asphalt">{t("lead")}</p>
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <Link href="/create-account" className={buttonVariants({ variant: "default" })}>
-            {t("createAccount")}
-          </Link>
-          <Link href="/sign-in" className={buttonVariants({ variant: "secondary" })}>
-            {t("signIn")}
-          </Link>
-        </div>
-        <p className="label-mono">{t("note")}</p>
-      </section>
-    </main>
+    <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-paper focus:px-4 focus:py-2 focus:text-asphalt"
+      >
+        {t("skipToContent")}
+      </a>
+      <SiteHeader />
+      <main id="main" className="flex flex-1 flex-col">
+        <Hero />
+        <Problem />
+        <Steps />
+        <Demo />
+        <Audience />
+        <Coverage />
+        <DemoRequest email={email} />
+      </main>
+      <SiteFooter email={email} />
+    </>
   );
 }

@@ -6,12 +6,174 @@
     "signOut": "Sign out",
     "loading": "Loading"
   },
-  "Home": {
-    "headline": "Bid it or bin it.",
-    "lead": "BeaverBids scores Canadian government tenders out of 100 against your business, so you know in seconds which ones are worth chasing.",
-    "signIn": "Sign in",
-    "createAccount": "Create account",
-    "note": "Launching on CanadaBuys federal tenders. More portals follow as each one allows it."
+  "Landing": {
+    "skipToContent": "Skip to content",
+    "header": {
+      "brand": "BEAVERBIDS",
+      "tag": "· BIDDESK",
+      "howItWorks": "How it works",
+      "whoItsFor": "Who it's for",
+      "portals": "Portals",
+      "cta": "Request a live demo"
+    },
+    "hero": {
+      "eyebrow": "For Canadian firms chasing government work",
+      "title": "STOP READING PORTALS.",
+      "highlightLine1": "START",
+      "highlightLine2": "BIDDING.",
+      "lead": "We watch every federal and provincial portal overnight. You get the ones that fit your trade, your province and your bonding capacity: in your inbox, Monday, 7 a.m.",
+      "primary": "Request a live demo",
+      "secondary": "See how it works",
+      "photoAlt": "A contractor working off an open tailgate with a phone and clipboard at first light",
+      "figure": "6 HRS",
+      "figureCaption": "back, every week"
+    },
+    "ticker": {
+      "jobLabel": "Job No. ",
+      "jobValue": "2026-0417",
+      "trade": "Trade: General Contracting",
+      "closesLabel": "Closes in ",
+      "closesValue": "4D 06H",
+      "value": "Est. Value $1.4M"
+    },
+    "problem": {
+      "eyebrow": "The problem",
+      "titleLine1": "THE BID YOU",
+      "titleLine2": "MISSED WAS",
+      "highlightLine1": "WORTH",
+      "highlightLine2": "WINNING.",
+      "stats": {
+        "portals": {
+          "figure": "8+",
+          "caption": "portals to check by hand, every single day"
+        },
+        "missed": {
+          "figure": "70%",
+          "caption": "of relevant tenders never seen in time"
+        },
+        "leadTime": {
+          "figure": "3 DAYS",
+          "caption": "average lead time lost to manual searching"
+        },
+        "spent": {
+          "figure": "$0",
+          "caption": "spent on the contracts you never found"
+        }
+      }
+    },
+    "steps": {
+      "title": "THREE STEPS. ONE INBOX.",
+      "eyebrow": "Scrape · Filter · Draft",
+      "watch": {
+        "number": "01",
+        "title": "WE WATCH THE PORTALS",
+        "body": "Every federal and provincial source, scraped overnight. CanadaBuys, MERX, BC Bid, SEAO, NBON and the rest. You stop tabbing between eight logins."
+      },
+      "filter": {
+        "number": "02",
+        "title": "WE FILTER TO YOUR SHOP",
+        "body": "Matched to your trade, your province and your bonding capacity. Set-aside and certified streams flagged. No noise, only bids you could actually win."
+      },
+      "draft": {
+        "number": "03",
+        "title": "AI READS THE RFP",
+        "body": "A plain-language summary of scope, deadlines and mandatory criteria, plus a first-draft proposal so you start writing at the 40-yard line, not the whiteboard."
+      }
+    },
+    "demo": {
+      "label": "Demo · 1:30",
+      "photoAlt": "Board-formed concrete with a single hard diagonal shadow",
+      "eyebrow": "See it move",
+      "title": "NUMBERS DO THE PERSUADING.",
+      "lead": "Ninety seconds: overnight scraping, an AI RFP summary, and a first draft proposal, start to finish. No pitch, just the product doing the work you do by hand today.",
+      "items": {
+        "feed": "Aggregated feed across every Canadian portal",
+        "summaries": "Plain-language RFP summaries with mandatory criteria flagged",
+        "drafts": "First-draft proposals matched to the scope"
+      }
+    },
+    "audience": {
+      "titleLine1": "BUILT FOR THE SHOP,",
+      "titleLine2": "NOT THE ENTERPRISE.",
+      "trades": {
+        "tag": "PRIMARY",
+        "title": "Trades & small business",
+        "body": "5–100 people, no bid team. Construction, facilities, IT services, staffing, supply. You have won government work before. You just miss half the chances to do it again."
+      },
+      "certified": {
+        "tag": "SET-ASIDE",
+        "title": "Certified suppliers",
+        "body": "Indigenous-, women- and veteran-owned firms. We surface the targeted and set-aside programs you are eligible for, automatically. No more guessing which door is open."
+      },
+      "consultants": {
+        "tag": "MULTIPLIER",
+        "title": "Consultants & bid writers",
+        "body": "Run one pipeline across every client account. Find, filter and triage opportunities for all of them from a single desk."
+      }
+    },
+    "coverage": {
+      "eyebrow": "Coverage",
+      "titleLine1": "EVERY PORTAL,",
+      "highlight": "ONE FEED.",
+      "lead": "Federal and provincial, watched overnight so nothing closes before you see it.",
+      "portals": {
+        "canadabuys": "CanadaBuys",
+        "merx": "MERX",
+        "bcbid": "BC Bid",
+        "ontario": "Ontario Tenders",
+        "seao": "SEAO",
+        "nbon": "NBON",
+        "apc": "Alberta Purchasing Connection",
+        "bidsandtenders": "Bids&Tenders"
+      }
+    },
+    "request": {
+      "eyebrow": "Next action",
+      "titleLine1": "REQUEST A",
+      "highlight": "LIVE DEMO.",
+      "lead": "Fifteen minutes on your own opportunities. We'll show you the bids you're missing this week. No obligation, no slide deck.",
+      "reLabel": "RE:",
+      "terrLabel": "TERR:",
+      "terr": "All Canadian provinces & territories",
+      "respLabel": "RESP:",
+      "resp": "Reply within one business day",
+      "form": {
+        "name": "Name",
+        "namePlaceholder": "Jordan Pratt",
+        "company": "Company",
+        "companyPlaceholder": "Pratt & Sons Contracting",
+        "email": "Work email",
+        "emailPlaceholder": "jordan@prattsons.ca",
+        "province": "Province",
+        "provincePlaceholder": "Ontario",
+        "trade": "Trade / industry",
+        "tradePlaceholder": "General contracting",
+        "submit": "Book my demo",
+        "note": "Routed straight to the BeaverBids team. No spam, no reselling. We only use this to schedule your call.",
+        "subject": "Live demo request: {company}"
+      },
+      "errors": {
+        "nameRequired": "Enter your name.",
+        "nameTooLong": "Use at most 120 characters.",
+        "companyRequired": "Enter your company name.",
+        "companyTooLong": "Use at most 120 characters.",
+        "emailInvalid": "Enter a valid work email address.",
+        "provinceRequired": "Enter your province.",
+        "provinceTooLong": "Use at most 80 characters.",
+        "tradeRequired": "Enter your trade or industry.",
+        "tradeTooLong": "Use at most 80 characters."
+      }
+    },
+    "footer": {
+      "brand": "BEAVERBIDS",
+      "tag": "· BIDDESK",
+      "blurb": "Bid it or bin it. Canadian government tenders, filtered to your shop and delivered before they close.",
+      "photoAlt": "Hi-vis vests and hard hats hanging on a site trailer wall",
+      "howItWorks": "How it works",
+      "whoItsFor": "Who it's for",
+      "requestDemo": "Request a demo",
+      "copyright": "© 2026 BeaverBids · Made in Canada"
+    }
   },
   "Auth": {
     "signIn": {
