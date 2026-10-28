@@ -71,6 +71,12 @@ describe("buildReasons templates", () => {
     expect(reasons.ruleOut[0].text).toBe("French-only submission");
   });
 
+  it("credits a held clearance in your favour instead of ruling you out", () => {
+    const reasons = reasonsFor(tender({ description: "Secret clearance required for the project lead." }), profile({ securityClearance: "reliability" }));
+    expect(codes(reasons.ruleOut)).not.toContain("clearanceRequired");
+    expect(reasons.inFavour).toContainEqual({ code: "clearanceHeld", params: {}, text: "You hold the security clearance this notice asks for" });
+  });
+
   it("flags a missing certification with the alternatives", () => {
     const reasons = reasonsFor(tender({ description: "ISO 27001 or SOC 2 required." }));
     expect(reasons.ruleOut[0]).toEqual({

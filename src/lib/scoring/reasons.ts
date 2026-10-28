@@ -31,6 +31,7 @@ export const REASON_CODES = [
   "bilingualRequired",
   "bondRequired",
   "clearanceRequired",
+  "clearanceHeld",
   "residencyRequired",
   "valueInRange",
   "valueAbove",
@@ -136,7 +137,12 @@ export function buildReasons(result: ScoreResult, tender: { title: string; descr
   }
 
   for (const check of location.facts.checks) {
-    if (check.satisfied) continue;
+    if (check.satisfied) {
+      if (check.code === "clearance") {
+        inFavour.push(reason("clearanceHeld", {}, "You hold the security clearance this notice asks for"));
+      }
+      continue;
+    }
     if (check.code === "bond") {
       ruleOut.push(reason("bondRequired", {}, "A bond is required and your answers say no bonding"));
     } else if (check.code === "clearance") {
