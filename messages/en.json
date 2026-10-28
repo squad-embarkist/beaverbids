@@ -279,11 +279,23 @@
       "soc2": "SOC 2",
       "iso27001": "ISO 27001",
       "iso9001": "ISO 9001",
+      "pEng": "a professional engineering licence (P.Eng.)",
+      "healthCanadaLicence": "a Health Canada licence"
+    },
+    "yes": "Yes",
+    "no": "No",
+    "certificationOptions": {
+      "soc2": "SOC 2",
+      "iso27001": "ISO 27001",
+      "iso9001": "ISO 9001",
       "pEng": "Professional engineering licence (P.Eng.)",
       "healthCanadaLicence": "Health Canada licence"
     },
-    "yes": "Yes",
-    "no": "No"
+    "bands": {
+      "HIGH": "High fit",
+      "MEDIUM": "Medium fit",
+      "LOW": "Low fit"
+    }
   },
   "Questionnaire": {
     "title": "Your answers",
@@ -410,7 +422,90 @@
   },
   "Opportunities": {
     "title": "Opportunities for you",
-    "emptyTitle": "Your scores are on their way",
-    "emptyBody": "Tenders are scored within a few minutes of saving your answers. Tenders are updated every morning."
+    "subtitle": "Scored on your answers. Tenders are updated every morning.",
+    "listLabel": "Scored tenders",
+    "columns": {
+      "score": "Score",
+      "tender": "Tender",
+      "closes": "Closes",
+      "value": "Value"
+    },
+    "filters": {
+      "title": "Filters",
+      "search": "Search",
+      "searchPlaceholder": "Keyword, buyer, reference",
+      "category": "Category",
+      "anyCategory": "All categories",
+      "province": "Province",
+      "anyProvince": "All of Canada",
+      "closingWithin": "Closing within",
+      "anyTime": "Any time",
+      "days": "{days} days",
+      "sort": "Sort",
+      "sortScore": "Best score",
+      "sortClosing": "Closing soonest",
+      "apply": "Apply filters",
+      "clear": "Clear filters",
+      "bands": "Fit",
+      "allBands": "All",
+      "showIneligible": "Show tenders you are not eligible for",
+      "hideIneligible": "Hide tenders you are not eligible for"
+    },
+    "closesIn": "{days, plural, =0 {Closes today} =1 {Closes tomorrow} other {Closes in # days}}",
+    "closingSoon": "Closing soon",
+    "valueRange": "{min} to {max}",
+    "valueFrom": "From {min}",
+    "valueUpTo": "Up to {max}",
+    "valueNotStated": "Value not stated",
+    "view": "View",
+    "showMore": "Show more",
+    "chip": {
+      "outOf": "/100",
+      "scoring": "Scoring",
+      "notEligible": "Not eligible"
+    },
+    "empty": {
+      "scoringTitle": "Your scores are on their way",
+      "scoringBody": "Tenders are scored within a few minutes of saving your answers. Tenders are updated every morning.",
+      "filtersTitle": "No tenders match these filters",
+      "filtersBody": "Try fewer filters or a different keyword."
+    },
+    "against": {
+      "title": "Scoring you against",
+      "categories": "Categories",
+      "buyers": "Buyers",
+      "size": "Contract size",
+      "regions": "Regions",
+      "language": "Language",
+      "notSet": "Not set",
+      "edit": "Edit my answers"
+    }
+  },
+  "Reasons": {
+    "categoryMatch": "Matches your category: {category}",
+    "categoryMiss": "Outside your categories: {category}",
+    "categoryUnknown": "The notice names no category, so the match rests on keywords",
+    "categoryCap": "Too little category match, so this tender is capped at Low",
+    "buyerMatch": "{buyerType} buyers are on your list",
+    "buyerMiss": "{buyerType} buyers are not on your list",
+    "regionMismatch": "Outside the provinces you work in: {region}",
+    "setAside": "Set aside for {group}",
+    "languageMismatch": "{language, select, FR {French-only submission} other {English-only submission}}",
+    "bilingualRequired": "Bilingual delivery is required",
+    "bondRequired": "A bond is required and your answers say no bonding",
+    "clearanceRequired": "A security clearance is required",
+    "clearanceHeld": "You hold the security clearance this notice asks for",
+    "residencyRequired": "Data must stay in Canada and your head office is not set",
+    "valueInRange": "The value sits inside your range",
+    "valueAbove": "The value is above your range",
+    "valueBelow": "The value is below your range",
+    "valueUnknown": "No value is published",
+    "timelineOk": "Closes in {days, plural, =1 {one day} other {# days}}, inside your lead time",
+    "timelineTight": "Closes in {days, plural, =1 {one day} other {# days}}, under your {lead} day lead time",
+    "afterHoursCapacity": "24/7 coverage goes beyond a team of {band}",
+    "certificationHeld": "You hold {certification}, which is required",
+    "certificationMissing": "Requires {list}, which you do not list",
+    "referencesRequested": "References are requested",
+    "referencesRequestedCount": "{count, plural, =1 {One reference is requested} other {# references are requested}}"
   }
 }

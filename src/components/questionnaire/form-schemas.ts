@@ -7,6 +7,7 @@ import {
   profileWorkSchema,
 } from "@/lib/schemas/company-profile";
 import type { Profile } from "@/lib/profile";
+import { CERTIFICATION_MESSAGE_KEYS } from "@/lib/scoring/labels";
 import type { CertificationCode } from "@/lib/scoring/requirements";
 
 // What each step form holds, and how it becomes the step's answers. Native
@@ -91,13 +92,10 @@ export const sizeFormSchema = z
 // The five certifications the extractor recognises are checkboxes whose
 // values are the codes it emits, so a ticked box scores. Anything else
 // goes in the free-text lines.
-export const KNOWN_CERTIFICATIONS: { code: CertificationCode; key: "soc2" | "iso27001" | "iso9001" | "pEng" | "healthCanadaLicence" }[] = [
-  { code: "SOC 2", key: "soc2" },
-  { code: "ISO 27001", key: "iso27001" },
-  { code: "ISO 9001", key: "iso9001" },
-  { code: "P.Eng.", key: "pEng" },
-  { code: "Health Canada licence", key: "healthCanadaLicence" },
-];
+export const KNOWN_CERTIFICATIONS = (Object.keys(CERTIFICATION_MESSAGE_KEYS) as CertificationCode[]).map((code) => ({
+  code,
+  key: CERTIFICATION_MESSAGE_KEYS[code],
+}));
 
 const KNOWN_CODES: readonly string[] = KNOWN_CERTIFICATIONS.map((c) => c.code);
 
