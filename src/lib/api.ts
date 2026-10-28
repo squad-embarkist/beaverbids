@@ -5,6 +5,7 @@ export type ApiErrorCode =
   | "UNAUTHORIZED"
   | "BAD_REQUEST"
   | "NOT_FOUND"
+  | "CONFLICT"
   | "INTERNAL";
 
 const NO_STORE = { "cache-control": "no-store" } as const;

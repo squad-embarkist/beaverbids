@@ -1,11 +1,17 @@
 import { describe, expect, it } from "vitest";
 import {
   companyProfileSchema,
+  nextIncompleteStep,
+  profileCredentialsSchema,
   profileSizeSchema,
+  profileStepSaveSchema,
   profileWorkSchema,
   profileRegionsSchema,
+  stepAfter,
+  stepBefore,
+  stepNumber,
 } from "./company-profile";
-import { bandForTotal, CATEGORY_CODES, REGION_CODES } from "./vocab";
+import { bandForTotal, CATEGORY_CODES, CLEARANCE_LEVELS, REGION_CODES } from "./vocab";
 
 const valid = {
   name: "Sample Technology Partners Inc.",
@@ -52,6 +58,65 @@ describe("companyProfileSchema", () => {
   it("rejects an invalid website", () => {
     const result = companyProfileSchema.safeParse({ ...valid, website: "not a url" });
     expect(result.success).toBe(false);
+  });
+});
+
+describe("profileCredentialsSchema", () => {
+  it("accepts each clearance level and none, and defaults the Indigenous flag to false", () => {
+    for (const level of CLEARANCE_LEVELS) {
+      expect(profileCredentialsSchema.safeParse({ securityClearance: level }).success).toBe(true);
+    }
+    const result = profileCredentialsSchema.safeParse({ securityClearance: null });
+    expect(result.success).toBe(true);
+    if (result.success) expect(result.data.indigenousBusiness).toBe(false);
+    expect(profileCredentialsSchema.safeParse({}).success).toBe(true);
+  });
+
+  it("rejects a clearance outside the vocabulary", () => {
+    expect(profileCredentialsSchema.safeParse({ securityClearance: "cosmic" }).success).toBe(false);
+  });
+});
+
+describe("profileStepSaveSchema", () => {
+  it("parses a step with its own answers", () => {
+    const result = profileStepSaveSchema.safeParse({ step: "regions", answers: { regions: ["ON", "QC"] } });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects an unknown step", () => {
+    expect(profileStepSaveSchema.safeParse({ step: "extras", answers: {} }).success).toBe(false);
+  });
+
+  it("checks the answers against the named step, not another one", () => {
+    // Work answers under the regions step: regions is missing.
+    const result = profileStepSaveSchema.safeParse({ step: "regions", answers: { categories: ["it-managed-services-cloud"] } });
+    expect(result.success).toBe(false);
+    if (!result.success) expect(result.error.issues[0]?.path).toEqual(["answers", "regions"]);
+  });
+
+  it("applies step defaults so a sparse credentials save is complete", () => {
+    const result = profileStepSaveSchema.safeParse({ step: "credentials", answers: {} });
+    expect(result.success).toBe(true);
+    if (result.success && result.data.step === "credentials") {
+      expect(result.data.answers).toEqual({ certifications: [], bonding: false, indigenousBusiness: false });
+    }
+  });
+});
+
+describe("questionnaire steps", () => {
+  it("numbers steps from one and walks forward and back", () => {
+    expect(stepNumber("basics")).toBe(1);
+    expect(stepNumber("credentials")).toBe(5);
+    expect(stepAfter("basics")).toBe("work");
+    expect(stepAfter("credentials")).toBeNull();
+    expect(stepBefore("basics")).toBeNull();
+    expect(stepBefore("size")).toBe("regions");
+  });
+
+  it("finds the first incomplete step from the stored count", () => {
+    expect(nextIncompleteStep(0)).toBe("basics");
+    expect(nextIncompleteStep(2)).toBe("regions");
+    expect(nextIncompleteStep(5)).toBeNull();
   });
 });
 

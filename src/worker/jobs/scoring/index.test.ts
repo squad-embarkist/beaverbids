@@ -77,9 +77,30 @@ describe("registerScoringJobs", () => {
     consoleError.mockRestore();
   });
 
+  it("fails a profile job without a profile id before scoring anything", async () => {
+    const boss = fakeBoss();
+    await registerScoringJobs(boss, db, { schedule: false, startupRun: false });
+    scoreAll.mockClear();
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    await expect(boss.handlers.get(QUEUES.scoreProfile)!([{ id: "j4", data: { reason: "profileUpdated" } }])).rejects.toThrow();
+    await expect(boss.handlers.get(QUEUES.scoreProfile)!([{ id: "j5", data: { profileId: "", reason: "manual" } }])).rejects.toThrow();
+    await expect(boss.handlers.get(QUEUES.scoreProfile)!([{ id: "j6", data: null }])).rejects.toThrow();
+
+    expect(scoreAll).not.toHaveBeenCalled();
+    consoleError.mockRestore();
+  });
+
   it("keys a profile job on the profile id", async () => {
     const boss = fakeBoss();
     await enqueueScoreProfile(boss, "p1", "profileUpdated");
     expect(boss.send).toHaveBeenCalledWith(QUEUES.scoreProfile, { profileId: "p1", reason: "profileUpdated" }, { singletonKey: "p1" });
+  });
+
+  it("refuses to enqueue a profile job without an id", async () => {
+    const boss = fakeBoss();
+    await expect(enqueueScoreProfile(boss, "", "profileUpdated")).rejects.toThrow();
+    await expect(enqueueScoreProfile(boss, "   ", "manual")).rejects.toThrow();
+    expect(boss.send).not.toHaveBeenCalled();
   });
 });

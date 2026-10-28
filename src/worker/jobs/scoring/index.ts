@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/node";
 import type { PgBoss } from "pg-boss";
 import { log } from "@/lib/log";
-import { QUEUES, SCORE_ALL_SINGLETON_KEY, enqueueScoreAll, type ScoreAllJob, type ScoreProfileJob } from "@/lib/queues";
+import { QUEUES, SCORE_ALL_SINGLETON_KEY, enqueueScoreAll, scoreAllJobSchema, scoreProfileJobSchema, type ScoreAllJob } from "@/lib/queues";
 import { scoreAll } from "@/lib/scoring/run";
 
 // Scoring jobs. `score-all` rescores every open tender for every profile;
@@ -25,14 +25,20 @@ export async function registerScoringJobs(boss: Boss, db: ScoringDb, { schedule,
   await boss.createQueue(QUEUES.scoreAll, QUEUE_OPTIONS);
   await boss.createQueue(QUEUES.scoreProfile, QUEUE_OPTIONS);
 
-  await boss.work<ScoreAllJob>(QUEUES.scoreAll, ([job]) =>
-    runJob(QUEUES.scoreAll, job.id, { reason: job.data.reason }, () => scoreAll(db)),
+  await boss.work<unknown>(QUEUES.scoreAll, ([job]) =>
+    runJob(QUEUES.scoreAll, job.id, { reason: reasonOf(job.data) }, () => {
+      scoreAllJobSchema.parse(job.data);
+      return scoreAll(db);
+    }),
   );
 
-  await boss.work<ScoreProfileJob>(QUEUES.scoreProfile, ([job]) =>
-    runJob(QUEUES.scoreProfile, job.id, { profileId: job.data.profileId, reason: job.data.reason }, () =>
-      scoreAll(db, { profileId: job.data.profileId }),
-    ),
+  // The payload is parsed before anything runs: a job without a profile id
+  // fails here and is retried, and never rescores every profile.
+  await boss.work<unknown>(QUEUES.scoreProfile, ([job]) =>
+    runJob(QUEUES.scoreProfile, job.id, { profileId: profileIdOf(job.data), reason: reasonOf(job.data) }, () => {
+      const { profileId } = scoreProfileJobSchema.parse(job.data);
+      return scoreAll(db, { profileId });
+    }),
   );
 
   if (schedule) {
@@ -43,6 +49,14 @@ export async function registerScoringJobs(boss: Boss, db: ScoringDb, { schedule,
   if (startupRun) {
     await enqueueScoreAll(boss, "startup");
   }
+}
+
+function reasonOf(data: unknown): unknown {
+  return typeof data === "object" && data !== null && "reason" in data ? data.reason : undefined;
+}
+
+function profileIdOf(data: unknown): unknown {
+  return typeof data === "object" && data !== null && "profileId" in data ? data.profileId : undefined;
 }
 
 // Logs the outcome either way and reports a failure to Sentry before

@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   output: "standalone",
   cacheComponents: true,
   partialPrefetching: true,
+  // The M0 dashboard became the opportunities list in M3.
+  async redirects() {
+    return [{ source: "/dashboard", destination: "/opportunities", permanent: true }];
+  },
   turbopack: {
     rules: {
       "*.css": {

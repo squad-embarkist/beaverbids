@@ -65,7 +65,7 @@ export type OpportunityItem = {
   publishedAt: string;
   closesAt: string;
   language: string;
-  officialUrl: string;
+  officialUrl: string | null;
   source: { code: string; name: string };
   score: ScoreSummary;
 };
