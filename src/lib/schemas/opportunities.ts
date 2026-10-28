@@ -26,6 +26,9 @@ export const opportunitiesQuerySchema = z
     valueMin: money.optional(),
     valueMax: money.optional(),
     closesBefore: z.coerce.date().optional(),
+    // "Closing within" on the list: a number of days from now, so a plain
+    // GET form can set it without computing a date.
+    closingWithin: z.coerce.number().int().min(1).max(365).optional(),
     q: z.string().trim().min(1).max(200).optional(),
     includeIneligible: z.stringbool().default(false),
   })

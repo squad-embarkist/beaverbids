@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useRef, type ReactNode } from "react";
 import type { FieldValues, UseFormReturn } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button-link";
 import { stepAfter, stepBefore, type ProfileStepSave, type QuestionnaireStep } from "@/lib/schemas/company-profile";
 import { useSaveStep, type SaveDestination } from "./use-save-step";
 
@@ -43,9 +43,9 @@ export function StepForm<TIn extends FieldValues, TOut extends ProfileStepSave["
 
       <div className="sticky bottom-0 -mx-4 mt-4 flex flex-wrap items-center gap-3 border-t border-line bg-paper px-4 py-4 md:static md:mx-0 md:border-t md:px-0 md:pt-6">
         {previous ? (
-          <Button variant="text" size="sm" className="h-11" nativeButton={false} render={<Link href={`/questionnaire/${previous}`} />}>
+          <ButtonLink href={`/questionnaire/${previous}`} variant="text" size="sm" className="h-11">
             {t("actions.back")}
-          </Button>
+          </ButtonLink>
         ) : null}
         <p className="hidden flex-1 text-sm leading-5 text-ink-muted md:block">{t("footerNote")}</p>
         <Button

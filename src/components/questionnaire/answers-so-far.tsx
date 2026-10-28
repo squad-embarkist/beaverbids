@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button-link";
 import type { Profile } from "@/lib/profile";
 import { useQuestionnaireStore } from "./store-provider";
 
@@ -64,9 +63,9 @@ export function AnswersSoFar() {
           </div>
         ))}
       </dl>
-      <Button variant="secondary" size="sm" className="self-start" nativeButton={false} render={<Link href="/questionnaire/basics" />}>
+      <ButtonLink href="/questionnaire/basics" variant="secondary" size="sm" className="self-start">
         {t("edit", { number: "01" })}
-      </Button>
+      </ButtonLink>
     </section>
   );
 }

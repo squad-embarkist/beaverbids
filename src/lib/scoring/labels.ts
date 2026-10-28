@@ -65,6 +65,16 @@ export const CERTIFICATION_LABELS: Record<CertificationCode, string> = {
   "Health Canada licence": "a Health Canada licence",
 };
 
+// Certification codes carry dots and spaces ("P.Eng.", "SOC 2"), which
+// next-intl cannot use as message keys, so the messages are keyed by these.
+export const CERTIFICATION_MESSAGE_KEYS: Record<CertificationCode, "soc2" | "iso27001" | "iso9001" | "pEng" | "healthCanadaLicence"> = {
+  "SOC 2": "soc2",
+  "ISO 27001": "iso27001",
+  "ISO 9001": "iso9001",
+  "P.Eng.": "pEng",
+  "Health Canada licence": "healthCanadaLicence",
+};
+
 export function labelFor<K extends string>(table: Record<K, string>, code: string): string {
   return (table as Record<string, string>)[code] ?? code;
 }

@@ -27,7 +27,7 @@ export function CredentialsForm({ profile }: { profile: Profile | null }) {
     <StepForm step="credentials" form={form} skippable>
       <OptionGroup id="knownCertifications" legend={t("certifications")} hint={t("certificationsHint")}>
         {KNOWN_CERTIFICATIONS.map(({ code, key }) => (
-          <OptionCard key={code} type="checkbox" value={code} defaultChecked={defaults.knownCertifications.includes(code)} label={tVocab(`certifications.${key}`)} {...register("knownCertifications")} />
+          <OptionCard key={code} type="checkbox" value={code} defaultChecked={defaults.knownCertifications.includes(code)} label={tVocab(`certificationOptions.${key}`)} {...register("knownCertifications")} />
         ))}
       </OptionGroup>
 
