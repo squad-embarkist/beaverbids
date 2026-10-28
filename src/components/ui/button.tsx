@@ -2,30 +2,32 @@ import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
-// Specs from docs/ui-ux-guide.md: 44 px tall, 4 px radius, one red primary
-// action per screen, secondary with a 2 px asphalt border, text buttons for
-// Skip and Back. Focus rings are never removed.
+// Specs from docs/ui-ux-guide.md (Figma frame 1:957): signal fill with
+// asphalt text in condensed bold uppercase, 56 px tall, square corners.
+// Secondary is a 1 px asphalt border at 40 percent on no fill. The 40 px
+// `sm` size is the header button. Focus rings are never removed.
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border-2 border-transparent bg-clip-padding font-sans font-semibold whitespace-nowrap transition-colors outline-none select-none focus-visible:outline-2 focus-visible:outline-asphalt focus-visible:ring-3 focus-visible:ring-asphalt/20 disabled:pointer-events-none disabled:opacity-50 aria-busy:cursor-progress [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center gap-2 border bg-clip-padding font-sans font-condensed font-bold uppercase whitespace-nowrap transition-colors outline-none select-none focus-visible:outline-2 focus-visible:outline-asphalt focus-visible:ring-3 focus-visible:ring-asphalt/20 disabled:pointer-events-none disabled:opacity-50 aria-busy:cursor-progress [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        default: "bg-signal text-surface hover:bg-signal-press active:bg-signal-press",
+        default:
+          "border-transparent bg-signal text-asphalt hover:bg-signal-press active:bg-signal-press",
         secondary:
-          "border-asphalt bg-paper text-asphalt hover:bg-surface aria-expanded:bg-surface",
+          "border-asphalt/40 bg-transparent text-asphalt hover:border-asphalt aria-expanded:border-asphalt",
         outline:
           "border-line bg-surface text-asphalt hover:border-asphalt aria-expanded:border-asphalt",
-        ghost: "text-asphalt hover:bg-paper aria-expanded:bg-paper",
-        text: "text-asphalt underline-offset-4 hover:underline",
-        destructive: "bg-signal text-surface hover:bg-signal-press",
-        link: "text-signal underline-offset-4 hover:underline",
+        ghost: "border-transparent text-asphalt hover:bg-paper aria-expanded:bg-paper",
+        text: "border-transparent text-asphalt underline-offset-4 hover:underline",
+        destructive: "border-transparent bg-signal text-asphalt hover:bg-signal-press",
+        link: "border-transparent text-signal underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-control px-4 text-base",
-        sm: "h-9 px-3 text-sm",
-        lg: "h-12 px-6 text-base",
+        default: "h-button px-7 text-button",
+        sm: "h-10 px-4 text-button-sm",
+        lg: "h-button px-8 text-button",
         icon: "size-control",
-        "icon-sm": "size-9",
+        "icon-sm": "size-10",
       },
     },
     defaultVariants: {
