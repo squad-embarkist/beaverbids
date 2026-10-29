@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { CreateAccountForm } from "@/components/auth/create-account-form";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Auth.createAccount");
@@ -15,7 +15,7 @@ export default async function CreateAccountPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-expanded text-h1 font-bold">{t("title")}</CardTitle>
+        <h1 className="font-heading font-expanded text-h1 font-bold text-asphalt">{t("title")}</h1>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         <CreateAccountForm />

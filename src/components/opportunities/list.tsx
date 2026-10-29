@@ -131,7 +131,10 @@ function Closing({ text }: { text: RowText }) {
   return (
     <p className="flex flex-col gap-0.5">
       <span className="font-mono text-sm text-asphalt">{text.closes}</span>
-      <span className={cn("font-mono text-label", text.closingSoon ? "font-medium text-signal" : "text-ink-muted")}>{text.closesIn}</span>
+      <span className={cn("flex items-center gap-1.5 font-mono text-label", text.closingSoon ? "font-medium text-asphalt" : "text-ink-muted")}>
+        {text.closingSoon ? <span aria-hidden className="size-2 shrink-0 bg-signal" /> : null}
+        {text.closesIn}
+      </span>
     </p>
   );
 }

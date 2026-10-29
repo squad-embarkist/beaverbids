@@ -55,7 +55,7 @@ async function ListingContent({ params }: { params: PageProps<"/opportunities/[i
       <header className="bg-stone">
         <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-6 px-4 py-8 md:px-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex min-w-0 flex-col gap-4">
-            <nav aria-label={t("breadcrumb.label")} className="font-mono text-label text-ink-muted">
+            <nav aria-label={t("breadcrumb.label")} className="font-mono text-label text-asphalt">
               <ol className="flex flex-wrap items-center gap-2">
                 <li>
                   <Link href="/opportunities" className="text-asphalt underline underline-offset-4">
