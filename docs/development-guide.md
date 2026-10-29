@@ -161,7 +161,7 @@ Nine tables carry phase 1, beside the ones Better Auth and `pg-boss` create for 
 | Table | Key columns | Notes |
 | --- | --- | --- |
 | `draftProfile` | sessionToken, answers (JSON), instantScoreCache | Pre-signup answers; merged into `companyProfile` on signup |
-| `companyProfile` | userId, name, categories (array), regions (array), sizeMin, sizeMax, certifications (array), capacity, timelinePref | The five questionnaire steps feed this |
+| `companyProfile` | userId, name, categories (array), regions (array), sizeMin, sizeMax, certifications (array), capacity, timelinePref, securityClearance, indigenousBusiness | The five questionnaire steps feed this. Clearance and the Indigenous-business flag were added in M3 (docs/plans/m2-category-cap.md) |
 | `source` | code (canadabuys at launch), name, baseUrl, active, lastSuccessAt | One row per data source; more rows only with written permission |
 | `ingestRun` | sourceId, startedAt, finishedAt, status, rowsFound, error | Drives the failure and zero-row alerts |
 | `tender` | sourceId, externalId, title, buyer, description, categoryCodes, region, valueMin, valueMax, publishedAt, closesAt, language, officialUrl, rawFileKey | Unique on sourceId plus externalId |
@@ -191,6 +191,8 @@ Every tender gets a score out of 100 for a given company profile, made of five f
 | Credentials | 10 | Certifications, security clearance, past work asked for | Share of required credentials the profile lists |
 
 **Category cap (decided Oct 24, 2026, threshold set Oct 26).** A tender with fewer than 10 points from category codes and keywords, not buyer type, has its total capped at 49, so it is always a Low fit. Without the cap, a tender with no category match could still reach 58 from location, size, timing and credentials alone and show as Medium; a right buyer says nothing about the work, so buyer-type points do not count towards the threshold. The cap changes the number itself, so the score and the band always agree. The five factor values are stored as computed; only the total is capped, and the stored reasons carry a `categoryCap` entry so the screen can say why. The golden set includes pairs that prove the cap, and any change to this rule updates the golden set, the brief and this guide together. The review of the fixture tenders under 10 and the decisions are in docs/plans/m2-category-cap.md; modelVersion rules-2.
+
+**Security clearance (rules-3, Oct 28, 2026).** The credentials step asks for the highest personnel security clearance held (Reliability, Secret, Top Secret or none). A clearance of any level satisfies a detected clearance requirement, because the text extractor only detects that one is required, not which level; the level is stored so a later rule can compare it. A held clearance earns the location check points and a `clearanceHeld` reason in your favour; without one the tender still shows `clearanceRequired` under "could rule you out". The golden set pins the difference with two program-evaluation pairs for the national consultancy.
 
 **Bands:** 75 to 100 High, 50 to 74 Medium, under 50 Low. Chips and colours on the screens use these bands.
 
@@ -225,7 +227,7 @@ REST route handlers under `/api`, one small file per endpoint in `src/app/api`. 
 | `POST /api/profile/claim-draft` | User | Merge the draft into a company profile after signup | Company profile |
 | `GET /api/me` | User | Current user, language and digest setting | User object |
 | `GET /api/profile` | User | Read the company profile | Profile |
-| `PUT /api/profile` | User | Update the profile; queues a rescore job | Profile |
+| `PUT /api/profile` | User | Save one questionnaire step, body `{ step, answers }` checked with that step's Zod schema; queues a rescore of that profile only (M3) | Profile plus `rescoreQueued` |
 | `GET /api/opportunities` | User | Scored list. Query: `band`, `region`, `category`, `valueMin`, `valueMax`, `closesBefore`, `sort` (score or closing), `cursor`, `q` | Page of tenders with score summary |
 | `GET /api/opportunities/{id}` | User | Listing detail | Tender, score total, factors, reasons, official URL |
 | `POST /api/opportunities/{id}/save` | User | Save a listing | Saved state |

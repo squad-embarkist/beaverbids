@@ -14,7 +14,9 @@ import type { ScoreCap, ScoreResult, ScoringProfile, ScoringTender } from "./typ
 // rules-2: category cap (Oct 24, 2026, docs/plans/m2-category-cap.md).
 //          Oct 26: the cap reads code plus keyword points only (same version,
 //          nothing was deployed).
-export const MODEL_VERSION = "rules-2";
+// rules-3: a clearance held on the profile satisfies a clearance requirement
+//          (Oct 28, 2026, M3 credentials step; docs/plans/m3-plan.md).
+export const MODEL_VERSION = "rules-3";
 
 // Category cap: with fewer than `threshold` points from category codes and
 // keywords the total is capped at `limit`, so the band is Low. A tender for

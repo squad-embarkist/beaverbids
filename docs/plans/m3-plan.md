@@ -1,6 +1,6 @@
 # M3 Core screens: build plan
 
-Oct 27, 2026 · Status: proposed, waiting for approval
+Oct 27, 2026, re-checked Oct 28 against `development` after the landing page merge · Status: approved Oct 28 and built in four slices on `feature/m3-core-screens` (Oct 28 to 29, 2026); see the notes at the end for what changed during the build
 
 Milestone M3 from docs/development-guide.md, scoped as requested: four screens on fixture data (sign in and create account, the five-step questionnaire, the opportunities list, the listing detail), built with shadcn/ui and Tailwind from the tokens in docs/ui-ux-guide.md and the lo-fi wireframes in docs/wireframes/. Plus the pieces those screens need underneath: the score keyset in `GET /api/opportunities`, `GET` and `PUT /api/profile` validated with Zod, the security clearance question and the Indigenous-business flag on the profile, reasons rendered from next-intl messages keyed by reason code, and the official notice link with a fallback.
 
@@ -79,7 +79,7 @@ The certification checkboxes store the same strings the extractor recognises (`c
 
 Each step shows one H1, the mono "STEP 2 OF 5" counter with `aria-current="step"` on the rail, the progress announced through a visually hidden live region, visible labels on every field, errors tied by `aria-describedby`, and a 44 px primary button that sits at the bottom on phones.
 
-shadcn additions: `radio-group` and `textarea` through `npx shadcn add`, restyled to the tokens (44 px, 4 px radius, 2 px asphalt focus border).
+shadcn additions: `radio-group` and `textarea` through `npx shadcn add`, restyled to the tokens (44 px tall, square corners from the radius tokens, 2 px asphalt focus border).
 
 ## Opportunities list
 
@@ -155,7 +155,7 @@ Changed: `prisma/schema.prisma`, `src/lib/schemas/vocab.ts`, `company-profile.ts
 
 Removed: `src/app/dashboard/*` (redirect kept).
 
-Dependencies (current versions on Oct 27, 2026, each read from its official docs before use): `react-hook-form` 7.91.0, `@hookform/resolvers` 6.0.1, `zustand` 5.0.16; dev `@axe-core/playwright` 4.14.0. `@playwright/test` 1.64.1 is already installed.
+Dependencies (current versions on Oct 28, 2026, each read from its official docs before use): `react-hook-form` 7.91.0, `@hookform/resolvers` 6.0.2, `zustand` 5.0.16; dev `@axe-core/playwright` 4.14.0. `@playwright/test` 1.64.1 is already installed.
 
 ## Playwright
 
@@ -202,3 +202,18 @@ Lint, typecheck (which also checks every message key through `global.ts`), tests
 ## Out of scope
 
 Instant score, save and hide, Saved and Hidden tabs, digest and consent, events, French copy and the switcher, AI reasons, website pre-fill, the conditional set-aside extractor and gate (M4), the CanadaBuys adapter (M4), Stripe.
+
+## Build notes (Oct 29, 2026)
+
+What changed from the plan while building, each decided during a slice check:
+
+- The profile panel sits under the filters in the left column, not in a third column: three columns left the table too narrow at 1280 px.
+- "Show more" appends the next page in place through a server action rather than linking to a cursor page, so nothing already read disappears; it is still a link without JavaScript.
+- The filter panel puts the fit chips first, shows a "Reset (n)" action in its header only when something is active, and uses a full-width apply.
+- Step 3 links "All of Canada" with the provinces: ticking it ticks all 13, unticking any province unticks it, and either state is stored as the single code CA.
+- Option cards, radios and selects are native inputs registered with React Hook Form directly; the shadcn radio-group was not needed. A `ButtonLink` keeps the link role for navigation styled as buttons.
+- The top bar puts the nav on its own row under the wordmark on phones, since two items plus Sign out did not fit at 375 px.
+- Closing urgency in the list is asphalt text with a signal square, because signal red on paper is under 4.5:1 at 12 px. The breadcrumb on the detail is asphalt on stone for the same reason.
+- `fixtures/tenders.json` keeps FIXTURE-0054 without a notice link so the fallback shows with seed data.
+- The e2e suite uses the `pg` driver for cleanup: the generated Prisma client is ESM-only and Playwright loads files as CommonJS. The tests count visible headings and landmarks only, because Next.js 16 keeps the previous page hidden in the document for instant back navigation.
+- The e2e CI job is added but not a required check yet.

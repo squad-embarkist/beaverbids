@@ -194,6 +194,14 @@
     html {
       scroll-behavior: auto;
     }
+    /* Skeleton pulses and hover transitions stop for people who ask for less motion. */
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
   body {
     @apply bg-background text-foreground text-base leading-6;

@@ -22,7 +22,9 @@ export const tenderInputSchema = z
     publishedAt: z.coerce.date(),
     closesAt: z.coerce.date(),
     language: languageCode.default("EN"),
-    officialUrl: z.url(),
+    // Null when the source file carries no link; the listing detail then
+    // falls back to the source's own site and the reference number.
+    officialUrl: z.url().nullable().default(null),
     rawFileKey: z.string().min(1).nullish(),
   })
   .refine((t) => t.closesAt.getTime() > t.publishedAt.getTime(), {
