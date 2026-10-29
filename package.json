@@ -13,6 +13,7 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "worker": "tsx src/worker/index.ts",
+    "ingest": "tsx src/worker/tools/ingest-once.ts",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",

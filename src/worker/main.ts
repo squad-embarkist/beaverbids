@@ -3,6 +3,8 @@ import { PgBoss } from "pg-boss";
 import { prisma } from "@/lib/db";
 import { log } from "@/lib/log";
 import { QUEUES } from "@/lib/queues";
+import { createRawFileStore } from "@/lib/storage";
+import { registerIngestJobs } from "./jobs/ingest";
 import { registerScoringJobs } from "./jobs/scoring";
 
 const HEARTBEAT_CRON = "* * * * *";
@@ -13,6 +15,11 @@ export async function main() {
     throw new Error("DATABASE_URL is not set");
   }
 
+  // Before pg-boss starts: a production worker without S3 exits here with a
+  // clear message instead of failing its first import.
+  const store = createRawFileStore();
+  const sentry = process.env.SENTRY_DSN ? Sentry : undefined;
+
   // pg-boss keeps its own tables in the "pgboss" schema. Prisma never models them.
   const boss = new PgBoss({ connectionString, schema: "pgboss" });
 
@@ -22,7 +29,7 @@ export async function main() {
   });
 
   await boss.start();
-  log.info("worker started", { node: process.version, queues: Object.values(QUEUES) });
+  log.info("worker started", { node: process.version, queues: Object.values(QUEUES), rawFiles: store.kind });
 
   await boss.createQueue(QUEUES.heartbeat);
   await boss.schedule(QUEUES.heartbeat, HEARTBEAT_CRON);
@@ -34,11 +41,24 @@ export async function main() {
   await boss.send(QUEUES.heartbeat, { reason: "startup" });
 
   // Outside production a fresh database gets scores within seconds of the
-  // worker starting; production waits for the schedule (M4: the import).
+  // worker starting; production waits for the import to chain a rescore.
   await registerScoringJobs(boss, prisma, {
-    schedule: true,
     startupRun: process.env.NODE_ENV !== "production",
   });
+
+  // One scheduled import per registered source. INGEST_ON_STARTUP lists the
+  // sources to import once right away (development only).
+  await registerIngestJobs(
+    boss,
+    { db: prisma, store, sentry },
+    {
+      schedule: true,
+      startupSources: (process.env.INGEST_ON_STARTUP ?? "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean),
+    },
+  );
 
   const shutdown = async (signal: string) => {
     log.info("worker stopping", { signal });
