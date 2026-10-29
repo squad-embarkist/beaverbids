@@ -1,9 +1,13 @@
 import { describe, expect, it } from "vitest";
+import { PROVINCE_CODES } from "@/lib/schemas/vocab";
 import {
   basicsDefaults,
   basicsFormSchema,
   credentialsDefaults,
   credentialsFormSchema,
+  normalizeRegions,
+  regionsDefaults,
+  regionsFormSchema,
   sizeFormSchema,
   workFormSchema,
 } from "./form-schemas";
@@ -43,6 +47,15 @@ describe("questionnaire form schemas", () => {
     const ok = workFormSchema.safeParse({ categories: ["management-consulting"], buyerTypes: [], description: "", languages: null });
     expect(ok.success).toBe(true);
     if (ok.success) expect(ok.data).toMatchObject({ languages: "EN", description: null });
+  });
+
+  it("stores All of Canada as one code and ticks every box for it", () => {
+    expect(normalizeRegions(["CA", "ON"])).toEqual(["CA"]);
+    expect(normalizeRegions([...PROVINCE_CODES])).toEqual(["CA"]);
+    expect(normalizeRegions(["ON", "QC"])).toEqual(["ON", "QC"]);
+    expect(regionsFormSchema.safeParse({ regions: ["CA"] })).toMatchObject({ success: true, data: { regions: ["CA"] } });
+    expect(regionsDefaults({ regions: ["CA"] } as never).regions).toHaveLength(PROVINCE_CODES.length + 1);
+    expect(regionsDefaults({ regions: ["ON"] } as never).regions).toEqual(["ON"]);
   });
 
   it("merges ticked certifications with the free-text lines and reads None as no clearance", () => {
