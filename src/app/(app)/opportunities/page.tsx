@@ -5,14 +5,13 @@ import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Filters } from "@/components/opportunities/filters";
 import { OpportunityList } from "@/components/opportunities/list";
-import { hasFilters, opportunitiesHref } from "@/components/opportunities/query-url";
+import { LoadMore } from "@/components/opportunities/load-more";
+import { hasFilters, opportunitiesHref, parseQuery, queryParams } from "@/components/opportunities/query-url";
 import { ScoringAgainst } from "@/components/opportunities/scoring-against";
-import { ButtonLink } from "@/components/ui/button-link";
 import { prisma } from "@/lib/db";
 import { listOpportunities } from "@/lib/opportunities";
 import { getProfile } from "@/lib/profile";
 import { nextIncompleteStep } from "@/lib/schemas/company-profile";
-import { opportunitiesQuerySchema, queryObjectFrom, type OpportunitiesQuery } from "@/lib/schemas/opportunities";
 import { getCurrentUser } from "@/lib/session";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -32,18 +31,6 @@ export default function OpportunitiesPage({ searchParams }: PageProps<"/opportun
       </Suspense>
     </main>
   );
-}
-
-// Bad or stale parameters fall back to the defaults rather than a 400: the
-// page is reached by links, not by hand-built queries.
-function parseQuery(params: Record<string, string | string[] | undefined>): OpportunitiesQuery {
-  const search = new URLSearchParams();
-  for (const [key, value] of Object.entries(params)) {
-    const first = Array.isArray(value) ? value[0] : value;
-    if (first != null) search.set(key, first);
-  }
-  const parsed = opportunitiesQuerySchema.safeParse(queryObjectFrom(search));
-  return parsed.success ? parsed.data : opportunitiesQuerySchema.parse({});
 }
 
 async function OpportunitiesContent({ searchParams }: { searchParams: PageProps<"/opportunities">["searchParams"] }) {
@@ -80,9 +67,11 @@ async function OpportunitiesContent({ searchParams }: { searchParams: PageProps<
           <>
             <OpportunityList items={page.items} now={now} />
             {page.nextCursor ? (
-              <ButtonLink href={opportunitiesHref(query, { cursor: page.nextCursor })} variant="secondary" className="self-center">
-                {t("showMore")}
-              </ButtonLink>
+              <LoadMore
+                baseSearch={queryParams({ ...query, cursor: undefined }).toString()}
+                cursor={page.nextCursor}
+                fallbackHref={opportunitiesHref(query, { cursor: page.nextCursor })}
+              />
             ) : null}
           </>
         )}

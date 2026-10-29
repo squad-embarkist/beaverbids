@@ -479,7 +479,11 @@
       "language": "Language",
       "notSet": "Not set",
       "edit": "Edit my answers"
-    }
+    },
+    "listContinued": "More scored tenders",
+    "loadingMore": "Loading",
+    "loadedMore": "{count, plural, =1 {One more tender shown} other {# more tenders shown}}",
+    "loadMoreFailed": "We could not load more tenders. Try again in a minute."
   },
   "Reasons": {
     "categoryMatch": "Matches your category: {category}",
