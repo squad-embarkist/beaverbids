@@ -20,7 +20,9 @@ type RowText = {
   reason: string | null;
 };
 
-export async function OpportunityList({ items, now }: { items: OpportunityItem[]; now: Date }) {
+// `continued` marks a chunk appended by "Show more": its header is for
+// assistive technology only, so the rows read as one list on screen.
+export async function OpportunityList({ items, now, continued = false }: { items: OpportunityItem[]; now: Date; continued?: boolean }) {
   const t = await getTranslations("Opportunities");
   const tVocab = await getTranslations("Vocab");
   const format = await getFormatter();
@@ -54,14 +56,14 @@ export async function OpportunityList({ items, now }: { items: OpportunityItem[]
   return (
     <>
       <table className="hidden w-full table-fixed border-collapse md:table">
-        <caption className="sr-only">{t("listLabel")}</caption>
+        <caption className="sr-only">{continued ? t("listContinued") : t("listLabel")}</caption>
         <colgroup>
           <col className="w-40" />
           <col />
           <col className="w-36" />
           <col className="w-36" />
         </colgroup>
-        <thead>
+        <thead className={cn(continued && "sr-only")}>
           <tr className="border-b border-line text-left">
             <th scope="col" className="label-mono py-3 pr-4 pl-4">
               {t("columns.score")}
@@ -95,7 +97,7 @@ export async function OpportunityList({ items, now }: { items: OpportunityItem[]
         </tbody>
       </table>
 
-      <ul className="flex flex-col gap-3 md:hidden">
+      <ul aria-label={continued ? t("listContinued") : undefined} className="flex flex-col gap-3 md:hidden">
         {rows.map(({ item, text, region }) => (
           <li key={item.id} className="flex gap-4 border border-line bg-surface p-4">
             <ScoreChip score={item.score} className="shrink-0" />

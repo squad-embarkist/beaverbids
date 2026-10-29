@@ -1,4 +1,4 @@
-import { OPPORTUNITIES_DEFAULT_LIMIT, type OpportunitiesQuery } from "@/lib/schemas/opportunities";
+import { OPPORTUNITIES_DEFAULT_LIMIT, opportunitiesQuerySchema, queryObjectFrom, type OpportunitiesQuery } from "@/lib/schemas/opportunities";
 
 // The list keeps its state in the URL. These helpers rebuild /opportunities
 // links from the parsed query so a chip or a "show more" link changes one
@@ -6,6 +6,20 @@ import { OPPORTUNITIES_DEFAULT_LIMIT, type OpportunitiesQuery } from "@/lib/sche
 // changes, since a cursor only makes sense for the query it came from.
 
 export type QueryPatch = Partial<Record<"q" | "category" | "region" | "closingWithin" | "sort" | "band" | "includeIneligible" | "cursor", string | null>>;
+
+// Bad or stale parameters fall back to the defaults rather than a 400: the
+// page is reached by links, not by hand-built queries.
+export function parseQuery(params: Record<string, string | string[] | undefined> | URLSearchParams): OpportunitiesQuery {
+  const search = params instanceof URLSearchParams ? params : new URLSearchParams();
+  if (!(params instanceof URLSearchParams)) {
+    for (const [key, value] of Object.entries(params)) {
+      const first = Array.isArray(value) ? value[0] : value;
+      if (first != null) search.set(key, first);
+    }
+  }
+  const parsed = opportunitiesQuerySchema.safeParse(queryObjectFrom(search));
+  return parsed.success ? parsed.data : opportunitiesQuerySchema.parse({});
+}
 
 export function queryParams(query: OpportunitiesQuery): URLSearchParams {
   const params = new URLSearchParams();
