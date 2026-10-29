@@ -29,12 +29,13 @@ export async function AppHeader({ children }: { children?: React.ReactNode }) {
         <Link href="/opportunities" className="order-1 flex h-14 shrink-0 items-center">
           <Wordmark />
         </Link>
-        <div className="order-2 ml-auto flex h-14 shrink-0 items-center gap-3 md:order-3">{children}</div>
-        <nav aria-label={t("label")} className="order-3 -mx-4 flex h-12 basis-full items-stretch gap-1 border-t border-line-dark px-4 md:order-2 md:mx-0 md:h-14 md:basis-auto md:flex-1 md:border-t-0 md:px-0 md:gap-4">
+        {/* DOM order is wordmark, nav, user: the desktop tab order. Phones move the nav to its own last row. */}
+        <nav aria-label={t("label")} className="order-3 -mx-4 flex h-12 basis-full items-stretch gap-1 border-t border-line-dark px-4 md:order-none md:mx-0 md:h-14 md:basis-auto md:flex-1 md:border-t-0 md:px-0 md:gap-4">
           <Suspense fallback={<NavLinkList items={items} pathname={null} />}>
             <NavLinks items={items} />
           </Suspense>
         </nav>
+        <div className="order-2 ml-auto flex h-14 shrink-0 items-center gap-3 md:order-none">{children}</div>
       </div>
     </header>
   );

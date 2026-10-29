@@ -16,6 +16,7 @@ npm run lint         # eslint . (next lint no longer exists in Next 16)
 npm run typecheck    # next typegen && tsc --noEmit (typegen creates the LayoutProps/PageProps globals; also checks message keys via global.ts)
 npm test             # vitest run
 npx vitest run path/to/file.test.ts   # single test file
+npm run e2e          # playwright test: starts next dev (or reuses yours) and a worker; refuses any DATABASE_URL that is not localhost
 npm run worker       # tsx src/worker/index.ts (pg-boss worker, loads .env itself; outside production it scores every tender for every profile at startup)
 
 docker compose up -d           # compose.yaml: local Postgres 18 (user/pass/db all "beaverbids")
@@ -30,7 +31,7 @@ npx shadcn add <component>     # add a shadcn/ui component into src/components/u
 
 CI (`.github/workflows/ci.yml`) runs lint, typecheck, test and prisma-validate as four named checks on every pull request, with a Postgres 18 service for the tests.
 
-Playwright is installed as a dev dependency but has no config yet. Vitest config is `vitest.config.mts` with the `@/` alias and two projects: unit tests (`*.test.ts`, next to the code, run in parallel) and integration tests (`*.int.test.ts`, run afterwards one file at a time because they share the fixture rows). Integration tests hit the real database through `DATABASE_URL` and skip themselves when it is unset.
+Vitest config is `vitest.config.mts` with the `@/` alias and two projects: unit tests (`*.test.ts`, next to the code, run in parallel) and integration tests (`*.int.test.ts`, run afterwards one file at a time because they share the fixture rows). Integration tests hit the real database through `DATABASE_URL` and skip themselves when it is unset. Playwright (`playwright.config.ts`, specs in `e2e/*.spec.ts`, desktop and 375 px phone projects) runs the M3 acceptance flow (`onboarding.spec.ts`: sign up, five steps, the sample tender at 92, the listing with its five meters) and the UI guide's accessibility checklist (`accessibility.spec.ts`: axe WCAG 2.2 AA on the four screens with colour contrast checked separately against the guide's two documented exceptions, one visible H1 and main, keyboard paths, 375 px and 200 percent zoom without horizontal scroll). `e2e/db.ts` refuses to run unless `DATABASE_URL` points at localhost, because the suite creates and deletes accounts through the `pg` driver (the generated Prisma client is ESM-only and Playwright loads files as CommonJS). The config starts `next dev` (reusing a running one outside CI) and a worker, waiting for its "worker started" log line. The dev account from `npm run db:seed` must exist. CI runs it as a fifth `e2e` job that is not a required check yet.
 
 ## Architecture
 
