@@ -56,14 +56,14 @@ export async function OpportunityList({ items, now }: { items: OpportunityItem[]
       <table className="hidden w-full table-fixed border-collapse md:table">
         <caption className="sr-only">{t("listLabel")}</caption>
         <colgroup>
-          <col className="w-36" />
+          <col className="w-40" />
           <col />
           <col className="w-36" />
-          <col className="w-32" />
+          <col className="w-36" />
         </colgroup>
         <thead>
           <tr className="border-b border-line text-left">
-            <th scope="col" className="label-mono py-3 pr-4">
+            <th scope="col" className="label-mono py-3 pr-4 pl-4">
               {t("columns.score")}
             </th>
             <th scope="col" className="label-mono py-3 pr-4">
@@ -72,7 +72,7 @@ export async function OpportunityList({ items, now }: { items: OpportunityItem[]
             <th scope="col" className="label-mono py-3 pr-4">
               {t("columns.closes")}
             </th>
-            <th scope="col" className="label-mono py-3">
+            <th scope="col" className="label-mono py-3 pr-4">
               {t("columns.value")}
             </th>
           </tr>
@@ -80,7 +80,7 @@ export async function OpportunityList({ items, now }: { items: OpportunityItem[]
         <tbody>
           {rows.map(({ item, text, region }) => (
             <tr key={item.id} className="border-b border-line align-top transition-colors hover:bg-surface">
-              <td className="py-4 pr-4">
+              <td className="py-4 pr-4 pl-4">
                 <ScoreChip score={item.score} />
               </td>
               <td className="py-4 pr-4">
@@ -89,7 +89,7 @@ export async function OpportunityList({ items, now }: { items: OpportunityItem[]
               <td className="py-4 pr-4 whitespace-nowrap">
                 <Closing text={text} />
               </td>
-              <td className="py-4 font-mono text-sm text-asphalt whitespace-nowrap">{text.value}</td>
+              <td className="py-4 pr-4 font-mono text-sm text-asphalt whitespace-nowrap">{text.value}</td>
             </tr>
           ))}
         </tbody>
