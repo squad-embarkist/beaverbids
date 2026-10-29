@@ -41,7 +41,7 @@ export function StepForm<TIn extends FieldValues, TOut extends ProfileStepSave["
 
       <div className="flex flex-col gap-8">{children}</div>
 
-      <div className="sticky bottom-0 -mx-4 mt-4 flex flex-wrap items-center gap-3 border-t border-line bg-paper px-4 py-4 md:static md:mx-0 md:border-t md:px-0 md:pt-6">
+      <div className="sticky bottom-0 -mx-4 mt-4 flex flex-wrap items-center gap-3 border-t border-line bg-paper px-4 py-4 md:static md:mx-0 md:px-6 md:py-5">
         {previous ? (
           <ButtonLink href={`/questionnaire/${previous}`} variant="text" size="sm" className="h-11">
             {t("actions.back")}
