@@ -49,3 +49,9 @@ export function opportunitiesHref(query: OpportunitiesQuery, patch: QueryPatch =
 export function hasFilters(query: OpportunitiesQuery): boolean {
   return Boolean(query.q || query.category || query.region || query.closingWithin != null || query.band);
 }
+
+// Everything a reset clears: the filters, the band chip, the sort and the
+// ineligible toggle.
+export function activeFilterCount(query: OpportunitiesQuery): number {
+  return [query.q, query.category, query.region, query.closingWithin != null, query.band, query.includeIneligible, query.sort !== "score"].filter(Boolean).length;
+}

@@ -450,7 +450,7 @@
       "allBands": "All",
       "showIneligible": "Show tenders you are not eligible for",
       "hideIneligible": "Hide tenders you are not eligible for",
-      "reset": "Reset filters"
+      "reset": "Reset ({count})"
     },
     "closesIn": "{days, plural, =0 {Closes today} =1 {Closes tomorrow} other {Closes in # days}}",
     "closingSoon": "Closing soon",
