@@ -213,6 +213,21 @@ function closingKeyset(closesAtIso: string, id: string): Prisma.TenderWhereInput
   return { OR: [{ closesAt: { gt: closesAt } }, { closesAt, id: { gt: id } }] };
 }
 
+// ---- one listing ----------------------------------------------------------
+
+// The listing detail, in the same shape as a list item, with this
+// profile's score when one exists. Null when the tender does not exist.
+export async function getOpportunity(db: Pick<PrismaClient, "tender">, { id, profileId }: { id: string; profileId: string | null }): Promise<OpportunityItem | null> {
+  const row = await db.tender.findUnique({
+    where: { id },
+    select: {
+      ...tenderSelect,
+      scores: { where: { profileId: profileId ?? "" }, select: scoreSelect, take: 1 },
+    },
+  });
+  return row ? toOpportunityItem(row) : null;
+}
+
 // ---- list -----------------------------------------------------------------
 
 export type ListOpportunitiesInput = {

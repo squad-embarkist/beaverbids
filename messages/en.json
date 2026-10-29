@@ -512,5 +512,72 @@
     "certificationMissing": "Requires {list}, which you do not list",
     "referencesRequested": "References are requested",
     "referencesRequestedCount": "{count, plural, =1 {One reference is requested} other {# references are requested}}"
+  },
+  "Listing": {
+    "breadcrumb": {
+      "label": "Breadcrumb",
+      "opportunities": "Opportunities",
+      "ref": "Ref. {id}"
+    },
+    "metaLine": "{buyer} · {region} · {value} · Posted {date}",
+    "posted": "Posted {date}",
+    "closing": {
+      "label": "Closes",
+      "date": "Closes {date}",
+      "daysLeft": "{days, plural, =0 {Closes today} =1 {1 day left} other {# days left}}"
+    },
+    "notice": {
+      "open": "Open the notice on {source}",
+      "opensNewTab": "opens in a new tab",
+      "find": "Find it on {source}",
+      "noLink": "This notice has no direct link. Search {source} for the reference number.",
+      "copy": "Copy reference",
+      "copied": "Copied"
+    },
+    "score": {
+      "title": "Your fit score",
+      "outOf": "/100",
+      "factors": {
+        "category": "Category match",
+        "location": "Location and eligibility",
+        "size": "Contract size",
+        "timeline": "Timeline and capacity",
+        "credentials": "Credentials"
+      },
+      "factorValue": "{points} / {max}",
+      "capNote": "Capped at Low: the work is outside your categories, so the other factors cannot lift it above {limit}.",
+      "basis": "Scored on your questionnaire answers.",
+      "update": "Update them",
+      "pending": "Your score is on its way",
+      "pendingBody": "Tenders are scored within a few minutes of saving your answers.",
+      "ineligible": "Not eligible",
+      "ineligibleBody": "Your answers rule this tender out, so it has no score."
+    },
+    "assessment": {
+      "title": "Fit assessment",
+      "inFavour": "In your favour",
+      "gaps": "Gaps to close",
+      "ruleOut": "Could rule you out"
+    },
+    "details": {
+      "title": "About the notice",
+      "description": "Notice text",
+      "buyer": "Buyer",
+      "buyerType": "Buyer type",
+      "region": "Region",
+      "value": "Value",
+      "published": "Published",
+      "closes": "Closes",
+      "language": "Submission language",
+      "categories": "Categories",
+      "source": "Source",
+      "reference": "Reference",
+      "noCategories": "No category code"
+    },
+    "notFound": {
+      "title": "We could not find that tender",
+      "body": "It may have closed or been removed from the source.",
+      "back": "Back to opportunities"
+    }
   }
 }
