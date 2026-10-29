@@ -28,7 +28,7 @@ function textOnlyTender(row: CanadaBuysSampleRow) {
     description: row.description,
     buyerType: "federal",
     categoryCodes: [] as string[],
-    region: "CA",
+    regions: ["CA"],
     valueMin: null,
     valueMax: null,
     closesAt: new Date(`${row.closingDate}-04:00`),

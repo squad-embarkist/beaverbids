@@ -9,9 +9,10 @@ function fakeDb(profiles: ReturnType<typeof profile>[], tenders: ReturnType<type
   const db = {
     companyProfile: { findMany: vi.fn(async () => profiles.map((p, i) => ({ id: `p${i}`, ...p }))) },
     tender: {
-      findMany: vi.fn(async ({ where }: { where: { closesAt: { gt: Date } } }) =>
-        tenders.map((t, i) => ({ id: `t${i}`, ...t })).filter((t) => t.closesAt > where.closesAt.gt),
-      ),
+      findMany: vi.fn(async ({ where }: { where: { AND: { closesAt?: { gt: Date } }[] } }) => {
+        const closing = where.AND.find((f) => f.closesAt)?.closesAt?.gt ?? new Date(0);
+        return tenders.map((t, i) => ({ id: `t${i}`, ...t })).filter((t) => t.closesAt > closing);
+      }),
     },
     score: {
       upsert: vi.fn((args: unknown) => {
@@ -37,12 +38,16 @@ describe("scoreRow", () => {
 
 describe("scoreAll", () => {
   it("scores every open tender for every profile and upserts on the pair", async () => {
-    const { db, upserts, mocks } = fakeDb([profile(), profile({ regions: ["BC"] })], [tender(), tender({ region: "BC" }), tender({ closesAt: daysFromNow(-1) })]);
+    const { db, upserts, mocks } = fakeDb([profile(), profile({ regions: ["BC"] })], [tender(), tender({ regions: ["BC"] }), tender({ closesAt: daysFromNow(-1) })]);
 
     const summary = await scoreAll(db, { now: NOW });
 
     expect(summary).toEqual({ profiles: 2, tenders: 2, scored: 4, modelVersion: "rules-3" });
-    expect(mocks.tender.findMany).toHaveBeenCalledWith(expect.objectContaining({ where: { closesAt: { gt: NOW } } }));
+    // The open-tender rules shared with the list: closed, withdrawn, non-bid
+    // and inactive-source rows are never scored.
+    expect(mocks.tender.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({ where: { AND: [{ closesAt: { gt: NOW } }, { withdrawnAt: null }, { noticeKind: { in: ["BID", "UNKNOWN"] } }, { source: { active: true } }] } }),
+    );
     expect(upserts).toHaveLength(4);
     expect(upserts[0]).toMatchObject({
       where: { tenderId_profileId: { tenderId: "t0", profileId: "p0" } },

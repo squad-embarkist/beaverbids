@@ -18,7 +18,7 @@ export function tender(overrides: Partial<ScoringTender> = {}): ScoringTender {
     description: "Help desk, network and cloud support for a municipality.",
     buyerType: "municipal",
     categoryCodes: ["it-managed-services-cloud"],
-    region: "ON",
+    regions: ["ON"],
     valueMin: 500_000,
     valueMax: 800_000,
     closesAt: daysFromNow(30),

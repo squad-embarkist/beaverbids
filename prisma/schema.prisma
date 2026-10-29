@@ -25,15 +25,15 @@ datasource db {
 // ---------------------------------------------------------------------------
 
 model User {
-  id              String    @id
+  id              String          @id
   name            String
   email           String
-  emailVerified   Boolean   @default(false)
+  emailVerified   Boolean         @default(false)
   image           String?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  language        String?   @default("en")
-  digestOptIn     Boolean?  @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  language        String?         @default("en")
+  digestOptIn     Boolean?        @default(false)
   digestConsentAt DateTime?
   sessions        Session[]
   accounts        Account[]
@@ -114,6 +114,18 @@ enum IngestRunStatus {
   FAILED
 }
 
+/// What kind of notice the source published, normalized by its adapter from
+/// the source's own type text. Only BID and UNKNOWN rows are scored and
+/// listed; the others open from a direct link with a note (M4).
+enum NoticeKind {
+  BID
+  RFI
+  ACAN
+  DIRECTED
+  OTHER
+  UNKNOWN
+}
+
 /// The five questionnaire steps, one profile per user in phase 1.
 model CompanyProfile {
   id                 String   @id @default(uuid(7))
@@ -123,22 +135,22 @@ model CompanyProfile {
   name               String
   website            String?
   headOfficeProvince String?
-  capacity           String?  // team size band code, see TEAM_SIZE_BANDS
+  capacity           String? // team size band code, see TEAM_SIZE_BANDS
   /// Step 2, what you do
   categories         String[] @default([])
   buyerTypes         String[] @default([])
-  description        String?  // the work you most want to win
+  description        String? // the work you most want to win
   languages          Language @default(EN)
   /// Step 3, where you work
   regions            String[] @default([])
   /// Step 4, size of work, in CAD dollars
   sizeMin            Int?
   sizeMax            Int?
-  timelinePref       Int?     // minimum days needed to respond
+  timelinePref       Int? // minimum days needed to respond
   /// Step 5, credentials
   certifications     String[] @default([])
   bonding            Boolean  @default(false)
-  securityClearance  String?  // clearance level code, see CLEARANCE_LEVELS; null means none
+  securityClearance  String? // clearance level code, see CLEARANCE_LEVELS; null means none
   /// Listed in the Indigenous Business Directory. Stored from M3; the gate
   /// and the conditional set-aside reading use it in M4 (docs/plans/m2-category-cap.md).
   indigenousBusiness Boolean  @default(false)
@@ -179,6 +191,8 @@ model IngestRun {
   status     IngestRunStatus @default(RUNNING)
   rowsFound  Int?
   error      String?
+  /// Counts, skipped rows by reason, unmapped values and file headers (M4)
+  summary    Json?
   createdAt  DateTime        @default(now())
   updatedAt  DateTime        @updatedAt
 
@@ -188,32 +202,44 @@ model IngestRun {
 
 /// A published opportunity. Amendments update the existing row, never a second one.
 model Tender {
-  id            String   @id @default(uuid(7))
-  sourceId      String
-  source        Source   @relation(fields: [sourceId], references: [id], onDelete: Cascade)
-  externalId    String
-  title         String
-  buyer         String
-  buyerType     String?  // see BUYER_TYPE_CODES
-  description   String
-  categoryCodes String[] @default([])
-  region        String   // province code, or CA for all of Canada
-  valueMin      Int?
-  valueMax      Int?
-  publishedAt   DateTime
-  closesAt      DateTime
-  language      Language @default(EN)
+  id                 String     @id @default(uuid(7))
+  sourceId           String
+  source             Source     @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  externalId         String
+  title              String
+  buyer              String
+  buyerType          String? // see BUYER_TYPE_CODES
+  description        String
+  categoryCodes      String[]   @default([])
+  /// Province codes the work covers, or ["CA"] for all of Canada. Several
+  /// when the source names several provinces (M4 made this an array).
+  regions            String[]   @default([])
+  valueMin           Int?
+  valueMax           Int?
+  publishedAt        DateTime
+  closesAt           DateTime
+  language           Language   @default(EN)
   /// Link to the notice on the source portal. Null when the source file has
   /// no link (more than half of CanadaBuys notices); the screen falls back
   /// to the source's own site plus the reference number.
-  officialUrl   String?
-  rawFileKey    String?  // S3 key of the raw daily file this row came from
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  scores        Score[]
+  officialUrl        String?
+  rawFileKey         String? // S3 key of the raw daily file this row came from
+  /// The source's own notice type text, and its normalized kind
+  noticeType         String?
+  noticeKind         NoticeKind @default(BID)
+  /// The buyer's solicitation number, which links a notice to its award later
+  solicitationNumber String?
+  /// Set when the notice left the source's open file, cleared if it returns.
+  /// Withdrawn rows are neither scored nor listed.
+  withdrawnAt        DateTime?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  scores             Score[]
 
   @@unique([sourceId, externalId])
   @@index([closesAt])
+  @@index([regions], type: Gin)
+  @@index([sourceId, withdrawnAt])
   @@map("tender")
 }
 

@@ -46,7 +46,7 @@ export const REASON_CODES = [
 ] as const;
 
 export type ReasonCode = (typeof REASON_CODES)[number];
-// Params hold codes (category, buyer type, region, team size band,
+// Params hold codes (category, buyer type, regions, team size band,
 // certification), never English labels, so a French message can label them
 // itself. Only `group` (a set-aside) quotes the tender's own words.
 export type ReasonParams = Record<string, string | number | string[]>;
@@ -122,9 +122,8 @@ export function buildReasons(result: ScoreResult, tender: { title: string; descr
   // ---- gate and location -------------------------------------------------
   for (const blocker of result.gate.blockers) {
     if (blocker.code === "regionMismatch") {
-      ruleOut.push(
-        reason("regionMismatch", { region: blocker.region }, `Outside the provinces you work in: ${labelFor(REGION_LABELS, blocker.region)}`),
-      );
+      const labels = blocker.regions.map((code) => labelFor(REGION_LABELS, code)).join(", ");
+      ruleOut.push(reason("regionMismatch", { regions: blocker.regions }, `Outside the provinces you work in: ${labels}`));
     } else {
       ruleOut.push(reason("setAside", { group: blocker.group }, `Set aside for ${blocker.group}`));
     }

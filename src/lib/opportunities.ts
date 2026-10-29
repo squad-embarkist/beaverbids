@@ -5,6 +5,7 @@ import type { ScoreBand } from "@/lib/schemas/vocab";
 import type { ReasonSet } from "@/lib/scoring/reasons";
 import { parseFactors, parseReasons } from "@/lib/scoring/stored";
 import type { FactorPoints } from "@/lib/scoring/types";
+import { openTenderFilters } from "@/lib/tenders";
 
 // Query builder and serializer for GET /api/opportunities and the list
 // page. Pure enough to unit test with a mocked client; the route handler
@@ -69,13 +70,19 @@ export type OpportunityItem = {
   buyerType: string | null;
   description: string;
   categoryCodes: string[];
-  region: string;
+  // Province codes, or ["CA"] for all of Canada.
+  regions: string[];
   valueMin: number | null;
   valueMax: number | null;
   publishedAt: string;
   closesAt: string;
   language: string;
   officialUrl: string | null;
+  noticeType: string | null;
+  noticeKind: string;
+  // Set when the notice left the source's open file. Such a row is kept out
+  // of the list but still opens from a direct link.
+  withdrawnAt: string | null;
   source: { code: string; name: string; baseUrl: string };
   score: ScoreSummary;
 };
@@ -101,13 +108,16 @@ export const tenderSelect = {
   buyerType: true,
   description: true,
   categoryCodes: true,
-  region: true,
+  regions: true,
   valueMin: true,
   valueMax: true,
   publishedAt: true,
   closesAt: true,
   language: true,
   officialUrl: true,
+  noticeType: true,
+  noticeKind: true,
+  withdrawnAt: true,
   source: { select: { code: true, name: true, baseUrl: true } },
 } satisfies Prisma.TenderSelect;
 
@@ -147,13 +157,16 @@ export function toOpportunityItem(row: TenderRow): OpportunityItem {
     buyerType: row.buyerType,
     description: row.description,
     categoryCodes: row.categoryCodes,
-    region: row.region,
+    regions: row.regions,
     valueMin: row.valueMin,
     valueMax: row.valueMax,
     publishedAt: row.publishedAt.toISOString(),
     closesAt: row.closesAt.toISOString(),
     language: row.language,
     officialUrl: row.officialUrl,
+    noticeType: row.noticeType,
+    noticeKind: row.noticeKind,
+    withdrawnAt: row.withdrawnAt?.toISOString() ?? null,
     source: row.source,
     score: toScoreSummary(row.scores[0]),
   };
@@ -163,15 +176,16 @@ export function toOpportunityItem(row: TenderRow): OpportunityItem {
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-// The filters that apply to the tender itself, whatever the sort.
+// The filters that apply to the tender itself, whatever the sort: the open
+// tender rules shared with scoring, then the user's filters.
 export function tenderFilters(query: OpportunitiesQuery, now: Date): Prisma.TenderWhereInput[] {
-  const and: Prisma.TenderWhereInput[] = [{ closesAt: { gt: now } }];
+  const and: Prisma.TenderWhereInput[] = openTenderFilters(now);
 
   if (query.closesBefore) and.push({ closesAt: { lte: query.closesBefore } });
   if (query.closingWithin != null) and.push({ closesAt: { lte: new Date(now.getTime() + query.closingWithin * DAY_MS) } });
   // A tender open to all of Canada matches every province filter.
   if (query.region) {
-    and.push(query.region === "CA" ? { region: "CA" } : { region: { in: [query.region, "CA"] } });
+    and.push(query.region === "CA" ? { regions: { has: "CA" } } : { regions: { hasSome: [query.region, "CA"] } });
   }
   if (query.category) and.push({ categoryCodes: { has: query.category } });
   // Value overlap: a tender with no published value never matches a value filter.
@@ -216,7 +230,9 @@ function closingKeyset(closesAtIso: string, id: string): Prisma.TenderWhereInput
 // ---- one listing ----------------------------------------------------------
 
 // The listing detail, in the same shape as a list item, with this
-// profile's score when one exists. Null when the tender does not exist.
+// profile's score when one exists. Null when the tender does not exist. A
+// withdrawn, closed or non-bid notice still opens here (the page explains
+// why it is not in the list).
 export async function getOpportunity(db: Pick<PrismaClient, "tender">, { id, profileId }: { id: string; profileId: string | null }): Promise<OpportunityItem | null> {
   const row = await db.tender.findUnique({
     where: { id },

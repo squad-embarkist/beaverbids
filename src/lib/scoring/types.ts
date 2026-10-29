@@ -38,7 +38,9 @@ export type ScoringTender = {
   description: string;
   buyerType?: BuyerTypeCode | string | null;
   categoryCodes: readonly (CategoryCode | string)[];
-  region: RegionCode | string;
+  // Province codes, or ["CA"] for all of Canada. Several when the notice
+  // names several provinces.
+  regions: readonly (RegionCode | string)[];
   valueMin?: number | null;
   valueMax?: number | null;
   closesAt: Date;
@@ -72,7 +74,7 @@ export type GateResult = {
 };
 
 export type GateBlocker =
-  | { code: "regionMismatch"; region: string }
+  | { code: "regionMismatch"; regions: string[] }
   | { code: "setAside"; group: string };
 
 // Recorded whenever the category cap rule applies, even when it did not

@@ -1,10 +1,12 @@
 import type { Prisma, PrismaClient } from "@/generated/prisma/client";
+import { openTenderFilters } from "@/lib/tenders";
 import { buildReasons, type ReasonSet } from "./reasons";
 import { MODEL_VERSION, scoreTender } from "./score";
 import type { ScoringProfile, ScoringTender } from "./types";
 
-// Scores every open tender for every company profile (or one profile) and
-// upserts the rows in the score table. Safe to rerun: the unique key on
+// Scores every open tender (src/lib/tenders.ts: not closed, not withdrawn,
+// a call for bids, from an active source) for every company profile (or one
+// profile) and upserts the rows in the score table. Safe to rerun: the unique key on
 // (tenderId, profileId) means a retry overwrites instead of duplicating.
 // Runs in the worker, never in a web request.
 
@@ -78,14 +80,14 @@ export async function scoreAll(db: Db, { profileId, now = new Date(), batchSize 
   });
 
   const tenders = await db.tender.findMany({
-    where: { closesAt: { gt: now } },
+    where: { AND: openTenderFilters(now) },
     select: {
       id: true,
       title: true,
       description: true,
       buyerType: true,
       categoryCodes: true,
-      region: true,
+      regions: true,
       valueMin: true,
       valueMax: true,
       closesAt: true,

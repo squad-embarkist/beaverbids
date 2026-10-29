@@ -8,13 +8,17 @@ import { languageMatch, regionMatches, scoreLocation } from "./location";
 
 describe("regionMatches", () => {
   it.each([
-    ["ON", ["ON"], true],
-    ["ON", ["BC"], false],
-    ["CA", ["BC"], true],
-    ["QC", ["CA"], true],
-    ["NU", ["MB", "SK", "NU"], true],
-  ])("tender %s vs profile %j is %s", (region, regions, expected) => {
-    expect(regionMatches(region, regions)).toBe(expected);
+    [["ON"], ["ON"], true],
+    [["ON"], ["BC"], false],
+    [["CA"], ["BC"], true],
+    [["QC"], ["CA"], true],
+    [["NU"], ["MB", "SK", "NU"], true],
+    // Several provinces on the notice: any one in common is a match.
+    [["ON", "QC"], ["QC"], true],
+    [["ON", "QC"], ["BC", "AB"], false],
+    [["ON", "CA"], ["BC"], true],
+  ])("tender %j vs profile %j is %s", (tenderRegions, profileRegions, expected) => {
+    expect(regionMatches(tenderRegions, profileRegions)).toBe(expected);
   });
 });
 
@@ -43,8 +47,8 @@ describe("scoreLocation (20)", () => {
       r: { residencyCanada: true, bondRequired: true },
       expected: 12 + 5 + 2,
     },
-    { name: "province outside the profile", t: { region: "BC" }, p: {}, r: {}, expected: 8 },
-    { name: "national tender for a provincial profile", t: { region: "CA" }, p: {}, r: {}, expected: 20 },
+    { name: "province outside the profile", t: { regions: ["BC"] }, p: {}, r: {}, expected: 8 },
+    { name: "national tender for a provincial profile", t: { regions: ["CA"] }, p: {}, r: {}, expected: 20 },
     { name: "French-only notice for an English profile", t: { language: "FR" }, p: {}, r: {}, expected: 15 },
     { name: "bilingual notice for an English profile", t: { language: "EN_FR" }, p: {}, r: {}, expected: 18 },
     { name: "bilingual text on an English notice counts as bilingual", t: {}, p: {}, r: { bilingualRequired: true }, expected: 18 },

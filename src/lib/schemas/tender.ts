@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { buyerTypeCode, categoryCode, languageCode, regionCode } from "./vocab";
+import { buyerTypeCode, categoryCode, languageCode, noticeKind, regionCode } from "./vocab";
 import { MAX_VALUE_CAD } from "./company-profile";
 
 // The normalized shape of a tender before it is saved. Every source adapter
@@ -16,7 +16,13 @@ export const tenderInputSchema = z
     buyerType: buyerTypeCode.nullish(),
     description: z.string().trim().min(1),
     categoryCodes: z.array(categoryCode).default([]),
-    region: regionCode,
+    // The provinces the work covers. Any CA collapses the list to ["CA"]
+    // (all of Canada), and duplicates are dropped, so the gate and the list
+    // filter always see one clean list.
+    regions: z
+      .array(regionCode)
+      .min(1)
+      .transform((codes) => (codes.includes("CA") ? ["CA" as const] : [...new Set(codes)])),
     valueMin: money.nullish(),
     valueMax: money.nullish(),
     publishedAt: z.coerce.date(),
@@ -26,6 +32,10 @@ export const tenderInputSchema = z
     // falls back to the source's own site and the reference number.
     officialUrl: z.url().nullable().default(null),
     rawFileKey: z.string().min(1).nullish(),
+    // The source's own type text and its normalized kind. Fixtures are bids.
+    noticeType: z.string().trim().min(1).max(100).nullable().default(null),
+    noticeKind: noticeKind.default("BID"),
+    solicitationNumber: z.string().trim().min(1).max(200).nullable().default(null),
   })
   .refine((t) => t.closesAt.getTime() > t.publishedAt.getTime(), {
     error: "closesBeforePublished",

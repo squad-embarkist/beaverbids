@@ -8,7 +8,7 @@ const valid = {
   buyerType: "municipal",
   description: "A tender used in tests.",
   categoryCodes: ["facilities-janitorial"],
-  region: "ON",
+  regions: ["ON"],
   valueMin: 100_000,
   valueMax: 200_000,
   publishedAt: "2026-10-01T00:00:00.000Z",
@@ -44,8 +44,23 @@ describe("tenderInputSchema", () => {
     expect(result.success).toBe(true);
   });
 
-  it("rejects an unknown region or category", () => {
-    expect(tenderInputSchema.safeParse({ ...valid, region: "XX" }).success).toBe(false);
+  it("rejects an unknown region, an empty region list or an unknown category", () => {
+    expect(tenderInputSchema.safeParse({ ...valid, regions: ["XX"] }).success).toBe(false);
+    expect(tenderInputSchema.safeParse({ ...valid, regions: [] }).success).toBe(false);
     expect(tenderInputSchema.safeParse({ ...valid, categoryCodes: ["nope"] }).success).toBe(false);
+  });
+
+  it("keeps several provinces, drops duplicates and collapses all of Canada", () => {
+    expect(tenderInputSchema.parse({ ...valid, regions: ["ON", "QC", "ON"] }).regions).toEqual(["ON", "QC"]);
+    expect(tenderInputSchema.parse({ ...valid, regions: ["ON", "CA", "QC"] }).regions).toEqual(["CA"]);
+  });
+
+  it("defaults the notice kind to a bid with no type text", () => {
+    const parsed = tenderInputSchema.parse(valid);
+    expect(parsed.noticeKind).toBe("BID");
+    expect(parsed.noticeType).toBeNull();
+    expect(parsed.solicitationNumber).toBeNull();
+    expect(tenderInputSchema.parse({ ...valid, noticeType: "Request for Information", noticeKind: "RFI" }).noticeKind).toBe("RFI");
+    expect(tenderInputSchema.safeParse({ ...valid, noticeKind: "nope" }).success).toBe(false);
   });
 });

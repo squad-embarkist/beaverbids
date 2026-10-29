@@ -7,7 +7,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/generated/prisma/client";
 import { listOpportunities } from "@/lib/opportunities";
 import { opportunitiesQuerySchema } from "@/lib/schemas/opportunities";
-import { FIXTURE_SOURCE, SAMPLE_TENDER_EXTERNAL_ID, fixtureTenderInputs, seedFixtures } from "./fixtures";
+import { FIXTURE_SOURCE, SAMPLE_TENDER_EXTERNAL_ID, fixtureSourceActive, fixtureTenderInputs, seedFixtures } from "./fixtures";
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -34,8 +34,10 @@ describe.skipIf(!databaseUrl)("seedFixtures against PostgreSQL", () => {
     const stored = await prisma.tender.count({ where: { sourceId: first.sourceId } });
     expect(stored).toBe(expected);
 
+    // Active outside production so the fixtures serve development and the
+    // tests; inactive in production so they never show beside real notices.
     const source = await prisma.source.findUniqueOrThrow({ where: { code: FIXTURE_SOURCE.code } });
-    expect(source.active).toBe(false);
+    expect(source.active).toBe(fixtureSourceActive());
   });
 
   it("includes the City of Sample IT managed services tender", async () => {
@@ -45,7 +47,7 @@ describe.skipIf(!databaseUrl)("seedFixtures against PostgreSQL", () => {
     });
     expect(sample?.title).toBe("IT Managed Services and Cloud Infrastructure Support");
     expect(sample?.buyer).toBe("City of Sample");
-    expect(sample?.region).toBe("ON");
+    expect(sample?.regions).toEqual(["ON"]);
     expect(sample?.source.code).toBe(FIXTURE_SOURCE.code);
   });
 
@@ -82,7 +84,7 @@ describe.skipIf(!databaseUrl)("seedFixtures against PostgreSQL", () => {
       now,
     });
     expect(ontario.items.length).toBeGreaterThan(0);
-    for (const item of ontario.items) expect(["ON", "CA"]).toContain(item.region);
+    for (const item of ontario.items) expect(item.regions.some((r) => r === "ON" || r === "CA")).toBe(true);
 
     const search = await listOpportunities(prisma, {
       query: opportunitiesQuerySchema.parse({ q: "city of sample", category: "it-managed-services-cloud" }),
