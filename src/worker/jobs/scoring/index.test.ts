@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { QUEUES, SCORE_ALL_SINGLETON_KEY, enqueueScoreProfile } from "@/lib/queues";
 
-const scoreAll = vi.hoisted(() => vi.fn(async () => ({ profiles: 1, tenders: 2, scored: 2, modelVersion: "rules-3" })));
+const scoreAll = vi.hoisted(() => vi.fn(async () => ({ profiles: 1, tenders: 2, scored: 2, modelVersion: "rules-4" })));
 vi.mock("@/lib/scoring/run", () => ({ scoreAll }));
 
 const captureException = vi.hoisted(() => vi.fn());

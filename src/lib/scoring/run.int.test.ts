@@ -77,7 +77,7 @@ describe.skipIf(!databaseUrl)("scoreAll against PostgreSQL", () => {
     expect(reasons.gaps[0]?.code).toBe("categoryCap");
 
     const versions = await prisma.score.findMany({ where: { profileId }, select: { modelVersion: true }, distinct: ["modelVersion"] });
-    expect(versions).toEqual([{ modelVersion: "rules-3" }]);
+    expect(versions).toEqual([{ modelVersion: "rules-4" }]);
   });
 
   it("shows up in GET /api/opportunities as a real score", async () => {

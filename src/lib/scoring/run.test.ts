@@ -2,6 +2,14 @@ import { describe, expect, it, vi } from "vitest";
 import { scoreAll, scoreRow } from "./run";
 import { NOW, daysFromNow, profile, tender } from "./test-helpers";
 
+// The real extractor, wrapped so the per-tender call count can be checked.
+const extractRequirements = vi.hoisted(() => vi.fn());
+vi.mock("./requirements", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("./requirements")>();
+  extractRequirements.mockImplementation(actual.extractRequirements);
+  return { ...actual, extractRequirements };
+});
+
 // Fake Prisma client: findMany returns the arrays given, upsert is recorded,
 // $transaction awaits what it is given.
 function fakeDb(profiles: ReturnType<typeof profile>[], tenders: ReturnType<typeof tender>[]) {
@@ -28,7 +36,7 @@ function fakeDb(profiles: ReturnType<typeof profile>[], tenders: ReturnType<type
 describe("scoreRow", () => {
   it("builds a score row with factors, reasons and the model version", () => {
     const row = scoreRow({ id: "t1", ...tender() }, { id: "p1", ...profile() }, NOW);
-    expect(row).toMatchObject({ tenderId: "t1", profileId: "p1", band: "HIGH", eligible: true, modelVersion: "rules-3", scoredAt: NOW });
+    expect(row).toMatchObject({ tenderId: "t1", profileId: "p1", band: "HIGH", eligible: true, modelVersion: "rules-4", scoredAt: NOW });
     expect(row.factors).toEqual(expect.objectContaining({ category: expect.any(Number) }));
     expect(row.reasons).toEqual(expect.objectContaining({ inFavour: expect.any(Array), summary: expect.any(Array) }));
     const reasons = row.reasons as { summary: { code: string; text: string }[] };
@@ -42,16 +50,18 @@ describe("scoreAll", () => {
 
     const summary = await scoreAll(db, { now: NOW });
 
-    expect(summary).toEqual({ profiles: 2, tenders: 2, scored: 4, modelVersion: "rules-3" });
+    expect(summary).toEqual({ profiles: 2, tenders: 2, scored: 4, modelVersion: "rules-4" });
     // The open-tender rules shared with the list: closed, withdrawn, non-bid
     // and inactive-source rows are never scored.
     expect(mocks.tender.findMany).toHaveBeenCalledWith(
-      expect.objectContaining({ where: { AND: [{ closesAt: { gt: NOW } }, { withdrawnAt: null }, { noticeKind: { in: ["BID", "UNKNOWN"] } }, { source: { active: true } }] } }),
+      expect.objectContaining({ where: { AND: [{ closesAt: { gt: NOW } }, { withdrawnAt: null }, { noticeKind: { in: ["BID", "UNKNOWN"] } }, { source: { active: true } }] }, orderBy: { id: "asc" } }),
     );
+    // One write per profile, so the whole set is never in memory at once.
+    expect(mocks.$transaction).toHaveBeenCalledTimes(2);
     expect(upserts).toHaveLength(4);
     expect(upserts[0]).toMatchObject({
       where: { tenderId_profileId: { tenderId: "t0", profileId: "p0" } },
-      create: { tenderId: "t0", profileId: "p0", modelVersion: "rules-3" },
+      create: { tenderId: "t0", profileId: "p0", modelVersion: "rules-4" },
     });
     const pairs = upserts.map((u) => (u as { where: { tenderId_profileId: { tenderId: string; profileId: string } } }).where.tenderId_profileId);
     expect(pairs).toEqual([
@@ -68,10 +78,21 @@ describe("scoreAll", () => {
     expect(mocks.companyProfile.findMany).toHaveBeenCalledWith(expect.objectContaining({ where: { id: "p0" } }));
   });
 
-  it("writes in batches", async () => {
+  it("writes in batches, per profile", async () => {
     const { db, mocks } = fakeDb([profile()], Array.from({ length: 7 }, () => tender()));
     await scoreAll(db, { now: NOW, batchSize: 3 });
     expect(mocks.$transaction).toHaveBeenCalledTimes(3);
+
+    const two = fakeDb([profile(), profile()], Array.from({ length: 7 }, () => tender()));
+    await scoreAll(two.db, { now: NOW, batchSize: 3 });
+    expect(two.mocks.$transaction).toHaveBeenCalledTimes(6);
+  });
+
+  it("extracts the requirements once per tender, not once per pair", async () => {
+    const { db } = fakeDb([profile(), profile(), profile()], [tender(), tender()]);
+    extractRequirements.mockClear();
+    await scoreAll(db, { now: NOW });
+    expect(extractRequirements).toHaveBeenCalledTimes(2);
   });
 
   it("does nothing without profiles", async () => {

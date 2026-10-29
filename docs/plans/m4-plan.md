@@ -261,4 +261,6 @@ Changes asked for and folded into the plan above: the row-count failure threshol
 
 ## Notes from the build
 
-Appended as each commit lands.
+**Commit 1, Oct 29, 2026 (`8495b7f`): schema and shared shape.** Lint, typecheck and the 434 unit and integration tests pass. The full Playwright suite passes against `next dev` (47 passed, 1 skipped by design). The migration converted the 55 fixture rows in place. CLAUDE.md still says the fixtures source is never active; commit 5 rewrites that paragraph for decision 9.
+
+**Known issue: the phone focus test under a production build.** Run against `next build` plus `next start` (which the suite does not normally do), `e2e/accessibility.spec.ts` "listing detail: has one H1, a main landmark and a visible focus path" fails on the phone project only: after `openListing` taps the first title link and the detail page loads, the first Tab press moves focus out of the document (`document.hasFocus()` is false and `activeElement` is `body`); the second Tab lands on the skip link. On desktop the first Tab lands on the breadcrumb link. The `development` branch built the same way, against a throwaway database, fails identically, so it predates M4 and comes from tap navigation under touch emulation on a production build, not from the page. It passes against `next dev`, which is what CI and `npm run e2e` use. Left as is; worth a note in the M5 accessibility pass if the suite ever runs against a build.

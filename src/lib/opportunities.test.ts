@@ -166,7 +166,7 @@ describe("toOpportunityItem", () => {
             eligible: true,
             factors: { category: 38, location: 19, size: 14, timeline: 12, credentials: 9 },
             reasons: { inFavour: [{ code: "categoryMatch", params: { category: "it-managed-services-cloud" }, text: "x" }], gaps: [], ruleOut: [], summary: [] },
-            modelVersion: "rules-3",
+            modelVersion: "rules-4",
             scoredAt: new Date("2026-10-23T06:00:00.000Z"),
           },
         ],
@@ -221,7 +221,7 @@ describe("listOpportunities by score", () => {
     eligible: true,
     factors: null,
     reasons: null,
-    modelVersion: "rules-3",
+    modelVersion: "rules-4",
     scoredAt: new Date("2026-10-23T06:00:00.000Z"),
     tender: { ...row({ id, closesAt: new Date(closesAt) }), scores: undefined },
   });

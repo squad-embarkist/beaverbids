@@ -1,14 +1,22 @@
 import type { Prisma, PrismaClient } from "@/generated/prisma/client";
 import { openTenderFilters } from "@/lib/tenders";
 import { buildReasons, type ReasonSet } from "./reasons";
+import { extractRequirements, type Requirements } from "./requirements";
 import { MODEL_VERSION, scoreTender } from "./score";
 import type { ScoringProfile, ScoringTender } from "./types";
 
 // Scores every open tender (src/lib/tenders.ts: not closed, not withdrawn,
 // a call for bids, from an active source) for every company profile (or one
-// profile) and upserts the rows in the score table. Safe to rerun: the unique key on
-// (tenderId, profileId) means a retry overwrites instead of duplicating.
-// Runs in the worker, never in a web request.
+// profile) and upserts the rows in the score table. Safe to rerun: the
+// unique key on (tenderId, profileId) means a retry overwrites instead of
+// duplicating. Runs in the worker, never in a web request.
+//
+// Memory and locks (M2 review follow-ups, built in M4): the text extractor
+// runs once per tender, not once per pair, and the rows are scored and
+// written one profile at a time, so the whole set is never in memory at
+// once. Tenders are read in id order and written in that order inside
+// every batch, so a score-profile job running beside the nightly score-all
+// takes its row locks in the same order and the two cannot deadlock.
 
 export type ScoreAllOptions = {
   profileId?: string;
@@ -41,8 +49,9 @@ export function scoreRow(
   tender: ScoringTender & { id: string },
   profile: ScoringProfile & { id: string },
   now: Date,
+  requirements: Requirements = extractRequirements(tender),
 ): ScoreRow {
-  const result = scoreTender(tender, profile, now);
+  const result = scoreTender(tender, profile, now, requirements);
   const reasons: ReasonSet = buildReasons(result, tender);
   return {
     tenderId: tender.id,
@@ -81,6 +90,7 @@ export async function scoreAll(db: Db, { profileId, now = new Date(), batchSize 
 
   const tenders = await db.tender.findMany({
     where: { AND: openTenderFilters(now) },
+    orderBy: { id: "asc" },
     select: {
       id: true,
       title: true,
@@ -95,25 +105,25 @@ export async function scoreAll(db: Db, { profileId, now = new Date(), batchSize 
     },
   });
 
-  const rows: ScoreRow[] = [];
+  const extracted = profiles.length > 0 ? tenders.map((tender) => ({ tender, requirements: extractRequirements(tender) })) : [];
+
+  let scored = 0;
   for (const profile of profiles) {
-    for (const tender of tenders) {
-      rows.push(scoreRow(tender, profile, now));
+    const rows = extracted.map(({ tender, requirements }) => scoreRow(tender, profile, now, requirements));
+    for (let start = 0; start < rows.length; start += batchSize) {
+      const batch = rows.slice(start, start + batchSize);
+      await db.$transaction(
+        batch.map(({ tenderId, profileId: pid, ...data }) =>
+          db.score.upsert({
+            where: { tenderId_profileId: { tenderId, profileId: pid } },
+            update: data,
+            create: { tenderId, profileId: pid, ...data },
+          }),
+        ),
+      );
     }
+    scored += rows.length;
   }
 
-  for (let start = 0; start < rows.length; start += batchSize) {
-    const batch = rows.slice(start, start + batchSize);
-    await db.$transaction(
-      batch.map(({ tenderId, profileId: pid, ...data }) =>
-        db.score.upsert({
-          where: { tenderId_profileId: { tenderId, profileId: pid } },
-          update: data,
-          create: { tenderId, profileId: pid, ...data },
-        }),
-      ),
-    );
-  }
-
-  return { profiles: profiles.length, tenders: tenders.length, scored: rows.length, modelVersion: MODEL_VERSION };
+  return { profiles: profiles.length, tenders: tenders.length, scored, modelVersion: MODEL_VERSION };
 }

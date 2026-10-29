@@ -59,7 +59,7 @@ describe("scoreTender", () => {
     expect(result.band).toBe(bandForTotal(result.total));
     expect(result.eligible).toBe(true);
     expect(result.cap).toBeNull();
-    expect(MODEL_VERSION).toBe("rules-3");
+    expect(MODEL_VERSION).toBe("rules-4");
   });
 
   it("scores the sample shape at 92 with 38, 19, 14, 12 and 9 and no cap", () => {
