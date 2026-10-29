@@ -1,9 +1,11 @@
 name: CI
 
-# Five named checks on every pull request: lint, typecheck, test,
-# prisma-validate and e2e. Mark the first four as required in the branch
-# protection rules for development, staging and main; e2e is not required
-# yet (decided Oct 28, 2026).
+# Named checks on every pull request: lint, typecheck, test,
+# prisma-validate, e2e and commit-messages. Mark lint, typecheck, test and
+# prisma-validate as required in the branch protection rules for
+# development, staging and main; e2e is not required yet (decided Oct 28,
+# 2026). commit-messages fails a pull request whose commits carry Claude
+# attribution lines, which .githooks/commit-msg strips locally.
 
 on:
   pull_request:
@@ -125,3 +127,26 @@ jobs:
             playwright-report
             test-results
           retention-days: 7
+
+  commit-messages:
+    name: commit-messages
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: No Claude attribution lines in the pull request's commits
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          offending=$(git log --format='%H%n%B%n--' "$BASE".."$HEAD" | grep -i -n -E '^(Co-Authored-By: Claude|Claude-Session:)' || true)
+          if [ -n "$offending" ]; then
+            echo "::error::Commit messages in this pull request carry Claude attribution lines. Run npm install so .githooks/commit-msg is active, then rewrite the commits."
+            echo "$offending"
+            exit 1
+          fi
+          echo "No attribution lines in $(git rev-list --count "$BASE".."$HEAD") commits."

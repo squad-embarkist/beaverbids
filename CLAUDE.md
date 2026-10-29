@@ -99,6 +99,7 @@ Canadian tender matching web app. Users answer a 5 step questionnaire and see te
 - Jobs must be safe to rerun. The daily import uses a singleton key
 - Only the CanadaBuys open data file is imported. Any other source needs written permission saved in docs/permissions first
 - Never commit secrets. Keep .env.example current
+- No Claude attribution in commit messages or pull request descriptions: no `Co-Authored-By: Claude` and no `Claude-Session:` lines. `.claude/settings.json` turns the attribution off, `.githooks/commit-msg` strips the lines (active after `npm install`, which points `core.hooksPath` at `.githooks`), and the `commit-messages` CI job fails a pull request that still carries them
 - Never edit a migration that has been applied. Add a new one
 - All user facing text goes through next-intl, in English and French
 - Write tests with the code. Scoring changes must keep the golden set in fixtures/ passing
