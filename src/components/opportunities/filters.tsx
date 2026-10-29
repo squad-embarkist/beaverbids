@@ -17,6 +17,8 @@ const CLOSING_OPTIONS = [7, 14, 30, 60];
 export async function Filters({ query }: { query: OpportunitiesQuery }) {
   const t = await getTranslations("Opportunities.filters");
   const tVocab = await getTranslations("Vocab");
+  // Reset returns to the plain list: filters, sort, band and the ineligible toggle.
+  const isDefault = !hasFilters(query) && query.sort === "score" && !query.includeIneligible;
 
   return (
     <section aria-labelledby="filters-title" className="flex flex-col gap-6 border border-line bg-surface p-5">
@@ -92,11 +94,9 @@ export async function Filters({ query }: { query: OpportunitiesQuery }) {
           <Button type="submit" variant="secondary" size="sm" className="h-11">
             {t("apply")}
           </Button>
-          {hasFilters(query) ? (
-            <ButtonLink href="/opportunities" variant="text" size="sm" className="h-11">
-              {t("clear")}
-            </ButtonLink>
-          ) : null}
+          <ButtonLink href="/opportunities" variant="text" size="sm" className="h-11" aria-disabled={isDefault ? true : undefined}>
+            {t("reset")}
+          </ButtonLink>
         </div>
       </form>
 
