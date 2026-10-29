@@ -19,6 +19,7 @@ function fakeBoss() {
     createQueue: vi.fn(async () => {}),
     updateQueue: vi.fn(async () => {}),
     schedule: vi.fn(async () => {}),
+    unschedule: vi.fn(async () => {}),
     send: vi.fn(async () => "job-id"),
     work: vi.fn(async (name: string, handler: Handler) => {
       handlers.set(name, handler);
@@ -67,6 +68,16 @@ describe("registerIngestJobs", () => {
     const boss = fakeBoss();
     await registerIngestJobs(boss, deps, { schedule: true, adapters: [] });
     expect(boss.schedule).not.toHaveBeenCalled();
+    expect(boss.unschedule).not.toHaveBeenCalled();
+  });
+
+  it("removes each adapter's schedule when scheduling is off (INGEST_SCHEDULE not on)", async () => {
+    const boss = fakeBoss();
+    await registerIngestJobs(boss, deps, { schedule: false, adapters: [alpha, beta] });
+    expect(boss.schedule).not.toHaveBeenCalled();
+    expect(boss.unschedule).toHaveBeenCalledTimes(2);
+    expect(boss.unschedule).toHaveBeenNthCalledWith(1, QUEUES.ingest, "alpha");
+    expect(boss.unschedule).toHaveBeenNthCalledWith(2, QUEUES.ingest, "beta");
   });
 
   it("runs the adapter named in the job with the shared deps and the queue", async () => {

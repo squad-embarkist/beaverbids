@@ -14,6 +14,7 @@
     "test": "vitest run",
     "worker": "tsx src/worker/index.ts",
     "ingest": "tsx src/worker/tools/ingest-once.ts",
+    "ingest:check": "tsx src/worker/tools/canadabuys-check.ts",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",

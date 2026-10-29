@@ -9,13 +9,18 @@ import type { CategoryCode } from "@/lib/schemas/vocab";
 // health services (85) map to none of the ten on purpose; unmapped codes are
 // counted on the run summary so the table can grow. First version from the
 // Oct 29, 2026 file; the M4 acceptance check reviews the uncertain entries.
+// A null entry is a class mapped to none on purpose, narrower than a family
+// that maps to a category; it is not reported as unmapped.
 
-const UNSPSC: Record<string, CategoryCode> = {
+type Entry = CategoryCode | null;
+
+const UNSPSC: Record<string, Entry> = {
   // 43 Information technology, broadcasting and telecommunications
   "43": "it-managed-services-cloud", // The segment itself (43000000), when a notice names nothing narrower
   "4319": "it-managed-services-cloud", // Communications devices and accessories
   "4320": "it-managed-services-cloud", // Components for IT or broadcasting or telecommunications
   "4321": "it-managed-services-cloud", // Computer equipment and accessories
+  "432120": null, // Computer display accessories (monitor arms, stands): office furnishing, not IT work (acceptance check, Oct 29)
   "4322": "it-managed-services-cloud", // Data voice or multimedia network equipment or platforms
   "432225": "cybersecurity-data-protection", // Network security equipment (firewalls, VPN, vulnerability assessment)
   "4323": "custom-software-saas", // Software
@@ -29,7 +34,7 @@ const UNSPSC: Record<string, CategoryCode> = {
   "811117": "custom-software-saas", // Management information systems MIS (database design, systems planning)
   "811118": "it-managed-services-cloud", // System and system component administration (LAN, WAN, help desk)
   "81111801": "cybersecurity-data-protection", // Computer or network or internet security
-  "811119": "it-managed-services-cloud", // Information retrieval systems
+  "811119": null, // Information retrieval systems: database and online subscriptions, a publisher's or data vendor's work (acceptance check, Oct 29)
   "811120": "it-managed-services-cloud", // Data services (data centre, disaster recovery)
   "811121": "it-managed-services-cloud", // Internet services
   "811122": "custom-software-saas", // Software maintenance and support
@@ -81,7 +86,7 @@ const UNSPSC: Record<string, CategoryCode> = {
   "51": "medical-equipment-pharma", // Drugs and pharmaceutical products
 };
 
-const GSIN: Record<string, CategoryCode> = {
+const GSIN: Record<string, Entry> = {
   D302: "it-managed-services-cloud", // Informatics professional and consulting services
   D304: "it-managed-services-cloud", // Data transmission service
   D399: "it-managed-services-cloud", // Telecommunications, other
@@ -99,12 +104,14 @@ const GSIN: Record<string, CategoryCode> = {
   T004: "management-consulting", // Media monitoring services
 };
 
-function longestPrefix(table: Record<string, CategoryCode>, code: string): CategoryCode | null {
+// The longest prefix in the table decides: a category, null for a class
+// mapped to none on purpose, or undefined when nothing in the table matches.
+function longestPrefix(table: Record<string, Entry>, code: string): Entry | undefined {
   for (let length = code.length; length > 0; length -= 1) {
-    const hit = table[code.slice(0, length)];
-    if (hit) return hit;
+    const key = code.slice(0, length);
+    if (key in table) return table[key];
   }
-  return null;
+  return undefined;
 }
 
 // Trailing zeros in a UNSPSC code mean "the whole family or class": 72000000
@@ -124,14 +131,14 @@ export function categoriesForCodes(unspsc: readonly string[], gsin: readonly str
     if (!code) continue;
     const hit = longestPrefix(UNSPSC, significantUnspsc(code));
     if (hit) codes.add(hit);
-    else unmapped.push(code);
+    else if (hit === undefined) unmapped.push(code);
   }
   for (const raw of gsin) {
     const code = raw.trim().toUpperCase();
     if (!code) continue;
     const hit = longestPrefix(GSIN, code);
     if (hit) codes.add(hit);
-    else unmapped.push(code);
+    else if (hit === undefined) unmapped.push(code);
   }
   return { codes: [...codes], unmapped };
 }

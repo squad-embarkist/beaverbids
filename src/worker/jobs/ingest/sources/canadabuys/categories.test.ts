@@ -64,6 +64,11 @@ describe("categoriesForCodes", () => {
     expect(categoriesForCodes([], [code])).toEqual({ codes: [expected], unmapped: [] });
   });
 
+  it("maps a class to none on purpose without reporting it", () => {
+    expect(categoriesForCodes(["43212002", "81111901", "81111900"], [])).toEqual({ codes: [], unmapped: [] });
+    expect(categoriesForCodes(["43212002", "43211900"], [])).toEqual({ codes: ["it-managed-services-cloud"], unmapped: [] });
+  });
+
   it("leaves environmental, research, health and goods codes unmapped and reports them", () => {
     expect(categoriesForCodes(["77101500", "85101700", "81141902", "22101500", "41100000"], ["N2310", "T006A"])).toEqual({
       codes: [],

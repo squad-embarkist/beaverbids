@@ -16,10 +16,12 @@ import type { SourceAdapter } from "./sources/types";
 // apart cover a portal that is late publishing its file.
 export const INGEST_QUEUE_OPTIONS = { policy: "stately", expireInSeconds: 1800, retryLimit: 2, retryDelay: 900 } as const;
 
-type Boss = Pick<PgBoss, "createQueue" | "updateQueue" | "schedule" | "work" | "send">;
+type Boss = Pick<PgBoss, "createQueue" | "updateQueue" | "schedule" | "unschedule" | "work" | "send">;
 
 export type RegisterIngestOptions = {
-  // Register the cron schedules (off for the tests and tools).
+  // Register the cron schedules (INGEST_SCHEDULE=on: staging and production).
+  // Off removes any schedule a previous start left in the database, so a
+  // laptop or CI worker never imports the real file on its own.
   schedule: boolean;
   // Source codes to import once right after start (INGEST_ON_STARTUP).
   startupSources?: readonly string[];
@@ -51,14 +53,17 @@ export async function registerIngestJobs(boss: Boss, deps: Omit<IngestDeps, "bos
     ),
   );
 
-  if (schedule) {
-    for (const adapter of adapters) {
-      const code = adapter.source.code;
+  for (const adapter of adapters) {
+    const code = adapter.source.code;
+    if (schedule) {
       // `missed: "once"` sends one job when a deploy straddled the slot.
       await boss.schedule(QUEUES.ingest, adapter.schedule.cron, { source: code }, { tz: adapter.schedule.tz, key: code, singletonKey: code, missed: "once" });
       log.info("ingest scheduled", { source: code, cron: adapter.schedule.cron, tz: adapter.schedule.tz });
+    } else {
+      await boss.unschedule(QUEUES.ingest, code);
     }
   }
+  if (!schedule) log.info("ingest schedule off (INGEST_SCHEDULE is not \"on\")", { sources: adapters.map((a) => a.source.code) });
 
   for (const code of startupSources) {
     adapterFor(code, adapters); // a typo in INGEST_ON_STARTUP stops the worker here, loudly

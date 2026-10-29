@@ -46,13 +46,14 @@ export async function main() {
     startupRun: process.env.NODE_ENV !== "production",
   });
 
-  // One scheduled import per registered source. INGEST_ON_STARTUP lists the
-  // sources to import once right away (development only).
+  // One scheduled import per registered source, only where INGEST_SCHEDULE
+  // is "on" (staging and production). INGEST_ON_STARTUP lists the sources
+  // to import once right away (development only).
   await registerIngestJobs(
     boss,
     { db: prisma, store, sentry },
     {
-      schedule: true,
+      schedule: process.env.INGEST_SCHEDULE?.trim().toLowerCase() === "on",
       startupSources: (process.env.INGEST_ON_STARTUP ?? "")
         .split(",")
         .map((s) => s.trim())

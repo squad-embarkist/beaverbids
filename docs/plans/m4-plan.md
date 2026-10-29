@@ -1,6 +1,6 @@
 # M4 CanadaBuys ingestion: build plan
 
-Oct 29, 2026 · Status: approved Oct 29, 2026 with the answers and changes recorded under "Approval" below. Built in five commits on `feature/m4-canadabuys-ingest`, each checked before the next starts.
+Oct 29, 2026 · Status: built Oct 29, 2026 on `feature/m4-canadabuys-ingest` in six commits (the five planned plus the notice page link), each checked before the next started; the local acceptance run passed and is recorded under "Acceptance report" at the end. Remaining for "done": the pull request into `development` merged. The unattended week on staging is an M5 launch check.
 
 Milestone M4 from docs/development-guide.md: a pg-boss schedule that runs each morning after CanadaBuys refreshes its open tender notices file, downloads the CSV, keeps the raw file (S3 in production, local disk in development), parses it with csv-parse against the column names in the CanadaBuys data dictionary, normalizes each notice into the shared tender shape, upserts on source plus external id, records an ingestRun row, queues scoring for every profile and checks in to Sentry Crons. A run with zero rows fails loudly. The pipeline sits behind a small source adapter interface in `src/worker/jobs/ingest/sources/` with CanadaBuys as the only implementation.
 
@@ -291,4 +291,107 @@ Changes asked for and folded into the plan above: the row-count failure threshol
 
 **Commit 4b, Oct 29, 2026: the notice page link.** Asked for at the commit 4 check after checking eight sample notices on canadabuys.canada.ca: a notice's page is the tender opportunities listing plus `tender-notice/` and the reference number as a slug (lower case, letters, digits and hyphens only: `SSC-26-00034400:T` opens at `ssc-26-00034400t`, `PW-_NCS-030-11940` at `pw-ncs-030-11940`; the underscore kept gives 404). Seven of the eight opened without an account; `cb-990-11745680` and, twice, `cb-329-8183335` answered 403, so a few notices are restricted. Two pages said "Expired" where the file says Open, which the closing-date filter already covers. The adapter builds the link (`sources/canadabuys/notice-url.ts`) into a new nullable `Tender.noticePageUrl` (migration `20261029200000_m4_notice_page_url`), the tender schema and `OpportunityItem` carry it, and the detail screen's notice link only chooses: a link in the file gives a primary button named by its domain ("Open the notice on merx.com") plus a secondary "View on CanadaBuys"; no link in the file gives the primary "Open the notice on CanadaBuys" with the reference number, the copy button and "If the notice does not open, it may need a CanadaBuys account."; neither (the fixtures) keeps the earlier fallback. No account and no login anywhere in the code. The reference number is not searchable on the site; it is only this slug.
 
+**Commit 5, Oct 29, 2026: acceptance and docs.** Also asked for at the commit 4b check: the ingest schedule registers only when `INGEST_SCHEDULE=on` (off by default on a laptop and in CI, on in staging and production); when it is off the worker removes any schedule a previous start left in the database, so the one the Playwright worker created locally on Oct 29 disappears on the next start. Documented in `.env.example` and CLAUDE.md. `npm run ingest:check -- <file.csv>` (`src/worker/tools/canadabuys-check.ts`) prints the category cap acceptance report; its verdict reads the notice titles for the profile's keywords and lists description-only hits for the human read, because a single generic word such as "development" in an engineering notice is not a read. CLAUDE.md gained the M4 ingestion paragraph, the API field list, the fixtures source flag, the staging volume and the rules-4 note, and lost the trailing-space filename note; the development guide's data model, scoring and ingestion tables follow. Lint, typecheck, 688 tests and the Playwright suite pass. The report follows.
+
 **Known issue: the phone focus test under a production build.** Run against `next build` plus `next start` (which the suite does not normally do), `e2e/accessibility.spec.ts` "listing detail: has one H1, a main landmark and a visible focus path" fails on the phone project only: after `openListing` taps the first title link and the detail page loads, the first Tab press moves focus out of the document (`document.hasFocus()` is false and `activeElement` is `body`); the second Tab lands on the skip link. On desktop the first Tab lands on the breadcrumb link. The `development` branch built the same way, against a throwaway database, fails identically, so it predates M4 and comes from tap navigation under touch emulation on a production build, not from the page. It passes against `next dev`, which is what CI and `npm run e2e` use. Left as is; worth a note in the M5 accessibility pass if the suite ever runs against a build.
+
+## Acceptance report (Oct 29, 2026)
+
+Run by the project owner with `npm run ingest -- canadabuys` against the local database (two runs, 05:52 and 07:01 UTC; the second filled the notice page links). The category cap check ran offline on the stored raw file with `npm run ingest:check`, after the table changes below. The scoring weights were not changed.
+
+**Run summary (07:01 UTC run, from `ingest_run.summary`).**
+
+| Field | Value |
+| --- | --- |
+| Rows found | 894 (previous successful run 894) |
+| Inserted, updated, withdrawn, restored | 0, 894, 0, 0 |
+| Skipped | 0 |
+| Warnings | none |
+| Duration | 17155 ms |
+| File | 6115661 bytes, SHA-256 `b53a18d9d66abb34...`, Last-Modified 2026-10-28T10:20:41.000Z, ETag `0x8DF34DD1E670744`, content type `application/octet-stream`, stored at `canadabuys/2026/10/29/openTenderNotice-ouvertAvisAppelOffres-070120Z.csv` |
+
+**Unmapped values (the run summary keeps the top 20 per table).**
+
+- Regions (all foreign places, mapped to CA): United States of America (6), Asia (4), Europe (4), Africa (3), Caribbean (3), Central America (3), Mexico (3), South America (3), Germany (2), Oceania (2), Algeria (1), China (1), Indonesia (1), Japan (1), Lebanon (1), Philippines (1), South Korea (1).
+- Buyers: none. Notice types: none.
+- Category codes, top 20 of 681 distinct: 41100000 (27), 56101700 (15), 81141902 (9), 25111900 (8), 40141600 (7), 25181700 (6), 25200000 (6), 55111500 (6), 73152108 (6), 80122001 (6), 85101700 (6), 92111700 (6), 22101500 (5), 25111500 (5), 25132102 (5), 39120000 (5), 39121700 (5), 41110000 (5), 77000000 (5), 77101500 (5). These are laboratory equipment (41), furniture (56), research and development (8114), vehicles and machinery (25), legal and real estate (8012, 8013), environmental (77) and health services (85), outside the ten categories on purpose.
+
+**Counts for the sample profile (Ontario IT firm) after the table changes.** > tsx src/worker/tools/canadabuys-check.ts .data/raw/canadabuys/2026/10/29/openTenderNotice-ouvertAvisAppelOffres-070120Z.csv. . In the database before the table changes the same profile had 30 High, 49 Medium, 385 capped Low and 260 gated.
+
+**High notices (27), title and score.**
+
+| Score | Reference | Title | Codes mapped to |
+| --- | --- | --- | --- |
+| 81 | `WS3430950409-Doc5344784278` | Electronic Health Record Platform (EHRP)-Invitation to Qualify (ITQ) R | custom-software-saas, it-managed-services-cloud |
+| 79 | `cb-869-30702733` | TBIPS Change Management Consultant Level 3 | custom-software-saas |
+| 79 | `cb-953-98325012` | IT Security Professional Services Under the Task-Based Services Supply | it-managed-services-cloud |
+| 79 | `WS3971158100-Doc3971158168` | Software Licensing Supply Arrangement (SLSA) RFSA | custom-software-saas |
+| 79 | `WS4125166145-Doc4243461216` | EN578-191593F RFSA - SaaS Method of Supply (GC Cloud) | custom-software-saas |
+| 78 | `SSC-26-00035268:T` | Data Erasure- RFP | custom-software-saas |
+| 78 | `cb-26-24814736` | Digital Talent Services | custom-software-saas |
+| 78 | `cb-313-36103614` | Gather data and maintain the alternative fuel station database | it-managed-services-cloud |
+| 78 | `cb-181-76348100` | Request for Supply Arrangement for Technical Integration Services for | it-managed-services-cloud, custom-software-saas |
+| 78 | `WS4219842924-Doc5603700321` | Ongoing Qualification RFSA - Perimeter Security Management System and | it-managed-services-cloud, cybersecurity-data-protection |
+| 78 | `WS5935625437-Doc5945491432` | Parliamentary Precinct Network Infrastructure Transformation | it-managed-services-cloud |
+| 77 | `cb-536-24115079` | IT Professional Services | management-consulting, custom-software-saas |
+| 77 | `cb-346-24044821` | Web-based Platform for Whole Building Life Cycle Analysis (WBLCA) and | custom-software-saas |
+| 76 | `SSC-26-00034400:T` | Local Internet Access Services (LIAS) | it-managed-services-cloud |
+| 76 | `SSC-22-00020507:T` | Local Internet Access Services RFSA | it-managed-services-cloud |
+| 76 | `SSC-26-00035216:T` | ATEN Products, or equivalent, for the Department of National Defence. | it-managed-services-cloud |
+| 76 | `WS4102449949-Doc4106230724` | W6399-22CA50C Miscellaneous Communication Equipment | it-managed-services-cloud |
+| 76 | `WS5286859961-Doc5287556087` | Communications Management and Monitoring Equipment RFSA | it-managed-services-cloud |
+| 76 | `WS4856241079-Doc5643313188` | ITQ results DIGITAL REGISTRY SOLUTION (DRS) U6265-275951-B | it-managed-services-cloud, custom-software-saas, cybersecurity-data-protection |
+| 76 | `WS4286933967-Doc4822970058` | Invitation to Qualify to Artificial Intelligence Source List | custom-software-saas |
+| 76 | `cb-965-17321735` | Application/Software Architect – Level 3 for Drupal | custom-software-saas, it-managed-services-cloud |
+| 76 | `WS5869934399-Doc5885635305` | Canadian Student Alcohol and Drugs Survey (CSADS). | it-managed-services-cloud |
+| 76 | `WS5942246975-Doc5942297703` | 5P300-260186- Geosystems Survey Equipment Replacement | it-managed-services-cloud |
+| 76 | `cb-327-26516930` | Simulation Hardware & Peripherals | it-managed-services-cloud |
+| 76 | `MX-444150458321` | RFP_IT_Maximo Spare Parts Tool_Phase 1_2026 | - |
+| 76 | `WS5820650376-Doc5820832341` | HCM Data Integration and Enablement Services | it-managed-services-cloud, custom-software-saas, cybersecurity-data-protection |
+| 76 | `WS3991178614-Doc5935815036` | Refresh #1 – RFSO EN578-221793-B_Digitization Services | it-managed-services-cloud |
+
+**30 of the other capped notices (every 19th by file order), title and the codes they carried.**
+
+| Score | Reference | Title | Codes in the file | Mapped to |
+| --- | --- | --- | --- | --- |
+| 49 | `MX-443841357513` | Open Construction Source List for CFB Halifax | - | none |
+| 49 | `MX-443841876262` | Open Construction Source List for Northern Canada | - | none |
+| 49 | `MX-444195744611` | Request for Expression of Interest (RFEOI) for Enniskillen Road Upgrad | - | none |
+| 40 | `cb-112-87725383` | Wheel Chocks / Cale de Roue Tire Chains / Ensemble De Chaines Pour Pne | 25172100 | none |
+| 49 | `cb-292-23373661` | Terminal Taper Pin Electrical | 39121400 | none |
+| 49 | `cb-629-72290055` | Simulation‑Based Nursing Education Services (SIMS), Ontario Region | 42300000, 42301500, 86101605 | medical-equipment-pharma |
+| 47 | `cb-811-34971855` | Control of invasive alien plant species | 70141603 | none |
+| 49 | `cb-4-54243300` | Request for Offers for the provision of Cleaning Services for the Emba | 76110000 | facilities-janitorial |
+| 49 | `cb-466-63260269` | Project Executive Consulting Services | 80101706 | management-consulting |
+| 49 | `PW-__HP-539-79947` | Buses, Electric | N2310 | none |
+| 49 | `WS4332350868-Doc4332354230` | E60HN-200ACS - Access Control Systems RFSA | 26121600, 32131000, 39121100, 39121300, 39121400, 39121500, 391... | none |
+| 49 | `WS5386713014-Doc5386719620` | E6TOR-25RM01 Compressed Gas and Welding Supplies | 12142101, 12142104, 12142105, 12142106, 23271700, 23271800, 241... | none |
+| 49 | `WS4095676068-Doc4095807190` | Buses, Electric RFSA | 25101502 | none |
+| 40 | `WS5769496901-Doc5769633356` | W684H-260279 - RFSA - Brush Clearing - CFB Halifax Various Sites | 70150000 | none |
+| 49 | `MX-443840130693` | Open Construction Source List for CFB Kingston | - | none |
+| 47 | `cb-866-65312742` | RFSA - British Columbia Coastwide Ecosystem Monitoring Service | 70100000, 70101602, 70101800 | none |
+| 49 | `cb-107-78365176` | CABLE, SPECIAL PURPOSE, ELECTRICAL | 26121500 | none |
+| 49 | `WS5932342839-Doc5933526112` | W0125-27TEM2 (B) Petroleum, Oil and Lubricant Products | 15120000, 15121500, 15121501, 15121503, 15121504, 15121509 | none |
+| 38 | `WS5902285068-Doc5918245600` | F1782-26C206 - CCGS Gordon Reid Alongside Refit | 78182000 | logistics-freight-3pl |
+| 37 | `cb-870-21953670` | Tube,Metallic | 40170000 | none |
+| 49 | `WS5790264815-Doc5790283285` | T86 Rooftop Units Replacement | 72000000 | commercial-construction |
+| 36 | `WS5576291337-Doc5897126663` | E6MON-26PQFL - Period 08 - RMSO Food - Fresh Fruits and Vegetables | 50300000, 50400000 | none |
+| 49 | `cb-426-96674657` | 74 Height-Adjustable Extended-Corner Workstations | 56101703 | none |
+| 43 | `WS5916589753-Doc5921893944` | RFP - SNOW REMOVAL AND ICE CONTROL SERVICES | 72102903 | facilities-janitorial |
+| 43 | `cb-118-86363151` | Supply, install , commission HVAC, lights and controls and associated | 30191800 | none |
+| 37 | `WS5862734181-Doc5895485610` | Class 5 Diesel Medium Truck with Flat deck | 25101917 | none |
+| 49 | `cb-957-88702220` | Office Furniture: Categories 1, 2,3,4,5 and 6 Jasper National Park | 56101500, 56101700 | none |
+| 40 | `WS5774350607-Doc5869818405` | W6899-270194 - Pre-fabricated structures - CFB Greenwood | 72121102, 95140000, 95141600, 95141700 | commercial-construction |
+| 34 | `cb-437-59896557` | De-Icer Spare Parts | 25101935, 25191500, 40101842, 46161506, 56111905 | none |
+| 36 | `WS5609648156-Doc5749913291` | W684Q-264141 - Laboratory Testing - RFSO | 77121707 | none |
+
+**The 43 and 81 notices held at Low by the cap: 61.** All read, none is managed IT, cybersecurity or custom software: they are professional engineering (8110: marine, electrical, civil, commissioning, dam and harbour design), earth sciences (8115: hydrography, LiDAR, surveying, archaeology, diving), research and development (8114: C4ISR, zero-emission propulsion, space technology, blast injury simulation), environmental consulting and a few goods with an 81 code attached (talc, a flatbed trailer). The tool's title measure flagged one, "High-Precision Control Network Eastern Bridge", on the word "network"; it is a geodetic survey control network (81151604, land surveying). Nineteen more carry a single generic word such as "development" or "security" in a long engineering description. **The check passes**: no 43 or 81 notice that reads as the profile's work is capped, and the sampled capped notices are all outside its categories. The cap rule for coded tenders stays as it is.
+
+**Table changes made during the check, and why.**
+
+- `432120` (computer display accessories: monitor arms and stands) now maps to none. It put "EP916-260561 Workspaces Cat 1-6", an office furniture notice, at 76 High because one of its five codes was a monitor arm.
+- `811119` (information retrieval systems: database and online information retrieval) now maps to none. It put "Flight passenger traffic and flight schedule data" and "Subscription Agent Services" at High; both are data and publication subscriptions, a vendor's product rather than IT services.
+- The category table gained a "none on purpose" entry type for these, narrower than the family above them, so they are not reported as unmapped. Three High and four Medium notices moved to Low; nothing moved up.
+- The real-file findings from commit 4 stand: the corrections to 811118, 811122, 811623, 811015 and 80161604, the family defaults for 43, 72, 76, 8111 and 8116, and the two Crown corporations.
+- Still High on hardware and data-collection codes, left as they are for the product owner to judge: "Geosystems Survey Equipment Replacement" (a GPS antenna class), "Simulation Hardware and Peripherals", "Miscellaneous Communication Equipment", "ATEN Products" (KVM hardware) and "Canadian Student Alcohol and Drugs Survey" (coded as data services). The ten categories have no "IT hardware" or "data collection" entry, so segment 43 and family 811120 both fall to managed services.
+- The stored scores in the local database were computed before the two table changes. The next import rewrites every notice's category codes and chains a rescore, so the database follows the table on its own.
