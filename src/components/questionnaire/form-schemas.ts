@@ -7,6 +7,7 @@ import {
   profileWorkSchema,
 } from "@/lib/schemas/company-profile";
 import type { Profile } from "@/lib/profile";
+import { PROVINCE_CODES } from "@/lib/schemas/vocab";
 import { CERTIFICATION_MESSAGE_KEYS } from "@/lib/scoring/labels";
 import type { CertificationCode } from "@/lib/scoring/requirements";
 
@@ -72,9 +73,17 @@ export const workFormSchema = z
   )
   .pipe(profileWorkSchema);
 
+// "All of Canada" and the full set of provinces mean the same thing, so
+// either one is stored as the single code CA.
+export function normalizeRegions(regions: string[]): string[] {
+  const provinces = regions.filter((r) => r !== "CA");
+  if (regions.includes("CA") || PROVINCE_CODES.every((p) => provinces.includes(p))) return ["CA"];
+  return provinces;
+}
+
 export const regionsFormSchema = z
   .object({ regions: codes } satisfies Record<keyof RegionsFormValues, z.ZodType>)
-  .transform((v) => ({ regions: v.regions }) as z.input<typeof profileRegionsSchema>)
+  .transform((v) => ({ regions: normalizeRegions(v.regions) }) as z.input<typeof profileRegionsSchema>)
   .pipe(profileRegionsSchema);
 
 export const sizeFormSchema = z
@@ -143,8 +152,10 @@ export function workDefaults(profile: Profile | null): WorkFormValues {
   };
 }
 
+// A profile that works everywhere shows every box ticked.
 export function regionsDefaults(profile: Profile | null): RegionsFormValues {
-  return { regions: profile?.regions ?? [] };
+  const regions = profile?.regions ?? [];
+  return { regions: regions.includes("CA") ? ["CA", ...PROVINCE_CODES] : regions };
 }
 
 export function sizeDefaults(profile: Profile | null): SizeFormValues {
