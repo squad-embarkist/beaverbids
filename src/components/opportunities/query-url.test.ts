@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { opportunitiesQuerySchema } from "@/lib/schemas/opportunities";
-import { hasFilters, opportunitiesHref } from "./query-url";
+import { activeFilterCount, hasFilters, opportunitiesHref } from "./query-url";
 
 describe("opportunitiesHref", () => {
   const query = opportunitiesQuerySchema.parse({ q: "sample", region: "ON", band: "HIGH", cursor: "abc", limit: "25" });
@@ -18,5 +18,11 @@ describe("opportunitiesHref", () => {
   it("knows whether any filter is set", () => {
     expect(hasFilters(query)).toBe(true);
     expect(hasFilters(opportunitiesQuerySchema.parse({ sort: "closing" }))).toBe(false);
+  });
+
+  it("counts everything a reset clears", () => {
+    expect(activeFilterCount(opportunitiesQuerySchema.parse({}))).toBe(0);
+    expect(activeFilterCount(query)).toBe(3);
+    expect(activeFilterCount(opportunitiesQuerySchema.parse({ sort: "closing", includeIneligible: "true", closingWithin: "7" }))).toBe(3);
   });
 });
