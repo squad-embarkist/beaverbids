@@ -1,0 +1,14 @@
+#!/bin/sh
+# Strips Claude attribution trailers from every commit message, whatever
+# wrote it. Active once `npm install` has run the prepare script, which
+# points core.hooksPath at this folder. CI runs the same check on every
+# pull request (.github/workflows/ci.yml, job commit-messages).
+#
+# Portable: POSIX sh and grep only, no sed -i (its flags differ between
+# BSD and GNU). grep -v exits 1 when nothing is left, which is not an error.
+
+msg="$1"
+tmp="$msg.stripped"
+
+grep -i -v -E '^(Co-Authored-By: Claude|Claude-Session:)' "$msg" > "$tmp" || true
+mv "$tmp" "$msg"
