@@ -31,7 +31,7 @@ function parseResult(ids: string[], extra: Partial<ParseResult> = {}): ParseResu
   return {
     tenders: ids.map((id) => input(id)),
     skipped: [],
-    unmapped: { categories: {}, regions: {}, buyers: {} },
+    unmapped: { categories: {}, regions: {}, buyers: {}, noticeTypes: {} },
     rowsFound: ids.length,
     ...extra,
   };
@@ -104,7 +104,7 @@ function fakeDeps({ existing = [], lastRowsFound = null }: { existing?: Existing
     }),
   };
   const boss = { send: vi.fn(async () => "job-1") };
-  const sentry = { captureCheckIn: vi.fn(() => "checkin-1"), captureException: vi.fn() };
+  const sentry = { captureCheckIn: vi.fn(() => "checkin-1"), captureException: vi.fn(), captureMessage: vi.fn() };
   const deps: IngestDeps = { db: db as unknown as IngestDeps["db"], store, boss, sentry, log: SILENT, now: NOW, batchSize: 2 };
   return { deps, db, calls, runUpdates, stored, store, boss, sentry };
 }
@@ -195,7 +195,7 @@ describe("runIngest, happy path", () => {
     const { deps, runUpdates, boss, sentry } = fakeDeps({ lastRowsFound: 3 });
     const parsed = parseResult(["A", "B", "C"], {
       skipped: [{ row: 4, externalId: null, reason: "missingId", detail: "" }],
-      unmapped: { categories: { "99999999": 2, "12345678": 5 }, regions: { Mars: 1 }, buyers: {} },
+      unmapped: { categories: { "99999999": 2, "12345678": 5 }, regions: { Mars: 1 }, buyers: {}, noticeTypes: {} },
       rowsFound: 4,
     });
     const summary = await runIngest(fakeAdapter(parsed), deps);
@@ -205,7 +205,7 @@ describe("runIngest, happy path", () => {
       where: { id: "run-1" },
       data: { status: "SUCCEEDED", finishedAt: expect.any(Date), rowsFound: 4, summary: expect.objectContaining({ inserted: 3, previousRowsFound: 3 }) },
     });
-    expect(summary.unmapped).toEqual({ categories: [["12345678", 5], ["99999999", 2]], regions: [["Mars", 1]], buyers: [] });
+    expect(summary.unmapped).toEqual({ categories: [["12345678", 5], ["99999999", 2]], regions: [["Mars", 1]], buyers: [], noticeTypes: [] });
     expect(summary.file).toEqual({
       key: "testsource/2026/10/29/open-notices-140012Z.csv",
       location: "/raw/testsource/2026/10/29/open-notices-140012Z.csv",
@@ -235,6 +235,29 @@ describe("runIngest, happy path", () => {
     const summary = await runIngest(adapter, deps);
     expect(summary.warnings).toEqual(["staleFile"]);
     expect(SILENT.warn).toHaveBeenCalledWith("ingest file is stale", expect.objectContaining({ source: "testsource" }));
+  });
+
+  it("warns Sentry, but passes, when more than 10 percent of the rows were skipped", async () => {
+    const { deps, sentry } = fakeDeps();
+    const skipped = [2, 3].map((row) => ({ row, externalId: null, reason: "missingReference", detail: "" }));
+    const summary = await runIngest(fakeAdapter(parseResult(Array.from({ length: 8 }, (_, i) => `N${i}`), { rowsFound: 10, skipped })), deps);
+
+    expect(summary).toMatchObject({ inserted: 8, warnings: ["highSkipRate"], skipped: { total: 2, byReason: { missingReference: 2 } } });
+    expect(sentry.captureMessage).toHaveBeenCalledWith("testsource: 2 of 10 rows skipped (20 percent)", {
+      level: "warning",
+      tags: { source: "testsource", ingestRunId: "run-1" },
+      extra: { byReason: { missingReference: 2 } },
+    });
+    expect(sentry.captureException).not.toHaveBeenCalled();
+    expect(sentry.captureCheckIn).toHaveBeenLastCalledWith(expect.objectContaining({ status: "ok" }));
+  });
+
+  it("does not warn at exactly 10 percent skipped", async () => {
+    const { deps, sentry } = fakeDeps();
+    const skipped = [{ row: 10, externalId: null, reason: "missingReference", detail: "" }];
+    const summary = await runIngest(fakeAdapter(parseResult(Array.from({ length: 9 }, (_, i) => `N${i}`), { rowsFound: 10, skipped })), deps);
+    expect(summary.warnings).toEqual([]);
+    expect(sentry.captureMessage).not.toHaveBeenCalled();
   });
 
   it("passes at exactly 70 percent of the last successful run", async () => {

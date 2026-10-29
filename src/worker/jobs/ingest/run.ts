@@ -23,7 +23,7 @@ import type { ExistingTender, Logger, ParseResult, SkippedRow, SourceAdapter, Un
 
 export type IngestDb = Pick<PrismaClient, "source" | "ingestRun" | "tender" | "$transaction">;
 
-export type IngestSentry = Pick<typeof Sentry, "captureCheckIn" | "captureException">;
+export type IngestSentry = Pick<typeof Sentry, "captureCheckIn" | "captureException" | "captureMessage">;
 
 export type IngestDeps = {
   db: IngestDb;
@@ -46,6 +46,11 @@ export const MIN_ROW_SHARE = 0.7;
 // and our data is simply unchanged.
 export const STALE_FILE_HOURS = 36;
 
+// More skipped rows than this share of the file is a Sentry warning (not a
+// failure): the run still writes what it could read, and someone looks at
+// the skipped reasons that morning.
+export const MAX_SKIP_SHARE = 0.1;
+
 export const FETCH_TIMEOUT_MS = 120_000;
 
 // Sentry Crons: one monitor per source, created by the first check-in.
@@ -66,7 +71,7 @@ export type IngestSummary = {
   withdrawn: number;
   restored: number;
   skipped: { total: number; byReason: Record<string, number> };
-  unmapped: { categories: [string, number][]; regions: [string, number][]; buyers: [string, number][] };
+  unmapped: { categories: [string, number][]; regions: [string, number][]; buyers: [string, number][]; noticeTypes: [string, number][] };
   file: { key: string; location: string; bytes: number; sha256: string; contentType: string; lastModified: string | null; etag: string | null };
   warnings: string[];
   durationMs: number;
@@ -155,6 +160,13 @@ export async function runIngest(adapter: SourceAdapter, deps: IngestDeps): Promi
       throw new IngestError("rowCountDropped", `${code}: ${parsed.rowsFound} rows, under ${Math.round(MIN_ROW_SHARE * 100)} percent of the last successful run (${previousRowsFound})`);
     }
     logSkipped(log, fields, parsed.skipped);
+    const skippedByReason = countBy(parsed.skipped.map((s) => s.reason));
+    if (parsed.skipped.length > parsed.rowsFound * MAX_SKIP_SHARE) {
+      warnings.push("highSkipRate");
+      const message = `${code}: ${parsed.skipped.length} of ${parsed.rowsFound} rows skipped (${Math.round((parsed.skipped.length / parsed.rowsFound) * 100)} percent)`;
+      log.warn("ingest skipped many rows", { ...fields, skipped: parsed.skipped.length, rowsFound: parsed.rowsFound, byReason: skippedByReason });
+      sentry?.captureMessage(message, { level: "warning", tags: { source: code, ingestRunId: run.id }, extra: { byReason: skippedByReason } });
+    }
 
     // 7. Write. New ids are inserted, known ids updated, in external id order
     // and in batches, each batch one transaction.
@@ -202,7 +214,7 @@ export async function runIngest(adapter: SourceAdapter, deps: IngestDeps): Promi
       updated,
       withdrawn: withdrawnResult.count,
       restored,
-      skipped: { total: parsed.skipped.length, byReason: countBy(parsed.skipped.map((s) => s.reason)) },
+      skipped: { total: parsed.skipped.length, byReason: skippedByReason },
       unmapped: topUnmapped(parsed.unmapped),
       file: {
         key: stored.key,
@@ -290,7 +302,7 @@ function topUnmapped(unmapped: UnmappedValues): IngestSummary["unmapped"] {
     Object.entries(counts)
       .sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1))
       .slice(0, UNMAPPED_TOP);
-  return { categories: top(unmapped.categories), regions: top(unmapped.regions), buyers: top(unmapped.buyers) };
+  return { categories: top(unmapped.categories), regions: top(unmapped.regions), buyers: top(unmapped.buyers), noticeTypes: top(unmapped.noticeTypes) };
 }
 
 // Skipped rows never fail the run; the first few of each reason are logged

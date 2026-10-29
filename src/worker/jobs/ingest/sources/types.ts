@@ -56,10 +56,13 @@ export type SkippedRow = {
   detail: string;
 };
 
+// Values the adapter's tables did not know, with how often each appeared.
+// Reported on the run summary (top 20 per table) so the tables can grow.
 export type UnmappedValues = {
   categories: Record<string, number>;
   regions: Record<string, number>;
   buyers: Record<string, number>;
+  noticeTypes: Record<string, number>;
 };
 
 export type ParseResult = {

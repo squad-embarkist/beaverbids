@@ -77,7 +77,7 @@ describe("registerIngestJobs", () => {
     expect(runIngest).toHaveBeenCalledWith(beta, { ...deps, boss });
   });
 
-  it("fails a job for an unknown or missing source before anything runs", async () => {
+  it("fails a job for an unknown, empty or missing source before anything runs", async () => {
     const boss = fakeBoss();
     await registerIngestJobs(boss, deps, { schedule: false, adapters: [alpha] });
     runIngest.mockClear();
@@ -86,6 +86,9 @@ describe("registerIngestJobs", () => {
     await expect(boss.handlers.get(QUEUES.ingest)!([{ id: "j2", data: { source: "merx" } }])).rejects.toThrow(/No source adapter is registered for "merx" \(known: alpha\)/);
     await expect(boss.handlers.get(QUEUES.ingest)!([{ id: "j3", data: {} }])).rejects.toThrow();
     await expect(boss.handlers.get(QUEUES.ingest)!([{ id: "j4", data: null }])).rejects.toThrow();
+    await expect(boss.handlers.get(QUEUES.ingest)!([{ id: "j5", data: { source: "" } }])).rejects.toThrow();
+    await expect(boss.handlers.get(QUEUES.ingest)!([{ id: "j6", data: { source: "   " } }])).rejects.toThrow();
+    await expect(boss.handlers.get(QUEUES.ingest)!([{ id: "j7", data: { source: 42 } }])).rejects.toThrow();
 
     expect(runIngest).not.toHaveBeenCalled();
     // The pipeline reports its own failures with the run id; the wrapper does not report twice.
