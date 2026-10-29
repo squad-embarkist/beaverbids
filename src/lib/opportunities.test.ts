@@ -34,6 +34,7 @@ function row(overrides: Partial<Parameters<typeof toOpportunityItem>[0]> = {}) {
     closesAt: new Date("2026-11-01T00:00:00.000Z"),
     language: "EN" as const,
     officialUrl: "https://example.com/fixtures/FIXTURE-0001",
+    noticePageUrl: null,
     source: { code: "fixtures", name: "Fixture tenders (fictional)", baseUrl: "https://example.com/fixtures" },
     scores: [],
     ...overrides,

@@ -119,6 +119,13 @@ describe("parseCanadaBuys on the sample", () => {
     expect(result.unmapped.noticeTypes).toEqual({});
   });
 
+  it("builds the notice page link from the reference number for every row", () => {
+    expect(byRow(7).noticePageUrl).toBe("https://canadabuys.canada.ca/en/tender-opportunities/tender-notice/ssc-26-00034400t");
+    expect(byRow(20).noticePageUrl).toBe("https://canadabuys.canada.ca/en/tender-opportunities/tender-notice/pw-ncs-030-11940");
+    expect(byRow(10).noticePageUrl).toBe("https://canadabuys.canada.ca/en/tender-opportunities/tender-notice/ws4052927717-doc4053526199");
+    expect(result.tenders.every((t) => t.noticePageUrl?.startsWith("https://canadabuys.canada.ca/en/tender-opportunities/tender-notice/"))).toBe(true);
+  });
+
   it("keeps the notice link where there is one and leaves null otherwise", () => {
     expect(byRow(3).officialUrl).toBe("https://www.merx.com/public/solicitations/3776296409/abstract?language=EN");
     expect(byRow(10).officialUrl).toMatch(/^https:\/\/portal\.us\.bn\.cloud\.ariba\.com\//);

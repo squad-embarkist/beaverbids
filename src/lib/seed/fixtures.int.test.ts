@@ -7,6 +7,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/generated/prisma/client";
 import { listOpportunities } from "@/lib/opportunities";
 import { opportunitiesQuerySchema } from "@/lib/schemas/opportunities";
+import { openTenderFilters } from "@/lib/tenders";
 import { FIXTURE_SOURCE, SAMPLE_TENDER_EXTERNAL_ID, fixtureSourceActive, fixtureTenderInputs, seedFixtures } from "./fixtures";
 
 const databaseUrl = process.env.DATABASE_URL;
@@ -53,7 +54,7 @@ describe.skipIf(!databaseUrl)("seedFixtures against PostgreSQL", () => {
 
   it("pages through every open fixture tender exactly once with the cursor", async () => {
     const expectedIds = new Set(
-      (await prisma.tender.findMany({ where: { closesAt: { gt: now } }, select: { id: true } })).map((t) => t.id),
+      (await prisma.tender.findMany({ where: { AND: openTenderFilters(now) }, select: { id: true } })).map((t) => t.id),
     );
 
     const seen: string[] = [];
@@ -70,7 +71,7 @@ describe.skipIf(!databaseUrl)("seedFixtures against PostgreSQL", () => {
       expect(page.items.length).toBeLessThanOrEqual(20);
       for (const item of page.items) expect(item.score.placeholder).toBe(true);
       cursor = page.nextCursor ?? undefined;
-    } while (cursor && pages < 20);
+    } while (cursor && pages < 100); // room for the real CanadaBuys rows beside the fixtures
 
     expect(new Set(seen).size).toBe(seen.length);
     expect(new Set(seen)).toEqual(expectedIds);

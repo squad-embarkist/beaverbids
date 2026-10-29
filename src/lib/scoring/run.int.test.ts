@@ -9,6 +9,7 @@ import { listOpportunities } from "@/lib/opportunities";
 import { opportunitiesQuerySchema } from "@/lib/schemas/opportunities";
 import { SAMPLE_TENDER_EXTERNAL_ID, seedFixtures } from "@/lib/seed/fixtures";
 import { SAMPLE_PROFILE } from "@/lib/seed/sample-profile";
+import { openTenderFilters } from "@/lib/tenders";
 import { MODEL_VERSION } from "./score";
 import { scoreAll } from "./run";
 
@@ -39,7 +40,9 @@ describe.skipIf(!databaseUrl)("scoreAll against PostgreSQL", () => {
   });
 
   it("writes one score per open tender for the profile, and reruns without duplicates", async () => {
-    const openTenders = await prisma.tender.count({ where: { closesAt: { gt: now } } });
+    // The same open-tender rules scoreAll uses, so real CanadaBuys rows in the
+    // local database (closed, withdrawn or non-bid ones excluded) count too.
+    const openTenders = await prisma.tender.count({ where: { AND: openTenderFilters(now) } });
     expect(openTenders).toBeGreaterThan(0);
 
     const first = await scoreAll(prisma, { profileId, now });
@@ -91,10 +94,26 @@ describe.skipIf(!databaseUrl)("scoreAll against PostgreSQL", () => {
   });
 
   it("hides ineligible tenders from the default list and shows them with includeIneligible", async () => {
-    const hidden = await listOpportunities(prisma, { query: opportunitiesQuerySchema.parse({ limit: "100" }), profileId, now });
-    expect(hidden.items.every((i) => i.score.eligible)).toBe(true);
+    // Pages through the whole list: with real CanadaBuys rows present the
+    // gated notices sit far below the first page.
+    async function allItems(extra: Record<string, string> = {}) {
+      const items = [];
+      let cursor: string | undefined;
+      do {
+        const page = await listOpportunities(prisma, { query: opportunitiesQuerySchema.parse({ limit: "100", ...extra, ...(cursor ? { cursor } : {}) }), profileId, now });
+        items.push(...page.items);
+        cursor = page.nextCursor ?? undefined;
+      } while (cursor);
+      return items;
+    }
+    const ineligible = await prisma.score.count({ where: { profileId, eligible: false, tender: { AND: openTenderFilters(now) } } });
+    expect(ineligible).toBeGreaterThan(0);
 
-    const all = await listOpportunities(prisma, { query: opportunitiesQuerySchema.parse({ limit: "100", includeIneligible: "true" }), profileId, now });
-    expect(all.items.length).toBeGreaterThan(hidden.items.length);
+    const hidden = await allItems();
+    expect(hidden.every((i) => i.score.eligible)).toBe(true);
+
+    const all = await allItems({ includeIneligible: "true" });
+    expect(all.length).toBe(hidden.length + ineligible);
+    expect(all.filter((i) => !i.score.eligible)).toHaveLength(ineligible);
   });
 });

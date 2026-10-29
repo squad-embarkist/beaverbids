@@ -536,9 +536,12 @@
     },
     "notice": {
       "open": "Open the notice on {source}",
+      "openOn": "Open the notice on {domain}",
+      "viewOnSource": "View on {source}",
       "opensNewTab": "opens in a new tab",
       "find": "Find it on {source}",
       "noLink": "This notice has no direct link. Search {source} for the reference number.",
+      "mayNeedAccount": "If the notice does not open, it may need a {source} account.",
       "copy": "Copy reference",
       "copied": "Copied"
     },

@@ -6,6 +6,7 @@ import { buyerTypeFor } from "./buyers";
 import { COLUMNS, type ColumnKey } from "./columns";
 import { categoriesForCodes } from "./categories";
 import { noticeKindFor } from "./notice-kind";
+import { noticePageUrlFor } from "./notice-url";
 import { tenderRegions } from "./regions";
 import { cleanHtml, collapseWhitespace, splitStarred } from "./text";
 
@@ -86,6 +87,7 @@ export function parseCanadaBuys(body: Buffer, ctx: ParseContext): ParseResult {
       closesAt,
       language: "EN",
       officialUrl: httpUrl(get("noticeUrl")),
+      noticePageUrl: noticePageUrlFor(externalId),
       rawFileKey: ctx.rawFileKey,
       noticeType: noticeType || null,
       noticeKind: kind.kind,

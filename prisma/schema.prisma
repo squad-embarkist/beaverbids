@@ -223,6 +223,9 @@ model Tender {
   /// no link (more than half of CanadaBuys notices); the screen falls back
   /// to the source's own site plus the reference number.
   officialUrl        String?
+  /// The notice's own page on the source portal, built by the adapter from
+  /// the reference number (M4). Null for sources without one (fixtures).
+  noticePageUrl      String?
   rawFileKey         String? // S3 key of the raw daily file this row came from
   /// The source's own notice type text, and its normalized kind
   noticeType         String?

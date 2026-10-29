@@ -11,8 +11,8 @@ import { parseCanadaBuys } from "./parse";
 
 export const CANADABUYS_OPEN_TENDERS_URL = "https://canadabuys.canada.ca/opendata/pub/openTenderNotice-ouvertAvisAppelOffres.csv";
 
-// Notice pages live under this path by reference number; the detail screen
-// uses baseUrl when a notice has no link of its own.
+// The tender opportunities listing. Notice pages live under it by reference
+// number (notice-url.ts).
 export const CANADABUYS_BASE_URL = "https://canadabuys.canada.ca/en/tender-opportunities";
 
 export const CANADABUYS_SOURCE = {

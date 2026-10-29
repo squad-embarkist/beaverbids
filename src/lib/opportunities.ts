@@ -78,6 +78,8 @@ export type OpportunityItem = {
   closesAt: string;
   language: string;
   officialUrl: string | null;
+  // The notice's page on the source portal (null for the fixtures)
+  noticePageUrl: string | null;
   noticeType: string | null;
   noticeKind: string;
   // Set when the notice left the source's open file. Such a row is kept out
@@ -115,6 +117,7 @@ export const tenderSelect = {
   closesAt: true,
   language: true,
   officialUrl: true,
+  noticePageUrl: true,
   noticeType: true,
   noticeKind: true,
   withdrawnAt: true,
@@ -164,6 +167,7 @@ export function toOpportunityItem(row: TenderRow): OpportunityItem {
     closesAt: row.closesAt.toISOString(),
     language: row.language,
     officialUrl: row.officialUrl,
+    noticePageUrl: row.noticePageUrl,
     noticeType: row.noticeType,
     noticeKind: row.noticeKind,
     withdrawnAt: row.withdrawnAt?.toISOString() ?? null,

@@ -31,6 +31,9 @@ export const tenderInputSchema = z
     // Null when the source file carries no link; the listing detail then
     // falls back to the source's own site and the reference number.
     officialUrl: z.url().nullable().default(null),
+    // The notice's page on the source portal, built by the adapter from the
+    // reference number. The screen links to it without knowing the rule.
+    noticePageUrl: z.url().nullable().default(null),
     rawFileKey: z.string().min(1).nullish(),
     // The source's own type text and its normalized kind. Fixtures are bids.
     noticeType: z.string().trim().min(1).max(100).nullable().default(null),
