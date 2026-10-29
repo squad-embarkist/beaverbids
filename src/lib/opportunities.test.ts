@@ -5,6 +5,7 @@ import {
   buildWhere,
   decodeCursor,
   encodeCursor,
+  getOpportunity,
   listOpportunities,
   PLACEHOLDER_SCORE,
   toOpportunityItem,
@@ -307,5 +308,21 @@ describe("listOpportunities by score", () => {
       OR: [{ closesAt: { gt: new Date("2026-11-01T00:00:00.000Z") } }, { closesAt: new Date("2026-11-01T00:00:00.000Z"), id: { gt: "u3" } }],
     });
     expect(page).toMatchObject({ items: [{ id: "u5" }], nextCursor: null });
+  });
+});
+
+describe("getOpportunity", () => {
+  it("reads one tender with this profile's score row, or null", async () => {
+    const findUnique = vi.fn().mockResolvedValue(row({ id: "t1" }));
+    const db = { tender: { findUnique } } as unknown as PrismaClient;
+
+    const item = await getOpportunity(db, { id: "t1", profileId: "profile-1" });
+    expect(findUnique).toHaveBeenCalledWith(
+      expect.objectContaining({ where: { id: "t1" }, select: expect.objectContaining({ scores: expect.objectContaining({ where: { profileId: "profile-1" } }) }) }),
+    );
+    expect(item).toMatchObject({ id: "t1", score: PLACEHOLDER_SCORE });
+
+    findUnique.mockResolvedValue(null);
+    expect(await getOpportunity(db, { id: "nope", profileId: null })).toBeNull();
   });
 });

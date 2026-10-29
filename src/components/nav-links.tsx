@@ -26,7 +26,7 @@ export function NavLinkList({ items, pathname }: { items: NavItem[]; pathname: s
             href={item.href}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "flex items-center border-b-4 px-2 font-sans text-button-sm font-condensed font-bold uppercase transition-colors focus-visible:outline-2 focus-visible:outline-paper focus-visible:outline-offset-[-2px]",
+              "flex items-center border-b-4 px-3 font-sans text-button-sm font-condensed font-bold uppercase whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-paper focus-visible:outline-offset-[-2px]",
               active ? "border-signal text-paper" : "border-transparent text-paper/75 hover:text-paper",
             )}
           >

@@ -23,16 +23,18 @@ export async function AppHeader({ children }: { children?: React.ReactNode }) {
       >
         {tCommon("skipToContent")}
       </a>
-      <div className="mx-auto flex h-14 w-full max-w-[1200px] items-center gap-6 px-4 md:px-8">
-        <Link href="/opportunities" className="shrink-0">
+      {/* Phones: wordmark and sign out on the first row, the two nav items on
+          a full-width second row. From 768 px everything sits on one row. */}
+      <div className="mx-auto flex w-full max-w-[1200px] flex-wrap items-center gap-x-6 px-4 md:h-14 md:flex-nowrap md:px-8">
+        <Link href="/opportunities" className="order-1 flex h-14 shrink-0 items-center">
           <Wordmark />
         </Link>
-        <nav aria-label={t("label")} className="flex h-full flex-1 items-stretch gap-1 sm:gap-4">
+        <div className="order-2 ml-auto flex h-14 shrink-0 items-center gap-3 md:order-3">{children}</div>
+        <nav aria-label={t("label")} className="order-3 -mx-4 flex h-12 basis-full items-stretch gap-1 border-t border-line-dark px-4 md:order-2 md:mx-0 md:h-14 md:basis-auto md:flex-1 md:border-t-0 md:px-0 md:gap-4">
           <Suspense fallback={<NavLinkList items={items} pathname={null} />}>
             <NavLinks items={items} />
           </Suspense>
         </nav>
-        <div className="flex shrink-0 items-center gap-3">{children}</div>
       </div>
     </header>
   );

@@ -9,7 +9,7 @@ import { opportunitiesQuerySchema } from "@/lib/schemas/opportunities";
 import { scoreAll } from "@/lib/scoring/run";
 import { SAMPLE_TENDER_EXTERNAL_ID, seedFixtures } from "@/lib/seed/fixtures";
 import { SAMPLE_PROFILE } from "@/lib/seed/sample-profile";
-import { listOpportunities, type OpportunityItem } from "./opportunities";
+import { getOpportunity, listOpportunities, type OpportunityItem } from "./opportunities";
 
 const databaseUrl = process.env.DATABASE_URL;
 const TEST_EMAIL = "opportunities-int-test@beaverbids.test";
@@ -61,6 +61,22 @@ describe.skipIf(!databaseUrl)("listOpportunities sort=score against PostgreSQL",
     const totals = items.map((i) => i.score.total ?? -1);
     for (let i = 1; i < totals.length; i += 1) expect(totals[i]).toBeLessThanOrEqual(totals[i - 1]);
     expect(items.every((i) => !i.score.placeholder)).toBe(true);
+  });
+
+  it("returns one listing with the stored factors, reasons and source link details", async () => {
+    const sample = await prisma.tender.findFirstOrThrow({ where: { externalId: SAMPLE_TENDER_EXTERNAL_ID } });
+    const item = await getOpportunity(prisma, { id: sample.id, profileId });
+    expect(item).toMatchObject({
+      externalId: SAMPLE_TENDER_EXTERNAL_ID,
+      source: { code: "fixtures", baseUrl: "https://example.com/fixtures" },
+      score: { total: 92, band: "HIGH", factors: { category: 38, location: 19, size: 14, timeline: 12, credentials: 9 } },
+    });
+    const score = item?.score;
+    expect(score && !score.placeholder ? score.reasons?.inFavour[0]?.code : null).toBe("categoryMatch");
+
+    const noLink = await prisma.tender.findFirstOrThrow({ where: { externalId: "FIXTURE-0054" } });
+    expect((await getOpportunity(prisma, { id: noLink.id, profileId }))?.officialUrl).toBeNull();
+    expect(await getOpportunity(prisma, { id: "00000000-0000-0000-0000-000000000000", profileId })).toBeNull();
   });
 
   it("appends tenders without a score row after the scored ones, each once", async () => {
