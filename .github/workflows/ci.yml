@@ -1,0 +1,152 @@
+name: CI
+
+# Named checks on every pull request: lint, typecheck, test,
+# prisma-validate, e2e and commit-messages. Mark lint, typecheck, test and
+# prisma-validate as required in the branch protection rules for
+# development, staging and main; e2e is not required yet (decided Oct 28,
+# 2026). commit-messages fails a pull request whose commits carry Claude
+# attribution lines, which .githooks/commit-msg strips locally.
+
+on:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DATABASE_URL: postgresql://beaverbids:beaverbids@localhost:5432/beaverbids?schema=public
+  BETTER_AUTH_SECRET: ci-only-secret-not-used-anywhere-else-0123456789
+  BETTER_AUTH_URL: http://localhost:3000
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  checks:
+    name: ${{ matrix.check }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        check: [lint, typecheck, test, prisma-validate]
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: beaverbids
+          POSTGRES_PASSWORD: beaverbids
+          POSTGRES_DB: beaverbids
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U beaverbids"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run db:generate
+
+      - name: prisma validate
+        if: matrix.check == 'prisma-validate'
+        run: npm run db:validate
+
+      - name: lint
+        if: matrix.check == 'lint'
+        run: npm run lint
+
+      - name: typecheck
+        if: matrix.check == 'typecheck'
+        run: npm run typecheck
+
+      - name: migrate
+        if: matrix.check == 'test'
+        run: npm run db:deploy
+
+      - name: test
+        if: matrix.check == 'test'
+        run: npm test
+
+  e2e:
+    name: e2e
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: beaverbids
+          POSTGRES_PASSWORD: beaverbids
+          POSTGRES_DB: beaverbids
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U beaverbids"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run db:generate
+
+      - run: npm run db:deploy
+
+      # Fixture tenders and the dev account the accessibility spec signs in with.
+      - run: npm run db:seed
+
+      - run: npx playwright install --with-deps chromium
+
+      # Starts the dev server and the worker itself (playwright.config.ts).
+      - run: npm run e2e
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7
+
+  commit-messages:
+    name: commit-messages
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: No Claude attribution lines in the pull request's commits
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          offending=$(git log --format='%H%n%B%n--' "$BASE".."$HEAD" | grep -i -n -E '^(Co-Authored-By: Claude|Claude-Session:)' || true)
+          if [ -n "$offending" ]; then
+            echo "::error::Commit messages in this pull request carry Claude attribution lines. Run npm install so .githooks/commit-msg is active, then rewrite the commits."
+            echo "$offending"
+            exit 1
+          fi
+          echo "No attribution lines in $(git rev-list --count "$BASE".."$HEAD") commits."

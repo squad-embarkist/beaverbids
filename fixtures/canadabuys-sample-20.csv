@@ -1,0 +1,1188 @@
+﻿"title-titre-eng","title-titre-fra","referenceNumber-numeroReference","amendmentNumber-numeroModification","solicitationNumber-numeroSollicitation","publicationDate-datePublication","tenderClosingDate-appelOffresDateCloture","amendmentDate-dateModification","expectedContractStartDate-dateDebutContratPrevue","expectedContractEndDate-dateFinContratPrevue","tenderStatus-appelOffresStatut-eng","tenderStatus-appelOffresStatut-fra","gsin-nibs","gsinDescription-nibsDescription-eng","gsinDescription-nibsDescription-fra","unspsc","unspscDescription-eng","unspscDescription-fra","procurementCategory-categorieApprovisionnement","noticeType-avisType-eng","noticeType-avisType-fra","procurementMethod-methodeApprovisionnement-eng","procurementMethod-methodeApprovisionnement-fra","selectionCriteria-criteresSelection-eng","selectionCriteria-criteresSelection-fra","limitedTenderingReason-raisonAppelOffresLimite-eng","limitedTenderingReason-raisonAppelOffresLimite-fra","tradeAgreements-accordsCommerciaux-eng","tradeAgreements-accordsCommerciaux-fra","regionsOfOpportunity-regionAppelOffres-eng","regionsOfOpportunity-regionAppelOffres-fra","regionsOfDelivery-regionsLivraison-eng","regionsOfDelivery-regionsLivraison-fra","contractingEntityName-nomEntitContractante-eng","contractingEntityAddressLine-ligneAdresseEntiteContractante-eng","contractingEntityAddressCity-entiteContractanteAdresseVille-eng","contractingEntityAddressProvince-entiteContractanteAdresseProvince-eng","contractingEntityAddressPostalCode-entiteContractanteAdresseCodePostal","contractingEntityAddressCountry-entiteContractanteAdressePays-eng","contractingEntityName-nomEntitContractante-fra","contractingEntityAddressLine-ligneAdresseEntiteContractante-fra","contractingEntityAddressCity-entiteContractanteAdresseVille-fra","contractingEntityAddressProvince-entiteContractanteAdresseProvince-fra","contractingEntityAddressCountry-entiteContractanteAdressePays-fra","endUserEntitiesName-nomEntitesUtilisateurFinal-eng","endUserEntitiesAddress-adresseEntitesUtilisateurFinal-eng","endUserEntitiesName-nomEntitesUtilisateurFinal-fra","endUserEntitiesAddress-adresseEntitesUtilisateurFinal-fra","contactInfoName-informationsContactNom","contactInfoEmail-informationsContactCourriel","contactInfoPhone-contactInfoTelephone","contactInfoFax","contactInfoAddressLine-contactInfoAdresseLigne-eng","contactInfoCity-contacterInfoVille-eng","contactInfoProvince-contacterInfoProvince-eng","contactInfoPostalcode","contactInfoCountry-contactInfoPays-eng","contactInfoAddressLine-contactInfoAdresseLigne-fra","contactInfoCity-contacterInfoVille-fra","contactInfoProvince-contacterInfoProvince-fra","contactInfoCountry-contactInfoPays-fra","noticeURL-URLavis-eng","noticeURL-URLavis-fra","attachment-piecesJointes-eng","attachment-piecesJointes-fra","tenderDescription-descriptionAppelOffres-eng","tenderDescription-descriptionAppelOffres-fra"
+"5000096222 Technology Architect (Level 3)","5000096222 Architecte de technologie (Niveau 3)","cb-329-8183335","000","5000096222","2026-10-06","2026-10-26T14:00:00","","","","Open","Ouvert","","","","*81111500","*Software or hardware engineering","*Ingénierie en logiciel et matériel","*SRV","RFP against Supply Arrangement","Demande de proposition découlant d’un arrangement en matière d’approvisionnement","Competitive - Selective tendering","Concurrentielle - Appel d'offres sélectif","Highest Combined Rating of Technical Merit and Price","Cote combinée la plus élevée pour le mérite technique et le prix","","","*Canada-Ukraine Free Trade Agreement (CUFTA)
+*Canada-Chile Free Trade Agreement (CCFTA)
+*Canadian Free Trade Agreement (CFTA)
+*Canada-UK Trade Continuity Agreement (Canada-UK TCA)
+*Please refer to Tender Description or Tender Documents
+*Canada-Colombia Free Trade Agreement
+*Canada-Panama Free Trade Agreement
+*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)
+*Canada-Korea Free Trade Agreement (CKFTA)
+*Canada-Peru Free Trade Agreement (CPFTA)
+*Canada-Honduras Free Trade Agreement
+*Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)
+*World Trade Organization Agreement on Government Procurement (WTO GPA)","*Accord de libre-échange Canada-Ukraine (ALECU)
+*Accord de libre-échange Canada-Chili (ALECC)
+*Accord de libre-échange canadien (ALEC)
+*Accord de continuité commerciale Canada–Royaume-Uni (ACC Canada-Royaume-Uni)
+*Veuillez consulter la description ou les documents de l'appel d'offres
+*Accord de libre-échange Canada-Colombie
+*Accord de libre-échange Canada-Panama
+*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)
+*Accord de libre-échange Canada-Corée
+*Accord de libre-échange Canada-Pérou (ALECP)
+*Accord de libre-échange Canada-Honduras
+*Accord de Partenariat transpacifique global et progressiste (PTPGP)
+*Accord sur les marchés publics de l'Organisation mondiale du commerce (AMP-OMC)","*National Capital Region (NCR)","*Région de la capitale nationale (RCN)","*National Capital Region (NCR)","*Région de la capitale nationale (RCN)","Canadian Nuclear Safety Commission (CNSC)","280 Slater Street","Ottawa","Ontario","K1P 5S9","Canada","Commission canadienne de sûreté nucléaire (CCSN)","280 rue Slater","Ottawa","Ontario","Canada","","","","","","","","","","Ottawa","Ontario","K1P 5S9","Canada","","Ottawa","Ontario","Canada","","","","","NOTICE OF PROPOSED PROCUREMENT (NPP)
+for 
+TASK BASED INFORMATICS PROFESSIONAL SERVICES (TBIPS)
+This requirement is for: Canadian Nuclear Safety Commission (CNSC)
+This requirement is open only to those TBIPS Supply Arrangement Holders under EN578-170432 who qualified under Tier 1 under the National Capital Region (NCR) for the level of expertise and for the following category: 
+
+I.11 Technology architect – Level 3
+
+The requirement is intended to result in the award of one (1) contract. 
+The following SA Holders have been invited to submit a proposal:
+7 Theta Inc	MINDWIRE SYSTEMS LTD., Akkada Professional Services inc., HubSpoke Inc., in Joint Venture
+Acosys Consulting Services Inc.	MNP LLP
+Adirondack Information Management Inc.	NATTIQ INC.
+ADRM Technology Consulting Group Corp.	NavPoint Consulting Group Inc.
+Akkada Professional Services Inc.	Newfound Recruiting Corporation
+Altis Recruitment & Technology Inc.	Nisha Technologies Inc.
+Calian Ltd.	PrecisionIT Inc,IDS Systems Consultants Inc., PrecisionERP Incorporated, in JOINT VENTURE
+Cistel Technology Inc.	Procom Consultants Group Ltd.
+Cofomo Inc.	Prologic Systems Ltd.
+Donna Cona Inc.	Promaxis Systems Inc
+EMINENT SYSTEMS INC.	Quarry Consulting Inc.
+Etico, Inc.	Randstad Interim Inc.
+EXPERIS CANADA INC.	SoftSim Technologies Inc.
+GSI International Consulting Inc.	Strategic Relationships Solutions Inc.
+iFathom Corporation	Symbiotic Group Inc.
+IPSS INC.	SYSTEMATIX SOLUTIONS TI INC/SYSTEMATIX IT SOLUTIONS INC
+IT/Net - Ottawa Inc.	TAG HR The Associates Group Inc.
+Jumping Elephants Incorporated	Tato Recruiting Inc.
+Leo-Pisces Services Group Inc.	TEKSYSTEMS CANADA CORP./SOCIÉTÉ TEKSYSTEMS CANADA
+Leverage Technology Resources Inc.	THE LANSDOWNE CONSULTING GROUP INC.
+MAKWA Resourcing Inc.	Thomas&Schmidt Inc.
+Maplesoft Consulting Inc.	TRM Technologies Inc.
+Maverin Business Services Inc.	Tundra Technical Solutions Inc
+MAXIMUS Canada Services, Inc.	Turtle Technologies Inc.
+Mindwire Systems Ltd.	Zernam Enterprise Inc
+
+Description of the Requirement:
+The CNSC requires the services of Level 3 Technology Architect(s) to design, develop, specify and plan work packages that deliver to the Digital Program outcomes. 
+
+Security: 
+There are security requirements associated with this requirement.  Please note that SA Holders do not need to have the required clearance to submit a bid.  For additional information, consult Part 6 - Security, Financial and Other Requirements, and Part 7 – Resulting Contract Clauses. For more information on personnel and organization security screening or security clauses, Bidders should refer to the Contract Security Program of Public Works and Government Services Canada (http://www.tpsgc-pwgsc.gc.ca/esc-src/introduction-eng.html) website. 
+
+Level of Security Requirement: 
+
+Minimum Corporate Security Required:		Facility Security Clearance at the level of SECRET
+Minimum Resource Security Required: 		SECRET
+
+Contracting Authority Information:
+
+File Number: 5000096222
+
+Contracting Authority: CNSC Procurement
+
+E-Mail: solicitation-demandedesoumission@cnsc-ccsn.gc.ca 
+
+Inquiries:
+
+Inquiries regarding this Request for Proposal (RFP) requirement must be submitted to the Contracting Authority named above.  RFP documents will be e-mailed directly by the Contracting Authority to the Qualified Supply Arrangement Holders who are being invited to bid on this requirement. BIDDERS ARE ADVISED THAT “CANADABUYS.CANADA.CA” ” IS NOT RESPONSIBLE FOR THE DISTRIBUTION OF SOLICITATION DOCUMENTS.  The Crown retains the right to negotiate with any supplier on any procurement. Documents may be submitted in either official language.
+
+Debriefings:
+
+Bidders may request a debriefing on the results of the bid solicitation process. Bidders should make the request to the Contracting Authority within 15 working days from receipt of the results of the bid solicitation process. The debriefing may be in writing, by telephone or in person.
+
+NOTE: Task-Based Informatics Professional Services (TBIPS) Method of Supply is refreshed on a quarterly basis.  If you wish to find out how you can be a “Qualified SA Holder”, please contact parcnmdai.apncrimos@tpsgc-pwgsc.gc.ca 
+","AVIS DE PROJET DE MARCHÉ (APM)
+pour les
+SERVICES PROFESSIONNELS EN INFORMATIQUE CENTRÉS SUR LES TÂCHES (SPICT)
+
+Cette exigence concerne: Commission canadienne de sûreté nucléaire (CCSN)
+Ce besoin est ouvert uniquement aux titulaires d'arrangements en matière d'approvisionnement pour les SPICT EN578-170432 qui se sont qualifiés sous Palier 1 dans la région de la capitale nationale (RCN) pour le niveau d’expertise et pour les catégories suivantes :
+I.11. Architecte de technologie - Niveau 3
+Ce besoin vise à donner lieu à l'attribution d’un (1) contrat. 
+Les fournisseurs suivant ont été inviter à soumettre une proposition : 
+7 Theta Inc	MINDWIRE SYSTEMS LTD., Akkada Professional Services inc., HubSpoke Inc., in Joint Venture
+Acosys Consulting Services Inc.	MNP LLP
+Adirondack Information Management Inc.	NATTIQ INC.
+ADRM Technology Consulting Group Corp.	NavPoint Consulting Group Inc.
+Akkada Professional Services Inc.	Newfound Recruiting Corporation
+Altis Recruitment & Technology Inc.	Nisha Technologies Inc.
+Calian Ltd.	PrecisionIT Inc,IDS Systems Consultants Inc., PrecisionERP Incorporated, in JOINT VENTURE
+Cistel Technology Inc.	Procom Consultants Group Ltd.
+Cofomo Inc.	Prologic Systems Ltd.
+Donna Cona Inc.	Promaxis Systems Inc
+EMINENT SYSTEMS INC.	Quarry Consulting Inc.
+Etico, Inc.	Randstad Interim Inc.
+EXPERIS CANADA INC.	SoftSim Technologies Inc.
+GSI International Consulting Inc.	Strategic Relationships Solutions Inc.
+iFathom Corporation	Symbiotic Group Inc.
+IPSS INC.	SYSTEMATIX SOLUTIONS TI INC/SYSTEMATIX IT SOLUTIONS INC
+IT/Net - Ottawa Inc.	TAG HR The Associates Group Inc.
+Jumping Elephants Incorporated	Tato Recruiting Inc.
+Leo-Pisces Services Group Inc.	TEKSYSTEMS CANADA CORP./SOCIÉTÉ TEKSYSTEMS CANADA
+Leverage Technology Resources Inc.	THE LANSDOWNE CONSULTING GROUP INC.
+MAKWA Resourcing Inc.	Thomas&Schmidt Inc.
+Maplesoft Consulting Inc.	TRM Technologies Inc.
+Maverin Business Services Inc.	Tundra Technical Solutions Inc
+MAXIMUS Canada Services, Inc.	Turtle Technologies Inc.
+Mindwire Systems Ltd.	Zernam Enterprise Inc
+
+Description des travaux :
+La CCSN a besoin des services d’architecte(s) de technologie de niveau 3 pour concevoir, élaborer, préciser et planifier des lots de travaux qui permettent d’atteindre les résultats du Programme numérique.
+
+Sécurité:
+
+Ce besoin comporte des exigences relatives à la sécurité.  Veuillez noter que les titulaires d'AMA n'ont pas besoin d'avoir l'autorisation requise pour soumettre une offre.  Pour de plus amples renseignements, consulter la Partie 6, Exigences relatives à la sécurité, exigences financières et autres exigences, et la Partie 7, Clauses du contrat subséquent. Pour de plus amples renseignements sur les enquêtes de sécurité sur le personnel et les organismes, les soumissionnaires devraient consulter le site Web du Programme de sécurité des contrats de Travaux publics et Services gouvernementaux Canada (http://www.tpsgc-pwgsc.gc.ca/esc-src/introduction-fra.html).
+
+Niveau d'exigence de sécurité :
+
+Niveau minimum d'attestation de sécurité requis pour l'entreprise :  attestation de sécurité d'installation (ASI) valable au niveau SECRET
+Niveau minimum d'attestation de sécurité requis pour la ou les ressources : SECRET 
+
+Informations sur l'autorité contractante :
+Numéro de dossier : 5000096222
+
+Autorité contractante :  Approvisionnement de la CCSN
+
+Courriel : solicitation-demandedesoumission@cnsc-ccsn.gc.ca 
+	
+Demandes de renseignements :
+Les demandes de renseignements concernant le besoin de cette DDP doivent être transmises à l’autorité contractante  identifiée ci-dessus.  L’autorité contractante enverra les documents de la DDP directement par courriel aux détenteurs d’AMA qualifiés invités à soumissionner le besoin. LES SOUMISSIONNAIRES SONT PRIÉS DE NOTER QUE LA DISTRIBUTION DES DOCUMENTS DE L’INVITATION À SOUMISSIONNER NE RELÈVE PAS DU SITE ACHATSCANADA.CANADA.CA.  L’État se réserve le droit de négocier avec tout fournisseur dans le cadre de tout marché. Les documents peuvent être présentés dans l'une ou l'autre des langues officielles.
+Compte rendu
+Les soumissionnaires peuvent demander un compte rendu des résultats du processus de demande de soumissions. Les soumissionnaires devraient en faire la demande à l'autorité contractante dans les 15 jours ouvrables suivant la réception des résultats du processus de demande de soumissions. Le compte rendu peut être fourni par écrit, par téléphone ou en personne.
+
+REMARQUE : La méthode d’approvisionnement des services professionnels en informatique centrés sur les tâches (SPICT) est mise à sur une base trimestrielle. Si vous désirez savoir comment vous pouvez devenir un « titulaire d’AMA qualifié », veuillez communiquer avec parcnmdai.apncrimos@tpsgc-pwgsc.gc.ca
+"
+"Video Encoders and Licensing","Codeurs Vidéo et Licences","cb-383-49070000","000","W6399-27-TR35","2026-10-02","2026-10-26T23:59:00","","2026-10-30","2027-02-01","Open","Ouvert","","","","*43211608","*Encoder decoder equipment","*Équipement codeur-décodeur","*GD","RFP against Supply Arrangement","Demande de proposition découlant d’un arrangement en matière d’approvisionnement","Competitive - Selective tendering","Concurrentielle - Appel d'offres sélectif","","","","","*Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)
+*Canada-Colombia Free Trade Agreement
+*Canada-Korea Free Trade Agreement (CKFTA)
+*Canada-UK Trade Continuity Agreement (Canada-UK TCA)
+*World Trade Organization Agreement on Government Procurement (WTO GPA)
+*North American Free Trade Agreement (NAFTA)
+*Canada-Ukraine Free Trade Agreement (CUFTA)
+*Canadian Free Trade Agreement (CFTA)
+*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)
+*Canada-Chile Free Trade Agreement (CCFTA)
+*Canada-Honduras Free Trade Agreement
+*Canada-Panama Free Trade Agreement
+*Canada-Peru Free Trade Agreement (CPFTA)","*Accord de Partenariat transpacifique global et progressiste (PTPGP)
+*Accord de libre-échange Canada-Colombie
+*Accord de libre-échange Canada-Corée
+*Accord de continuité commerciale Canada–Royaume-Uni (ACC Canada-Royaume-Uni)
+*Accord sur les marchés publics de l'Organisation mondiale du commerce (AMP-OMC)
+*Accord de libre-échange nord-américain (ALENA)
+*Accord de libre-échange Canada-Ukraine (ALECU)
+*Accord de libre-échange canadien (ALEC)
+*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)
+*Accord de libre-échange Canada-Chili (ALECC)
+*Accord de libre-échange Canada-Honduras
+*Accord de libre-échange Canada-Panama
+*Accord de libre-échange Canada-Pérou (ALECP)","","","","","Department of National Defence (DND)","101 Promenade Colonel By","Ottawa","ON","K1A 0K2","Canada","Ministère de la Défense nationale (MDN)","101 Promenade Colonel By","Ottawa","ON","Canada","","","","","","","","","","Ottawa","ON","K1A 0K2","Canada","","Ottawa","ON","Canada","","","","","This requirement is a Request for Proposal (RFP) against Supply Arrangement # W6399-22-CA50. All Supply Arrangement holders will be e-mailed the RFP directly. If vendors outside of the Supply Arrangement are interested in submitting a proposal, they will have to qualify for the Supply Arrangement before they are given an opportunity to bid on this requirement. Please contact the Supply Arrangement Contracting Officer at PSPC to obtain the steps required to be considered for Supply Arrangement # W6399-22-CA50.","Il s’agit d’une demande de propositions (DP) dans le cadre de l’arrangement en matière d’approvisionnement n° W6399-22-CA50. Tous les titulaires d’un arrangement en matière d’approvisionnement recevront directement la DP par courriel. Si des fournisseurs ne faisant pas partie de l’arrangement en matière d’approvisionnement souhaitent présenter une proposition, ils devront se qualifier pour l’arrangement en matière d’approvisionnement avant d’avoir la possibilité de présenter une soumission pour ce besoin. Veuillez communiquer avec l’agent de négociation des contrats d’arrangement en matière d’approvisionnement à SPAC pour connaître les étapes à suivre pour être pris en considération pour l’arrangement en matière d’approvisionnement no W6399-22-CA50."
+"Open Construction Source List for CFB Halifax","Répertoire ouvert d’entrepreneurs en construction pour la BFC Halifax","MX-443841357513","000","AR26SLHX_86026","2026-01-23","2029-03-31T13:00:00","","","","Open","Ouvert","","","","","","","*CNST","","","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","","","","","*World Trade Organization Agreement on Government Procurement (WTO GPA)
+*Canadian Free Trade Agreement (CFTA)
+*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)","*Accord sur les marchés publics de l'Organisation mondiale du commerce (AMP-OMC)
+*Accord de libre-échange canadien (ALEC)
+*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)","","","","","Defence Construction Canada - Atlantic Region","175 Western Parkway, Suite 100","Bedford","Nova Scotia","B4B 0V1","Canada","Defence Construction Canada - Atlantic Region","175 Western Parkway, Suite 100","Bedford","Nouvelle-Écosse","Canada","","","","","","","","","","","","","","","","","","https://www.merx.com/public/solicitations/3776296409/abstract?language=EN","https://www.merx.com/public/solicitations/3776296409/abstract?language=FR","","","
+	Defence Construction Canada (DCC) is inviting contractors and suppliers to apply to be placed on an Open Construction Source List (OCSL) for commercial, residential, industrial, institutional, and civil work required by the Department of National Defence, at CFB Halifax (and its satellite sites in Nova Scotia) for three fiscal years (April 1, 2026, to March 31, 2029).
+	Interested contractors and suppliers may request to be placed on the OCSL at any time. However, DCC is requesting that interested contractors and suppliers submit a request to be placed the OCSL as soon as possible, preferably by March 4, 2026. DCC will require ten (10) business days to process an application for the OCSL.
+	Contractors and suppliers that want to be added to the OCSL, must submit a request through this MERX posting and therein indicate their preferred official language (English or French).
+	IMPORTANT: Contractors and suppliers that were placed on the previous OCSL (April 1, 2023, to March 31, 2026) must re-apply to be placed on the OCSL for April 1, 2026, to March 31, 2029.
+	The language selected by the applicant for this OCSL will be the only language used for the tender documents, the contract documents and communication for all future tenders and during the execution of any resulting contract. The language selected will apply for the duration of the OCSL.
+	Faxed, mailed, or emailed submissions will not be accepted. 
+	The OCSL will be used to tender construction services (commercial, residential, industrial, institutional, civil) with an estimated value of $10 million and below. As &quot;Opportunities to bid&quot; arise, DCC will invite all contractors and suppliers on the OCSL to bid on the work.
+	Contractors and suppliers will be invited electronically through MERX and may, at the discretion of DCC, be required to attend a site meeting prior to a tender closing. Tenders will close electronically through MERX.
+	Contractors and suppliers who apply to be placed on the OCSL will require an active MERX account to submit electronic bids. Please contact MERX for information on how to open or reactivate an account.
+	To bid on a tender call, a bidder must be registered on the OCSL used for the tender call. If the bidder&#39;s legal name does not appear on the OCSL, DCC may consider their bid to be non-compliant. If you change your business name, it is therefore very important that you notify DCC and consider making the change to your MERX account.
+	DCC reserves the right, at its sole discretion, to:
+	
+		Continue using existing source lists that may already be in place for similar or related services such as existing Quick Response Tender (QRT) source lists,
+		Establish other source lists for specific categories of construction services which may require different pre-qualification requirements, such as Quick Response Tender (QRT) source lists. Such other source lists will not be advertised through this OCSL. Such other source lists will be advertised openly on MERX on a case-by-case basis,
+		Verify which contractors have submitted bids under the OCSL, verify if those that did not submit bids are still interested to be on the OCSL and remove from the OCSL those contractors that are no longer interested,
+		Require additional pre-qualification requirements for any specific tenders done through the OCSL,
+		Elect to post any tender openly on MERX in lieu of this OCSL if DCC deems that an open tender would provide the potential for more competition,
+		Tenders may be set aside for Indigenous businesses in accordance with the Procurement Strategy for Indigenous Business (PSIB). In such cases, all contractors and suppliers on the Open Construction Source List (OCSL) will receive an invitation to bid; however, the MERX advertisement will clearly state that the opportunity is reserved for Indigenous businesses under PSIB. To qualify, the Indigenous business must be registered in Indigenous Services Canada&rsquo;s (ISC) Indigenous Business Directory (IBD). If you are forming a Joint Venture (JV) to bid on a contract set aside for Indigenous businesses, at least one member of the JV must be listed on the OCSL, and the Indigenous business within the JV must also be registered in ISC&rsquo;s Indigenous Business Directory. Failure to meet these requirements will result in the bid being deemed non-compliant,
+		Include a requirement for sub-contracting to Indigenous businesses that must be registered under Indigenous Services Canada&rsquo;s (ISC) Indigenous Business Directory. In this case, the MERX Ad specific to the invitation will clearly identify the inclusion of an Indigenous Benefits Plan (IBP).
+	
+	
+	Contractors are advised that contracts awarded by DCC include measurable performance standards and requirements as detailed in form DCL81-Performance Evaluation Guidelines which is available at https://www.dcc-cdc.gc.ca/industry/forms. A contractor that receives an unacceptable or failing score may be removed from this OCSL and receive no further invitations under the OCSL.
+	Contractors and suppliers are advised that all contracts tendered and awarded by DCC are subject to DCC&rsquo;s Procurement Code of Conduct which is available for download at https://www.dcc-cdc.gc.ca/industry/forms. A contractor or a supplier that has been declared ineligible or has been suspended by Public Services and Procurement Canada under its Ineligibility and Suspension Policy and the period of ineligibility or suspension has not expired may be removed from this OCSL and received no further invitations.
+	Contractors and suppliers are advised that DCC&rsquo;s Standard Construction Contract Documents - Electronic Bidding (DCL250) will be used for opportunities under the OCSL and can be downloaded from the DCC website at: https://www.dcc-cdc.gc.ca/industry/forms.
+	Contractors and suppliers are advised that tenders and contracts under this OCSL may contain organization and personnel security requirements. Typically, the organization security requirement will be Designated Organization Screening (DOS) and reliability status for personnel. However more stringent requirement may apply such as Facility Security Clearance (FSC) at the level of SECRET with approved Document Safeguarding (DSC) with secret clearance for personnel.
+	DCC may publish Advance Procurement Notices (APN) identifying potential tenders with anticipated security requirements to provide interested contractors an opportunity to begin the sponsorship request process for potentially obtaining the required security clearance(s) that are anticipated. The process to apply for a security clearance is provided in the APNs.
+	DCC reserves the right to reject any application that does not demonstrate, to the sole satisfaction of DCC, that the contractor or supplier has met the stated requirements. DCC also reserves the right to request clarifications and/or confirmations from any or all firms regarding any aspect of their submission information. A written response to each such communication is required from the firm.
+	By submitting a response to this invitation, contractors and suppliers are providing their consent, pursuant to section 30 of the Defence Production Act, for DCC to publicly disclose, after closing, their legal name, address and whether they have been included on the OCSL.
+	The OCSL may be used for procurements covered by trade agreements to which Canada is a party.
+	You have questions regarding the foregoing, or you wish to be removed from an OCSL, please contact:
+
+Defence Construction Canada
+Andr&eacute; Champagne
+Andre.Champagne@dcc-cdc.gc.caBidding and Documents are available on http://www.merx.com.  Fees may apply; See https://www.merx.com/public/pricing for more information.","
+	Construction de D&eacute;fense Canada (CDC) demande aux entrepreneurs et fournisseurs &agrave; pr&eacute;senter une demande d&rsquo;adh&eacute;sion &agrave; un r&eacute;pertoire ouvert d&rsquo;entrepreneurs en construction (ROEC) pour des travaux commerciaux, r&eacute;sidentiels, industriels, institutionnels, et de g&eacute;nie civil requis par le minist&egrave;re de la D&eacute;fense nationale, &agrave; la BFC Halifax (et ses sites satellites &agrave; Nouvelle-&Eacute;cosse) pour trois exercices financiers (du 1er avril 2026 au 31 mars 2029).
+	Les entrepreneurs et fournisseurs int&eacute;ress&eacute;s peuvent pr&eacute;senter une demande d&rsquo;adh&eacute;sion au r&eacute;pertoire &agrave; tout moment. Toutefois, CDC demande aux entrepreneurs et fournisseurs int&eacute;ress&eacute;s de soumettre leur demande d&rsquo;adh&eacute;sion au ROEC d&egrave;s que possible, de pr&eacute;f&eacute;rence avant le 4 mars 2026. CDC aura besoins de 10 jours ouvrables pour traiter une demande d&rsquo;adh&eacute;sion au r&eacute;pertoire.
+	Les entrepreneurs et fournisseurs qui d&eacute;sirent adh&eacute;rer au ROEC doivent soumettre leur demande d&rsquo;adh&eacute;sion par le biais de cet affichage MERX et y indiquer leur langue officielle pr&eacute;f&eacute;r&eacute;e (anglais ou Fran&ccedil;ais).
+	IMPORTANT&nbsp;: Les entrepreneurs et fournisseurs qui figuraient au ROEC pr&eacute;c&eacute;dent (du 1er avril 2023 au 31 mars 2026) doivent pr&eacute;senter une nouvelle demande d&rsquo;adh&eacute;sion au ROEC pour la p&eacute;riode du 1er avril 2026 au 31 mars 2029.
+	La langue choisie par le demandeur pour ce r&eacute;pertoire sera la seule langue utilis&eacute;e pour les documents d&rsquo;appel d&rsquo;offres, les documents contractuels et la communication pour toutes les offres futures et pendant l&rsquo;ex&eacute;cution de tout contrat r&eacute;sultant. La langue choisie s&rsquo;appliquera pour toute la dur&eacute;e du r&eacute;pertoire.
+	Les demandes d&rsquo;adh&eacute;sion envoy&eacute;es par t&eacute;l&eacute;copieur, par la poste ou par courriel ne seront pas accept&eacute;es.&nbsp;
+	Ce ROEC sera utilis&eacute; pour des services de construction (commerciaux, r&eacute;sidentiels, industriels, institutionnels, et de g&eacute;nie civil) d&rsquo;une valeur estim&eacute;e &agrave; 10 millions de dollars et moins. Au fur et &agrave; mesure que des &laquo; occasions de soumissionner &raquo; se pr&eacute;senteront, CDC invitera tous les entrepreneurs et fournisseurs faisant partie du r&eacute;pertoire &agrave; soumissionner pour les travaux.
+	Les entrepreneurs et fournisseurs seront invit&eacute;s par voie &eacute;lectronique par l&rsquo;entremise de MERX et pourront, &agrave; la discr&eacute;tion de CDC, &ecirc;tre tenus d&rsquo;assister &agrave; une r&eacute;union sur place avant la cl&ocirc;ture d&rsquo;un appel d&rsquo;offres.&nbsp; Le d&eacute;p&ocirc;t des soumissions se fera par voie &eacute;lectronique par l&rsquo;entremise de MERX.
+	Les entrepreneurs et fournisseurs qui pr&eacute;sentent une demande d&rsquo;adh&eacute;sion au ROEC auront besoin d&rsquo;un compte MERX actif pour d&eacute;poser des soumissions &eacute;lectroniques. Veuillez communiquer avec MERX pour savoir comment ouvrir ou r&eacute;activer un compte.
+	Pour soumissionner dans le cadre d&rsquo;un appel d&rsquo;offres, un soumissionnaire doit &ecirc;tre inscrit sur le ROEC utilis&eacute; pour l&rsquo;appel d&rsquo;offres. Si le nom l&eacute;gal du soumissionnaire n&rsquo;appara&icirc;t pas sur le ROEC, CDC pourrait consid&eacute;rer que sa soumission n&rsquo;est pas conforme. Si vous changez le nom de votre entreprise, il est donc tr&egrave;s important que vous en avisiez CDC et que vous envisagiez &eacute;galement d&rsquo;apporter le changement &agrave; votre compte MERX.
+	CDC se r&eacute;serve le droit, &agrave; sa seule discr&eacute;tion, de :
+	
+		Continuer &agrave; utiliser les r&eacute;pertoires d&eacute;j&agrave; en place pour des services similaires ou connexes, tels que les r&eacute;pertoires pour Soumissions &agrave; Intervention Rapide (SIR),
+		Mettre en place d&rsquo;autres r&eacute;pertoires pour des cat&eacute;gories sp&eacute;cifiques de services de construction qui peuvent n&eacute;cessiter des exigences de pr&eacute;qualification diff&eacute;rentes, telles que des r&eacute;pertoires pour Soumissions &agrave; Intervention Rapide (SIR). Ces autres r&eacute;pertoires ne seront pas annonc&eacute;s par le biais de ce r&eacute;pertoire. Ces autres r&eacute;pertoires seront annonc&eacute;s ouvertement sur MERX au cas par cas,
+		V&eacute;rifiez quels entrepreneurs ont d&eacute;pos&eacute; des soumissions en vertu de ce r&eacute;pertoire, v&eacute;rifiez si ceux qui n&rsquo;ont pas d&eacute;pos&eacute; de soumissions sont toujours int&eacute;ress&eacute;s &agrave; figurer sur le r&eacute;pertoire et retirer du r&eacute;pertoire les entrepreneurs qui ne sont plus int&eacute;ress&eacute;s,
+		Exiger des besoins de pr&eacute;qualification suppl&eacute;mentaires pour toute soumission sp&eacute;cifique effectu&eacute;e par l&rsquo;interm&eacute;diaire du r&eacute;pertoire,
+		Choisir d&rsquo;afficher ouvertement tout appel d&rsquo;offres sur MERX au lieu d&rsquo;utiliser le r&eacute;pertoire si CDC estime qu&rsquo;un appel d&rsquo;offres ouvert pourrait accro&icirc;tre la concurrence,
+		R&eacute;server des appels d&rsquo;offres aux entreprises autochtones conform&eacute;ment &agrave; la Strat&eacute;gie d&rsquo;approvisionnement aupr&egrave;s des entreprises autochtones (SAEA). Dans ce cas, tous les entrepreneurs et fournisseurs inscrits au R&eacute;pertoire ouvert d&rsquo;entrepreneurs en construction (ROEC) recevront une invitation &agrave; soumissionner; toutefois, l&rsquo;annonce publi&eacute;e sur MERX indiquera clairement que l&rsquo;occasion est r&eacute;serv&eacute;e aux entreprises autochtones en vertu de la SAEA. Pour &ecirc;tre admissible, l&rsquo;entreprise autochtone doit &ecirc;tre inscrite au R&eacute;pertoire des entreprises autochtones (REA) de Services aux Autochtones Canada (SAC). Si vous formez une coentreprise (JV) pour soumissionner sur un contrat r&eacute;serv&eacute; aux entreprises autochtones, au moins un membre de la coentreprise doit figurer au ROEC, et l&rsquo;entreprise autochtone faisant partie de la coentreprise doit &eacute;galement &ecirc;tre inscrite au R&eacute;pertoire des entreprises autochtones de SAC. Le non-respect de ces exigences entra&icirc;nera le rejet de la soumission pour non-conformit&eacute;,
+		Inclure une exigence de sous-traitance aux entreprises autochtones qui doivent &ecirc;tre inscrites dans le R&eacute;pertoire des entreprises autochtones de Services aux Autochtones Canada (SAC). Dans ce cas, l&rsquo;annonce MERX sp&eacute;cifique &agrave; l&rsquo;invitation indiquera clairement l&rsquo;inclusion d&rsquo;un volet de participation aux Autochtones.
+	
+	
+	Les entrepreneurs sont avis&eacute;s que les contrats mis en place par CDC comprennent des normes et des exigences de rendement mesurables, comme indiqu&eacute; dans le formulaire CDL81 - Lignes directrices sur l&rsquo;&eacute;valuation du rendement, disponible &agrave; https://www.cdc-dcc.gc.ca/industrie/formulaires. Un entrepreneur qui re&ccedil;oit une note inacceptable ou une mention d&rsquo;&eacute;chec peut &ecirc;tre retir&eacute; de ce r&eacute;pertoire et ne recevoir aucune autre invitation en vertu de ce r&eacute;pertoire.
+	Les entrepreneurs et fournisseurs sont avis&eacute;s que tous les appels d&rsquo;offres et les contrats mis en place par CDC sont assujettis au Code de conduite en mati&egrave;re d&rsquo;approvisionnement de CDC, qui peut &ecirc;tre t&eacute;l&eacute;charg&eacute; &agrave; l&rsquo;adresse https://www.cdc-dcc.gc.ca/industrie/formulaires. Un entrepreneur ou un fournisseur qui a &eacute;t&eacute; d&eacute;clar&eacute; inadmissible ou qui a &eacute;t&eacute; suspendu par Services publics et Approvisionnement Canada en vertu de sa Politique d&rsquo;inadmissibilit&eacute; et de suspension et dont la p&eacute;riode d&rsquo;inadmissibilit&eacute; ou de suspension n&rsquo;a pas expir&eacute; peut &ecirc;tre retir&eacute; du r&eacute;pertoire et ne recevoir aucune autre invitation.
+	Les entrepreneurs et fournisseurs sont avis&eacute;s que les Documents de contrat de construction standards pour soumissions &eacute;lectroniques de CDC (CDL250) seront utilis&eacute;s pour les opportunit&eacute;s en vertu de ce r&eacute;pertoire et peuvent &ecirc;tre t&eacute;l&eacute;charg&eacute;s &agrave; partir du site Web de CDC &agrave; l&rsquo;adresse suivante : https://www.cdc-dcc.gc.ca/industrie/formulaires.
+	Les entrepreneurs et fournisseurs sont avis&eacute;s que les appels d&rsquo;offres et les contrats en vertu du pr&eacute;sent r&eacute;pertoire peuvent contenir des exigences en mati&egrave;re de s&eacute;curit&eacute; de l&rsquo;organisation et de s&eacute;curit&eacute; du personnel.&nbsp; En r&egrave;gle g&eacute;n&eacute;rale, l&rsquo;exigence de s&eacute;curit&eacute; de l&rsquo;organisation sera la v&eacute;rification de l&rsquo;organisation d&eacute;sign&eacute;e (VOD) et la cote de fiabilit&eacute; pour le personnel. Toutefois, des exigences plus strictes peuvent s&rsquo;appliquer, telles qu&rsquo;une attestation de s&eacute;curit&eacute; d&rsquo;installation (ASI), une autorisation de d&eacute;tenir des renseignements (ADR) et une autorisation de s&eacute;curit&eacute; pour son personnel au niveau Secret.
+	CDC peut publier des pr&eacute;avis d&rsquo;approvisionnement (PA) identifiant les appels d&rsquo;offres potentiels avec des exigences de s&eacute;curit&eacute; pr&eacute;vues afin de donner aux entrepreneurs int&eacute;ress&eacute;s l&rsquo;occasion d&rsquo;entamer le processus de demande de parrainage pour obtenir &eacute;ventuellement la ou les cotes de s&eacute;curit&eacute; requises qui sont pr&eacute;vues. Le processus de demande cote de s&eacute;curit&eacute; est fourni dans les PA.
+	CDC se r&eacute;serve le droit de rejeter toute demande de pr&eacute;qualification qui ne d&eacute;montre pas, &agrave; la seule satisfaction de CDC, que l&rsquo;entrepreneur a satisfait aux exigences &eacute;nonc&eacute;es.&nbsp; CDC se r&eacute;serve &eacute;galement le droit de demander des &eacute;claircissements ou des confirmations &agrave; l&rsquo;un ou &agrave; l&rsquo;ensemble des entrepreneurs concernant tout aspect des renseignements qu&rsquo;ils soumettent. Une r&eacute;ponse &eacute;crite &agrave; chacune de ces communications est requise de la part de l&rsquo;entrepreneur.
+	En r&eacute;pondant &agrave; cette invitation, les entrepreneurs et fournisseurs consentent, conform&eacute;ment &agrave; l&rsquo;article 30 de la Loi sur la production de d&eacute;fense, &agrave; ce que CDC divulgue publiquement, apr&egrave;s la cl&ocirc;ture, leur nom l&eacute;gal, leur adresse et s&rsquo;ils ont &eacute;t&eacute; inclus au r&eacute;pertoire.
+	Le r&eacute;pertoire peut &ecirc;tre utilis&eacute;e pour les march&eacute;s publics vis&eacute;s par des accords commerciaux auxquels le Canada est parti.
+	Vous avez des questions concernant ce qui pr&eacute;c&egrave;de ou vous d&eacute;sirez vous retirer d&rsquo;un r&eacute;pertoire, contactez&nbsp;:
+
+Construction de D&eacute;fense Canada
+Andr&eacute; Champagne
+Andre.Champagne@dcc-cdc.gc.caVous pouvez soumettre une offre et accéder aux documents sur http://www.merx.com. Des frais peuvent sappliquer; Voir https://www.merx.com/public/pricing pour plus dinformations."
+"Cloth, Coated, Nylon/Polyurethane, 235 g/m², CADPAT™ Multi-Terrain (MT) – Re-Tender","Tissu de nylon enduit de polyuréthane, 235 g/m², DCamCMC multiterrain (MT) – Nouvelle sollicitation","cb-395-95380568","000","W8486-270882A","2026-10-08","2026-11-23T14:00:00","","2027-01-01","2031-03-31","Open","Ouvert","","","","*11162100","*Specialty fabrics or cloth","*Etoffe ou tissus spéciaux","*GD","Request for Standing Offer","Demande d’offre à commandes","Competitive - Traditional","Concurrentielle - Traditionnelle","Lowest Price","Prix le plus bas","","","*Canadian Free Trade Agreement (CFTA)","*Accord de libre-échange canadien (ALEC)","*Canada","*Canada","*Canada","*Canada","Department of National Defence (DND)","101 Colonel By Drive","Ottawa","Ontario","K1A 0K2","Canada","Ministère de la Défense nationale (MDN)","101 Colonel By Drive","Ottawa","Ontario","Canada","","","","","","","","","","Ottawa","ON","K1A 0K2","Canada","","Ottawa","ON","Canada","","","","","The Department of National Defence (DND), has a requirement for the production and supply of CADPAT-patterned clothing and associated items for the Canadian Armed Forces (CAF). This solicitation is subject to limited tendering. Only companies holding a valid and active licence to print CADPAT, issued by the Department of National Defence, will be invited to submit bids.
+The following licensed companies are eligible to participate in this solicitation:
+•	Textiles Monterey (1996) Inc. / Monterey Textiles (1996) Inc.
+•	Brookwood Companies Incorporated
+•	Textil Santanderina, S.A.
+•	NV Utexbel 
+•	Brittany Global Technologies Corporation
+
+Where a supplier has previously submitted samples to DND for the same or equivalent requirement, those samples may be retained and considered for use in support of the upcoming solicitation, subject to confirmation by DND that they remain representative of the proposed product and continue to meet the applicable technical requirements.
+Companies interested in obtaining a CADPAT printing licence are invited to contact: Requesting the Commercial Use of the Canadian Disruptive Pattern (CADPAT) - Canada.ca  for information regarding the licensing process and eligibility requirements.
+By limiting the solicitation to organizations that currently hold a valid CADPAT printing licence, DND can ensure compliance with intellectual property, security, and technical requirements associated with the production of CADPAT-patterned materials. Request for Standing Offers (RFSO) package would be provided directly to the eligible licensed firms, increasing the likelihood of receiving compliant and competitive bids. At the same time, transparency is maintained by clearly identifying the eligibility requirements, listing the licensed companies eligible to participate, and providing information for other interested firms wishing to pursue a CADPAT printing licence for future opportunities.
+","Le ministère de la Défense nationale (MDN) a un besoin visant la production et la fourniture de vêtements à motif CADPAT ainsi que d’articles connexes pour les Forces armées canadiennes (FAC). La présente sollicitation est assujettie à un processus d’appel d’offres limité. Seules les entreprises détenant une licence valide et active, délivrée par le ministère de la Défense nationale, les autorisant à imprimer le motif CADPAT seront invitées à présenter une soumission.
+Les entreprises titulaires d’une licence suivantes sont admissibles à participer à la présente sollicitation :
+- Textiles Monterey (1996) Inc. / Monterey Textiles (1996) Inc.
+- Brookwood Companies Incorporated
+- Textil Santanderina, S.A.
+- NV Utexbel
+- Brittany Global Technologies Corporation
+
+Lorsqu’un fournisseur a déjà soumis des échantillons au MDN pour le même besoin ou un besoin équivalent, ces échantillons peuvent être conservés et pris en considération dans le cadre de la prochaine sollicitation, sous réserve de la confirmation par le MDN qu’ils demeurent représentatifs du produit proposé et qu’ils continuent de satisfaire aux exigences techniques applicables.
+Les entreprises souhaitant obtenir une licence d’impression CADPAT sont invitées à consulter la page « Demander l’utilisation commerciale du dessin de camouflage canadien (CADPAT) » sur Canada.ca afin d’obtenir de l’information sur le processus d’octroi de licence et les critères d’admissibilité.
+En limitant la sollicitation aux organisations qui détiennent actuellement une licence valide d’impression CADPAT, le MDN peut assurer le respect des exigences en matière de propriété intellectuelle, de sécurité et des exigences techniques liées à la production de matériaux à motif CADPAT. Demande d’offres à commandes (DOC) serait fournie directement aux entreprises titulaires d’une licence admissibles, ce qui augmenterait la probabilité de recevoir des soumissions conformes et concurrentielles. Parallèlement, la transparence est maintenue en indiquant clairement les critères d’admissibilité, en dressant la liste des entreprises titulaires d’une licence admissibles à participer et en fournissant de l’information aux autres entreprises intéressées qui souhaitent obtenir une licence d’impression CADPAT pour de futures occasions"
+"Wharfhead Repairs","Réparation de quai","cb-212-11044757","000","T8080-260273","2026-10-20","2026-11-04T11:00:00","","2026-11-12","2026-12-31","Open","Ouvert","","","","*24101800","*Dock equipment","*Équipements de quai","*SRV","Request for Proposal","Demande de propositions","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","Highest Combined Rating of Technical Merit and Price","Cote combinée la plus élevée pour le mérite technique et le prix","","","*Canada-Korea Free Trade Agreement (CKFTA)
+*North American Free Trade Agreement (NAFTA)","*Accord de libre-échange Canada-Corée
+*Accord de libre-échange nord-américain (ALENA)","*World","*Monde","*British Columbia","*Colombie-Britannique","Department of Transport (TC)","344 Edmonton st ","Winnipeg","MB","R3B 2L4","Canada","Ministère des Transports (TC)","344 Edmonton st ","Winnipeg","MB","Canada","","","","","","","","","","Winnipeg","MB","R3B 2L4","Canada","","Winnipeg","MB","Canada","","","https://canadabuys.canada.ca/sites/default/files/webform/tender_notice/110441/t8080-260273---rfp_en-%281.pdf","https://canadabuys.canada.ca/sites/default/files/webform/tender_notice/110441/t8080-260273---rfp_fr-%281.pdf","The purpose of this contract is to complete the priority repairs at the Bamfield West Public Port Facility to address critical structural deficies and ensure the continued safe operation of the facility.","L’objectif de ce contrat est d’effectuer les réparations prioritaires à l’installation portuaire publique de Bamfield West afin de corriger des lacunes structurelles critiques et d’assurer l’exploitation sécuritaire continue de l’installation."
+"APN - BASE JANITORIAL SERVICES CFB SHILO, MANITOBA","PA - SERVICES DE NETTOYAGE ET D’ENTRETIEN DE LA BASE CFB SHILO, MANITOBA","MX-444171758619","000","87700","2026-09-23","2026-11-23T15:00:00","","","","Open","Ouvert","","","","","","","*SRV","","","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","","","","","*World Trade Organization Agreement on Government Procurement (WTO GPA)
+*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)
+*Canadian Free Trade Agreement (CFTA)","*Accord sur les marchés publics de l'Organisation mondiale du commerce (AMP-OMC)
+*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)
+*Accord de libre-échange canadien (ALEC)","","","","","Defence Construction Canada - Western Region","13220 St. Albert Trail, Suite 302","Edmonton","Alberta","T5L 4W1","Canada","Defence Construction Canada - Western Region","13220 St. Albert Trail, Suite 302","Edmonton","Alberta","Canada","","","","","","","","","","","","","","","","","","https://www.merx.com/public/solicitations/4101691609/abstract?language=EN","https://www.merx.com/public/solicitations/4101691609/abstract?language=FR","","","Advance Procurement Notice
+
+BASE JANITORIAL SERVICES 
+CFB SHILO, MANITOBA
+(with Security Requirements)
+
+Purpose of this Advance Procurement Notice
+
+This is not a bid solicitation nor a request for proposals.
+
+In the context of the major investments announced by the Government and to foster a proactive partnership with industry, DCC is issuing this Advance Procurement Notice (APN) to inform contractors of an upcoming contract opportunity at CFB Shilo, Shilo Manitoba.
+
+The purpose of this APN is to allow contractors to assess their capacity and interest in participating, and to prepare adequately for the potential solicitation process, notably by initiating any necessary steps.
+
+This is a preliminary notice regarding a potential contract, which includes security requirements. The purpose of this APN is to allow interested contractors to initiate, if required, the sponsorship process to obtain the necessary clearances or security clearances (if applicable).
+
+Please note that there is no guarantee that this contract will proceed or that security clearances will be granted within the anticipated timelines or at all as part of the sponsorship process.
+
+Description of the Project and Services
+
+The Department of National Defence and Defence Construction Canada intends to put in place a contract to provide all labour, material, supervision and equipment to supply janitorial services at CFB Shilo, Manitoba.&nbsp;
+
+In general, the work includes, but not limited to:
+
+Janitorial cleaning services (internal and external elements)
+
+General Requirements
+
+	wipe down benches, exercise equipment and weight machines;
+	dusting of blinds;
+	vacuuming of curtains and drapery;
+	cleaning/stocking of dispensers;
+	clean &amp; disinfect door handles, handrails and switch plates
+	cleaning and disinfecting of drinking fountains;
+	spot clean/ replace of entrance mats and grates;
+	floor strip/refinishing;
+	sweep/vacuum and damp mop of flooring;
+	vacuum (automatic type) pools;
+	clean and disinfect pool deck;
+	clean, damp mop and disinfect sauna room;
+	cleaning and disinfect bathroom fixtures;
+	waste removal;
+	glass cleaning
+
+Other Tasks
+
+
+	carpet/furniture shampooing and steam cleaning
+
+The approximate estimated cost for these services is $4,000,000.00 over two (2) years with the potential for three (3) additional one (1) year extensions and an increase in value up to $6,000,000.00. The estimated total potential value is approximately $10,000,000.00 over a possible five (5) year period.
+
+It is anticipated that the following solicitation will proceed as noted in the table below. This is conditional on the contract receiving approval to proceed from DND.
+
+Contract Number:&nbsp; SLSO2796
+Title: Base Janitorial Services
+Total Potential Value: $10,000,000.00
+Anticipated Posting: November 2026
+Anticipated Contract Commencement: April 2027
+
+Contract Award and Anticipated Security Requirements
+
+To be eligible for contract award, a bidder will be required to, among other things, actively hold or obtain all required security clearance(s) prior to the date of the award, as further detailed in the solicitation documents.
+
+The anticipated security clearance level for this contract is Designated Organization Screening (DOS).
+
+Industrial Security Program Sponsorship
+
+Defence Construction Canada (DCC) is providing contractors early access to the security clearance application process through sponsorship under its Industrial Security Program (ISP). Accordingly, contractors that intend to submit a bid for this project and that do not actively hold the above identified security clearance(s) should begin forthwith the security clearance application process by applying through DCC&rsquo;s ISP.
+
+Under this program, DCC may, at its entire discretion, provide preliminary assistance to all the potential bidders with their respective security clearance sponsorship process.
+
+To begin the security clearance sponsorship process, please submit a sponsorship request application to DCC by following the steps identified on DCC&rsquo;s website at: https://www.dcc-cdc.gc.ca/industry/security-requirements.
+
+In their sponsorship request application to DCC, consultants or contractors are asked to quote the following information, among other things:
+
+	Advance Procurement Notice (APN) number (Project number on the MERX notice);
+	Contract number SLSO2796; and
+	Level of clearance requested to be sponsored for.
+
+Sponsorship Process
+
+Upon receipt, DCC will review the sponsorship request application and will communicate directly with the consultants or contractors to provide assistance for the completion of the sponsorship request packages.
+Once DCC has determined, at its entire discretion, that a consultant or contractor:
+
+	has started the sponsorship process prior to the solicitation (Contract number listed on their request for sponsorship) being advertised on MERX,
+	has&nbsp; met all the material requirements of the sponsorship request package, and
+	has submitted a proposal or a bid
+
+DCC will &nbsp;send the documents to the Public Services and Procurement Canada&rsquo;s (PSPC) Contract Security Program (CSP).
+
+Following receipt of the sponsorship request package, the CSP will communicate directly with the proponent or bidder regarding any further steps or actions to be undertaken or the status of the sponsorship request package processing. At such time, the proponent or bidder will need to promptly cooperate with CSP &nbsp;to ensure that the process is completed as soon as possible.
+
+Questions
+
+Any questions pertaining to the sponsoring process through the ISP can be addressed to:
+
+Telephone Number: (613) 998-8974; or
+Email address: ISP.Sponsorship@dcc-cdc.gc.ca
+
+Any questions relating to this Advance Procurement Notice can be addressed to:
+
+Brad Jeaurond
+Coordinator, Contract Services
+Defence Construction Canada
+204-765-3000, ext. 258-4094
+Bradley.Jeaurond@dcc-cdc.gc.ca
+
+Disclaimer
+
+DCC is only providing assistance, at its entire discretion, for the above stated sponsorship process &nbsp;and does not provide any representations &nbsp;or guarantees that a sponsorship request package or a security clearance application forwarded by DCC to the CSP will be successful or result in the granting of the requested security clearance(s) by the CSP. At all times, the processing of a sponsorship request package or a security clearance application is subject to the respective terms, conditions, and timelines of DCC&rsquo;s ISP sponsorship process and the CSP security clearance granting process. By applying to either of the aforementioned processes, the proponent or bidder agrees to bear any fees and risks associated with: (i) the completeness or accuracy, or lack thereof, of its application or related documents submitted under or in connection with either said processes, and (ii) the timeliness, or lack thereof, of any processing or granting of security clearance(s) under or in connection with either said processes. Notwithstanding anything else stated above, DCC shall in no event be liable to the bidder or proponent for any direct, indirect, incidental, special, consequential, punitive or exemplary damages arising out or in connection with the above stated&nbsp; sponsorship process.Bidding and Documents are available on http://www.merx.com.  Fees may apply; See https://www.merx.com/public/pricing for more information.","Pr&eacute;avis d&rsquo;approvisionnement
+
+SERVICES DE NETTOYAGE ET D&rsquo;ENTRETIEN DE LA BASE&nbsp;
+CFB SHILO, MANITOBA
+(comprend des exigences en mati&egrave;re de s&eacute;curit&eacute;)
+
+Objectif du pr&eacute;sent pr&eacute;avis d&rsquo;approvisionnement
+
+Il ne s&rsquo;agit pas d&rsquo;une demande de soumissions ni d&rsquo;une demande de propositions.
+
+Dans le contexte des investissements majeurs annonc&eacute;s par le gouvernement et afin de favoriser un partenariat proactif avec l&rsquo;industrie, CDC diffuse le pr&eacute;sent pr&eacute;avis d&rsquo;approvisionnement (PA) afin d&rsquo;informer les entrepreneurs d&rsquo;un contrat &agrave; venir &agrave; a BFC Shilo, Shilo, au Manitoba.
+
+Le pr&eacute;sent PA vise &agrave; permettre aux entrepreneurs d&rsquo;&eacute;valuer leur capacit&eacute; et leur int&eacute;r&ecirc;t &agrave; participer, ainsi que de se pr&eacute;parer ad&eacute;quatement en vue du processus de sollicitation, notamment en amor&ccedil;ant les d&eacute;marches n&eacute;cessaires.
+
+Il s&rsquo;agit d&rsquo;un avis pr&eacute;liminaire concernant un contrat potentiel, avec des exigences en mati&egrave;re de s&eacute;curit&eacute;. Ce pr&eacute;avis vise &agrave; permettre aux entrepreneurs int&eacute;ress&eacute;s la possibilit&eacute; d&rsquo;entamer, au besoin, le processus de parrainage afin d&rsquo;obtenir (si n&eacute;cessaires) les habilitations ou les habilitations de s&eacute;curit&eacute; requises.
+Veuillez noter qu&rsquo;il n&rsquo;y a aucune garantie que ce contrat aboutira ou que les habilitations de s&eacute;curit&eacute; seront accord&eacute;es dans les d&eacute;lais pr&eacute;vus ou autrement dans le cadre du processus de parrainage.
+
+Description du projet et des services
+
+Le minist&egrave;re de la D&eacute;fense nationale (MDN) et Construction de D&eacute;fense Canada (CDC) ont l&rsquo;intention de mettre en place un contrat pour fournir l&rsquo;ensemble de la main-d&rsquo;&oelig;uvre, du mat&eacute;riel, de la supervision et de l&rsquo;&eacute;quipement n&eacute;cessaires pour la prestation de services de nettoyage et d&rsquo;entretien &agrave; la BFC&nbsp;Shilo, au Manitoba.&nbsp;
+De mani&egrave;re g&eacute;n&eacute;rale, les travaux comprennent, sans toutefois s&rsquo;y limiter&nbsp;:
+
+Services de nettoyage et d&rsquo;entretien (&eacute;l&eacute;ments internes et externes)
+
+Exigences g&eacute;n&eacute;rales
+
+	essuyer les bancs, l&rsquo;&eacute;quipement de conditionnement physique et les appareils de musculation;
+	&eacute;pousseter les stores;
+	passer l&rsquo;aspirateur sur les rideaux et les draperies;
+	nettoyer et r&eacute;approvisionner les distributeurs;
+	nettoyer et d&eacute;sinfecter les poign&eacute;es de porte, les rampes et les plaques d&rsquo;interrupteur;
+	nettoyer et d&eacute;sinfecter les fontaines &agrave; boire;
+	remplacer les tapis d&rsquo;accueil et les grilles ou y nettoyer les taches;
+	d&eacute;caper et remettre &agrave; neuf le plancher;
+	balayer le sol ou passer l&rsquo;aspirateur et nettoyer &agrave; la vadrouille humide;
+	utiliser l&rsquo;aspirateur automatique dans les piscines;
+	nettoyer et d&eacute;sinfecter le pourtour de la piscine;
+	laver, nettoyer &agrave; la vadrouille humide et d&eacute;sinfecter le sauna;
+	nettoyer et d&eacute;sinfecter les installations de salle de bains;
+	enlever les d&eacute;chets;
+	nettoyer les vitres;
+
+Autres t&acirc;ches
+
+
+	shampouiner et nettoyer &agrave; la vapeur la moquette et le mobilier.
+
+La valeur estim&eacute;e de ces services est d&rsquo;environ 4&nbsp;000&nbsp;000&nbsp;$ sur deux&nbsp;(2)&nbsp;ans avec la possibilit&eacute; d&rsquo;ajouter trois&nbsp;(3)&nbsp;p&eacute;riodes suppl&eacute;mentaires d&rsquo;un&nbsp;(1)&nbsp;an et d&rsquo;augmenter la valeur jusqu&rsquo;&agrave; un maximum de 6&nbsp;000&nbsp;000&nbsp;$. La valeur potentielle totale estim&eacute;e de cette offre est d&rsquo;environ 10&nbsp;000&nbsp;000&nbsp;$ pour un total possible de cinq (5) ans.
+Cette sollicitation devrait &ecirc;tre mise de l&rsquo;avant comme indiqu&eacute; dans le tableau ci-dessous. Ceci est conditionnel &agrave; l&rsquo;approbation du contrat par le MDN.
+
+Num&eacute;ro de contrat&nbsp;: SLSO2796
+Titre&nbsp;: Services de nettoyage et d&rsquo;entretien de la base
+Valeur potentielle totale&nbsp;: 10&nbsp;000&nbsp;000&nbsp;$
+Date d&rsquo;affichage pr&eacute;vue&nbsp;: Novembre&nbsp;2026
+Date pr&eacute;vue de d&eacute;but du contrat&nbsp;: Avril&nbsp;2027
+
+Exigences &eacute;ventuelles en mati&egrave;re de s&eacute;curit&eacute; et d&rsquo;attribution du contrat
+
+Pour &ecirc;tre admissible &agrave; l&rsquo;attribution d&rsquo;un contrat, un soumissionnaire devra, entre autres, d&eacute;tenir toute cote de s&eacute;curit&eacute; requise avant la date de l&rsquo;octroi du contrat, comme il sera indiqu&eacute; en d&eacute;tail dans les documents de la sollicitation.
+
+Le niveau d&rsquo;attestation de s&eacute;curit&eacute; pr&eacute;vu pour ce contrat est une v&eacute;rification &rsquo;d&rsquo;organisation d&eacute;sign&eacute;e (VOD)
+
+parrainage DU programme de s&eacute;curit&eacute; industrielle (PSI)
+
+Construction de D&eacute;fense Canada (CDC) offre aux entrepreneurs l&rsquo;opportunit&eacute; de se faire parrainer en vue d&rsquo;obtenir une attestation de s&eacute;curit&eacute; par l&rsquo;entremise du Programme de s&eacute;curit&eacute; industrielle (PSI). Par cons&eacute;quent, les entrepreneurs qui pr&eacute;voient pr&eacute;senter une soumission pour ce projet et qui ne d&eacute;tiennent pas activement l&rsquo;attestation de s&eacute;curit&eacute; identifi&eacute;e ci-dessus devraient commencer imm&eacute;diatement le processus de demande d&rsquo;attestation de s&eacute;curit&eacute; en faisant la demande par l&rsquo;interm&eacute;diaire du PSI de CDC.
+
+Dans le cadre de ce programme, CDC peut, &agrave; son enti&egrave;re discr&eacute;tion, fournir une aide pr&eacute;liminaire pour le processus de parrainage visant l&rsquo;obtention d&rsquo;une attestation de s&eacute;curit&eacute;.
+
+Pour commencer ce processus, veuillez pr&eacute;senter une demande de parrainage &agrave; CDC en suivant les &eacute;tapes suivantes qui se trouvent sur son site Web &agrave;&nbsp;: https://www.cdc-dcc.gc.ca/industrie/exigences-de-s&eacute;curit&eacute;.
+
+Dans la demande de parrainage qu&rsquo;ils pr&eacute;sentent &agrave; CDC, les firmes d&rsquo;experts-conseils ou les entrepreneurs sont pri&eacute;s de notamment indiquer les renseignements suivants&nbsp;:
+
+	Le num&eacute;ro du pr&eacute;avis d&rsquo;approvisionnement (num&eacute;ro de projet dans l&rsquo;avis de MERX);
+	Le num&eacute;ro du contrat SLSO2796; et,
+	Le niveau de cote de s&eacute;curit&eacute; demand&eacute; dans le cadre du parrainage.
+
+Processus de parrainage
+
+&Agrave; la r&eacute;ception d&rsquo;une demande de parrainage, CDC l&rsquo;examine et communique directement avec les experts-conseils ou les entrepreneurs pour compl&eacute;ter le dossier.
+
+Une fois que CDC a d&eacute;termin&eacute;, &agrave; son enti&egrave;re discr&eacute;tion, qu&rsquo;une firme ou un entrepreneur&nbsp;:
+
+	a d&eacute;but&eacute; le processus de parrainage avant que la sollicitation (num&eacute;ro de contrat indiqu&eacute; sur leur demande de parrainage) ne soit annonc&eacute;e sur MERX,
+	a satisfait &agrave; toutes les exigences mat&eacute;rielles de la trousse de demande de parrainage, et
+	a d&eacute;pos&eacute; une proposition ou une soumission
+
+CDC enverra la trousse de demande de parrainage au Programme de s&eacute;curit&eacute; des contrats (PSC) de Services publics et Approvisionnement Canada (SPAC).
+
+Apr&egrave;s la r&eacute;ception du dossier de demande de parrainage, le PSC communique directement avec le proposant ou le soumissionnaire pour lui indiquer les prochaines &eacute;tapes, les mesures &agrave; prendre ou l&rsquo;&eacute;tat du traitement du dossier. Le proposant ou le soumissionnaire devra alors coop&eacute;rer avec le PSC en temps opportun pour faire avancer le processus.
+
+Des questions?
+
+Vous pouvez transmettre toute question concernant le processus de parrainage par l&rsquo;interm&eacute;diaire du PSI &agrave;&nbsp;:
+
+Num&eacute;ro de t&eacute;l&eacute;phone&nbsp;: (613) 998-8974
+Courriel&nbsp;: ISP.Sponsorship@dcc-cdc.gc.ca
+
+Vous pouvez transmettre vos questions relatives au pr&eacute;sent pr&eacute;avis d&rsquo;approvisionnement &agrave;&nbsp;:
+
+Brad Jeaurond
+Coordonnateur, Services des march&eacute;s
+Construction de D&eacute;fense Canada
+204-765-3000, ext. 258-4094
+Bradley.Jeaurond@dcc-cdc.gc.ca
+
+Avis de non-responsabilit&eacute;
+
+CDC ne fournit qu&rsquo;une aide, &agrave; son enti&egrave;re discr&eacute;tion, pour le processus de parrainage susmentionn&eacute; et ne fournit aucune d&eacute;claration ni ne garantit qu&rsquo;un dossier de demande de parrainage ou une demande d&rsquo;attestation de s&eacute;curit&eacute; transmise par CDC au PSC sera retenu ou entra&icirc;nera l&rsquo;octroi de l&rsquo;attestation de s&eacute;curit&eacute; demand&eacute;e par le PSC. En tout temps, le traitement d&rsquo;une demande de parrainage ou d&rsquo;une demande d&rsquo;attestation de s&eacute;curit&eacute; est assujetti aux modalit&eacute;s et aux d&eacute;lais respectifs du processus de parrainage du PSI de CDC et du processus d&rsquo;octroi de l&rsquo;attestation de s&eacute;curit&eacute; du PSC. En postulant &agrave; l&rsquo;un ou l&rsquo;autre des processus susmentionn&eacute;s, le proposant ou le soumissionnaire accepte d&rsquo;assumer les frais et les risques associ&eacute;s &agrave; : (i) l&rsquo;exhaustivit&eacute; ou l&rsquo;exactitude, ou l&rsquo;absence d&rsquo;exactitude, de sa demande ou des documents connexes soumis dans le cadre de l&rsquo;un ou l&rsquo;autre de ces processus ou en relation avec ceux-ci, et (ii) le respect ou l&rsquo;absence d&rsquo;opportunit&eacute;, de tout traitement ou octroi d&rsquo;une ou de plusieurs attestations de s&eacute;curit&eacute; dans le cadre de l&rsquo;un ou l&rsquo;autre de ces processus ou en relation avec ceux-ci. Nonobstant toute autre disposition ci-dessus, CDC ne sera en aucun cas responsable envers le proposant ou soumissionnaire de tout dommage direct ou indirect.Vous pouvez soumettre une offre et accéder aux documents sur http://www.merx.com. Des frais peuvent sappliquer; Voir https://www.merx.com/public/pricing pour plus dinformations."
+"Local Internet Access Services (LIAS)","Service d'accès Internet local (SAIL)","SSC-26-00034400:T","000","BPM014160/34400","2026-07-29","2065-04-27T07:00:00","","","","Open","Ouvert","*D304A","*Data Transmission Service","*Transmission de données","","","","*SRV","Request for Supply Arrangement","Demande pour un arrangement en matière d’approvisionnement","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","","","","","*Canada-Korea Free Trade Agreement (CKFTA)
+*Canada-Ukraine Free Trade Agreement (CUFTA)
+*Canada-Peru Free Trade Agreement (CPFTA)
+*World Trade Organization Agreement on Government Procurement (WTO GPA)
+*Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)
+*Canadian Free Trade Agreement (CFTA)
+*Canada-Chile Free Trade Agreement (CCFTA)
+*Canada-Panama Free Trade Agreement
+*Canada-Colombia Free Trade Agreement
+*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)
+*Canada-Honduras Free Trade Agreement","*Accord de libre-échange Canada-Corée
+*Accord de libre-échange Canada-Ukraine (ALECU)
+*Accord de libre-échange Canada-Pérou (ALECP)
+*Accord sur les marchés publics de l'Organisation mondiale du commerce (AMP-OMC)
+*Accord de Partenariat transpacifique global et progressiste (PTPGP)
+*Accord de libre-échange canadien (ALEC)
+*Accord de libre-échange Canada-Chili (ALECC)
+*Accord de libre-échange Canada-Panama
+*Accord de libre-échange Canada-Colombie
+*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)
+*Accord de libre-échange Canada-Honduras","*Canada","*Canada","*Canada","*Canada","Shared Services Canada","90 Metcalfe Street","Ottawa","Ontario","K0A 0C3","Canada","Services partagés Canada","90, rue Metcalfe","Ottawa","Ontario","Canada","Shared Services Canada","90 Metcalfe Street,Ottawa,Ontario,K0A 0C3,Canada","Services partagés Canada","90, rue Metcalfe,Ottawa,Ontario,K0A 0C3,Canada","","","","","","Ottawa","Ontario","K0A 0C3","CANADA","","","","","","","https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download_public/00926665-9700-4F15-AC1E-B72E08430ABA,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download_public/06B3A327-D49E-4E29-A541-6C5FE7E69EBD,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download_public/6AA06B06-11A9-41A0-ABDC-0E9B824EE71A,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download_public/0487BECE-992C-42B6-A0DE-CC9D46D875EB,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download_public/1A7BBA79-A75F-46EC-8DB2-95FCDAE91495,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download_public/A82BB3BB-DF8C-4F54-89C5-A67FC1462DC4,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download_public/C7206CC3-B55A-4A3C-85A6-5AF7511E3DED,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download_public/4E10CFD1-68B8-4721-9E2F-B4654346404D","https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download_public/3D78651C-138F-4B39-A12F-6AEF13967642,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download_public/1B32F002-8CB1-4F70-AADD-BA8A7A77B164,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download_public/5842B591-D6E1-43A4-BF55-88AF60F66818,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download_public/565D487C-D03D-4938-9558-976B955EEF16,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download_public/D57F1412-F2A4-4843-8686-69B87ED2E63B,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download_public/77F6BBAC-1E90-4BEA-8860-C4DA2BDDEAB4","Solicitation No.: BPM014160Department: Shared Services Canada (SSC)Delivery Destination Area:&nbsp; Canada / National&nbsp;Description of Requirement: Shared Services Canada (SSC) requires Local Internet Access Services (LIAS) for federal government sites across Canada on an as-and-when requested basis for SSC itself, its exclusive Partner Organizations, Mandatory Clients, and any other Government Organization that chooses to use SSC for the procurement of its LIAS.&nbsp;This Request for Supply Arrangement is to invite Internet Service Providers (ISPs) to prequalify their business through this solicitation. All suppliers that demonstrate the required experience and capacity will be qualified as part of the resulting Supply Arrangements (SAs) for opportunities to supply Canada with LIAS.&nbsp;The intent is to issue Supply Arrangements to all qualified ISPs. The resulting SAs will be used to:
+Establish a list of qualified ISPs for future exclusive competition of LIAS requirements
+	Standardize resulting contracts for a more efficient and timely contract award process
+	Streamline future solicitations, their responses, inquiries, and invoicing, to improve organizational processes while reducing manual clerical deficiencies.
+	Formalize and consolidate pre-existing Legacy and Contracted Connections for ease of management and payment
+	Recompete pre-existing Contracted Connections as they expire
+	Establish new LIAS Connections
+
+&nbsp;This RFSA is not a solicitation of bids or tenders and is intended to pre-qualify suppliers that possess the criteria required by SSC to be issued a Supply Arrangement. Although SSC intends to award as many SAs as possible resulting from this RFSA, there is no obligation to award a contract as a result of being issued an SA from this RFSA process.&nbsp;Procure to Pay (P2P) Portal: Procure to Pay (P2P) is an integral part of SSC’s contracting processes where all SSC requirements and solicitations are posted and managed. Suppliers must be registered and logged into P2P in order to submit a response. Registering for an account will allow vendors to view, respond, bid, invoice, and manage opportunities with SSC. Resources are available to assist your business with account setup and support. Visit https://sscp2pspc.ssc-spc.gc.ca and click “New Supplier? / Register Now” to get started on creating your account.&nbsp;&nbsp;
+
+
+SSC Local Internet Access Services (LIAS)- Amendment 000","No de la demande de soumissions&nbsp;: BPM014160Minist&#232;re&nbsp;: Services partag&#233;s Canada (SPC)Zone de destination de distribution&nbsp;: Canada / &#224; l’&#233;chelle nationale&nbsp;Description du besoin&nbsp;: Services partag&#233;s Canada (SPC) requiert des d’acc&#232;s Internet local&nbsp;(SAIL) pour les sites du gouvernement f&#233;d&#233;ral &#224; travers le Canada, selon la demande et cela pour SPC lui-m&#234;me, ses organisations partenaires exclusives, ses clients obligatoires, ainsi que &nbsp;toute autre organisation gouvernementale qui choisit d’utiliser SPC pour l’approvisionnement de son SAIL.&nbsp;Cette demande d&#39;arrangements en mati&#232;re d&#39;approvisionnemnt a pour but d’inviter les fournisseurs de services Internet (FSI) &#224; se pr&#233;qualifier dans le cadre de cette solicitation.Tous les fournisseurs qui d&#233;montrent l’exp&#233;rience et la capacit&#233; requises seront qualifi&#233;s dans le cadre des arrangements en mati&#232;re d’approvisionnement (AMA) qui en r&#233;sulteront pour les possibilit&#233;s d’approvisionner le Canada en SAIL.&nbsp;L’objectif est d’&#233;mettre des arrangements en mati&#232;re d’approvisionnement (AMA) &#224; tous les FSI qualifi&#233;s. Les AMA r&#233;sultants seront utilis&#233;s pour&nbsp;:
+&#201;tablir une liste de fournisseurs de services Internet qualifi&#233;s en vue d&#39;une comp&#233;tition exclusive &#233;ventuelle pour les besoins du SAIL;
+	Normaliser les contrats r&#233;sultants pour un processus d’attribution des contrats plus efficace et plus rapide;
+	Rationaliser les prochaines demandes de soumissions, leurs r&#233;ponses, les demandes de renseignements et la facturation, afin d’am&#233;liorer les processus organisationnels tout en r&#233;duisant les lacunes dans les t&#226;ches manuelles administratives;
+	Formaliser et consolider les connexions h&#233;rit&#233;es pr&#233;existantes et les connexions contractuelles pour faciliter la gestion et le paiement;
+	Lancer &#224; nouveau des appels d’offres pour les connexions contractuelles pr&#233;existantes lorsqu’elles arrivent &#224; &#233;ch&#233;ance.
+	&#201;tablir de nouvelles connexions de SAIL.
+
+&nbsp;Cette demande d’arrangement en mati&#232;re d’approvisionnement n’est pas une demande de soumissions ou un appel d’offres. Elle a pour but de pr&#233;-qualifier les fournisseurs qui poss&#232;dent les crit&#232;res requis par SPC pour obtenir un arrangement en mati&#232;re d’approvisionnement (AMA). Bien que SPC ait l’intention d’attribuer le plus grand nombre possible d’AMA &#224; la suite de cette DAMA, il n’est pas oblig&#233; d’attribuer un contrat &#224; la suite de l’attribution d’un AMA dans le cadre du processus de cette DAMA.&nbsp;Portail d’approvisionnement au paiement en ligne (APL)&nbsp;: est une partie int&#233;grante des processus de passation de march&#233;s du SSC o&#249; tous les besoins et les demandes de soumissions de SPC sont affich&#233;s et g&#233;r&#233;s. Les fournisseurs doivent &#234;tre inscrits et connect&#233;s &#224; l’APL afin de pouvoir soumettre une r&#233;ponse. La cr&#233;ation d’un compte permettra aux fournisseurs de r&#233;viser, de r&#233;pondre, de soumissionner, de facturer et de g&#233;rer les occasions avec SPC. Des ressources sont disponibles pour aider votre entreprise &#224; configurer et &#224; g&#233;rer leur compte. Pour cr&#233;er votre compte, visitez https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/usr/login, puis cliquez sur Nouveau fournisseur ? Inscrivez-vous maintenant.SSC Local Internet Access Services (LIAS)- Amendment 000"
+"Compact Tracked Loader","Chargeur à chenille compact","cb-10-19497485","000","5P420-26-0191/A","2026-10-16","2026-10-31T16:00:00","","2026-11-16","2027-03-31","Open","Ouvert","","","","*22101500
+*22101600","*Earth moving machinery
+*Paving equipment","*Engins de terrassement
+*Équipements de pavage","*GD","RFP against Supply Arrangement","Demande de proposition découlant d’un arrangement en matière d’approvisionnement","Competitive - Selective tendering","Concurrentielle - Appel d'offres sélectif","Lowest Price","Prix le plus bas","","","*Canada-Korea Free Trade Agreement (CKFTA)
+*Canadian Free Trade Agreement (CFTA)","*Accord de libre-échange Canada-Corée
+*Accord de libre-échange canadien (ALEC)","*Canada","*Canada","*Manitoba","*Manitoba","Parks Canada Agency (PC)","30 Victoria Street","Gatineau","Quebec","J8X 0B3","Canada","Agence Parcs Canada (PC)","30, rue Victoria","Gatineau","Québec","Canada","","","","","","","","","","Calgary","Alberta","T2G 4X3","Canada","","Calgary","Alberta","Canada","","","","","Compact Tracked Loader
+
+5P420-26-0191/A
+
+Andrea McGraw-Alcock
+Telephone: 587-436-5908
+Email: andrea.mcgraw-alcock@pc.gc.ca 
+
+Parks Canada Agency has a requirement for one (1) Compact Tracked Loader, group 3, Configuration B.
+
+This bid solicitation process is open only to suppliers holding a Supply Arrangement (SA) under the Request (RFSA) E60HS-25BCKH/A.  If you wish to become a pre-qualified supplier under this RFSA, refer to: https://canadabuys.canada.ca/en/tender-opportunities/tender-notice/ws4798204521-doc4813695380
+
+As a requirement of the SA, this notice is published on canadabuys.canada.ca for a period of fifteen (15) calendar days.
+
+The requested delivery date for the above-mentioned goods is March 31, 2027.
+
+------------------------------------------------------------
+
+Debriefings
+
+Bidders may request a debriefing on the results of the bid solicitation. Bidders should make the request to the Contracting Authority within fifteen (15) working days from receipt of notification that their bid was unsuccessful. The debriefing may be provided in writing, by telephone or in person.
+","Chargeur à chenille compact
+
+5P420-26-0191/A
+
+Andrea McGraw-Alcock 
+Téléphone : 587-436-5908
+Courriel : andrea.mcgraw-alcock@pc.gc.ca  
+
+L’Agence Parcs Canada a un besoin pour un (1) chargeur à chenille compact, Groupe 3, Configuration B.
+
+Ce processus de demande de soumissions s’adresse uniquement aux fournisseurs détenant un Arrangement en Matière d’Approvisionnement (AMA) sous la demande (DAMA) E60HS-25BCKH/A.  Si vous désirez vous pré-qualifier pour cette DAMA, consulter : https://achatscanada.canada.ca/fr/occasions-de-marche/appels-d-offres/ws4798204521-doc4813695380
+
+Afin de satisfaire à l'exigence de l'AMA, cet avis est publié sur achatscanada.canada.ca/fr pour une période de 15 jours civils.
+
+La date de livraison demandée pour l'ensemble des biens susmentionnés est le 31 mars 2027.
+
+---------------------------------------------------------------
+
+Compte rendu
+
+Les soumissionnaires peuvent demander un compte rendu des résultats du processus de demande de soumissions. Les soumissionnaires devraient en faire la demande à l'autorité contractante dans les quinze (15) jours ouvrables, suivant la réception des résultats du processus de demande de soumissions. Le compte rendu peut être fourni par écrit, par téléphone ou en personne.
+"
+"Media monitoring and newsletter production services","Services de veille médiatique et de production d’infolettres","MX-243100575639","000","PRCP0003653","2026-10-21","2026-11-16T11:00:00","","","","Open","Ouvert","","","","","","","*SRV","","","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","","","","","*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)
+*Canadian Free Trade Agreement (CFTA)","*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)
+*Accord de libre-échange canadien (ALEC)","","","","","Business Development Bank of Canada","5, Place Ville-Marie","Montréal","Quebec","H3B 5E7","Canada","Business Development Bank of Canada","5, Place Ville-Marie","Montréal","Québec","Canada","","","","","","","","","","","","","","","","","","https://www.merx.com/public/solicitations/4139894701/abstract?language=EN","https://www.merx.com/public/solicitations/4139894701/abstract?language=FR","","","This procurement process covers two (2) main categories of services: (i) media monitoring and media intelligence services and (ii) newsletter production services, including delivery to a BDC-designated email address.
+Together, these services support BDC&rsquo;s external communications, reputation management, market intelligence activities, and internal knowledge-sharing objectives.Bidding and Documents are available on http://www.merx.com.  Fees may apply; See https://www.merx.com/public/pricing for more information.","Le pr&eacute;sent processus d&rsquo;appel d&rsquo;offres porte sur deux (2) cat&eacute;gories principales de services : (i) les services de veille et d&rsquo;analyse m&eacute;diatiques et (ii) les services de production d&rsquo;infolettres, y compris leur livraison &agrave; une adresse courriel d&eacute;sign&eacute;e par BDC.
+Ensemble, ces services soutiennent les communications externes de BDC, la gestion de sa r&eacute;putation, ses activit&eacute;s de veille commerciale ainsi que ses objectifs de partage des connaissances &agrave; l&#39;interne.Vous pouvez soumettre une offre et accéder aux documents sur http://www.merx.com. Des frais peuvent sappliquer; Voir https://www.merx.com/public/pricing pour plus dinformations."
+"E6TOR-23RM04 Light Construction Equipment Rental","E6TOR-23RM04 Location d’équipement de construction léger","WS4052927717-Doc4053526199","001","WS4052927717","2023-06-14","2028-06-29T20:00:00","2023-06-15","","2028-06-30","Open","Ouvert","","","","*22000000","*Building and Construction Machinery and Accessories","*Engins et accessoires de chantier et de construction","*SRV","Request for Supply Arrangement","Demande pour un arrangement en matière d’approvisionnement","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","Not applicable","Sans objet","","","*Canada-Panama Free Trade Agreement
+*Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)
+*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)
+*Canada-Ukraine Free Trade Agreement (CUFTA)
+*Canadian Free Trade Agreement (CFTA)
+*Canada-Korea Free Trade Agreement (CKFTA)
+*Canada-Chile Free Trade Agreement (CCFTA)
+*Canada-Honduras Free Trade Agreement
+*Canada-UK Trade Continuity Agreement (Canada-UK TCA)
+*Canada-Peru Free Trade Agreement (CPFTA)
+*World Trade Organization Agreement on Government Procurement (WTO GPA)
+*Canada-Colombia Free Trade Agreement","*Accord de libre-échange Canada-Panama
+*Accord de Partenariat transpacifique global et progressiste (PTPGP)
+*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)
+*Accord de libre-échange Canada-Ukraine (ALECU)
+*Accord de libre-échange canadien (ALEC)
+*Accord de libre-échange Canada-Corée
+*Accord de libre-échange Canada-Chili (ALECC)
+*Accord de libre-échange Canada-Honduras
+*Accord de continuité commerciale Canada–Royaume-Uni (ACC Canada-Royaume-Uni)
+*Accord de libre-échange Canada-Pérou (ALECP)
+*Accord sur les marchés publics de l'Organisation mondiale du commerce (AMP-OMC)
+*Accord de libre-échange Canada-Colombie","","","*Ontario (except NCR)","*Ontario (sauf RCN)","Department of Public Works and Government Services (PSPC)","11 Laurier St, Phase III, Place du Portage","Gatineau","Quebec","K1A 0S5","Canada"," Ministère des Travaux publics et des Services gouvernementaux (SPAC)","11, rue Laurier, Phase III, Place du Portage","Gatineau","Québec","Canada","Department of Public Works and Government Services (PSPC)","11 Laurier St, Phase III, Place du Portage,Gatineau,Quebec,K1A 0S5,Canada"," Ministère des Travaux publics et des Services gouvernementaux (SPAC)","11, rue Laurier, Phase III, Place du Portage,Gatineau,Québec,K1A 0S5,Canada","","","","","","","","","","","","","","https://portal.us.bn.cloud.ariba.com/dashboard/public/appext/comsapsbncdiscoveryui#/RfxEvent/preview/16583696?anId=ANONYMOUS","https://portal.us.bn.cloud.ariba.com/dashboard/public/appext/comsapsbncdiscoveryui#/RfxEvent/preview/16583696?anId=ANONYMOUS","","","Offerors may submit an offer at any point during the solicitation period.  Supply Arrangements will be issued in the order that compliant offers are received. Canada is seeking offers from Offerors to provide rental of light construction equipment, on behalf of Federal Government Departments located in the Ontario Region. This equipment includes but is not be limited to: powered and non-powered hand tools, ladders, scaffolding, work platforms and walk behind grounds keeping equipment. There is no pricing requested in this document as it will be used to pre-qualify bidders (by issuing Supply Arrangements) for future requests for quotations.  The period of the Supply Arrangement is from Issuance to 2028-06-30 inclusive.","Les offrants peuvent soumettre une offre à tout moment pendant la période de sollicitation. Les arrangements en matière d'approvisionnement seront émis dans l'ordre de réception des offres conformes. Le Canada cherche à obtenir des propositions portant sur la location d’équipement de construction léger pour le compte de ministères fédéraux situés en Ontario. L’équipement doit comprendre, entre autres : outils à main mécaniques et non mécaniques, échelles, échafaudages, plateformes de travail et équipement poussé d’entretien de terrains.  Le présent document n’exige pas qu’un prix soit fourni, car il vise à préqualifier les soumissionnaires (en attribuant un arrangement en matière d’approvisionnement) pour des demandes de prix éventuelles.  La période de l’arrangement en matière d’approvisionnement est de l'émission au 2028-06-30 inclusivement."
+"Local Internet Access Services RFSA","Service d'accès Internet local DAMA","SSC-22-00020507:T","000","BPM016120/20507","2022-10-21","2065-04-27T07:00:00","","","","Open","Ouvert","*D304A","*Data Transmission Service","*Transmission de données","","","","*SRV","Request for Supply Arrangement","Demande pour un arrangement en matière d’approvisionnement","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","","","","","*Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)
+*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)
+*Canada-Korea Free Trade Agreement (CKFTA)
+*Canada-Honduras Free Trade Agreement
+*Canada-Chile Free Trade Agreement (CCFTA)
+*Canada-Colombia Free Trade Agreement
+*Canada-Peru Free Trade Agreement (CPFTA)
+*Canada-Ukraine Free Trade Agreement (CUFTA)
+*World Trade Organization Agreement on Government Procurement (WTO GPA)
+*Canadian Free Trade Agreement (CFTA)
+*Canada-Panama Free Trade Agreement","*Accord de Partenariat transpacifique global et progressiste (PTPGP)
+*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)
+*Accord de libre-échange Canada-Corée
+*Accord de libre-échange Canada-Honduras
+*Accord de libre-échange Canada-Chili (ALECC)
+*Accord de libre-échange Canada-Colombie
+*Accord de libre-échange Canada-Pérou (ALECP)
+*Accord de libre-échange Canada-Ukraine (ALECU)
+*Accord sur les marchés publics de l'Organisation mondiale du commerce (AMP-OMC)
+*Accord de libre-échange canadien (ALEC)
+*Accord de libre-échange Canada-Panama","*Canada","*Canada","*Canada","*Canada","Shared Services Canada","90 Metcalfe Street","Ottawa","Ontario","K0A 0C3","Canada","Services partagés Canada","90, rue Metcalfe","Ottawa","Ontario","Canada","Shared Services Canada","90 Metcalfe Street,Ottawa,Ontario,K0A 0C3,Canada","Services partagés Canada","90, rue Metcalfe,Ottawa,Ontario,K0A 0C3,Canada","","","","","","","","","","","","","","","","https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download/FDBB4786-3FAA-4866-B721-63A2857F4CDA,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download/1B36B51A-83C5-47CD-A3E3-26D852962BFA,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download/B339D2F6-0F40-411E-ABFF-26C5336A1685","https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download/BF330023-65AC-4E9B-95C7-9712EC9DD094,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download/392C339F-EF98-4D97-96B3-E21BD8086698,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download/36701EAD-6B90-4A4B-89CF-FC1080F1B9EF","Solicitation No.:&nbsp;BPM016120 related to the initial solicitation BPM014160Department:&nbsp;Shared Services Canada (SSC)Notification Period:&nbsp;Thursday April 27, 2022 to (open - On-going opportunity for qualification)&nbsp;Delivery Destination Area:&nbsp;&nbsp;Canada / National&nbsp;Description of Requirement:&nbsp;Shared Services Canada (SSC) requires Local Internet Access Services (LIAS) for federal government sites across Canada on an as-and-when requested basis for SSC itself, its exclusive Partner Organizations, Mandatory Clients, and any other Government Organization that chooses to use SSC for the procurement of its LIAS.&nbsp;This Request for Supply Arrangement is to invite Internet Service Providers (ISPs) to prequalify their business through this solicitation. All suppliers that demonstrate the required experience and capacity will be qualified as part of the resulting Supply Arrangements (SAs) for opportunities to supply Canada with LIAS.&nbsp;The intent is to issue Supply Arrangements to all qualified ISPs.&nbsp;The resulting SAs will be used to:
+Establish a list of qualified ISPs for future exclusive competition of LIAS requirements
+	Standardize resulting contracts for a more efficient and timely contract award process
+	Streamline future solicitations, their responses, inquiries, and invoicing, to improve organizational processes while reducing manual clerical deficiencies.
+	Formalize and consolidate pre-existing Legacy and Contracted Connections for ease of management and payment
+	Recompete pre-existing Contracted Connections as they expire
+	Establish new LIAS Connections&nbsp;
+	This RFSA is not a solicitation of bids or tenders and is intended to pre-qualify suppliers that possess the criteria required by SSC to be issued a Supply Arrangement. Although SSC intends to award as many SAs as possible resulting from this RFSA, there is no obligation to award a contract as a result of being issued an SA from this RFSA process.
+
+&nbsp;Procure to Pay (P2P) Portal:&nbsp;Procure to Pay (P2P) is an integral part of SSC’s contracting processes where all SSC requirements and solicitations are posted and managed. Suppliers must be registered and logged into P2P in order to submit a response. Registering for an account will allow vendors to view, respond, bid, invoice, and manage opportunities with SSC. Resources are available to assist your business with account setup and support. Visit&nbsp;https://sscp2pspc.ssc-spc.gc.ca&nbsp;and click “New Supplier? / Register Now” to get started on creating your account.&nbsp;
+SSC Local Internet Access Services RFSA- Amendment 000","No&nbsp;de la demande de soumissions&nbsp;:&nbsp;BPM016120 li&#233;e &#224; la solicitation initiale BPM014160Minist&#232;re&nbsp;:&nbsp;Services partag&#233;s Canada (SPC)P&#233;riode de l’avis&nbsp;:&nbsp;jeudi, 27 avril 2022&nbsp; au (ouvert-possibilit&#233; continue &#224; se qualifier)Zone de destination de distribution&nbsp;:&nbsp;Canada / &#224; l’&#233;chelle nationale&nbsp;Description du besoin&nbsp;:&nbsp;Services partag&#233;s Canada (SPC) requiert des d’acc&#232;s Internet local&nbsp;(SAIL) pour les sites du gouvernement f&#233;d&#233;ral &#224; travers le Canada, selon la demande et cela pour SPC lui-m&#234;me, ses organisations partenaires exclusives, ses clients obligatoires, ainsi que &nbsp;toute autre organisation gouvernementale qui choisit d’utiliser SPC pour l’approvisionnement de son SAIL.&nbsp;Cette demande d&#39;arrangements en mati&#232;re d&#39;approvisionnemnt a pour but d’inviter les fournisseurs de services Internet (FSI) &#224; se pr&#233;qualifier dans le cadre de cette solicitation.Tous les fournisseurs qui d&#233;montrent l’exp&#233;rience et la capacit&#233; requises seront qualifi&#233;s dans le cadre des arrangements en mati&#232;re d’approvisionnement (AMA) qui en r&#233;sulteront pour les possibilit&#233;s d’approvisionner le Canada en SAIL.&nbsp;L’objectif est d’&#233;mettre des arrangements en mati&#232;re d’approvisionnement (AMA) &#224; tous les FSI qualifi&#233;s. Les AMA r&#233;sultants seront utilis&#233;s pour&nbsp;:
+						&#201;tablir une liste de fournisseurs de services Internet qualifi&#233;s en vue d&#39;une comp&#233;tition exclusive &#233;ventuelle pour les besoins du SAIL;
+							Normaliser les contrats r&#233;sultants pour un processus d’attribution des contrats plus efficace et plus rapide;
+							Rationaliser les prochaines demandes de soumissions, leurs r&#233;ponses, les demandes de renseignements et la facturation, afin d’am&#233;liorer les processus organisationnels tout en r&#233;duisant les lacunes dans les t&#226;ches manuelles administratives;
+							Formaliser et consolider les connexions h&#233;rit&#233;es pr&#233;existantes et les connexions contractuelles pour faciliter la gestion et le paiement;
+							Lancer &#224; nouveau des appels d’offres pour les connexions contractuelles pr&#233;existantes lorsqu’elles arrivent &#224; &#233;ch&#233;ance.
+							&#201;tablir de nouvelles connexions de SAIL.&nbsp;&nbsp;
+							Cette demande d’arrangement en mati&#232;re d’approvisionnement n’est pas une demande de soumissions ou un appel d’offres. Elle a pour but de pr&#233;-qualifier les fournisseurs qui poss&#232;dent les crit&#232;res requis par SPC pour obtenir un arrangement en mati&#232;re d’approvisionnement (AMA). Bien que SPC ait l’intention d’attribuer le plus grand nombre possible d’AMA &#224; la suite de cette DAMA, il n’est pas oblig&#233; d’attribuer un contrat &#224; la suite de l’attribution d’un AMA dans le cadre du processus de cette DAMA.
+						
+						&nbsp;Portail d’approvisionnement au paiement en ligne (APL)&nbsp;:&nbsp;est une partie int&#233;grante des processus de passation de march&#233;s du SSC o&#249; tous les besoins et les demandes de soumissions de SPC sont affich&#233;s et g&#233;r&#233;s. Les fournisseurs doivent &#234;tre inscrits et connect&#233;s &#224; l’APL afin de pouvoir soumettre une r&#233;ponse. La cr&#233;ation d’un compte permettra aux fournisseurs de r&#233;viser, de r&#233;pondre, de soumissionner, de facturer et de g&#233;rer les occasions avec SPC. Des ressources sont disponibles pour aider votre entreprise &#224; configurer et &#224; g&#233;rer leur compte. Pour cr&#233;er votre compte, visitez&nbsp;https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/usr/login, puis cliquez sur&nbsp;Nouveau fournisseur ? Inscrivez-vous maintenant.&nbsp;
+						
+					
+				
+			
+			
+		
+	
+
+SSC Local Internet Access Services RFSA- Amendment 000"
+"Application and Desktop Virtualization (ADV) Invitation to Qualify","Solution de virtualisation des applications et des postes de travail (VAST) invitation à se qualifier","SSC-26-00035036:T","001","BPM026715/35036","2026-10-01","2026-11-05T14:00:00","","","","Open","Ouvert","*N7030","*ADP Software","*Logiciel TAI","","","","*GD","Request for Information","Demande de renseignements","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","","","","","*Canada-Panama Free Trade Agreement
+*Canada-UK Trade Continuity Agreement (Canada-UK TCA)
+*Canada-Chile Free Trade Agreement (CCFTA)
+*Canada-Ukraine Free Trade Agreement (CUFTA)
+*Land Claim Set Asides (LCSA)
+*Canada-Korea Free Trade Agreement (CKFTA)
+*Canadian Free Trade Agreement (CFTA)
+*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)
+*Canada-Colombia Free Trade Agreement
+*Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)
+*Canada-Peru Free Trade Agreement (CPFTA)
+*Canada-Honduras Free Trade Agreement
+*World Trade Organization Agreement on Government Procurement (WTO GPA)","*Accord de libre-échange Canada-Panama
+*Accord de continuité commerciale Canada-Royaume-Uni (ACC Canada-Royaume-Uni)
+*Accord de libre-échange Canada-Chili (ALECC)
+*Accord de libre-échange Canada-Ukraine (ALECU)
+*Marchés réservés dans le cadre des revendications territoriales
+*Accord de libre-échange Canada-Corée
+*Accord de libre-échange canadien (ALEC)
+*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)
+*Accord de libre-échange Canada-Colombie
+*Accord de Partenariat transpacifique global et progressiste (PTPGP)
+*Accord de libre-échange Canada-Pérou (ALECP)
+*Accord de libre-échange Canada-Honduras
+*Accord sur les marchés publics de l'Organisation mondiale du commerce (AMP-OMC)","*Canada","*Canada","*Canada","*Canada","Shared Services Canada","90 Metcalfe Street","Ottawa","Ontario","K0A 0C3","Canada","Services partagés Canada","90, rue Metcalfe","Ottawa","Ontario","Canada","Shared Services Canada","90 Metcalfe Street,Ottawa,Ontario,K0A 0C3,Canada","Services partagés Canada","90, rue Metcalfe,Ottawa,Ontario,K0A 0C3,Canada","","","","","","","","","","","","","","","","https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download_public/AB6990E2-7055-442D-9911-7E34BB163419,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download_public/073C9711-E2AD-4472-A0BD-B0127F01A7F3,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download_public/F3678203-5147-4BC1-BE85-184737875E6D","https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download_public/6D895B6D-CC84-40EC-8A36-931E2A26FD68,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download_public/41FBCAA1-E338-4750-9ED1-2B4093F98763,https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download_public/2DBBD17D-4790-48AF-BE33-6B5E784CF94F","Application and Desktop Virtualization (ADV)&nbsp; Invitation to Qualify&nbsp;
+SSC Application and Desktop Virtualization (ADV) Invitation to Qualify - Amendment 001","Solution de virtualisation des applications et des postes de travail (VAST) invitation &#224; se qualifier&nbsp;&nbsp;
+SSC Application and Desktop Virtualization (ADV) Invitation to Qualify - Amendment 001"
+"Lightspeed satellite services","Services satellitaires Lightspeed","SSC-26-00035176:T","000","BPM026778/35176","","2026-11-02T14:00:00","","","","Open","Ouvert","*D399BB","*Telecommunications - Satellite Services","*Télécommunications - services par satellite","","","","*SRV","Advance Contract Award Notice","Préavis d’attribution du contrat","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","","","","","*Canadian Free Trade Agreement (CFTA)
+*Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)
+*World Trade Organization Agreement on Government Procurement (WTO GPA)
+*Canada-Ukraine Free Trade Agreement (CUFTA)
+*Canada-Colombia Free Trade Agreement
+*Canada-Honduras Free Trade Agreement
+*Canada-Peru Free Trade Agreement (CPFTA)
+*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)
+*Canada-Panama Free Trade Agreement
+*Canada-Chile Free Trade Agreement (CCFTA)
+*Canada-Korea Free Trade Agreement (CKFTA)
+*Canada-UK Trade Continuity Agreement (Canada-UK TCA)","*Accord de libre-échange canadien (ALEC)
+*Accord de Partenariat transpacifique global et progressiste (PTPGP)
+*Accord sur les marchés publics de l'Organisation mondiale du commerce (AMP-OMC)
+*Accord de libre-échange Canada-Ukraine (ALECU)
+*Accord de libre-échange Canada-Colombie
+*Accord de libre-échange Canada-Honduras
+*Accord de libre-échange Canada-Pérou (ALECP)
+*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)
+*Accord de libre-échange Canada-Panama
+*Accord de libre-échange Canada-Chili (ALECC)
+*Accord de libre-échange Canada-Corée
+*Accord de continuité commerciale Canada-Royaume-Uni (ACC Canada-Royaume-Uni)","*Canada","*Canada","*Canada","*Canada","Shared Services Canada","90 Metcalfe Street","Ottawa","Ontario","K0A 0C3","Canada","Services partagés Canada","90, rue Metcalfe","Ottawa","Ontario","Canada","Shared Services Canada","90 Metcalfe Street,Ottawa,Ontario,K0A 0C3,Canada","Services partagés Canada","90, rue Metcalfe,Ottawa,Ontario,K0A 0C3,Canada","","","","","","Ottawa","Ontario","K0A 0C3","CANADA","","","","","","","https://sscp2pspc.ssc-spc.gc.ca/page.aspx/en/fil/download_public/2F27097A-2A84-48CB-B17C-7023054B35B0","https://sscp2pspc.ssc-spc.gc.ca/page.aspx/fr/fil/download_public/9892FDCF-1B13-4813-9671-C728A9A1B048","This ACAN is being issued by Shared Services Canada (SSC) to satisfy the requirement for the provision and operation of Lightspeed Low Earth Orbiting satellite services (called Lightspeed Services) on an ‘’as and when’’ required basis.What is an ACAN: An ACAN is a public notice indicating to the supplier community that a department or agency intends to award a contract for goods, services or construction to a pre-identified supplier, thereby allowing other suppliers to signal their interest in bidding, by submitting a Statement of capabilities. If no supplier submits a Statement of capabilities that meets the requirements set out in the ACAN, on or before the closing date stated in the ACAN, the Contracting Officer may then proceed with the award to the pre-identified supplier.This ACAN relates to 1 contract proposed to be awarded to 1 contractor and will be used by Shared Services Canada.Definition of the Requirement: 
+
+Shared Services Canada (SSC) has a requirement for the provision and operation of Lightspeed Low Earth Orbiting satellite services (called Lightspeed Services) as provided by Telesat LEO ULC on an as-and-when required basis for use by SSC and its partner organizations/clients.
+
+Lightspeed provides Canada’s only sovereign enterprise-grade low earth orbit satellite constellation. Lightspeed has inter-satellite link capabilities, enabling any traffic originating outside of Canada to land in Canada (within applicable regulatory policies) directly through Canadian gateways.&nbsp; 
+
+Lightspeed Services are categorized by its low latency, high throughput, dedicated bandwidth capacity (committed information rate), public networking along with terrestrial landing station infrastructure and Points of Presence (PoP) globally, private networking with Private Access Stations (PAS) at their facilities, dedicated backhaul capability, enterprise level and fully managed services capability and coverage of Canada; and&nbsp; globally.&nbsp; Enterprise level and fully managed services include, but are not limited to: site survey, installation, commissioning, helpdesk, billing, ongoing maintenance, engineering and customer support.
+SSC Lightspeed satellite services - Amendment 000","Ce PAC est publi&#233; par Services partag&#233;s Canada (SPC) afin de r&#233;pondre au besoin relatif &#224; la fourniture et &#224; l’exploitation de services satellitaires en orbite terrestre basse Lightspeed (appel&#233;s ‘’services Ligthspeed’’) au fur et &#224; mesure des besoins.Qu’est-ce qu’un PAC&nbsp;: Un PAC est un avis public informant la collectivit&#233; des fournisseurs qu&#39;un minist&#232;re ou organisme a l&#39;intention d&#39;attribuer un contrat pour des biens, des services ou des travaux de construction &#224; un fournisseur s&#233;lectionn&#233; &#224; l’avance, ce qui permet aux autres fournisseurs de signaler leur int&#233;r&#234;t &#224; soumissionner en pr&#233;sentant un &#233;nonc&#233; des capacit&#233;s. Si aucun fournisseur ne pr&#233;sente un &#233;nonc&#233; des capacit&#233;s qui satisfait aux exigences &#233;tablies dans le PAC, au plus tard &#224; la date de cl&#244;ture indiqu&#233;e dans le PAC, l&#39;agent contractant peut proc&#233;der &#224; l&#39;attribution du contrat au fournisseur s&#233;lectionn&#233; l’avance.Ce PAC concerne un contrat propos&#233; &#224; un entrepreneur.D&#233;finition des besoins&nbsp;:
+
+Services partag&#233;s Canada (SPC) a besoin des services satellitaires en orbite terrestre basse Lighspeed (appel&#233;s &#39;&#39;services Lightspeed&#39;&#39;) offerts par Telesat LEO ULC et est &#224; la recherche d&#39;un fournisseur qui peut exploiter ces services et les fournir &#224; SPC et &#224; ses organisations partenaires et clients au fur et &#224; mesure des besoins.&nbsp;Lightspeed constitue la seule constellation souveraine de satellites en orbite terrestre basse de niveau entreprise au Canada. Lightspeed dispose de capacit&#233;s de liaison intersatellitaire, permettant &#224; tout trafic provenant de l’ext&#233;rieur du Canada d’aboutir au Canada (dans le respect des politiques r&#233;glementaires applicables) en passant directement par des passerelles canadiennes.
+
+Les services Lightspeed se caract&#233;risent par leur faible latence, leur d&#233;bit &#233;lev&#233;, leur capacit&#233; de bande passante d&#233;di&#233;e (d&#233;bit d’information garanti), leur r&#233;seau public associ&#233; &#224; une infrastructure de stations de r&#233;ception terrestres et de points de pr&#233;sence (PoP) &#224; l’&#233;chelle mondiale, leur r&#233;seau priv&#233; avec des stations d’acc&#232;s priv&#233;es (PAS) dans leurs locaux, leur capacit&#233; de liaison terrestre d&#233;di&#233;e, leurs services de niveau entreprise enti&#232;rement g&#233;r&#233;s, ainsi que leur couverture au Canada et dans le monde entier. Les services de niveau entreprise et enti&#232;rement g&#233;r&#233;s comprennent notamment l’&#233;tude de site, l’installation, la mise en service, le service d’assistance, la facturation, la maintenance continue, l’ing&#233;nierie et le soutien &#224; la client&#232;le.
+SSC Lightspeed satellite services - Amendment 000"
+"User Experience Research (UXR) Consulting and Services","User Experience Research (UXR) Consulting and Services","MX-443728062417","000","25-006","2025-10-29","2025-11-26T13:00:00","","","","Open","Ouvert","","","","","","","*SRV","","","Competitive - Traditional","Concurrentielle - Traditionnelle","","","","","*Canadian Free Trade Agreement (CFTA)
+*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)","*Accord de libre-échange canadien (ALEC)
+*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)","","","","","Export Development Canada - EDC","150 Slater","Ottawa","Ontario","K1A 1K3","Canada","Export Development Canada - EDC","150 Slater","Ottawa","Ontario","Canada","","","","","","","","","","","","","","","","","","https://www.merx.com/public/solicitations/3651536406/abstract?language=EN","https://www.merx.com/public/solicitations/3651536406/abstract?language=EN","","","Export Development Canada (EDC) is initiating this Request for Proposal (RFP) to engage a qualified ThirdParty Service Provider to deliver consulting services in User Experience Research (UXR). This competitive procurement process aims to secure expert support for EDC&rsquo;s ongoing research and testing activities related to its digital products and customer experience initiatives.Bidding and Documents are available on http://www.merx.com.  Fees may apply; See https://www.merx.com/public/pricing for more information.","Export Development Canada (EDC) is initiating this Request for Proposal (RFP) to engage a qualified ThirdParty Service Provider to deliver consulting services in User Experience Research (UXR). This competitive procurement process aims to secure expert support for EDC&rsquo;s ongoing research and testing activities related to its digital products and customer experience initiatives.Bidding and Documents are available on http://www.merx.com.  Fees may apply; See https://www.merx.com/public/pricing for more information."
+"FINDEV CANADA Translation and Proofreading Services","FINDEV CANADA Translation and Proofreading Services","MX-443973887373","000","26-012","2026-04-17","2026-05-22T13:00:00","","","","Open","Ouvert","","","","","","","*SRV","","","Competitive - Traditional","Concurrentielle - Traditionnelle","","","","","*Canadian Free Trade Agreement (CFTA)","*Accord de libre-échange canadien (ALEC)","","","","","Export Development Canada - EDC","150 Slater","Ottawa","Ontario","K1A 1K3","Canada","Export Development Canada - EDC","150 Slater","Ottawa","Ontario","Canada","","","","","","","","","","","","","","","","","","https://www.merx.com/public/solicitations/3916045470/abstract?language=EN","https://www.merx.com/public/solicitations/3916045470/abstract?language=EN","","","FINDEV CANADA, a development finance institution and wholly owned subsidiary of Export Development Canada (EDC), is issuing this Request for Proposal (RFP) to obtain translation and same-language proofreading services, including the review of AI-generated translations.Bidding and Documents are available on http://www.merx.com.  Fees may apply; See https://www.merx.com/public/pricing for more information.","FINDEV CANADA, a development finance institution and wholly owned subsidiary of Export Development Canada (EDC), is issuing this Request for Proposal (RFP) to obtain translation and same-language proofreading services, including the review of AI-generated translations.Bidding and Documents are available on http://www.merx.com.  Fees may apply; See https://www.merx.com/public/pricing for more information."
+"Request for Supply Arrangement_Mechanical Services_2024_Wave-2","Request for Supply Arrangement_Mechanical Services_2024_Wave-2","MX-443334830711","000","Doc1225721821","2024-11-28","2074-12-31T14:00:00","","2075-01-01","2075-01-01","Open","Ouvert","","","","","","","*GD
+*SRV","","","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","","","","","*World Trade Organization Agreement on Government Procurement (WTO GPA)
+*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)
+*Canadian Free Trade Agreement (CFTA)","*Accord sur les marchés publics de l'Organisation mondiale du commerce (AMP-OMC)
+*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)
+*Accord de libre-échange canadien (ALEC)","","","","","Canada Post Corporation","N0751-2701 Riverside Drive","Ottawa","Ontario","K1A 0B1","Canada","Canada Post Corporation","N0751-2701 Riverside Drive","Ottawa","Ontario","Canada","","","","","","","","","","","","","","","","","","https://www.merx.com/public/solicitations/3244075255/abstract?language=EN","https://www.merx.com/public/solicitations/3244075255/abstract?language=EN","","","Request for Supply Arrangement for Mechanical Services accross Canada.
+
+The Requirement to be performed is outlined in the ARIBA Sourcing Event: https://discovery.ariba.com/rfx/20608792Bidding and Documents are available on http://www.merx.com.  Fees may apply; See https://www.merx.com/public/pricing for more information.","Request for Supply Arrangement for Mechanical Services accross Canada.
+
+The Requirement to be performed is outlined in the ARIBA Sourcing Event: https://discovery.ariba.com/rfx/20608792Bidding and Documents are available on http://www.merx.com.  Fees may apply; See https://www.merx.com/public/pricing for more information."
+"PRCP0003585 Managed Services for the Tungsten TotalAgility (TTA) Platform","PRCP0003585 Services de gestion et de soutien de la plateforme Tungsten  TTA","MX-444188030829","000","PRCP0003585","2026-10-07","2026-11-01T11:00:00","","","","Open","Ouvert","","","","","","","*GD
+*SRV","","","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","","","","","*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)
+*Canadian Free Trade Agreement (CFTA)","*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)
+*Accord de libre-échange canadien (ALEC)","","","","","Business Development Bank of Canada","5, Place Ville-Marie","Montréal","Quebec","H3B 5E7","Canada","Business Development Bank of Canada","5, Place Ville-Marie","Montréal","Québec","Canada","","","","","","","","","","","","","","","","","","https://www.merx.com/public/solicitations/4120526215/abstract?language=EN","https://www.merx.com/public/solicitations/4120526215/abstract?language=FR","","","The purpose of this call for tenders is to solicit proposals for the Tungsten Total Agility (TTA) (formerly Kofax, &ldquo;KTA&rdquo;) managed services, as further detailed in section&nbsp;2 of tender document. The requirement combines three related activities: (i) authorized reseller and licensing management for TTA licenses and subscriptions; (ii) first-line application support and maintenance; and (iii) professional services for development, integration and continuous evolution of the existing Platform.Bidding and Documents are available on http://www.merx.com.  Fees may apply; See https://www.merx.com/public/pricing for more information.","Le pr&eacute;sent appel d&rsquo;offres vise &agrave; obtenir des soumissions pour l&rsquo;acquisition des services g&eacute;r&eacute;s pour la plateforme Tungsten TotalAgility (TTA) (anciennement Kofax TotalAgility, &laquo; KTA &raquo;), d&eacute;crite plus en d&eacute;tail &agrave; la section 2 du document. L&rsquo;exigence regroupe trois activit&eacute;s connexes : (i) la gestion des licences et des abonnements TTA &agrave; titre de revendeur autoris&eacute;; (ii) le soutien applicatif de premi&egrave;re ligne et la maintenance; et (iii) les services professionnels li&eacute;s au d&eacute;veloppement, &agrave; l&rsquo;int&eacute;gration et &agrave; l&rsquo;&eacute;volution continue de la plateforme existante.Vous pouvez soumettre une offre et accéder aux documents sur http://www.merx.com. Des frais peuvent sappliquer; Voir https://www.merx.com/public/pricing pour plus dinformations."
+"APN - Facilities Maintenance and Support Services Northern Canada","PA - Services de soutien et d'entretien d'installations Nord du Canada","MX-444158422563","000","APN_RPOP033__84735","2026-09-11","2026-11-30T14:00:00","","2026-12-04","2026-12-04","Open","Ouvert","","","","","","","*SRV","","","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","","","","","*Canada-European Union Comprehensive Economic and Trade Agreement (CETA)
+*Canadian Free Trade Agreement (CFTA)
+*World Trade Organization Agreement on Government Procurement (WTO GPA)","*Accord économique et commercial global (AECG) entre le Canada et l’Union européenne (UE)
+*Accord de libre-échange canadien (ALEC)
+*Accord sur les marchés publics de l'Organisation mondiale du commerce (AMP-OMC)","","","","","Defence Construction Canada - National Capital Region","180 Kent Street, 14th Floor","Ottawa","Ontario","K1P 0B6","Canada","Defence Construction Canada - National Capital Region","180 Kent Street, 14th Floor","Ottawa","Ontario","Canada","","","","","","","","","","","","","","","","","","https://www.merx.com/public/solicitations/4083739956/abstract?language=EN","https://www.merx.com/public/solicitations/4083739956/abstract?language=FR","","","Advance Procurement Notice
+Facilities Maintenance and Support Services
+Northern Canada (with Security Requirements)
+Purpose of this Advance Procurement Notice
+This is not a bid solicitation nor a request for proposals.
+This is an advance notice for potential contracts with anticipated security requirements to provide interested contractors an opportunity to begin the sponsorship process for obtaining (if required) the anticipated security clearance(s) . Note that there is no guarantee that these solicitation(s) will proceed or that any security clearance(s) will be granted under the sponsorship process in a timely fashion or otherwise.
+Description of the Project and Services
+The Department of National Defence requires Facilities Maintenance and Support Services for approximately 100 existing buildings and associated utility infrastructure with an approximate total gross floor area of 60,000 m2. In addition to the buildings there are utility services, parking lots, sidewalks, roads and landscaped areas that form part of the site included under the provisions of the project(s).
+
+The site locations are as follows:
+Manitoba: Churchill
+Northwest Territories: Inuvik, Yellowknife
+Yukon: Whitehorse
+Nunavut: Eureka, Resolute Bay, Gascoyne Inlet, Nanisivik Naval Facility, Rankin Inlet, Iqaluit,
+
+The services provided by the Contractor may vary based on Sites:&nbsp;All the services listed will have Scheduled and/or &ldquo;On-Demand"" requirements.
+
+	Hard Services
+
+
+
+	Building Envelope Maintenance
+	Heating, Ventilation, Air Conditioning &amp; Refrigeration Systems
+	Door Systems
+	Electrical Systems
+	Elevator and Lifting Systems
+	Plumbing Systems
+	Fire Detection and Suppression Systems
+	Generators
+	Life Safety Systems
+	Security and Access Control Systems
+	Kitchen Appliances and Equipment
+
+
+
+	Soft Services
+
+
+
+	Integrated Pest Management Services
+	Landscaping and Grounds Maintenance Services
+	Janitorial Services
+	Hazardous Waste Management Services
+	Environmental Services
+	Snow and Ice Control Services
+	Solid Waste Management
+	Utility Billing Support Services
+
+
+
+	Facilities Support Services
+
+
+
+	Service Management &amp; Coordination
+	Maintenance Program Management
+	Emergency Readiness and Response
+	Asset Investment Advice
+	Help Desk Services
+
+The Contractor(s) will also be required to undertake work that is outside the scope of the scheduled and demand services. This work will be priced, managed and implemented using an Additional Work Request (AWR) process.
+The services will be delivered through Facility Maintenance and Support Services (FM) contracts. It is anticipated that one contract will cover locations in Manitoba, the Northwest Territories, and Yukon (Total potential estimated value: $240M), and a separate contract will cover locations in Nunavut (Total potential estimated value: $225M). Each initial contract is expected to have a term of five (5) years, with provisions for two (2) additional option periods of three (3) years each, for a total potential contract duration of up to eleven (11) years.
+It is anticipated that these solicitations will be initiated in Winter 2026/2027 timeframe with Service Commencement in Winter 2028.&nbsp; This is conditional on the Project(s) receiving approval to proceed by the Department of National Defence (DND).
+
+The Government of Canada is committed to advancing reconciliation and fostering meaningful engagement with Indigenous Peoples. In alignment with these commitments, the Department of National Defence (DND) seeks to create opportunities for Indigenous businesses and communities through (sub)contracting, employment, and training initiatives associated with the proposed program of work.
+
+It is anticipated that Indigenous communities will benefit from potential subcontracting, employment, and training opportunities arising from this program of work.
+Contract Award and Anticipated Security Requirements
+To be eligible for contract award, a proponent will be required to, among other things, actively hold or obtain all required security clearance(s) prior to the date of the award, as further detailed in the solicitation documents.
+The anticipated security clearance level for this contract is Facility Security Clearance (FSC) at the level of Secret.
+Industrial Security Program Sponsorship 
+Defence Construction Canada (DCC) is providing contractors early access to the security clearance application process through sponsorship under its Industrial Security Program (ISP). Accordingly, contractors that intend to submit a proposal on one or more of these projects and that do not actively hold the above identified security clearance(s) should begin forthwith the security clearance application process by applying through DCC&rsquo;s ISP.
+Under this program, DCC may, at its entire discretion, provide preliminary assistance to all the potential &nbsp;proponents with their respective security clearance sponsorship process.
+To begin the security clearance sponsorship process, please submit a sponsorship request application to DCC by following the steps identified on DCC&rsquo;s website at: https://www.dcc-cdc.gc.ca/industry/security-requirements.
+In their sponsorship request application to DCC, contractors are asked to quote the following information, among other things:
+
+	Advance Procurement Notice (APN) number (Project number on the MERX notice);
+	Contract number &nbsp;84735&nbsp;; and
+	Level of clearance requested to be sponsored for.
+
+Sponsorship Process
+Upon receipt, DCC will review the sponsorship request application and will communicate directly with the contractors to provide assistance for the completion of the sponsorship request packages.
+Once DCC has determined, at its entire discretion, that a contractor:
+
+	has started the sponsorship process prior to the solicitation(s) (Contract number(s) listed on their request for sponsorship) being advertised on MERX,
+	has&nbsp; met all the material requirements of the sponsorship request package, and
+	has submitted a proposal.
+
+DCC will &nbsp;send the documents to the Public Services and Procurement Canada&rsquo;s (PSPC) Contract Security Program (CSP).
+Following receipt of the sponsorship request package, the CSP will communicate directly with the proponent regarding any further steps or actions to be undertaken or the status of the sponsorship request package processing. At such time, the proponent will need to promptly cooperate with CSP &nbsp;to ensure that the process is completed as soon as possible.
+Questions
+Any questions pertaining to the sponsoring process through the ISP can be addressed to:
+Telephone Number: (613) 998-8974; or
+Email address: ISP.Sponsorship@dcc-cdc.gc.ca
+
+Any questions relating to this Advance Procurement Notice can be addressed to:
+Eric Ndayambaza
+Coordinator, Contract Services
+Defence Construction Canada
+343 -576-9347
+Eric.Ndayambaza@dcc-cdc.gc.ca
+Disclaimer
+DCC is only providing assistance, at its entire discretion, for the above stated sponsorship process &nbsp;and does not provide any representations &nbsp;or guarantees that a sponsorship request package or a security clearance application forwarded by DCC to the CSP will be successful or result in the granting of the requested security clearance(s) by the CSP. At all times, the processing of a sponsorship request package or a security clearance application is subject to the respective terms, conditions, and timelines of DCC&rsquo;s ISP sponsorship process and the CSP security clearance granting process. By applying to either of the aforementioned processes, the proponent agrees to bear any fees and risks associated with: (i) the completeness or accuracy, or lack thereof, of its application or related documents submitted under or in connection with either said processes, and (ii) the timeliness, or lack thereof, of any processing or granting of security clearance(s) under or in connection with either said processes. Notwithstanding anything else stated above, DCC shall in no event be liable to the proponent for any direct, indirect, incidental, special, consequential, punitive or exemplary damages arising out or in connection with the above stated&nbsp; sponsorship process.
+
+&nbsp;Bidding and Documents are available on http://www.merx.com.  Fees may apply; See https://www.merx.com/public/pricing for more information.","Pr&eacute;avis d&rsquo;approvisionnement
+Services de soutien et d&rsquo;entretien d&rsquo;installations
+Nord du Canada
+(comprend des exigences en mati&egrave;re de s&eacute;curit&eacute;)
+Objectif du pr&eacute;sent pr&eacute;avis d&rsquo;approvisionnement
+Il ne s&rsquo;agit pas d&rsquo;une demande de soumissions ni d&rsquo;une demande de propositions.
+La pr&eacute;sente est un pr&eacute;avis d&rsquo;approvisionnement (PA) pour des contrats potentiels comportant des exigences de s&eacute;curit&eacute; anticip&eacute;es afin de fournir aux entrepreneurs int&eacute;ress&eacute;s, l&rsquo;occasion d&rsquo;entamer le processus de parrainage en vue d&rsquo;obtenir l&rsquo;attestation de s&eacute;curit&eacute; pr&eacute;vue. Veuillez noter qu&rsquo;il n&rsquo;y a aucune garantie que ces sollicitations auront lieu ou que des attestations de s&eacute;curit&eacute; seront accord&eacute;es dans le cadre du processus de parrainage en temps opportun.
+Description du projet et des services
+Le minist&egrave;re de la D&eacute;fense nationale&nbsp;(MDN) a besoin des services de soutien et d&rsquo;entretien d&rsquo;installations pour une centaine de b&acirc;timents existants et l&rsquo;infrastructure des services publics connexes, repr&eacute;sentant au total une surface hors &oelig;uvre brute d&rsquo;environ 60&nbsp;000&nbsp;m2. En plus des b&acirc;timents, les sites vis&eacute;s par des dispositions du projet comprennent des services publics, des stationnements, des trottoirs, des routes et des espaces paysagers.
+
+Les sites sont situ&eacute;s aux endroits suivants&nbsp;:
+Manitoba&nbsp;: Churchill
+Territoire du Nord-Ouest&nbsp;: Inuvik et Yellowknife
+Yukon&nbsp;: Whitehorse
+Nunavut&nbsp;: Eureka, Resolute&nbsp;Bay, Gascoyne&nbsp;Inlet, installation navale de Nanisivik, Rankin&nbsp;Inlet et Iqaluit
+
+Les services fournis par l&rsquo;entrepreneur peuvent varier selon le site&nbsp;: tous les services &eacute;num&eacute;r&eacute;s seront planifi&eacute;s ou fournis sur demande.
+
+	Services primaires
+
+
+
+	Entretien de l&rsquo;enveloppe de b&acirc;timents
+	Syst&egrave;mes de chauffage, de ventilation et de climatisation&nbsp;(CVC) et syst&egrave;mes de r&eacute;frig&eacute;ration
+	Syst&egrave;mes de portes
+	Syst&egrave;mes &eacute;lectriques
+	Ascenseurs et syst&egrave;mes de levage
+	Syst&egrave;mes de plomberie
+	Syst&egrave;mes d&rsquo;alarme et d&rsquo;extinction d&rsquo;incendie
+	G&eacute;n&eacute;ratrices
+
+
+
+	Syst&egrave;mes de s&eacute;curit&eacute; des personnes
+	Syst&egrave;mes de s&eacute;curit&eacute; et de contr&ocirc;le de l&rsquo;acc&egrave;s
+	Appareils &eacute;lectrom&eacute;nagers et &eacute;quipement de cuisine
+
+
+
+	Services auxiliaires
+
+
+
+	Services de lutte int&eacute;gr&eacute;e contre les parasites
+	Services d&rsquo;am&eacute;nagement et d&rsquo;entretien paysagers
+	Services de nettoyage et d&rsquo;entretien
+	Services de gestion des d&eacute;chets dangereux
+	Services environnementaux
+	Services de d&eacute;neigement et de d&eacute;gla&ccedil;age
+	Services de gestion des d&eacute;chets solides
+	Services de soutien &agrave; la facturation de services publics
+
+
+
+	Services de soutien
+
+
+
+	Gestion et coordination des services
+	Gestion du programme d&rsquo;entretien
+	Pr&eacute;paration et intervention en cas de situations d&rsquo;urgence
+	Conseils en mati&egrave;re d&rsquo;investissement
+	Services de d&eacute;pannage
+
+L&rsquo;entrepreneur devra aussi entreprendre des travaux en dehors de la port&eacute;e des services planifi&eacute;s et fournis sur demande. Le prix, la gestion et la mise en &oelig;uvre de ces travaux seront &eacute;tablis selon un processus de demandes de travaux suppl&eacute;mentaires (DTS).
+Les services seront fournis par l&rsquo;interm&eacute;diaire de march&eacute;s des services d&rsquo;entretien et de soutien des installations. Un seul march&eacute; servira &agrave; couvrir les emplacements du Manitoba, des Territoires du Nord-Ouest et du Yukon (valeur totale potentielle estim&eacute;e&nbsp;: 280&nbsp;M$) et un march&eacute; distinct servira &agrave; couvrir les emplacements du Nunavut (valeur totale potentielle estim&eacute;e&nbsp;: 200&nbsp;M$). Chaque contrat initial est appel&eacute; &agrave; &ecirc;tre d&rsquo;une dur&eacute;e de cinq (5) ans, avec la possibilit&eacute; de deux (2) p&eacute;riodes optionnelles suppl&eacute;mentaires de trois (3) ans chacune, pour une dur&eacute;e totale potentielle pouvant atteindre onze (11) ans.
+Cette sollicitation sera lanc&eacute;e durant la p&eacute;riode de l&rsquo;hiver&nbsp;2026-2027 et les services commenceront &agrave; l&rsquo;hiver&nbsp;2028. Ceci est conditionnel &agrave; l&rsquo;approbation des projets par le minist&egrave;re de la D&eacute;fense nationale (MDN).
+
+Le gouvernement du Canada est d&eacute;termin&eacute; &agrave; favoriser la r&eacute;conciliation et un engagement significatif avec les peuples autochtones. Conform&eacute;ment &agrave; ces engagements, le MDN souhaite cr&eacute;er des occasions pour les entreprises et communaut&eacute;s autochtones en offrant des contrats de sous-traitance, des emplois et d&rsquo;initiatives de formation li&eacute;es au programme des travaux propos&eacute;s.
+
+Les communaut&eacute;s autochtones devraient b&eacute;n&eacute;ficier de contrats de sous-traitance, d&rsquo;emplois et d&rsquo;initiatives de formation d&eacute;coulant de ce programme de travaux.
+Exigences &eacute;ventuelles en mati&egrave;re de s&eacute;curit&eacute; et d&rsquo;attribution du contrat
+Pour &ecirc;tre admissible &agrave; l&rsquo;attribution d&rsquo;un contrat, un proposant devra, entre autres, d&eacute;tenir toute cote de s&eacute;curit&eacute; requise avant la date de l&rsquo;octroi du contrat, comme il sera indiqu&eacute; en d&eacute;tail dans les documents de la sollicitation.
+Le niveau d&rsquo;attestation de s&eacute;curit&eacute; pr&eacute;vu pour ce contrat est une attestation de s&eacute;curit&eacute; d&rsquo;installation (ASI).
+le programme de parrainage de s&eacute;curit&eacute; industrielle (PSI) 
+Construction de D&eacute;fense Canada (CDC) offre aux firmes d&rsquo;experts-conseils ou aux entrepreneurs l&rsquo;opportunit&eacute; de se faire parrainer en vue d&rsquo;obtenir une attestation de s&eacute;curit&eacute; par l&rsquo;entremise du Programme de s&eacute;curit&eacute; industrielle (PSI). Par cons&eacute;quent, les firmes d&rsquo;experts-conseils ou les entrepreneurs qui pr&eacute;voient pr&eacute;senter une proposition ou une soumission pour un ou plusieurs de ces projets et qui ne d&eacute;tiennent pas activement les attestations de s&eacute;curit&eacute; identifi&eacute;e ci-dessus doivent commencer imm&eacute;diatement le processus de demande d&rsquo;attestation de s&eacute;curit&eacute; en faisant la demande par l&rsquo;interm&eacute;diaire du PSI de CDC.
+Dans le cadre de ce programme, CDC peut, &agrave; son enti&egrave;re discr&eacute;tion, fournir une aide pr&eacute;liminaire pour le processus de parrainage visant l&rsquo;obtention d&rsquo;une attestation de s&eacute;curit&eacute;.
+Pour commencer ce processus, veuillez pr&eacute;senter une demande de parrainage &agrave; CDC en suivant les &eacute;tapes suivantes qui se trouvent sur son site Web &agrave;&nbsp;: https://www.cdc-dcc.gc.ca/industrie/exigences-de-s&eacute;curit&eacute;.
+Dans la demande de parrainage qu&rsquo;ils pr&eacute;sentent &agrave; CDC, les firmes d&rsquo;experts-conseils ou entrepreneurs sont pri&eacute;s de notamment indiquer les renseignements suivants&nbsp;:
+
+	Le num&eacute;ro du Pr&eacute;avis d&rsquo;approvisionnement; (num&eacute;ro de projet dans l&rsquo;avis de MERX)
+	Le num&eacute;ro du contrat&nbsp;84735; et,
+	Le niveau de cote de s&eacute;curit&eacute; demand&eacute; dans le cadre du parrainage.
+
+
+Processus de parrainage
+&Agrave; la r&eacute;ception d&rsquo;une demande de parrainage, CDC l&rsquo;examine et communique directement avec la firme d&rsquo;experts-conseils ou entrepreneur pour compl&eacute;ter le dossier.
+Une fois que CDC a d&eacute;termin&eacute;, &agrave; son enti&egrave;re discr&eacute;tion, qu&rsquo;une firme d&rsquo;experts-conseils ou un entrepreneur&nbsp;:
+
+	a d&eacute;but&eacute; le processus de parrainage avant que la ou les sollicitations (num&eacute;ro(s) de contrat indiqu&eacute; sur leur demande de parrainage) ne soient annonc&eacute;es sur MERX,
+	a satisfait &agrave; toutes les exigences mat&eacute;rielles de la trousse de demande de parrainage, et
+	a d&eacute;pos&eacute; une proposition ou une soumission
+
+CDC enverra la trousse de demande de parrainage au Programme de s&eacute;curit&eacute; des contrats (PSC) de Services publics et Approvisionnement Canada (SPAC).
+Apr&egrave;s la r&eacute;ception du dossier de demande de parrainage, le PSC communique directement avec le proposant ou le soumissionnaire pour lui indiquer les prochaines &eacute;tapes, les mesures &agrave; prendre ou l&rsquo;&eacute;tat du traitement du dossier. Le proposant ou le soumissionnaire devra alors coop&eacute;rer avec le PSC en temps opportun pour faire avancer le processus.
+Des questions?
+Vous pouvez transmettre toute question concernant le processus de parrainage par l&rsquo;interm&eacute;diaire du PSI &agrave;&nbsp;:
+Num&eacute;ro de t&eacute;l&eacute;phone&nbsp;: 613-998-8974
+Courriel&nbsp;: ISP.Sponsorship@dcc-cdc.gc.ca
+
+Vous pouvez transmettre vos questions relatives au pr&eacute;sent pr&eacute;avis d&rsquo;approvisionnement &agrave;&nbsp;:
+
+Eric Ndayambaza
+Coordonnateur, Services des march&eacute;s
+&nbsp;Construction de D&eacute;fense Canada
+343-576-9347
+Eric.Ndayambaza@dcc-cdc.gc.ca
+
+Avis de non-responsabilit&eacute;
+CDC ne fournit qu&rsquo;une aide, &agrave; son enti&egrave;re discr&eacute;tion, pour le processus de parrainage susmentionn&eacute; et ne fournit aucune d&eacute;claration ni ne garantit qu&rsquo;un dossier de demande de parrainage ou une demande d&rsquo;attestation de s&eacute;curit&eacute; transmise par CDC au PSC sera retenu ou entra&icirc;nera l&rsquo;octroi de l&rsquo;attestation de s&eacute;curit&eacute; demand&eacute;e par le PSC. En tout temps, le traitement d&rsquo;une demande de parrainage ou d&rsquo;une demande d&rsquo;attestation de s&eacute;curit&eacute; est assujetti aux modalit&eacute;s et aux d&eacute;lais respectifs du processus de parrainage du PSI de CDC et du processus d&rsquo;octroi de l&rsquo;attestation de s&eacute;curit&eacute; du PSC. En postulant &agrave; l&rsquo;un ou l&rsquo;autre des processus susmentionn&eacute;s, le proposant ou le soumissionnaire accepte d&rsquo;assumer les frais et les risques associ&eacute;s &agrave;&nbsp;: (i) l&rsquo;exhaustivit&eacute; ou l&rsquo;exactitude, ou l&rsquo;absence d&rsquo;exactitude, de sa demande ou des documents connexes soumis dans le cadre de l&rsquo;un ou l&rsquo;autre de ces processus ou en relation avec ceux-ci, et (ii) le respect ou l&rsquo;absence d&rsquo;opportunit&eacute;, de tout traitement ou octroi d&rsquo;une ou de plusieurs attestations de s&eacute;curit&eacute; dans le cadre de l&rsquo;un ou l&rsquo;autre de ces processus ou en relation avec ceux-ci. Nonobstant toute autre disposition ci-dessus, CDC ne sera en aucun cas responsable envers le proposant ou soumissionnaire de tout dommage direct ou indirect.
+
+itement ou octroi d&rsquo;une ou de plusieurs attestations de s&eacute;curit&eacute; dans le cadre de l&rsquo;un ou l&rsquo;autre de ces processus ou en relation avec ceux-ci. Nonobstant toute autre disposition ci-dessus, CDC ne sera en aucun cas responsable envers le proposant de tout dommage direct ou indirectVous pouvez soumettre une offre et accéder aux documents sur http://www.merx.com. Des frais peuvent sappliquer; Voir https://www.merx.com/public/pricing pour plus dinformations."
+"Commercial metal slab doors","portes planes en métal de qualité commerciale","cb-922-97825427","000","W6900-27-0598","2026-10-07","2026-10-27T14:00:00","","","","Open","Ouvert","","","","*30171500","*Doors","*Portes","*GD","Request for Proposal","Demande de propositions","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","Lowest Price","Prix le plus bas","","","*Canada-Korea Free Trade Agreement (CKFTA)
+*Canada-Panama Free Trade Agreement
+*Canada-Peru Free Trade Agreement (CPFTA)
+*Canada-Colombia Free Trade Agreement
+*Canada-Chile Free Trade Agreement (CCFTA)
+*Canadian Free Trade Agreement (CFTA)
+*Canada-Honduras Free Trade Agreement","*Accord de libre-échange Canada-Corée
+*Accord de libre-échange Canada-Panama
+*Accord de libre-échange Canada-Pérou (ALECP)
+*Accord de libre-échange Canada-Colombie
+*Accord de libre-échange Canada-Chili (ALECC)
+*Accord de libre-échange canadien (ALEC)
+*Accord de libre-échange Canada-Honduras","","","*Wainwright","*Wainwright","Department of National Defence (DND)","Real Property Operations Unit (West) - CFB Wainwright","Denwood","AB","T0B 1B0","Canada","Ministère de la Défense nationale (MDN)","Unité des opérations immobilières (Ouest) – BFC Wainwright","Denwood","AB","Canada","","","","","","","","","","","","","","","","","","","","https://canadabuys.canada.ca/sites/default/files/webform/tender_notice/109129/rfp---w6900-27-0598---en.pdf","https://canadabuys.canada.ca/sites/default/files/webform/tender_notice/109129/ddp---w6900-27-0598---fr.pdf","The Department of National Defence has a requirement for the measurement of existing door frames and the supply of 150 commercial metal slab doors to Canadian Forces Base (CFB) Wainwright.
+
+This solicitation of offers is open only to Canadian Suppliers and to Suppliers of an Applicable Trading Partner.
+
+The Government of Canada is committed to supporting the procurement of environmentally preferable plastic products and the reduction of plastic packaging waste, and is taking concrete steps to better manage the use and disposal of plastics in its own operations as per the Policy on Green Procurement, the Greening Government Strategy: A Government of Canada Directive, and the Ocean Plastics Charter. Environmentally preferable packaging specifications are mandatory requirements in this procurement.
+
+The Crown retains the rights to negotiate with suppliers on any procurement.
+
+Documents may be submitted in either official language of Canada.
+","Le ministère de la Défense nationale souhaite conclure un marché pour la prise de mesures des cadres de porte existants et la fourniture de 150 portes planes en métal de qualité commerciale à la Base des Forces canadiennes (BFC) Wainwright.
+
+Le présent appel d’offres est ouvert uniquement aux fournisseurs canadiens et aux fournisseurs d’un partenaire commercial applicable.
+
+Le gouvernement du Canada s’engage à promouvoir l’achat de produits écologiques en plastique et la réduction des déchets d’emballage en plastique, et prend des mesures concrètes pour mieux gérer l'utilisation et l'élimination des plastiques dans ses propres opérations conformément à la Politique d’achats écologiques, la Stratégie pour un gouvernement vert : Une directive du gouvernement du Canada, et la Charte sur les plastiques dans les océans. Les spécifications relatives à l’emballage écologique sont des exigences obligatoires dans le cadre de cet approvisionnement.
+
+L’État se réserve le droit de négocier les conditions de tout marché avec les fournisseurs.
+
+Les documents peuvent être présentés dans l’une ou l’autre des langues officielles du Canada.
+"
+"Hazardous Waste Disposal Services","Services d'élimination de déchets dangereux","PW-_NCS-030-11940","000","EW479-162880/C","2020-11-16","2026-09-14T14:00:00","","","","Open","Ouvert","*E108CA","*Hazardous Chemical Waste Disposal Services","*Services d'élimination de déchets dangereux","","","","*SRV","Request for Proposal","Demande de propositions","Competitive - Open bidding","Concurrentielle - Invitation ouverte à soumissionner","Subsequent/Follow-on Contracts","Marchés subséquents","","","","","","","*Northwest Territories
+*Nova Scotia
+*New Brunswick
+*Nunavut Territory
+*Newfoundland and Labrador
+*Yukon
+*British Columbia
+*Quebec (except NCR)
+*Saskatchewan
+*Manitoba
+*Prince Edward Island
+*Ontario (except NCR)
+*National Capital Region (NCR)
+*Alberta","*Territoires du Nord-Ouest
+*Nouvelle-Écosse
+*Nouveau-Brunswick
+*Territoire du Nunavut
+*Terre-Neuve-et-Labrador
+*Yukon
+*Colombie-Britannique
+*Québec (sauf RCN)
+*Saskatchewan
+*Manitoba
+*Île-du-Prince-Édouard
+*Ontario (sauf RCN)
+*Région de la capitale nationale (RCN)
+*Alberta","Public Works and Government Services Canada","11 Laurier St, Phase III, Place du Portage","Gatineau","Quebec","K1A 0S5","Canada","Travaux publics et Services gouvernementaux Canada","11, rue Laurier, Phase III, Place du Portage","Gatineau","Québec","Canada","Public Works and Government Services Canada","11 Laurier St, Phase III, Place du Portage,Gatineau,Quebec,K1A 0S5,Canada","Travaux publics et Services gouvernementaux Canada","11, rue Laurier, Phase III, Place du Portage,Gatineau,Québec,K1A 0S5,Canada","","","","","","Edmonton","Alberta","T5J 4C3","","","Edmonton","Alberta","","","","https://canadabuys.canada.ca/documents/pub/att/2020/11/13/0cead1eeb0190bc86cac6e527cea7333/ABES.PROD.PW_NCS.B030.E11940.EBSU000.PDF","https://canadabuys.canada.ca/documents/pub/att/2020/11/13/72e0df8fdcc7f47ccbdd961102d570c2/ABES.PROD.PW_NCS.B030.F11940.EBSU000.PDF","Trade Agreement: CETA / WTO-AGP / CPTPP / CFTA / FTAs with Peru / Colombia / Panama / Korea
+Tendering Procedures: All interested suppliers may submit a bid
+Competitive Procurement Strategy: Subsequent/Follow-on Contracts
+Comprehensive Land Claim Agreement: No
+Nature of Requirements: 
+
+Hazardous Waste Disposal Services
+
+EW479-162880/C
+Calixto, Monnette
+Telephone No. - (204) 899-9768 (    )
+Fax No. - (204) 983-0338 (    )
+
+Hazardous Waste Disposal Services, PWGSC, National
+
+This requirement is to establish multiple Supply Arrangements to provide all labour, materials, equipment, tools and supervision necessary for the identification, labelling, packaging, reparation of profile documentation sheets, loading, transportation and disposal/destruction of user-generated hazardous waste products for various Federal Government Departments and Agencies within Canada.  These Supply Arrangements are meant for the procurement of professional and commercial services under those approval authorities.
+
+Suppliers must be licensed and permitted to provide hazardous waste disposal services within one or more provinces or territories.
+
+The Supply Arrangements have no defined end-date and will remain valid until such time as PWGSC no longer considers it to be advantageous to use them.  They will replace the Supply Arrangements currently in place under EW479-150546 & EW479-162880/B Hazardous Waste Disposal.
+
+Two streams of Supply Arrangements may be issued pursuant to this solicitation, as follows:
+
+1)  Any supplier, including Indigenous suppliers, wishing to submit an arrangement not pursuant to the Procurement Strategy for Aboriginal Business (PSAB). For the purpose of the RFSA, this stream is titled ?General? or ?General Suppliers? or ?General stream.?  General Suppliers must be able to provide the services either across Canada (nationally) or in at least one region of Canada.
+
+i)  Requirements in the general stream have three tiers with separate instructions, as defined in Part 6 (B), Section 2 - Bid Solicitation of this RFSA:
+
+a.  For requirements estimated below $40,000.00 (applicable taxes included):
+
+For bid solicitations valued at $25,000.00 or more (including applicable taxes), if, and only if, the requirement covered by the bid solicitation of any resulting supply arrangement is administered by PWGSC, the requirement will be subject to a preference for Canadian goods and/or services or will be limited to Canadian goods and/or services.
+
+Otherwise, the requirement is subject to the Government Contracts Regulations (GCRs) 
+b.  For requirements estimated at $40,000.00 to $100,000.00 (applicable taxes included): 
+
+If, and only if, the requirement covered by the bid solicitation of any resulting supply arrangement is administered by PWGSC, the requirement will be subject to a preference for Canadian goods and/or services or will be limited to Canadian goods and/or services.
+
+Otherwise, the requirement is subject to the Government Contracts Regulations (GCRs) in a similar fashion to 2.1.i.a.
+c.  For requirements estimated at $100,000.00 to the departmental contracting limit of $400,000.00 (applicable taxes included)
+
+The requirement may be subject to the provisions of the World Trade Organization Agreement on Government Procurement (WTO-AGP) and the Agreement on Internal Trade (AIT).  The departmental contracting limits are specified in the Treasury Board Secretariat’s Contracting Policy, Appendix ?C? - Treasury Board Contracts Directive,? Part 1 - Basic Contracting Limits, Schedule 3 - Service Contracts (Excluding Architectural and Engineering Services).
+   
+d.  For requirements estimated above the departmental contracting limit of $400,000.00 (applicable taxes included): 
+
+The requirement is outside the scope of the supply arrangements and the requirement must be administered separately by a PWGSC Contracting Authority.
+
+i.  The proposed requirement is subject to the following Comprehensive Land Claims Agreement(s) (CLCAs) (see 2.2.ii.).  One or more of the following CLCAs may apply to the bid solicitation of any resulting supply arrangement, dependant on delivery location(s).  It is not mandatory for suppliers to identify CLCA socio-economic benefits provisions to qualify for a Supply Arrangement.  Refer to Annex ?D? - Beneficiary Involvement Report and Annex ?E? - Socio-Economic Benefits Provisions.  
+
+1)  Any supplier, including Indigenous suppliers, wishing to submit an arrangement pursuant to the PSAB. For the purpose of the RFSA, this stream is titled ?PSAB,? ?PSAB Suppliers? or ?PSAB stream.?  PSAB Suppliers must be able to provide the services either across Canada (nationally) or in at least one region of Canada. 
+
+i.  Requirements in the PSAB stream have two tiers with separate instructions:
+
+a)  For requirements estimated below $40,000.00 (applicable taxes included):
+
+The requirement is subject to the Government Contracts Regulations (GCRs).
+
+b)  For requirements estimated at $40,000.00 to $100,000.00 (applicable taxes included)::
+
+The requirement covered by the bid solicitation of any resulting supply arrangement will be subject to the set aside under the federal government Procurement Strategy for Aboriginal Business (PSAB).  
+* For more information on Indigenous business requirements of the Set-aside Program for Indigenous Business, see Annex 9.4 of the Supply Manual.
+* This procurement is set aside from the international trade agreements under the provision each has for set-asides for small and minority businesses.
+* Further to Article 1802 of the AIT, AIT does not apply to this procurement.
+
+c)  For requirements estimated above the departmental contracting limit of $400,000.00 (applicable taxes included): 
+
+The requirement is outside the scope of the supply arrangements and the requirement must be administered separately by a PWGSC Contracting Authority.
+
+The proposed requirement is subject to Comprehensive Land Claims Agreement(s) (CLCAs).  One or more CLCAs may apply to the bid solicitation of any resulting supply arrangement, dependant on delivery location(s).  It is not mandatory for suppliers to identify CLCA socio-economic benefits provisions to qualify for a Supply Arrangement.
+
+Code of Conduct:
+""IMPORTANT NOTICE:  New measures related to Code of Conduct and certifications included in the solicitation documents requires attention.""
+
+Inquiries are to be directed to:  Monnette Calixto, PWGSC Procurement Officer at Fax #204-983-0338 or by email to Monnette.Calixto@pwgsc-tpsgc.gc.ca
+
+Delivery-date: Above-mentioned
+
+The Crown retains the right to negotiate with suppliers on any procurement.
+
+Documents may be submitted in either official language of Canada.
+
+Delivery Date: Above-mentioned
+
+The Crown retains the right to negotiate with suppliers on any procurement.
+
+Documents may be submitted in either official language of Canada.","Entente sur le commerce : AECG / OMC-AMP / PTPGP / ALEC / ALEs avec Pérou / Colombie / Panama / Corée
+Processus de demande des soumissions : Tout fournisseur intéressé peut présenter une soumission
+Stratégie d'approvisionnement concurrentielle : Marchés subséquents
+Entente sur les revendications territoriales globales : Non
+Nature des besoins : 
+
+Services d'élimination de déchets dangereux
+
+EW479-162880/C
+Calixto, Monnette
+N° de téléphone - (204) 899-9768 (    )
+Nº fax - (204) 983-0338 (    )
+
+Services de l'élimination des déchets dangereux, TPSGC, envergure nationale
+
+Le présent marché vise à établir plusieurs arrangements en matière d'approvisionnement (AMAs) afin de fournir l'ensemble de la main d'œuvre, des matériaux, de l'équipement, des outils et des services de supervision nécessaires afin d'identifier, d'étiqueter, de préparer, d'emballer, de charger, de transporter et d'éliminer les déchets dangereux produits par l'utilisateur au gré des besoins à divers ministères et organismes du gouvernement fédéral.  Ces AMAs sont conçus pour les demandes de services professionnels et commerciaux sous ces pouvoirs d'approbation.
+
+Les fournisseurs doivent détenir une licence et être autorisés à fournir des services d'élimination des déchets dangereux dans une ou plusieurs provinces ou territoires.
+
+Les arrangements en matière d'approvisionnement n'ont pas de date de fin définie et ils resteront valables jusqu'à ce que TPSGC considère qu'il n'est plus avantageux de les utiliser.  Ils vont remplacer les AMA qui existent présentement sous EW479-150546 Élimination des déchets dangereux.
+
+Deux processus d'AMA peuvent être déclenchés conformément à la présente invitation à soumissionner :
+
+1)  Les fournisseurs, y compris les fournisseurs autochtones, qui souhaitent présenter un arrangement qui n'est pas dans le cadre de la Stratégie d'approvisionnement auprès des entreprises autochtones (SAEA).  Aux fins de la DAMA, ce processus est désigné par les termes « général », « fournisseurs généraux » ou « processus général ».  Les fournisseurs généraux doivent être en mesure de fournir les services dans l'ensemble du Canada (à l'échelle nationale) ou dans au moins une région du Canada.
+
+i.  Il existe trois volets au processus général avec des instructions séparés, tels que définis dans la Partie 6 (B), Section 2 - Demande de soumissions de cette DAMA :
+
+a)  Les besoins dont la valeur estimative est inférieure à 40 000,00 $ (taxes applicables comprises) : 
+
+Pour les demandes de soumissions d'une valeur de 25 000 $ jusqu'au seuil (taxes applicables comprises) si, et seulement si, la demande de soumissions pour un besoin résultant d'un arrangement en matière d'approvisionnement est administré par TPSGC, la demande accordera une préférence aux produits et (ou) aux services canadiens ou il se limitera aux produits et (ou) aux services canadiens.
+
+Autrement, ce besoin est soumis aux Règlements sur les marchés de l'État RME).
+
+b)  Les besoins dont la valeur estimative va de 40,000.00$ de 100,000.00$ (taxes applicables comprises) : 
+
+Si, et seulement si, la demande de soumissions pour un besoin résultant d'un arrangement en matière d'approvisionnement est administré par TPSGC, la demande accordera une préférence aux produits et (ou) aux services canadiens ou il se limitera aux produits et (ou) aux services canadiens.
+
+Autrement, ce besoin est soumis aux Règlements sur les marchés de l'État (RME) d'une manière semblable à 2.1.i.a.
+
+c)  Les besoins dont la valeur estimative va $100,000.00 jusqu'aux pouvoirs ministériels de passation de marché de 400 000,00 $ (les taxes applicables comprises) : 
+
+Ce besoin peut être assujetti aux dispositions de l'Accord sur les marchés publics de l'organisation mondiale du commerce (AMP-OMC) et de l'Accord sur le commerce intérieur (ACI).  Les pouvoirs ministériels de passation de marché sont spécifiés dans la Politique sur les marchés du Secrétariat du Conseil du Trésor, Appendice « C » - Directive du Conseil du Trésor sur les marchés, Partie 1 - Pouvoirs généraux de passation des marchés, Annexe 3 - Marchés de services (à l'exclusion des services d'architecture et de génie).
+
+d)  Les besoins dont la valeur estimative est supérieure aux pouvoirs ministériels de passation de marché de $400,000.00 (taxes applicables comprises) :
+
+Le besoin dépasse le champ d'application des arrangements en matière d'approvisionnement et le besoin doit être administré séparément par une autorité contractante des TPSGC.
+
+i.  Le marché est assujetti aux dispositions d'une ou des ententes sur les revendications territoriales globales (ERTG) suivantes (voir 2) ii).  Une ou plusieurs des ERTG suivantes pourraient s'appliquer à toute commande subséquente à l'offre à commandes, selon le lieu de livraison.  Il n'est pas obligatoire que les fournisseurs définissent les dispositions sur la participation des bénéficiaires pour les ERTG pour qu'ils soient admissibles pour cet arrangement en matière d'approvisionnement.  Consultez l'annexe « D » - Rapport sur la participation du bénéficiaire et l'annexe « E » - Dispositions sur la participation du bénéficiaire.
+
+1)  Les fournisseurs, y compris les fournisseurs autochtones qui souhaitent présenter un arrangement dans le cadre de la SAEA. Aux fins de la DAMA, ce processus est désigné par les termes « SAEA », « fournisseurs visés par la SAEA » ou « processus de la SAEA ».  Les fournisseurs visés par la SAEA doivent être en mesure de fournir les services dans l'ensemble du Canada (à l'échelle nationale) ou dans au moins une région du Canada.
+
+i.  Il existe deux volets au processus de la SAEA :
+
+a)  Les besoins dont la valeur estimative est inférieure à 40 000,00 $ (taxes applicables comprises) : 
+
+Pour les demandes de soumissions d'une valeur de 25 000 $ jusqu'au seuil (taxes applicables comprises) si, et seulement si, la demande de soumissions pour un besoin résultant d'un arrangement en matière d'approvisionnement est administré par TPSGC, la demande accordera une préférence aux produits et (ou) aux services canadiens ou il se limitera aux produits et (ou) aux services canadiens.
+
+Autrement, ce besoin est soumis aux Règlements sur les marchés de l'État (RME).
+
+b)  Les besoins dont la valeur estimative va de 40,000.00$ de 100,000.00$ (taxes applicables comprises) :
+
+Ce marché est réservé dans le cadre de la Stratégie d'approvisionnement auprès des entreprises autochtones (SAEA) du gouvernement fédéral.
+
+* Pour de plus amples renseignements concernant les exigences requises des entreprises autochtones conformément au Programme de marchés réservés aux entreprises autochtones, consulter l'Annexe 9.4 du Guide des approvisionnements. 
+* Ce marché est exclu des accords commerciaux internationaux en vertu des dispositions de chaque accord relativement aux marchés réservés aux petites entreprises et aux entreprises minoritaires.
+* Conformément à l'article 1802 de l'ACI, cet accord ne s'applique pas au présent contrat.
+
+c)  Les besoins dont la valeur estimative est supérieure à $400,000.00 (taxes applicables comprises) :
+
+Le besoin dépasse le champ d'application des arrangements en matière d'approvisionnement et le besoin doit être administré séparément par une autorité contractante des TPSGC.
+
+Le marché est assujetti aux dispositions d'une ou des ententes sur les revendications territoriales globales (ERTG).  Une ou plusieurs des ERTG pourraient s'appliquer à toute commande subséquente à l'offre à commandes, selon le lieu de livraison.  Il n'est pas obligatoire que les fournisseurs définissent les dispositions sur la participation des bénéficiaires pour les ERTG pour qu'ils soientadmissibles pour cet arrangement en matière d'approvisionnement.  
+
+Code de conduite :
+AVIS IMPORTANT : Des nouvelles mesures connexes au Code de conduite et certifications faisant partie des documents d'invitation à soumissionner exigent une intervention.
+
+Les demandes doivent être transmises à : Monnette Calixto, agente d'approvisionnement de TPSGC, par télécopieur au numéro 204-983-0338 ou par courriel à Monnette.Calixto@pwgsc-tpsgc.gc.ca
+
+Date de livraison : Indiquée ci-dessus
+
+L'État se réserve le droit de négocier les conditions de tout marché avec les fournisseurs.
+
+Les documents peuvent être présentés dans l'une ou l'autre des langues officielles du Canada.
+
+Date de livraison : Indiquée ci-dessus
+
+L'État se réserve le droit de négocier les conditions de tout marché avec les fournisseurs.
+
+Les documents peuvent être présentés dans l'une ou l'autre des langues officielles du Canada."

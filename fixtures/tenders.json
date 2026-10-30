@@ -1,0 +1,940 @@
+{
+  "_fixture": "FICTIONAL DATA FOR DEVELOPMENT AND TESTS. Every tender, buyer and value in this file is invented. Buyers are named 'Sample ...' on purpose and links point at example.com. Nothing here comes from CanadaBuys or any other portal. Dates are day offsets resolved by the seed (postedDaysAgo, closesInDays).",
+  "tenders": [
+    {
+      "externalId": "FIXTURE-0001",
+      "title": "IT Managed Services and Cloud Infrastructure Support",
+      "buyer": "City of Sample",
+      "buyerType": "municipal",
+      "region": "ON",
+      "categoryCodes": [
+        "it-managed-services-cloud"
+      ],
+      "valueMin": 1000000,
+      "valueMax": 1400000,
+      "postedDaysAgo": 16,
+      "closesInDays": 9,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0001",
+      "description": "The City wants one vendor to run its help desk, network and cloud infrastructure for five years with two renewals. Tier 1 to 3 help desk for roughly 900 staff, 24 hours a day, with a 15-minute response on critical incidents and 99.9% uptime. Network, server and endpoint management across 12 municipal sites, migration of remaining on-premise workloads to a Canadian cloud region, backup, disaster recovery and quarterly security testing. Data must stay in Canada. The vendor must hold SOC 2 Type II or ISO 27001, provide three references of similar size, and post a performance bond. Scored on technical approach (40), experience and references (25), price (25) and team (10)."
+    },
+    {
+      "externalId": "FIXTURE-0002",
+      "title": "Cybersecurity Assessment and Data Protection Services",
+      "buyer": "Sample Regional Health Authority",
+      "buyerType": "health-authority",
+      "region": "BC",
+      "categoryCodes": [
+        "cybersecurity-data-protection"
+      ],
+      "valueMin": 300000,
+      "valueMax": 380000,
+      "postedDaysAgo": 10,
+      "closesInDays": 14,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0002",
+      "description": "A regional health authority seeks a vendor to run a cybersecurity maturity assessment, penetration testing of patient-facing systems, and a data protection program aligned with provincial privacy law. Experience with health information systems is required. Work is remote with two on-site visits."
+    },
+    {
+      "externalId": "FIXTURE-0003",
+      "title": "Electronic Health Record (EHR) System Implementation",
+      "buyer": "Sample Health Services",
+      "buyerType": "health-authority",
+      "region": "AB",
+      "categoryCodes": [
+        "healthcare-it-ehr"
+      ],
+      "valueMin": 2500000,
+      "valueMax": 3100000,
+      "postedDaysAgo": 12,
+      "closesInDays": 18,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0003",
+      "description": "Implementation of an electronic health record system across four community clinics, including data migration from two legacy systems, clinician training and 12 months of hypercare. Proponents must show at least two prior EHR deployments of comparable size."
+    },
+    {
+      "externalId": "FIXTURE-0004",
+      "title": "Custom Software Development and Enterprise SaaS Implementation",
+      "buyer": "Sample Federal Department",
+      "buyerType": "federal",
+      "region": "CA",
+      "categoryCodes": [
+        "custom-software-saas"
+      ],
+      "valueMin": null,
+      "valueMax": null,
+      "postedDaysAgo": 20,
+      "closesInDays": 6,
+      "language": "EN_FR",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0004",
+      "description": "Design, build and operate a case management application for a national program, delivered as a hosted service. Personnel require a valid security clearance at the Reliability level before work starts. User support must be offered in English and French. The value is not published."
+    },
+    {
+      "externalId": "FIXTURE-0005",
+      "title": "Management Consulting and Strategic Advisory Services",
+      "buyer": "Sample Crown Corporation",
+      "buyerType": "crown-utility",
+      "region": "MB",
+      "categoryCodes": [
+        "management-consulting"
+      ],
+      "valueMin": 400000,
+      "valueMax": 600000,
+      "postedDaysAgo": 7,
+      "closesInDays": 21,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0005",
+      "description": "A standing offer for strategic advisory, operating model reviews and change management support over three years. No volume is guaranteed; work is called up by task authorization."
+    },
+    {
+      "externalId": "FIXTURE-0006",
+      "title": "Facilities Management and Janitorial Services",
+      "buyer": "Sample Ministry of Public Services",
+      "buyerType": "provincial",
+      "region": "QC",
+      "categoryCodes": [
+        "facilities-janitorial"
+      ],
+      "valueMin": 4000000,
+      "valueMax": 5000000,
+      "postedDaysAgo": 25,
+      "closesInDays": 3,
+      "language": "FR",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0006",
+      "description": "Entretien ménager, gestion des installations et services de conciergerie pour 18 immeubles gouvernementaux pendant cinq ans. Les soumissions doivent être rédigées en français. Une garantie de soumission de 10 % est exigée."
+    },
+    {
+      "externalId": "FIXTURE-0007",
+      "title": "Help Desk and Endpoint Management Services",
+      "buyer": "Sample County",
+      "buyerType": "municipal",
+      "region": "ON",
+      "categoryCodes": [
+        "it-managed-services-cloud"
+      ],
+      "valueMin": 350000,
+      "valueMax": 500000,
+      "postedDaysAgo": 5,
+      "closesInDays": 24,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0007",
+      "description": "Outsourced help desk and endpoint management for 400 county staff across six offices. Business hours coverage with an after-hours on-call option. Three-year term."
+    },
+    {
+      "externalId": "FIXTURE-0008",
+      "title": "Cloud Migration and Hosting Services for Student Systems",
+      "buyer": "Sample College of Applied Arts",
+      "buyerType": "education",
+      "region": "ON",
+      "categoryCodes": [
+        "it-managed-services-cloud"
+      ],
+      "valueMin": 600000,
+      "valueMax": 900000,
+      "postedDaysAgo": 14,
+      "closesInDays": 30,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0008",
+      "description": "Migration of student information and learning platforms to a Canadian cloud region, followed by two years of managed hosting. Data residency in Canada is mandatory."
+    },
+    {
+      "externalId": "FIXTURE-0009",
+      "title": "Managed Network and Wi-Fi Services for Transit Stations",
+      "buyer": "Sample Transit Commission",
+      "buyerType": "transit",
+      "region": "BC",
+      "categoryCodes": [
+        "it-managed-services-cloud"
+      ],
+      "valueMin": 1800000,
+      "valueMax": 2200000,
+      "postedDaysAgo": 9,
+      "closesInDays": 27,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0009",
+      "description": "Design, supply and manage network and public Wi-Fi infrastructure at 22 transit stations. Vendors must show municipal or transit references and a 24/7 network operations centre."
+    },
+    {
+      "externalId": "FIXTURE-0010",
+      "title": "Microsoft 365 Administration and Support",
+      "buyer": "Sample Regional Municipality",
+      "buyerType": "municipal",
+      "region": "NS",
+      "categoryCodes": [
+        "it-managed-services-cloud"
+      ],
+      "valueMin": 120000,
+      "valueMax": 180000,
+      "postedDaysAgo": 3,
+      "closesInDays": 19,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0010",
+      "description": "Ongoing administration of a 300-seat Microsoft 365 tenant including identity, email security and device management, with monthly reporting."
+    },
+    {
+      "externalId": "FIXTURE-0011",
+      "title": "Data Centre Consolidation and Managed Hosting",
+      "buyer": "Sample Provincial Agency",
+      "buyerType": "provincial",
+      "region": "SK",
+      "categoryCodes": [
+        "it-managed-services-cloud"
+      ],
+      "valueMin": 2000000,
+      "valueMax": 2800000,
+      "postedDaysAgo": 18,
+      "closesInDays": 40,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0011",
+      "description": "Consolidation of two provincial data centres into managed hosting with disaster recovery in a second Canadian region. ISO 27001 certification required."
+    },
+    {
+      "externalId": "FIXTURE-0012",
+      "title": "Security Operations Centre Monitoring Services",
+      "buyer": "Sample Crown Utility",
+      "buyerType": "crown-utility",
+      "region": "ON",
+      "categoryCodes": [
+        "cybersecurity-data-protection"
+      ],
+      "valueMin": 900000,
+      "valueMax": 1200000,
+      "postedDaysAgo": 11,
+      "closesInDays": 22,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0012",
+      "description": "24/7 security monitoring, incident response and threat hunting for corporate and operational technology networks. SOC 2 Type II required; critical infrastructure experience preferred."
+    },
+    {
+      "externalId": "FIXTURE-0013",
+      "title": "Penetration Testing of Public-Facing Applications",
+      "buyer": "Sample City",
+      "buyerType": "municipal",
+      "region": "AB",
+      "categoryCodes": [
+        "cybersecurity-data-protection"
+      ],
+      "valueMin": 60000,
+      "valueMax": 90000,
+      "postedDaysAgo": 4,
+      "closesInDays": 16,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0013",
+      "description": "Annual penetration testing of 15 public-facing web applications and the citizen portal, with retesting of critical findings."
+    },
+    {
+      "externalId": "FIXTURE-0014",
+      "title": "Privacy Impact Assessments for Digital Health Programs",
+      "buyer": "Sample Health Authority",
+      "buyerType": "health-authority",
+      "region": "NB",
+      "categoryCodes": [
+        "cybersecurity-data-protection"
+      ],
+      "valueMin": 150000,
+      "valueMax": 220000,
+      "postedDaysAgo": 8,
+      "closesInDays": 25,
+      "language": "EN_FR",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0014",
+      "description": "Privacy impact assessments and security threat and risk assessments for three digital health initiatives. Deliverables in English and French."
+    },
+    {
+      "externalId": "FIXTURE-0015",
+      "title": "Identity and Access Management Modernization",
+      "buyer": "Sample School Board",
+      "buyerType": "education",
+      "region": "ON",
+      "categoryCodes": [
+        "cybersecurity-data-protection"
+      ],
+      "valueMin": 400000,
+      "valueMax": 550000,
+      "postedDaysAgo": 15,
+      "closesInDays": 33,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0015",
+      "description": "Replacement of the identity and access management platform for 25,000 students and staff, including multi-factor authentication rollout."
+    },
+    {
+      "externalId": "FIXTURE-0016",
+      "title": "Cybersecurity Awareness Training Program",
+      "buyer": "Sample Department of Defence Services",
+      "buyerType": "defence-public-safety",
+      "region": "CA",
+      "categoryCodes": [
+        "cybersecurity-data-protection"
+      ],
+      "valueMin": 200000,
+      "valueMax": 300000,
+      "postedDaysAgo": 6,
+      "closesInDays": 28,
+      "language": "EN_FR",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0016",
+      "description": "Bilingual security awareness training for 8,000 personnel, including phishing simulations and quarterly reporting. Secret clearance required for the project lead."
+    },
+    {
+      "externalId": "FIXTURE-0017",
+      "title": "Permit and Licensing Portal Development",
+      "buyer": "Sample Town",
+      "buyerType": "municipal",
+      "region": "BC",
+      "categoryCodes": [
+        "custom-software-saas"
+      ],
+      "valueMin": 250000,
+      "valueMax": 400000,
+      "postedDaysAgo": 13,
+      "closesInDays": 20,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0017",
+      "description": "Build or configure an online permit and licensing portal integrated with the existing financial system. Hosted in Canada, WCAG 2.1 AA."
+    },
+    {
+      "externalId": "FIXTURE-0018",
+      "title": "Grant Management SaaS Implementation",
+      "buyer": "Sample Provincial Ministry",
+      "buyerType": "provincial",
+      "region": "MB",
+      "categoryCodes": [
+        "custom-software-saas"
+      ],
+      "valueMin": 500000,
+      "valueMax": 750000,
+      "postedDaysAgo": 9,
+      "closesInDays": 35,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0018",
+      "description": "Configuration and rollout of a grant management platform for six programs, with data migration and training for 120 staff."
+    },
+    {
+      "externalId": "FIXTURE-0019",
+      "title": "Mobile Application for Transit Riders",
+      "buyer": "Sample Regional Transit Authority",
+      "buyerType": "transit",
+      "region": "QC",
+      "categoryCodes": [
+        "custom-software-saas"
+      ],
+      "valueMin": 600000,
+      "valueMax": 850000,
+      "postedDaysAgo": 21,
+      "closesInDays": 12,
+      "language": "FR",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0019",
+      "description": "Conception et développement d'une application mobile bilingue pour les usagers du transport en commun, incluant les horaires en temps réel et le paiement."
+    },
+    {
+      "externalId": "FIXTURE-0020",
+      "title": "Case Management System for Indigenous Child and Family Services",
+      "buyer": "Sample First Nation Government",
+      "buyerType": "indigenous-government",
+      "region": "SK",
+      "categoryCodes": [
+        "custom-software-saas"
+      ],
+      "valueMin": 300000,
+      "valueMax": 450000,
+      "postedDaysAgo": 10,
+      "closesInDays": 29,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0020",
+      "description": "A culturally appropriate case management system for community services, with offline capability for remote offices and data sovereignty requirements."
+    },
+    {
+      "externalId": "FIXTURE-0021",
+      "title": "Research Data Platform Development",
+      "buyer": "Sample University",
+      "buyerType": "education",
+      "region": "NS",
+      "categoryCodes": [
+        "custom-software-saas"
+      ],
+      "valueMin": 800000,
+      "valueMax": 1100000,
+      "postedDaysAgo": 17,
+      "closesInDays": 38,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0021",
+      "description": "Development of a research data management platform with institutional single sign-on, storage in Canada and open APIs."
+    },
+    {
+      "externalId": "FIXTURE-0022",
+      "title": "Clinical Information System Upgrade",
+      "buyer": "Sample Regional Hospital",
+      "buyerType": "health-authority",
+      "region": "ON",
+      "categoryCodes": [
+        "healthcare-it-ehr"
+      ],
+      "valueMin": 1500000,
+      "valueMax": 2000000,
+      "postedDaysAgo": 12,
+      "closesInDays": 26,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0022",
+      "description": "Upgrade of the clinical information system across three hospital sites, including interface work with laboratory and imaging systems. Prior hospital experience is mandatory."
+    },
+    {
+      "externalId": "FIXTURE-0023",
+      "title": "Telehealth Platform for Northern Communities",
+      "buyer": "Sample Territorial Health Department",
+      "buyerType": "provincial",
+      "region": "NT",
+      "categoryCodes": [
+        "healthcare-it-ehr"
+      ],
+      "valueMin": 700000,
+      "valueMax": 950000,
+      "postedDaysAgo": 8,
+      "closesInDays": 31,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0023",
+      "description": "A telehealth platform serving 12 remote communities over limited bandwidth, with Indigenous language support and on-site training."
+    },
+    {
+      "externalId": "FIXTURE-0024",
+      "title": "Long-Term Care Electronic Records Rollout",
+      "buyer": "Sample Health Region",
+      "buyerType": "health-authority",
+      "region": "SK",
+      "categoryCodes": [
+        "healthcare-it-ehr"
+      ],
+      "valueMin": 900000,
+      "valueMax": 1300000,
+      "postedDaysAgo": 14,
+      "closesInDays": 23,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0024",
+      "description": "Electronic resident records for 14 long-term care homes, including medication administration and family portal modules."
+    },
+    {
+      "externalId": "FIXTURE-0025",
+      "title": "Pharmacy Information System Replacement",
+      "buyer": "Sample Provincial Health Services",
+      "buyerType": "provincial",
+      "region": "BC",
+      "categoryCodes": [
+        "healthcare-it-ehr"
+      ],
+      "valueMin": 2200000,
+      "valueMax": 2900000,
+      "postedDaysAgo": 20,
+      "closesInDays": 44,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0025",
+      "description": "Replacement of the provincial pharmacy information system, with integration to the drug information system and a five-year support term."
+    },
+    {
+      "externalId": "FIXTURE-0026",
+      "title": "Community Recreation Centre Construction",
+      "buyer": "Sample Township",
+      "buyerType": "municipal",
+      "region": "ON",
+      "categoryCodes": [
+        "commercial-construction"
+      ],
+      "valueMin": 12000000,
+      "valueMax": 15000000,
+      "postedDaysAgo": 22,
+      "closesInDays": 15,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0026",
+      "description": "Construction of a 4,500 square metre recreation centre with an aquatic hall. A 10% bid bond and a 50% performance bond are required. Bidders must be prequalified."
+    },
+    {
+      "externalId": "FIXTURE-0027",
+      "title": "Fire Hall Renovation and Addition",
+      "buyer": "Sample Village",
+      "buyerType": "municipal",
+      "region": "AB",
+      "categoryCodes": [
+        "commercial-construction"
+      ],
+      "valueMin": 1800000,
+      "valueMax": 2400000,
+      "postedDaysAgo": 6,
+      "closesInDays": 21,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0027",
+      "description": "Renovation of the existing fire hall and a two-bay addition. Site visit mandatory. Performance bond required."
+    },
+    {
+      "externalId": "FIXTURE-0028",
+      "title": "School Roof Replacement Program",
+      "buyer": "Sample Public School Division",
+      "buyerType": "education",
+      "region": "MB",
+      "categoryCodes": [
+        "commercial-construction"
+      ],
+      "valueMin": 900000,
+      "valueMax": 1200000,
+      "postedDaysAgo": 4,
+      "closesInDays": 17,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0028",
+      "description": "Roof replacement at four elementary schools over the summer break, with strict completion dates before September."
+    },
+    {
+      "externalId": "FIXTURE-0029",
+      "title": "Courthouse Security Upgrades",
+      "buyer": "Sample Ministry of Justice",
+      "buyerType": "provincial",
+      "region": "NL",
+      "categoryCodes": [
+        "commercial-construction"
+      ],
+      "valueMin": 650000,
+      "valueMax": 800000,
+      "postedDaysAgo": 11,
+      "closesInDays": 24,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0029",
+      "description": "Security vestibule, screening area and access control upgrades at two courthouses. Contractors require enhanced reliability screening."
+    },
+    {
+      "externalId": "FIXTURE-0030",
+      "title": "Armoury Interior Fit-Up",
+      "buyer": "Sample Department of National Defence Services",
+      "buyerType": "defence-public-safety",
+      "region": "QC",
+      "categoryCodes": [
+        "commercial-construction"
+      ],
+      "valueMin": 2000000,
+      "valueMax": 2600000,
+      "postedDaysAgo": 16,
+      "closesInDays": 30,
+      "language": "EN_FR",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0030",
+      "description": "Aménagement intérieur d'un manège militaire, incluant les systèmes mécaniques et électriques. Interior fit-up of an armoury including mechanical and electrical systems. Security clearance required for site access."
+    },
+    {
+      "externalId": "FIXTURE-0031",
+      "title": "Bridge Rehabilitation Engineering Services",
+      "buyer": "Sample County",
+      "buyerType": "municipal",
+      "region": "ON",
+      "categoryCodes": [
+        "civil-engineering-infrastructure"
+      ],
+      "valueMin": 400000,
+      "valueMax": 550000,
+      "postedDaysAgo": 9,
+      "closesInDays": 20,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0031",
+      "description": "Engineering design and contract administration for the rehabilitation of three rural bridges. Professional engineering licence in Ontario required."
+    },
+    {
+      "externalId": "FIXTURE-0032",
+      "title": "Water Treatment Plant Expansion Design",
+      "buyer": "Sample City",
+      "buyerType": "municipal",
+      "region": "SK",
+      "categoryCodes": [
+        "civil-engineering-infrastructure"
+      ],
+      "valueMin": 1200000,
+      "valueMax": 1600000,
+      "postedDaysAgo": 19,
+      "closesInDays": 34,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0032",
+      "description": "Preliminary and detailed design for a water treatment plant expansion from 40 to 60 megalitres per day."
+    },
+    {
+      "externalId": "FIXTURE-0033",
+      "title": "Highway Resurfacing Program",
+      "buyer": "Sample Ministry of Transportation",
+      "buyerType": "provincial",
+      "region": "NB",
+      "categoryCodes": [
+        "civil-engineering-infrastructure"
+      ],
+      "valueMin": 8000000,
+      "valueMax": 9500000,
+      "postedDaysAgo": 13,
+      "closesInDays": 11,
+      "language": "EN_FR",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0033",
+      "description": "Resurfacing of 42 kilometres of provincial highway in two contracts. Bid and performance bonds required. Bilingual signage and documentation."
+    },
+    {
+      "externalId": "FIXTURE-0034",
+      "title": "Stormwater Master Plan",
+      "buyer": "Sample Regional District",
+      "buyerType": "municipal",
+      "region": "BC",
+      "categoryCodes": [
+        "civil-engineering-infrastructure"
+      ],
+      "valueMin": 250000,
+      "valueMax": 350000,
+      "postedDaysAgo": 7,
+      "closesInDays": 27,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0034",
+      "description": "A stormwater master plan covering climate projections, asset condition and a 20-year capital program."
+    },
+    {
+      "externalId": "FIXTURE-0035",
+      "title": "Rail Crossing Safety Improvements",
+      "buyer": "Sample Transit Agency",
+      "buyerType": "transit",
+      "region": "AB",
+      "categoryCodes": [
+        "civil-engineering-infrastructure"
+      ],
+      "valueMin": 3000000,
+      "valueMax": 3800000,
+      "postedDaysAgo": 15,
+      "closesInDays": 37,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0035",
+      "description": "Design and construction of safety improvements at nine at-grade rail crossings, including signals and pedestrian gates."
+    },
+    {
+      "externalId": "FIXTURE-0036",
+      "title": "Diagnostic Imaging Equipment Supply and Service",
+      "buyer": "Sample Regional Hospital",
+      "buyerType": "health-authority",
+      "region": "ON",
+      "categoryCodes": [
+        "medical-equipment-pharma"
+      ],
+      "valueMin": 3500000,
+      "valueMax": 4200000,
+      "postedDaysAgo": 10,
+      "closesInDays": 25,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0036",
+      "description": "Supply, installation and ten-year service of two CT scanners and one MRI unit. Health Canada licences required."
+    },
+    {
+      "externalId": "FIXTURE-0037",
+      "title": "Vaccine Cold Chain Equipment",
+      "buyer": "Sample Provincial Public Health",
+      "buyerType": "provincial",
+      "region": "QC",
+      "categoryCodes": [
+        "medical-equipment-pharma"
+      ],
+      "valueMin": 450000,
+      "valueMax": 600000,
+      "postedDaysAgo": 5,
+      "closesInDays": 14,
+      "language": "FR",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0037",
+      "description": "Fourniture de réfrigérateurs et de congélateurs certifiés pour la chaîne du froid des vaccins, avec surveillance de la température à distance."
+    },
+    {
+      "externalId": "FIXTURE-0038",
+      "title": "Standing Offer for Pharmaceutical Supply",
+      "buyer": "Sample Health Authority",
+      "buyerType": "health-authority",
+      "region": "NL",
+      "categoryCodes": [
+        "medical-equipment-pharma"
+      ],
+      "valueMin": null,
+      "valueMax": null,
+      "postedDaysAgo": 23,
+      "closesInDays": 32,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0038",
+      "description": "A three-year standing offer for pharmaceutical supply to regional hospitals. Volumes are estimates only and no minimum is guaranteed."
+    },
+    {
+      "externalId": "FIXTURE-0039",
+      "title": "Patient Monitoring Systems for Emergency Departments",
+      "buyer": "Sample Health Services",
+      "buyerType": "health-authority",
+      "region": "AB",
+      "categoryCodes": [
+        "medical-equipment-pharma"
+      ],
+      "valueMin": 1100000,
+      "valueMax": 1400000,
+      "postedDaysAgo": 12,
+      "closesInDays": 29,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0039",
+      "description": "Patient monitoring systems for four emergency departments, integrated with the clinical information system."
+    },
+    {
+      "externalId": "FIXTURE-0040",
+      "title": "Dental Equipment for Community Health Centres",
+      "buyer": "Sample Indigenous Health Authority",
+      "buyerType": "indigenous-government",
+      "region": "MB",
+      "categoryCodes": [
+        "medical-equipment-pharma"
+      ],
+      "valueMin": 180000,
+      "valueMax": 260000,
+      "postedDaysAgo": 8,
+      "closesInDays": 22,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0040",
+      "description": "Dental chairs, imaging and sterilization equipment for three community health centres, including delivery to remote locations and staff training."
+    },
+    {
+      "externalId": "FIXTURE-0041",
+      "title": "Janitorial Services for Municipal Buildings",
+      "buyer": "Sample Town",
+      "buyerType": "municipal",
+      "region": "ON",
+      "categoryCodes": [
+        "facilities-janitorial"
+      ],
+      "valueMin": 280000,
+      "valueMax": 340000,
+      "postedDaysAgo": 6,
+      "closesInDays": 18,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0041",
+      "description": "Daily janitorial services at the town hall, library and two arenas over three years. Staff require a criminal record check."
+    },
+    {
+      "externalId": "FIXTURE-0042",
+      "title": "Grounds Maintenance and Snow Removal",
+      "buyer": "Sample School Board",
+      "buyerType": "education",
+      "region": "AB",
+      "categoryCodes": [
+        "facilities-janitorial"
+      ],
+      "valueMin": 500000,
+      "valueMax": 650000,
+      "postedDaysAgo": 14,
+      "closesInDays": 26,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0042",
+      "description": "Grounds maintenance in summer and snow removal in winter for 31 school sites, with a two-hour response for snow events."
+    },
+    {
+      "externalId": "FIXTURE-0043",
+      "title": "Integrated Facilities Management for Office Portfolio",
+      "buyer": "Sample Crown Corporation",
+      "buyerType": "crown-utility",
+      "region": "CA",
+      "categoryCodes": [
+        "facilities-janitorial"
+      ],
+      "valueMin": 6000000,
+      "valueMax": 7500000,
+      "postedDaysAgo": 20,
+      "closesInDays": 41,
+      "language": "EN_FR",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0043",
+      "description": "Integrated facilities management for 38 offices in six provinces, including maintenance, cleaning and help desk. Bilingual service required."
+    },
+    {
+      "externalId": "FIXTURE-0044",
+      "title": "Transit Station Cleaning Services",
+      "buyer": "Sample Transit Commission",
+      "buyerType": "transit",
+      "region": "BC",
+      "categoryCodes": [
+        "facilities-janitorial"
+      ],
+      "valueMin": 1900000,
+      "valueMax": 2300000,
+      "postedDaysAgo": 11,
+      "closesInDays": 19,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0044",
+      "description": "Cleaning of 22 stations and 4 bus loops, 365 days a year, with performance-based service levels."
+    },
+    {
+      "externalId": "FIXTURE-0045",
+      "title": "Hospital Environmental Services",
+      "buyer": "Sample Health Region",
+      "buyerType": "health-authority",
+      "region": "NS",
+      "categoryCodes": [
+        "facilities-janitorial"
+      ],
+      "valueMin": 2400000,
+      "valueMax": 3000000,
+      "postedDaysAgo": 17,
+      "closesInDays": 36,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0045",
+      "description": "Environmental services for two hospitals, including infection control cleaning standards and waste handling."
+    },
+    {
+      "externalId": "FIXTURE-0046",
+      "title": "Warehousing and Distribution of Medical Supplies",
+      "buyer": "Sample Provincial Health Services",
+      "buyerType": "provincial",
+      "region": "BC",
+      "categoryCodes": [
+        "logistics-freight-3pl"
+      ],
+      "valueMin": 2800000,
+      "valueMax": 3400000,
+      "postedDaysAgo": 9,
+      "closesInDays": 28,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0046",
+      "description": "Third-party warehousing and distribution of medical supplies to 90 sites, with cold chain capability and 24-hour emergency delivery."
+    },
+    {
+      "externalId": "FIXTURE-0047",
+      "title": "Freight Services to Northern Communities",
+      "buyer": "Sample Territorial Government",
+      "buyerType": "provincial",
+      "region": "NU",
+      "categoryCodes": [
+        "logistics-freight-3pl"
+      ],
+      "valueMin": 1500000,
+      "valueMax": 2000000,
+      "postedDaysAgo": 15,
+      "closesInDays": 23,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0047",
+      "description": "Sealift and air freight services to 11 communities, including hazardous goods handling and marine insurance."
+    },
+    {
+      "externalId": "FIXTURE-0048",
+      "title": "Courier Services Standing Offer",
+      "buyer": "Sample Federal Agency",
+      "buyerType": "federal",
+      "region": "CA",
+      "categoryCodes": [
+        "logistics-freight-3pl"
+      ],
+      "valueMin": 300000,
+      "valueMax": 450000,
+      "postedDaysAgo": 4,
+      "closesInDays": 15,
+      "language": "EN_FR",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0048",
+      "description": "A standing offer for courier services between 60 offices across Canada. Bilingual customer service and online tracking required."
+    },
+    {
+      "externalId": "FIXTURE-0049",
+      "title": "Fleet Logistics and Vehicle Relocation",
+      "buyer": "Sample Crown Utility",
+      "buyerType": "crown-utility",
+      "region": "ON",
+      "categoryCodes": [
+        "logistics-freight-3pl"
+      ],
+      "valueMin": 400000,
+      "valueMax": 520000,
+      "postedDaysAgo": 7,
+      "closesInDays": 30,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0049",
+      "description": "Relocation of utility vehicles and equipment between service centres, including specialized heavy haul."
+    },
+    {
+      "externalId": "FIXTURE-0050",
+      "title": "Election Materials Distribution",
+      "buyer": "Sample Provincial Elections Office",
+      "buyerType": "provincial",
+      "region": "PE",
+      "categoryCodes": [
+        "logistics-freight-3pl"
+      ],
+      "valueMin": 90000,
+      "valueMax": 130000,
+      "postedDaysAgo": 3,
+      "closesInDays": 10,
+      "language": "EN_FR",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0050",
+      "description": "Secure distribution and return of election materials to 180 polling locations within a fixed four-day window. Bilingual labelling."
+    },
+    {
+      "externalId": "FIXTURE-0051",
+      "title": "Digital Transformation Roadmap",
+      "buyer": "Sample City",
+      "buyerType": "municipal",
+      "region": "ON",
+      "categoryCodes": [
+        "management-consulting"
+      ],
+      "valueMin": 150000,
+      "valueMax": 220000,
+      "postedDaysAgo": 8,
+      "closesInDays": 20,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0051",
+      "description": "A three-year digital transformation roadmap for city services, including a service inventory and a prioritized project list."
+    },
+    {
+      "externalId": "FIXTURE-0052",
+      "title": "Organizational Review of Public Safety Communications",
+      "buyer": "Sample Regional Municipality",
+      "buyerType": "defence-public-safety",
+      "region": "AB",
+      "categoryCodes": [
+        "management-consulting"
+      ],
+      "valueMin": 200000,
+      "valueMax": 280000,
+      "postedDaysAgo": 12,
+      "closesInDays": 25,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0052",
+      "description": "An organizational review of the 911 and dispatch service, with recommendations on staffing, governance and technology."
+    },
+    {
+      "externalId": "FIXTURE-0053",
+      "title": "Indigenous Procurement Strategy Development",
+      "buyer": "Sample Provincial Ministry",
+      "buyerType": "provincial",
+      "region": "BC",
+      "categoryCodes": [
+        "management-consulting"
+      ],
+      "valueMin": 120000,
+      "valueMax": 180000,
+      "postedDaysAgo": 6,
+      "closesInDays": 24,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0053",
+      "description": "Development of an Indigenous procurement strategy with engagement sessions in six regions. Indigenous-owned proponents are encouraged."
+    },
+    {
+      "externalId": "FIXTURE-0054",
+      "title": "Program Evaluation Services Standing Offer",
+      "buyer": "Sample Federal Department",
+      "buyerType": "federal",
+      "region": "CA",
+      "categoryCodes": [
+        "management-consulting"
+      ],
+      "valueMin": null,
+      "valueMax": null,
+      "postedDaysAgo": 18,
+      "closesInDays": 42,
+      "language": "EN_FR",
+      "officialUrl": null,
+      "description": "A standing offer for program evaluation services across three branches. Bilingual deliverables and Reliability clearance required. No value published."
+    },
+    {
+      "externalId": "FIXTURE-0055",
+      "title": "Transit Fare Policy Review",
+      "buyer": "Sample Regional Transit Authority",
+      "buyerType": "transit",
+      "region": "YT",
+      "categoryCodes": [
+        "management-consulting"
+      ],
+      "valueMin": 80000,
+      "valueMax": 120000,
+      "postedDaysAgo": 5,
+      "closesInDays": 17,
+      "language": "EN",
+      "officialUrl": "https://example.com/fixtures/FIXTURE-0055",
+      "description": "A review of fare policy and fare technology options for a small territorial transit system, including public engagement."
+    }
+  ]
+}
