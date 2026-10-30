@@ -1,0 +1,428 @@
+{
+  "_fixture": "GOLDEN SCORING SET. Fictional profiles scored against the fictional tenders in fixtures/tenders.json, resolved against the fixed `now` below. Expected bands were written from the rules in docs/plans/m2-plan.md before the engine ran, then updated for the category cap in docs/plans/m2-category-cap.md (rules-2: under 10 category points caps the total at 49). `expectedCapped` says whether the cap rule applies to a pair. rules-3 (Oct 28, 2026): a clearance held on the profile satisfies a clearance requirement; the two national-consultancy program-evaluation pairs pin the difference. A change that moves a pair across a band needs a note in the pull request.",
+  "now": "2026-10-23T12:00:00.000Z",
+  "profiles": {
+    "sample": {
+      "name": "Sample Technology Partners Inc.",
+      "headOfficeProvince": "ON",
+      "capacity": "6-10",
+      "categories": [
+        "it-managed-services-cloud",
+        "cybersecurity-data-protection",
+        "custom-software-saas"
+      ],
+      "buyerTypes": [
+        "municipal",
+        "provincial",
+        "health-authority",
+        "crown-utility"
+      ],
+      "description": "Managed IT, cloud migrations and security assessments for public sector teams of 200 to 2,000 staff.",
+      "languages": "EN",
+      "regions": [
+        "ON"
+      ],
+      "sizeMin": 250000,
+      "sizeMax": 3000000,
+      "timelinePref": 10,
+      "certifications": [
+        "SOC 2 Type II"
+      ],
+      "bonding": false
+    },
+    "quebec-facilities": {
+      "name": "Entretien Rive-Nord inc.",
+      "headOfficeProvince": "QC",
+      "capacity": "51-200",
+      "categories": [
+        "facilities-janitorial"
+      ],
+      "buyerTypes": [
+        "provincial",
+        "municipal",
+        "health-authority"
+      ],
+      "description": "Entretien ménager et gestion des installations pour les immeubles publics de la région de Montréal.",
+      "languages": "FR",
+      "regions": [
+        "QC"
+      ],
+      "sizeMin": 500000,
+      "sizeMax": 10000000,
+      "timelinePref": 7,
+      "certifications": [],
+      "bonding": true
+    },
+    "alberta-construction": {
+      "name": "Prairie Build Contractors Ltd.",
+      "headOfficeProvince": "AB",
+      "capacity": "26-50",
+      "categories": [
+        "commercial-construction",
+        "civil-engineering-infrastructure"
+      ],
+      "buyerTypes": [
+        "municipal",
+        "education",
+        "provincial"
+      ],
+      "description": "General contractor for institutional renovations and small civil works across Alberta and Saskatchewan.",
+      "languages": "EN",
+      "regions": [
+        "AB",
+        "SK"
+      ],
+      "sizeMin": 500000,
+      "sizeMax": 5000000,
+      "timelinePref": 14,
+      "certifications": [
+        "COR safety certification"
+      ],
+      "bonding": true
+    },
+    "national-consultancy": {
+      "name": "Northstar Advisory Group",
+      "headOfficeProvince": "ON",
+      "capacity": "11-25",
+      "categories": [
+        "management-consulting"
+      ],
+      "buyerTypes": [
+        "federal",
+        "provincial",
+        "crown-utility"
+      ],
+      "description": "Bilingual program evaluation and strategy work for federal departments, with a Reliability-cleared team.",
+      "languages": "EN_FR",
+      "regions": [
+        "CA"
+      ],
+      "sizeMin": 100000,
+      "sizeMax": 1000000,
+      "timelinePref": 10,
+      "certifications": [],
+      "bonding": false
+    },
+    "manitoba-logistics": {
+      "name": "Kistapinanihk Logistics",
+      "headOfficeProvince": "MB",
+      "capacity": "11-25",
+      "categories": [
+        "logistics-freight-3pl"
+      ],
+      "buyerTypes": [
+        "provincial",
+        "federal",
+        "indigenous-government",
+        "health-authority"
+      ],
+      "description": "Indigenous-owned freight and warehousing to northern Manitoba, Saskatchewan and Nunavut communities.",
+      "languages": "EN",
+      "regions": [
+        "MB",
+        "SK",
+        "NU"
+      ],
+      "sizeMin": 100000,
+      "sizeMax": 3000000,
+      "timelinePref": 7,
+      "certifications": [],
+      "bonding": false
+    },
+    "small-software-shop": {
+      "name": "Maple Loop Software",
+      "headOfficeProvince": "ON",
+      "capacity": "1-5",
+      "categories": [
+        "custom-software-saas"
+      ],
+      "buyerTypes": [
+        "municipal"
+      ],
+      "description": null,
+      "languages": "EN",
+      "regions": [
+        "ON"
+      ],
+      "sizeMin": 50000,
+      "sizeMax": 300000,
+      "timelinePref": 21,
+      "certifications": [],
+      "bonding": false
+    },
+    "national-consultancy-cleared": {
+      "name": "Northstar Advisory Group (Reliability cleared)",
+      "headOfficeProvince": "ON",
+      "capacity": "11-25",
+      "categories": [
+        "management-consulting"
+      ],
+      "buyerTypes": [
+        "federal",
+        "provincial",
+        "crown-utility"
+      ],
+      "description": "Bilingual program evaluation and strategy work for federal departments, with a Reliability-cleared team.",
+      "languages": "EN_FR",
+      "regions": [
+        "CA"
+      ],
+      "sizeMin": 100000,
+      "sizeMax": 1000000,
+      "timelinePref": 10,
+      "certifications": [],
+      "bonding": false,
+      "securityClearance": "reliability"
+    }
+  },
+  "pairs": [
+    {
+      "id": "sample-it-managed-services",
+      "note": "The wireframe example: 92 with 38, 19, 14, 12 and 9.",
+      "profile": "sample",
+      "tender": "FIXTURE-0001",
+      "expectedEligible": true,
+      "expectedBand": "HIGH",
+      "expectedTotal": 92,
+      "expectedFactors": {
+        "category": 38,
+        "location": 19,
+        "size": 14,
+        "timeline": 12,
+        "credentials": 9
+      },
+      "expectedCapped": false
+    },
+    {
+      "id": "sample-help-desk-after-hours",
+      "note": "Same category and buyer, after-hours on-call with a team of 6 to 10, no certifications asked for.",
+      "profile": "sample",
+      "tender": "FIXTURE-0007",
+      "expectedEligible": true,
+      "expectedBand": "HIGH",
+      "expectedCapped": false
+    },
+    {
+      "id": "sample-soc-monitoring",
+      "note": "Cybersecurity match, SOC 2 required and held, 24/7 coverage.",
+      "profile": "sample",
+      "tender": "FIXTURE-0012",
+      "expectedEligible": true,
+      "expectedBand": "HIGH",
+      "expectedCapped": false
+    },
+    {
+      "id": "sample-federal-unknown-value",
+      "note": "No published value, closes in 6 days against a 10 day lead time, Reliability clearance, bilingual support, federal buyer not on the list.",
+      "profile": "sample",
+      "tender": "FIXTURE-0004",
+      "expectedEligible": true,
+      "expectedBand": "MEDIUM",
+      "expectedCapped": false
+    },
+    {
+      "id": "sample-construction-far-above-range",
+      "note": "No category match, value four times the profile maximum, bonds required without bonding. Was 58 Medium under rules-1; the category cap (8 points, under 10) holds it at 49 Low.",
+      "profile": "sample",
+      "tender": "FIXTURE-0026",
+      "expectedEligible": true,
+      "expectedBand": "LOW",
+      "expectedTotal": 49,
+      "expectedCapped": true
+    },
+    {
+      "id": "sample-quebec-french-only",
+      "note": "Province gate plus a French-only notice and a bid guarantee.",
+      "profile": "sample",
+      "tender": "FIXTURE-0006",
+      "expectedEligible": false,
+      "expectedBand": "LOW",
+      "expectedCapped": true
+    },
+    {
+      "id": "sample-saskatchewan-missing-iso",
+      "note": "Strong category match but outside Ontario, and ISO 27001 is required while the profile holds SOC 2 only.",
+      "profile": "sample",
+      "tender": "FIXTURE-0011",
+      "expectedEligible": false,
+      "expectedBand": "LOW",
+      "expectedCapped": false
+    },
+    {
+      "id": "sample-secret-clearance",
+      "note": "National tender, Secret clearance required (costs points, does not gate), bilingual delivery.",
+      "profile": "sample",
+      "tender": "FIXTURE-0016",
+      "expectedEligible": true,
+      "expectedBand": "HIGH",
+      "expectedCapped": false
+    },
+    {
+      "id": "sample-bc-portal",
+      "note": "Province gate on an otherwise good software match.",
+      "profile": "sample",
+      "tender": "FIXTURE-0017",
+      "expectedEligible": false,
+      "expectedBand": "LOW",
+      "expectedCapped": false
+    },
+    {
+      "id": "sample-consulting-roadmap",
+      "note": "Ontario municipal buyer but a consulting category the profile does not list, value slightly below range. Was 66 Medium under rules-1; capped at 49 Low.",
+      "profile": "sample",
+      "tender": "FIXTURE-0051",
+      "expectedEligible": true,
+      "expectedBand": "LOW",
+      "expectedTotal": 49,
+      "expectedCapped": true
+    },
+    {
+      "id": "quebec-facilities-french-notice",
+      "note": "French profile on a French notice, bonding held, closes in 3 days against a 7 day lead time.",
+      "profile": "quebec-facilities",
+      "tender": "FIXTURE-0006",
+      "expectedEligible": true,
+      "expectedBand": "HIGH",
+      "expectedCapped": false
+    },
+    {
+      "id": "quebec-facilities-ontario-janitorial",
+      "note": "Province gate for a Quebec-only firm.",
+      "profile": "quebec-facilities",
+      "tender": "FIXTURE-0041",
+      "expectedEligible": false,
+      "expectedBand": "LOW",
+      "expectedCapped": false
+    },
+    {
+      "id": "quebec-facilities-national-bilingual",
+      "note": "National bilingual tender for a French-only firm: partial language credit, crown buyer not on the list.",
+      "profile": "quebec-facilities",
+      "tender": "FIXTURE-0043",
+      "expectedEligible": true,
+      "expectedBand": "HIGH",
+      "expectedCapped": false
+    },
+    {
+      "id": "alberta-construction-fire-hall",
+      "note": "Performance bond required and held, municipal buyer, inside range.",
+      "profile": "alberta-construction",
+      "tender": "FIXTURE-0027",
+      "expectedEligible": true,
+      "expectedBand": "HIGH",
+      "expectedCapped": false
+    },
+    {
+      "id": "alberta-construction-rail-crossing",
+      "note": "Civil match with a transit buyer the profile does not list.",
+      "profile": "alberta-construction",
+      "tender": "FIXTURE-0035",
+      "expectedEligible": true,
+      "expectedBand": "HIGH",
+      "expectedCapped": false
+    },
+    {
+      "id": "alberta-construction-manitoba-roof",
+      "note": "Province gate: Manitoba is outside Alberta and Saskatchewan.",
+      "profile": "alberta-construction",
+      "tender": "FIXTURE-0028",
+      "expectedEligible": false,
+      "expectedBand": "LOW",
+      "expectedCapped": false
+    },
+    {
+      "id": "national-consultancy-program-evaluation",
+      "note": "Bilingual national firm, no published value, Reliability clearance required and none held: the clearance check costs location points (83 against 86 for the cleared profile).",
+      "profile": "national-consultancy",
+      "tender": "FIXTURE-0054",
+      "expectedEligible": true,
+      "expectedBand": "HIGH",
+      "expectedCapped": false,
+      "expectedTotal": 83
+    },
+    {
+      "id": "national-consultancy-set-aside",
+      "note": "Set-aside gate. The description is patched because no fixture tender carries one.",
+      "profile": "national-consultancy",
+      "tender": "FIXTURE-0053",
+      "overrides": {
+        "description": "Development of an Indigenous procurement strategy with engagement sessions in six regions. This procurement is set aside for Indigenous businesses under the Procurement Strategy for Indigenous Business."
+      },
+      "expectedEligible": false,
+      "expectedBand": "LOW",
+      "expectedCapped": false
+    },
+    {
+      "id": "manitoba-logistics-northern-freight",
+      "note": "Nunavut is in the profile's regions, provincial buyer, inside range.",
+      "profile": "manitoba-logistics",
+      "tender": "FIXTURE-0047",
+      "expectedEligible": true,
+      "expectedBand": "HIGH",
+      "expectedCapped": false
+    },
+    {
+      "id": "small-shop-help-desk-closing-tomorrow",
+      "note": "Closing date patched to tomorrow: 1 day against a 21 day lead time, after-hours with a team of 1 to 5, value above range, category miss. Was 53 Medium under rules-1; capped at 49 Low.",
+      "profile": "small-software-shop",
+      "tender": "FIXTURE-0007",
+      "overrides": {
+        "closesInDays": 1
+      },
+      "expectedEligible": true,
+      "expectedBand": "LOW",
+      "expectedTotal": 49,
+      "expectedCapped": true
+    },
+    {
+      "id": "sample-fleet-logistics-capped",
+      "note": "Proves the cap: Ontario crown buyer on the list, inside range, comfortable close, but a logistics category. 67 before the cap, 49 after.",
+      "profile": "sample",
+      "tender": "FIXTURE-0049",
+      "expectedEligible": true,
+      "expectedBand": "LOW",
+      "expectedTotal": 49,
+      "expectedCapped": true
+    },
+    {
+      "id": "sample-clinical-system-capped",
+      "note": "Proves the cap: Ontario health authority on the list, inside range, but a healthcare IT category the profile does not list. 66 before the cap, 49 after.",
+      "profile": "sample",
+      "tender": "FIXTURE-0022",
+      "expectedEligible": true,
+      "expectedBand": "LOW",
+      "expectedTotal": 49,
+      "expectedCapped": true
+    },
+    {
+      "id": "sample-program-evaluation-under-cap",
+      "note": "Category 0 (federal buyer not on the list, no keywords) with a total already under 49: the cap applies but does not lower the total.",
+      "profile": "sample",
+      "tender": "FIXTURE-0054",
+      "expectedEligible": true,
+      "expectedBand": "LOW",
+      "expectedTotal": 47,
+      "expectedCapped": true
+    },
+    {
+      "id": "sample-facilities-help-desk-capped",
+      "note": "Right buyer (municipal, 8) plus one generic keyword (help desk, 2) on a facilities tender: category 10 but code plus keyword points 2, so the cap applies. Was 64 Medium before the cap read match points only.",
+      "profile": "sample",
+      "tender": "FIXTURE-0043",
+      "expectedEligible": true,
+      "expectedBand": "LOW",
+      "expectedTotal": 49,
+      "expectedCapped": true
+    },
+    {
+      "id": "national-consultancy-cleared-program-evaluation",
+      "note": "Same pair as national-consultancy-program-evaluation with a Reliability clearance on the profile (rules-3): the clearance check is met, so location scores full points and clearanceHeld lands in your favour.",
+      "profile": "national-consultancy-cleared",
+      "tender": "FIXTURE-0054",
+      "expectedEligible": true,
+      "expectedBand": "HIGH",
+      "expectedCapped": false,
+      "expectedTotal": 86
+    }
+  ]
+}

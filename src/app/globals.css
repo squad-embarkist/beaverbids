@@ -2,129 +2,232 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+/*
+  BeaverBids design tokens, from docs/ui-ux-guide.md, which follows the Figma
+  file "Beaver bids website" (frame 1:957). Every colour, radius and type size
+  a component uses comes from here. Dark mode is out of the MVP; the tokens
+  make it a later addition.
+*/
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  /* Brand */
+  --color-signal: var(--signal);
+  --color-signal-press: var(--signal-press);
+  --color-asphalt: var(--asphalt);
+  --color-paper: var(--paper);
+  --color-stone: var(--stone);
+  --color-stone-light: var(--stone-light);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-line-dark: var(--line-dark);
+  --color-ink-muted: var(--ink-muted);
+
+  /* Score bands. Always shown with the number or band word, never alone. */
+  --color-band-high: var(--band-high);
+  --color-band-medium: var(--band-medium);
+  --color-band-low: var(--band-low);
+
+  /* shadcn/ui semantic names mapped onto the brand tokens */
+  --color-background: var(--paper);
+  --color-foreground: var(--asphalt);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--asphalt);
+  --color-popover: var(--surface);
+  --color-popover-foreground: var(--asphalt);
+  --color-primary: var(--signal);
+  --color-primary-foreground: var(--asphalt);
+  --color-secondary: var(--paper);
+  --color-secondary-foreground: var(--asphalt);
+  --color-muted: var(--paper);
+  --color-muted-foreground: var(--ink-muted);
+  --color-accent: var(--paper);
+  --color-accent-foreground: var(--asphalt);
+  --color-destructive: var(--signal);
+  --color-border: var(--line);
+  --color-input: var(--line);
+  --color-ring: var(--asphalt);
+
+  /* Type: Archivo for headlines and body, IBM Plex Mono for labels and data.
+     Archivo is one variable font with the width axis: font-expanded (125)
+     for headlines, font-condensed (75) for buttons and card titles. */
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  /* App screens */
+  --text-display: 2.5rem;
+  --text-display--line-height: 2.75rem;
+  --text-h1: 1.75rem;
+  --text-h1--line-height: 2.125rem;
+  --text-h2: 1.25rem;
+  --text-h2--line-height: 1.625rem;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1rem;
+  --text-label--letter-spacing: 0.04em;
+  --text-score: 3.5rem;
+  --text-score--line-height: 1;
+  --text-score-sm: 2rem;
+  --text-score-sm--line-height: 1;
+
+  /* Landing page headlines (expanded ExtraBold) */
+  --text-hero: 5.4rem;
+  --text-hero--line-height: 0.92;
+  --text-hero--letter-spacing: -0.01em;
+  --text-hero-md: 4.5rem;
+  --text-hero-md--line-height: 0.92;
+  --text-hero-md--letter-spacing: -0.01em;
+  --text-hero-sm: 4rem;
+  --text-hero-sm--line-height: 0.92;
+  --text-hero-sm--letter-spacing: -0.01em;
+  --text-hero-xs: 2.75rem;
+  --text-hero-xs--line-height: 0.92;
+  --text-hero-xs--letter-spacing: -0.01em;
+  --text-section: 3rem;
+  --text-section--line-height: 1;
+  --text-section--letter-spacing: -0.01em;
+  --text-section-lg: 3.25rem;
+  --text-section-lg--line-height: 0.98;
+  --text-section-lg--letter-spacing: -0.01em;
+  --text-section-sm: 2rem;
+  --text-section-sm--line-height: 1;
+  --text-section-sm--letter-spacing: -0.01em;
+  --text-figure: 4.5rem;
+  --text-figure--line-height: 1;
+  --text-figure--letter-spacing: -0.01em;
+  --text-figure-sm: 2.5rem;
+  --text-figure-sm--line-height: 1;
+  --text-figure-sm--letter-spacing: -0.01em;
+  --text-wordmark: 1.25rem;
+  --text-wordmark--line-height: 1.75rem;
+  --text-wordmark--letter-spacing: -0.01em;
+  --text-wordmark-lg: 1.5rem;
+  --text-wordmark-lg--line-height: 2rem;
+  --text-wordmark-lg--letter-spacing: -0.01em;
+
+  /* Landing page condensed titles and buttons (condensed Bold, uppercase) */
+  --text-card-title: 1.5rem;
+  --text-card-title--line-height: 2rem;
+  --text-card-title--letter-spacing: 0.025em;
+  --text-portal: 1.125rem;
+  --text-portal--line-height: 1.75rem;
+  --text-portal--letter-spacing: 0.025em;
+  --text-button: 1rem;
+  --text-button--line-height: 1.5rem;
+  --text-button--letter-spacing: 0.025em;
+  --text-button-sm: 0.875rem;
+  --text-button-sm--line-height: 1.25rem;
+  --text-button-sm--letter-spacing: 0.025em;
+
+  /* Landing page body (Archivo normal width) */
+  --text-lead: 1.125rem;
+  --text-lead--line-height: 1.625;
+  --text-body-15: 0.9375rem;
+  --text-body-15--line-height: 1.625;
+  --text-list-15: 0.9375rem;
+  --text-list-15--line-height: 1.5;
+  --text-caption: 0.875rem;
+  --text-caption--line-height: 1.375;
+  --text-footer: 0.875rem;
+  --text-footer--line-height: 1.625;
+  --text-coverage-lead: 1rem;
+  --text-coverage-lead--line-height: 1.625;
+
+  /* Landing page mono labels */
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.125rem;
+  --text-eyebrow--letter-spacing: 0.2em;
+  --text-mono-xs: 0.6875rem;
+  --text-mono-xs--line-height: 1.03125rem;
+  --text-mono-xs--letter-spacing: 0.18em;
+  --text-mono-md: 0.8125rem;
+  --text-mono-md--line-height: 1.21875rem;
+  --text-mono-md--letter-spacing: 0.06em;
+  --text-tag: 0.625rem;
+  --text-tag--line-height: 0.9375rem;
+  --text-tag--letter-spacing: 0.2em;
+  --text-step: 0.875rem;
+  --text-step--line-height: 1.25rem;
+  --text-note: 0.6875rem;
+  --text-note--line-height: 1.117rem;
+  --text-note--letter-spacing: 0.04em;
+
+  /* Radius: square corners everywhere. Score chips are the one rounded shape. */
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-card: 0px;
+
+  /* Controls: inputs are 50 px tall, the primary button 56 px */
+  --spacing-control: 3.125rem;
+  --spacing-button: 3.5rem;
+  --spacing-header: 4.5625rem;
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --signal: #d52b1e;
+  --signal-press: #b8251a;
+  --asphalt: #23231f;
+  --paper: #f4f2ed;
+  --stone: #cbc7be;
+  --stone-light: #dedbd3;
+  --surface: #ffffff;
+  --line: rgb(35 35 31 / 0.15);
+  --line-dark: rgb(124 121 112 / 0.3);
+  --ink-muted: #7c7970;
+  --band-high: #2e7d4f;
+  --band-medium: #b7791f;
+  --band-low: #8a867c;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
+    @apply border-border;
   }
   html {
-    @apply font-sans;
+    @apply font-sans scroll-smooth;
+    scroll-padding-top: var(--spacing-header);
   }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    /* Skeleton pulses and hover transitions stop for people who ask for less motion. */
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  body {
+    @apply bg-background text-foreground text-base leading-6;
+  }
+  :focus-visible {
+    @apply outline-2 outline-asphalt outline-offset-0;
+  }
+}
+
+@utility font-expanded {
+  font-stretch: 125%;
+}
+
+@utility font-condensed {
+  font-stretch: 75%;
+}
+
+@utility label-mono {
+  @apply font-mono text-label uppercase font-medium text-ink-muted;
+}
+
+/* A headline line set on a signal block: asphalt text, block starts at the
+   column edge, text inset 6 px (Figma "Amber" layers). */
+@utility highlight {
+  display: inline-block;
+  background-color: var(--signal);
+  color: var(--asphalt);
+  padding: 0.06em 6px;
 }
