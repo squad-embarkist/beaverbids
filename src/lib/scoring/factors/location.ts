@@ -27,8 +27,10 @@ export type LocationFacts = {
 
 export type LocationResult = FactorResult<LocationFacts>;
 
-export function regionMatches(tenderRegion: string, profileRegions: readonly string[]): boolean {
-  return tenderRegion === "CA" || profileRegions.includes("CA") || profileRegions.includes(tenderRegion);
+// A tender open to all of Canada, a profile working anywhere, or any
+// province in common.
+export function regionMatches(tenderRegions: readonly string[], profileRegions: readonly string[]): boolean {
+  return tenderRegions.includes("CA") || profileRegions.includes("CA") || tenderRegions.some((region) => profileRegions.includes(region));
 }
 
 // A tender flagged bilingual in its text counts as EN_FR even when the
@@ -56,7 +58,7 @@ export function eligibilityChecks(requirements: Requirements, profile: ScoringPr
 }
 
 export function scoreLocation(tender: ScoringTender, profile: ScoringProfile, requirements: Requirements): LocationResult {
-  const regionMatch = regionMatches(tender.region, profile.regions);
+  const regionMatch = regionMatches(tender.regions, profile.regions);
   const regionPoints = regionMatch ? LOCATION_SPLIT.region : 0;
 
   const tenderLanguage = effectiveTenderLanguage(tender, requirements);

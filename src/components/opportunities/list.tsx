@@ -51,7 +51,8 @@ export async function OpportunityList({ items, now, continued = false }: { items
     };
   };
 
-  const rows = items.map((item) => ({ item, text: textFor(item), region: tVocab(`regions.${item.region as "ON"}`) }));
+  const regionsOf = (item: OpportunityItem) => format.list(item.regions.map((code) => tVocab(`regions.${code as "ON"}`)), { type: "conjunction" });
+  const rows = items.map((item) => ({ item, text: textFor(item), region: regionsOf(item) }));
 
   return (
     <>

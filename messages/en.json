@@ -291,6 +291,14 @@
       "pEng": "Professional engineering licence (P.Eng.)",
       "healthCanadaLicence": "Health Canada licence"
     },
+    "noticeKinds": {
+      "BID": "call for bids",
+      "RFI": "request for information",
+      "ACAN": "advance contract award notice",
+      "DIRECTED": "directed contract notice",
+      "OTHER": "notice that is not a call for bids",
+      "UNKNOWN": "notice of an unstated type"
+    },
     "bands": {
       "HIGH": "High fit",
       "MEDIUM": "Medium fit",
@@ -493,7 +501,7 @@
     "categoryCap": "Too little category match, so this tender is capped at Low",
     "buyerMatch": "{buyerType} buyers are on your list",
     "buyerMiss": "{buyerType} buyers are not on your list",
-    "regionMismatch": "Outside the provinces you work in: {region}",
+    "regionMismatch": "Outside the provinces you work in: {regions}",
     "setAside": "Set aside for {group}",
     "languageMismatch": "{language, select, FR {French-only submission} other {English-only submission}}",
     "bilingualRequired": "Bilingual delivery is required",
@@ -519,7 +527,7 @@
       "opportunities": "Opportunities",
       "ref": "Ref. {id}"
     },
-    "metaLine": "{buyer} · {region} · {value} · Posted {date}",
+    "metaLine": "{buyer} · {regions} · {value} · Posted {date}",
     "posted": "Posted {date}",
     "closing": {
       "label": "Closes",
@@ -528,9 +536,12 @@
     },
     "notice": {
       "open": "Open the notice on {source}",
+      "openOn": "Open the notice on {domain}",
+      "viewOnSource": "View on {source}",
       "opensNewTab": "opens in a new tab",
       "find": "Find it on {source}",
       "noLink": "This notice has no direct link. Search {source} for the reference number.",
+      "mayNeedAccount": "If the notice does not open, it may need a {source} account.",
       "copy": "Copy reference",
       "copied": "Copied"
     },
@@ -565,6 +576,7 @@
       "buyer": "Buyer",
       "buyerType": "Buyer type",
       "region": "Region",
+      "noticeType": "Notice type",
       "value": "Value",
       "published": "Published",
       "closes": "Closes",
@@ -573,6 +585,10 @@
       "source": "Source",
       "reference": "Reference",
       "noCategories": "No category code"
+    },
+    "notes": {
+      "notBid": "This is a {kind}, not a call for bids. It is kept out of your list.",
+      "withdrawn": "This notice left {source} on {date}. It is kept out of your list."
     },
     "notFound": {
       "title": "We could not find that tender",

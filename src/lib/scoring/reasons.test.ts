@@ -56,8 +56,9 @@ describe("buildReasons on the sample pair", () => {
 
 describe("buildReasons templates", () => {
   it("names the province that rules a tender out", () => {
-    const reasons = reasonsFor(tender({ region: "QC" }));
-    expect(reasons.ruleOut[0]).toEqual({ code: "regionMismatch", params: { region: "QC" }, text: "Outside the provinces you work in: Quebec" });
+    const reasons = reasonsFor(tender({ regions: ["QC"] }));
+    expect(reasons.ruleOut[0]).toEqual({ code: "regionMismatch", params: { regions: ["QC"] }, text: "Outside the provinces you work in: Quebec" });
+    expect(reasonsFor(tender({ regions: ["QC", "NB"] })).ruleOut[0]?.text).toBe("Outside the provinces you work in: Quebec, New Brunswick");
   });
 
   it("names the set-aside group", () => {
