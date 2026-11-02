@@ -45,7 +45,8 @@ async function ListingContent({ params }: { params: PageProps<"/opportunities/[i
   const now = new Date();
   const days = daysUntil(item.closesAt, now);
   const closesAt = new Date(item.closesAt);
-  const region = tVocab(`regions.${item.region as "ON"}`);
+  const regions = format.list(item.regions.map((code) => tVocab(`regions.${code as "ON"}`)), { type: "conjunction" });
+  const hiddenNote = hiddenNoteFor(item, t, tVocab, (d) => format.dateTime(d, "short"));
   const value = valueText(item, (n) => format.number(n, "cadCompact"), tList);
   const score = item.score;
   const reasons = !score.placeholder && score.eligible ? score.reasons : null;
@@ -70,8 +71,13 @@ async function ListingContent({ params }: { params: PageProps<"/opportunities/[i
             </nav>
             <h1 className="font-heading font-expanded text-h1 font-extrabold uppercase text-asphalt md:text-display">{item.title}</h1>
             <p className="font-mono text-sm text-asphalt">
-              {t("metaLine", { buyer: item.buyer, region, value, date: format.dateTime(new Date(item.publishedAt), "short") })}
+              {t("metaLine", { buyer: item.buyer, regions, value, date: format.dateTime(new Date(item.publishedAt), "short") })}
             </p>
+            {hiddenNote ? (
+              <p role="note" className="border-l-4 border-asphalt bg-paper px-4 py-3 text-sm leading-5 text-asphalt">
+                {hiddenNote}
+              </p>
+            ) : null}
           </div>
           <div className="flex shrink-0 flex-col gap-3 md:flex-row md:items-stretch">
             <div className="flex flex-col justify-center gap-1 bg-asphalt px-5 py-4 text-paper">
@@ -101,7 +107,8 @@ async function ListingContent({ params }: { params: PageProps<"/opportunities/[i
             <dl className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
               <Fact label={t("details.buyer")} value={item.buyer} />
               <Fact label={t("details.buyerType")} value={item.buyerType ? tVocab(`buyerTypes.${item.buyerType as "municipal"}`) : null} />
-              <Fact label={t("details.region")} value={region} />
+              <Fact label={t("details.region")} value={regions} />
+              <Fact label={t("details.noticeType")} value={item.noticeType ?? (item.noticeKind === "UNKNOWN" ? null : tVocab(`noticeKinds.${item.noticeKind as "BID"}`))} />
               <Fact label={t("details.value")} value={value} mono />
               <Fact label={t("details.published")} value={format.dateTime(new Date(item.publishedAt), "short")} mono />
               <Fact label={t("details.closes")} value={format.dateTime(closesAt, "short")} mono />
@@ -133,6 +140,20 @@ async function ListingContent({ params }: { params: PageProps<"/opportunities/[i
       </div>
     </>
   );
+}
+
+// Why a notice that opens from a direct link is not in the list: not a call
+// for bids, or gone from the source's open file. Closed notices need no
+// note, the closing box already says so.
+function hiddenNoteFor(
+  item: OpportunityItem,
+  t: Awaited<ReturnType<typeof getTranslations<"Listing">>>,
+  tVocab: Awaited<ReturnType<typeof getTranslations<"Vocab">>>,
+  date: (d: Date) => string,
+): string | null {
+  if (item.withdrawnAt) return t("notes.withdrawn", { source: item.source.name, date: date(new Date(item.withdrawnAt)) });
+  if (item.noticeKind !== "BID" && item.noticeKind !== "UNKNOWN") return t("notes.notBid", { kind: tVocab(`noticeKinds.${item.noticeKind as "RFI"}`) });
+  return null;
 }
 
 function valueText(item: OpportunityItem, money: (n: number) => string, t: Awaited<ReturnType<typeof getTranslations<"Opportunities">>>): string {

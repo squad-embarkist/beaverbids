@@ -3,15 +3,22 @@ import { tenderInputSchema, type TenderInput } from "@/lib/schemas/tender";
 import fixtureFile from "../../../fixtures/tenders.json";
 
 // Loads the fictional tenders in fixtures/tenders.json. They attach to their
-// own "fixtures" source, which is never active, so they can never be mistaken
-// for real CanadaBuys notices. Safe to rerun: everything is upserted.
+// own "fixtures" source. Scoring and the list read active sources only
+// (M4), so the source is active outside production, where the fixtures are
+// the development, test and e2e data, and inactive in production, where
+// they must never show beside real notices. Safe to rerun: everything is
+// upserted, and the flag is set on every run so a database that changes
+// role follows.
 
 export const FIXTURE_SOURCE = {
   code: "fixtures",
   name: "Fixture tenders (fictional)",
   baseUrl: "https://example.com/fixtures",
-  active: false,
 } as const;
+
+export function fixtureSourceActive(env: NodeJS.ProcessEnv = process.env): boolean {
+  return env.NODE_ENV !== "production";
+}
 
 export const SAMPLE_TENDER_EXTERNAL_ID = "FIXTURE-0001";
 
@@ -47,10 +54,11 @@ export async function seedFixtures(
   db: PrismaClient,
   { now = new Date() }: { now?: Date } = {},
 ): Promise<{ sourceId: string; count: number }> {
+  const active = fixtureSourceActive();
   const source = await db.source.upsert({
     where: { code: FIXTURE_SOURCE.code },
-    update: { name: FIXTURE_SOURCE.name, baseUrl: FIXTURE_SOURCE.baseUrl, active: false },
-    create: { ...FIXTURE_SOURCE },
+    update: { name: FIXTURE_SOURCE.name, baseUrl: FIXTURE_SOURCE.baseUrl, active },
+    create: { ...FIXTURE_SOURCE, active },
   });
 
   const inputs = fixtureTenderInputs(now);

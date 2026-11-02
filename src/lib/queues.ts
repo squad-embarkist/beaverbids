@@ -9,6 +9,7 @@ export const QUEUES = {
   heartbeat: "heartbeat",
   scoreAll: "score-all",
   scoreProfile: "score-profile",
+  ingest: "ingest",
 } as const;
 
 export type QueueName = (typeof QUEUES)[keyof typeof QUEUES];
@@ -28,8 +29,16 @@ export const scoreProfileJobSchema = z.object({
   reason: z.enum(["profileUpdated", "manual"]),
 });
 
+// One ingest job imports one source. The code is checked against the
+// worker's adapter registry before anything runs, so a job for an unknown
+// source fails instead of doing nothing quietly.
+export const ingestJobSchema = z.object({
+  source: z.string().trim().min(1).max(50),
+});
+
 export type ScoreAllJob = z.infer<typeof scoreAllJobSchema>;
 export type ScoreProfileJob = z.infer<typeof scoreProfileJobSchema>;
+export type IngestJob = z.infer<typeof ingestJobSchema>;
 
 type Sender = Pick<PgBoss, "send">;
 
@@ -45,4 +54,12 @@ export async function enqueueScoreAll(boss: Sender, reason: ScoreAllJob["reason"
 export async function enqueueScoreProfile(boss: Sender, profileId: string, reason: ScoreProfileJob["reason"]) {
   const data = scoreProfileJobSchema.parse({ profileId, reason });
   return boss.send(QUEUES.scoreProfile, data, { singletonKey: data.profileId });
+}
+
+// One import per source at a time: the stately policy with the source code
+// as the key means a retry never runs beside the original, and a second
+// source's job is never blocked by the first.
+export async function enqueueIngest(boss: Sender, source: string) {
+  const data = ingestJobSchema.parse({ source });
+  return boss.send(QUEUES.ingest, data, { singletonKey: data.source });
 }

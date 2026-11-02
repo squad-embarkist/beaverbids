@@ -5,7 +5,7 @@ import { scoreLocation } from "./factors/location";
 import { scoreSize } from "./factors/size";
 import { scoreTimeline } from "./factors/timeline";
 import { checkGate } from "./gate";
-import { extractRequirements } from "./requirements";
+import { extractRequirements, type Requirements } from "./requirements";
 import type { ScoreCap, ScoreResult, ScoringProfile, ScoringTender } from "./types";
 
 // Bump when a rule changes so the worker can tell stale rows apart and a
@@ -16,7 +16,12 @@ import type { ScoreCap, ScoreResult, ScoringProfile, ScoringTender } from "./typ
 //          nothing was deployed).
 // rules-3: a clearance held on the profile satisfies a clearance requirement
 //          (Oct 28, 2026, M3 credentials step; docs/plans/m3-plan.md).
-export const MODEL_VERSION = "rules-3";
+// rules-4: a tender carries a list of regions and matches a profile when any
+//          one is in common (or either side is all of Canada); category
+//          codes are deduplicated on both sides before the code share, so
+//          two source codes mapping to one category do not halve a match
+//          (Oct 29, 2026, M4 import; docs/plans/m4-plan.md).
+export const MODEL_VERSION = "rules-4";
 
 // Category cap: with fewer than `threshold` points from category codes and
 // keywords the total is capped at `limit`, so the band is Low. A tender for
@@ -32,9 +37,9 @@ export function categoryMatchPoints(category: { facts: { codePoints: number; key
 
 // The whole engine in one pure call: extract facts from the text, run the
 // five factors, apply the gate and the band. No database, no clock other
-// than `now`.
-export function scoreTender(tender: ScoringTender, profile: ScoringProfile, now: Date): ScoreResult {
-  const requirements = extractRequirements(tender);
+// than `now`. The extracted requirements depend on the tender text only, so
+// a caller scoring one tender for many profiles can pass them in once.
+export function scoreTender(tender: ScoringTender, profile: ScoringProfile, now: Date, requirements: Requirements = extractRequirements(tender)): ScoreResult {
 
   const category = scoreCategory(tender, profile, requirements);
   const location = scoreLocation(tender, profile, requirements);

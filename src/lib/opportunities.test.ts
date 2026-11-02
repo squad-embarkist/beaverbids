@@ -12,6 +12,8 @@ import {
 } from "./opportunities";
 
 const now = new Date("2026-10-23T12:00:00.000Z");
+// The open-tender rules every list query starts with (src/lib/tenders.ts).
+const OPEN = [{ closesAt: { gt: now } }, { withdrawnAt: null }, { noticeKind: { in: ["BID", "UNKNOWN"] } }, { source: { active: true } }];
 
 function row(overrides: Partial<Parameters<typeof toOpportunityItem>[0]> = {}) {
   return {
@@ -22,13 +24,17 @@ function row(overrides: Partial<Parameters<typeof toOpportunityItem>[0]> = {}) {
     buyerType: "municipal",
     description: "Five-year managed services contract.",
     categoryCodes: ["it-managed-services-cloud"],
-    region: "ON",
+    regions: ["ON"],
+    noticeType: null,
+    noticeKind: "BID" as const,
+    withdrawnAt: null,
     valueMin: 1_000_000,
     valueMax: 1_400_000,
     publishedAt: new Date("2026-10-07T00:00:00.000Z"),
     closesAt: new Date("2026-11-01T00:00:00.000Z"),
     language: "EN" as const,
     officialUrl: "https://example.com/fixtures/FIXTURE-0001",
+    noticePageUrl: null,
     source: { code: "fixtures", name: "Fixture tenders (fictional)", baseUrl: "https://example.com/fixtures" },
     scores: [],
     ...overrides,
@@ -57,14 +63,16 @@ describe("cursor", () => {
 });
 
 describe("buildWhere", () => {
-  it("always excludes closed tenders", () => {
+  it("always excludes closed, withdrawn, non-bid and inactive-source tenders", () => {
     const where = buildWhere(opportunitiesQuerySchema.parse({}), null, now);
-    expect(where.AND).toEqual([{ closesAt: { gt: now } }]);
+    expect(where.AND).toEqual(OPEN);
   });
 
-  it("lets a national tender match a province filter", () => {
+  it("lets a national or multi-province tender match a province filter", () => {
     const where = buildWhere(opportunitiesQuerySchema.parse({ region: "BC" }), null, now);
-    expect(where.AND).toContainEqual({ region: { in: ["BC", "CA"] } });
+    expect(where.AND).toContainEqual({ regions: { hasSome: ["BC", "CA"] } });
+    const national = buildWhere(opportunitiesQuerySchema.parse({ region: "CA" }), null, now);
+    expect(national.AND).toContainEqual({ regions: { has: "CA" } });
   });
 
   it("filters category, value overlap, closing date and text", () => {
@@ -117,10 +125,10 @@ describe("buildWhere", () => {
     });
 
     const broken = buildWhere(opportunitiesQuerySchema.parse({ cursor: "zzz" }), null, now);
-    expect(broken.AND).toHaveLength(1);
+    expect(broken.AND).toHaveLength(OPEN.length);
 
     const scored = encodeCursor({ phase: "scored", total: 50, closesAt: "2026-11-01T00:00:00.000Z", id: "abc" });
-    expect(buildWhere(opportunitiesQuerySchema.parse({ cursor: scored }), null, now).AND).toHaveLength(1);
+    expect(buildWhere(opportunitiesQuerySchema.parse({ cursor: scored }), null, now).AND).toHaveLength(OPEN.length);
   });
 });
 
@@ -159,7 +167,7 @@ describe("toOpportunityItem", () => {
             eligible: true,
             factors: { category: 38, location: 19, size: 14, timeline: 12, credentials: 9 },
             reasons: { inFavour: [{ code: "categoryMatch", params: { category: "it-managed-services-cloud" }, text: "x" }], gaps: [], ruleOut: [], summary: [] },
-            modelVersion: "rules-3",
+            modelVersion: "rules-4",
             scoredAt: new Date("2026-10-23T06:00:00.000Z"),
           },
         ],
@@ -214,7 +222,7 @@ describe("listOpportunities by score", () => {
     eligible: true,
     factors: null,
     reasons: null,
-    modelVersion: "rules-3",
+    modelVersion: "rules-4",
     scoredAt: new Date("2026-10-23T06:00:00.000Z"),
     tender: { ...row({ id, closesAt: new Date(closesAt) }), scores: undefined },
   });
@@ -232,7 +240,7 @@ describe("listOpportunities by score", () => {
 
     expect(score.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { AND: [{ profileId: "profile-1", eligible: true, tender: { AND: [{ closesAt: { gt: now } }] } }] },
+        where: { AND: [{ profileId: "profile-1", eligible: true, tender: { AND: OPEN } }] },
         orderBy: [{ total: "desc" }, { tender: { closesAt: "asc" } }, { tenderId: "asc" }],
         take: 3,
       }),
@@ -256,7 +264,11 @@ describe("listOpportunities by score", () => {
     });
 
     const call = score.findMany.mock.calls[0][0];
-    expect(call.where.AND[0]).toEqual({ profileId: "profile-1", band: "MEDIUM", tender: { AND: [{ closesAt: { gt: now } }, { region: { in: ["ON", "CA"] } }] } });
+    expect(call.where.AND[0]).toEqual({
+      profileId: "profile-1",
+      band: "MEDIUM",
+      tender: { AND: [...OPEN, { regions: { hasSome: ["ON", "CA"] } }] },
+    });
     expect(call.where.AND[1]).toEqual({
       OR: [
         { total: { lt: 88 } },
@@ -276,7 +288,7 @@ describe("listOpportunities by score", () => {
 
     expect(tender.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { AND: [{ closesAt: { gt: now } }, { scores: { none: { profileId: "profile-1" } } }] },
+        where: { AND: [...OPEN, { scores: { none: { profileId: "profile-1" } } }] },
         orderBy: [{ closesAt: "asc" }, { id: "asc" }],
         take: 4,
       }),

@@ -6,7 +6,9 @@
       "title": "IT Managed Services and Cloud Infrastructure Support",
       "buyer": "City of Sample",
       "buyerType": "municipal",
-      "region": "ON",
+      "regions": [
+        "ON"
+      ],
       "categoryCodes": [
         "it-managed-services-cloud"
       ],
@@ -23,7 +25,9 @@
       "title": "Cybersecurity Assessment and Data Protection Services",
       "buyer": "Sample Regional Health Authority",
       "buyerType": "health-authority",
-      "region": "BC",
+      "regions": [
+        "BC"
+      ],
       "categoryCodes": [
         "cybersecurity-data-protection"
       ],
@@ -40,7 +44,9 @@
       "title": "Electronic Health Record (EHR) System Implementation",
       "buyer": "Sample Health Services",
       "buyerType": "health-authority",
-      "region": "AB",
+      "regions": [
+        "AB"
+      ],
       "categoryCodes": [
         "healthcare-it-ehr"
       ],
@@ -57,7 +63,9 @@
       "title": "Custom Software Development and Enterprise SaaS Implementation",
       "buyer": "Sample Federal Department",
       "buyerType": "federal",
-      "region": "CA",
+      "regions": [
+        "CA"
+      ],
       "categoryCodes": [
         "custom-software-saas"
       ],
@@ -74,7 +82,9 @@
       "title": "Management Consulting and Strategic Advisory Services",
       "buyer": "Sample Crown Corporation",
       "buyerType": "crown-utility",
-      "region": "MB",
+      "regions": [
+        "MB"
+      ],
       "categoryCodes": [
         "management-consulting"
       ],
@@ -91,7 +101,9 @@
       "title": "Facilities Management and Janitorial Services",
       "buyer": "Sample Ministry of Public Services",
       "buyerType": "provincial",
-      "region": "QC",
+      "regions": [
+        "QC"
+      ],
       "categoryCodes": [
         "facilities-janitorial"
       ],
@@ -108,7 +120,9 @@
       "title": "Help Desk and Endpoint Management Services",
       "buyer": "Sample County",
       "buyerType": "municipal",
-      "region": "ON",
+      "regions": [
+        "ON"
+      ],
       "categoryCodes": [
         "it-managed-services-cloud"
       ],
@@ -125,7 +139,9 @@
       "title": "Cloud Migration and Hosting Services for Student Systems",
       "buyer": "Sample College of Applied Arts",
       "buyerType": "education",
-      "region": "ON",
+      "regions": [
+        "ON"
+      ],
       "categoryCodes": [
         "it-managed-services-cloud"
       ],
@@ -142,7 +158,9 @@
       "title": "Managed Network and Wi-Fi Services for Transit Stations",
       "buyer": "Sample Transit Commission",
       "buyerType": "transit",
-      "region": "BC",
+      "regions": [
+        "BC"
+      ],
       "categoryCodes": [
         "it-managed-services-cloud"
       ],
@@ -159,7 +177,9 @@
       "title": "Microsoft 365 Administration and Support",
       "buyer": "Sample Regional Municipality",
       "buyerType": "municipal",
-      "region": "NS",
+      "regions": [
+        "NS"
+      ],
       "categoryCodes": [
         "it-managed-services-cloud"
       ],
@@ -176,7 +196,9 @@
       "title": "Data Centre Consolidation and Managed Hosting",
       "buyer": "Sample Provincial Agency",
       "buyerType": "provincial",
-      "region": "SK",
+      "regions": [
+        "SK"
+      ],
       "categoryCodes": [
         "it-managed-services-cloud"
       ],
@@ -193,7 +215,9 @@
       "title": "Security Operations Centre Monitoring Services",
       "buyer": "Sample Crown Utility",
       "buyerType": "crown-utility",
-      "region": "ON",
+      "regions": [
+        "ON"
+      ],
       "categoryCodes": [
         "cybersecurity-data-protection"
       ],
@@ -210,7 +234,9 @@
       "title": "Penetration Testing of Public-Facing Applications",
       "buyer": "Sample City",
       "buyerType": "municipal",
-      "region": "AB",
+      "regions": [
+        "AB"
+      ],
       "categoryCodes": [
         "cybersecurity-data-protection"
       ],
@@ -227,7 +253,9 @@
       "title": "Privacy Impact Assessments for Digital Health Programs",
       "buyer": "Sample Health Authority",
       "buyerType": "health-authority",
-      "region": "NB",
+      "regions": [
+        "NB"
+      ],
       "categoryCodes": [
         "cybersecurity-data-protection"
       ],
@@ -244,7 +272,9 @@
       "title": "Identity and Access Management Modernization",
       "buyer": "Sample School Board",
       "buyerType": "education",
-      "region": "ON",
+      "regions": [
+        "ON"
+      ],
       "categoryCodes": [
         "cybersecurity-data-protection"
       ],
@@ -261,7 +291,9 @@
       "title": "Cybersecurity Awareness Training Program",
       "buyer": "Sample Department of Defence Services",
       "buyerType": "defence-public-safety",
-      "region": "CA",
+      "regions": [
+        "CA"
+      ],
       "categoryCodes": [
         "cybersecurity-data-protection"
       ],
@@ -278,7 +310,9 @@
       "title": "Permit and Licensing Portal Development",
       "buyer": "Sample Town",
       "buyerType": "municipal",
-      "region": "BC",
+      "regions": [
+        "BC"
+      ],
       "categoryCodes": [
         "custom-software-saas"
       ],
@@ -295,7 +329,9 @@
       "title": "Grant Management SaaS Implementation",
       "buyer": "Sample Provincial Ministry",
       "buyerType": "provincial",
-      "region": "MB",
+      "regions": [
+        "MB"
+      ],
       "categoryCodes": [
         "custom-software-saas"
       ],
@@ -312,7 +348,9 @@
       "title": "Mobile Application for Transit Riders",
       "buyer": "Sample Regional Transit Authority",
       "buyerType": "transit",
-      "region": "QC",
+      "regions": [
+        "QC"
+      ],
       "categoryCodes": [
         "custom-software-saas"
       ],
@@ -329,7 +367,9 @@
       "title": "Case Management System for Indigenous Child and Family Services",
       "buyer": "Sample First Nation Government",
       "buyerType": "indigenous-government",
-      "region": "SK",
+      "regions": [
+        "SK"
+      ],
       "categoryCodes": [
         "custom-software-saas"
       ],
@@ -346,7 +386,9 @@
       "title": "Research Data Platform Development",
       "buyer": "Sample University",
       "buyerType": "education",
-      "region": "NS",
+      "regions": [
+        "NS"
+      ],
       "categoryCodes": [
         "custom-software-saas"
       ],
@@ -363,7 +405,9 @@
       "title": "Clinical Information System Upgrade",
       "buyer": "Sample Regional Hospital",
       "buyerType": "health-authority",
-      "region": "ON",
+      "regions": [
+        "ON"
+      ],
       "categoryCodes": [
         "healthcare-it-ehr"
       ],
@@ -380,7 +424,9 @@
       "title": "Telehealth Platform for Northern Communities",
       "buyer": "Sample Territorial Health Department",
       "buyerType": "provincial",
-      "region": "NT",
+      "regions": [
+        "NT"
+      ],
       "categoryCodes": [
         "healthcare-it-ehr"
       ],
@@ -397,7 +443,9 @@
       "title": "Long-Term Care Electronic Records Rollout",
       "buyer": "Sample Health Region",
       "buyerType": "health-authority",
-      "region": "SK",
+      "regions": [
+        "SK"
+      ],
       "categoryCodes": [
         "healthcare-it-ehr"
       ],
@@ -414,7 +462,9 @@
       "title": "Pharmacy Information System Replacement",
       "buyer": "Sample Provincial Health Services",
       "buyerType": "provincial",
-      "region": "BC",
+      "regions": [
+        "BC"
+      ],
       "categoryCodes": [
         "healthcare-it-ehr"
       ],
@@ -431,7 +481,9 @@
       "title": "Community Recreation Centre Construction",
       "buyer": "Sample Township",
       "buyerType": "municipal",
-      "region": "ON",
+      "regions": [
+        "ON"
+      ],
       "categoryCodes": [
         "commercial-construction"
       ],
@@ -448,7 +500,9 @@
       "title": "Fire Hall Renovation and Addition",
       "buyer": "Sample Village",
       "buyerType": "municipal",
-      "region": "AB",
+      "regions": [
+        "AB"
+      ],
       "categoryCodes": [
         "commercial-construction"
       ],
@@ -465,7 +519,9 @@
       "title": "School Roof Replacement Program",
       "buyer": "Sample Public School Division",
       "buyerType": "education",
-      "region": "MB",
+      "regions": [
+        "MB"
+      ],
       "categoryCodes": [
         "commercial-construction"
       ],
@@ -482,7 +538,9 @@
       "title": "Courthouse Security Upgrades",
       "buyer": "Sample Ministry of Justice",
       "buyerType": "provincial",
-      "region": "NL",
+      "regions": [
+        "NL"
+      ],
       "categoryCodes": [
         "commercial-construction"
       ],
@@ -499,7 +557,9 @@
       "title": "Armoury Interior Fit-Up",
       "buyer": "Sample Department of National Defence Services",
       "buyerType": "defence-public-safety",
-      "region": "QC",
+      "regions": [
+        "QC"
+      ],
       "categoryCodes": [
         "commercial-construction"
       ],
@@ -516,7 +576,9 @@
       "title": "Bridge Rehabilitation Engineering Services",
       "buyer": "Sample County",
       "buyerType": "municipal",
-      "region": "ON",
+      "regions": [
+        "ON"
+      ],
       "categoryCodes": [
         "civil-engineering-infrastructure"
       ],
@@ -533,7 +595,9 @@
       "title": "Water Treatment Plant Expansion Design",
       "buyer": "Sample City",
       "buyerType": "municipal",
-      "region": "SK",
+      "regions": [
+        "SK"
+      ],
       "categoryCodes": [
         "civil-engineering-infrastructure"
       ],
@@ -550,7 +614,9 @@
       "title": "Highway Resurfacing Program",
       "buyer": "Sample Ministry of Transportation",
       "buyerType": "provincial",
-      "region": "NB",
+      "regions": [
+        "NB"
+      ],
       "categoryCodes": [
         "civil-engineering-infrastructure"
       ],
@@ -567,7 +633,9 @@
       "title": "Stormwater Master Plan",
       "buyer": "Sample Regional District",
       "buyerType": "municipal",
-      "region": "BC",
+      "regions": [
+        "BC"
+      ],
       "categoryCodes": [
         "civil-engineering-infrastructure"
       ],
@@ -584,7 +652,9 @@
       "title": "Rail Crossing Safety Improvements",
       "buyer": "Sample Transit Agency",
       "buyerType": "transit",
-      "region": "AB",
+      "regions": [
+        "AB"
+      ],
       "categoryCodes": [
         "civil-engineering-infrastructure"
       ],
@@ -601,7 +671,9 @@
       "title": "Diagnostic Imaging Equipment Supply and Service",
       "buyer": "Sample Regional Hospital",
       "buyerType": "health-authority",
-      "region": "ON",
+      "regions": [
+        "ON"
+      ],
       "categoryCodes": [
         "medical-equipment-pharma"
       ],
@@ -618,7 +690,9 @@
       "title": "Vaccine Cold Chain Equipment",
       "buyer": "Sample Provincial Public Health",
       "buyerType": "provincial",
-      "region": "QC",
+      "regions": [
+        "QC"
+      ],
       "categoryCodes": [
         "medical-equipment-pharma"
       ],
@@ -635,7 +709,9 @@
       "title": "Standing Offer for Pharmaceutical Supply",
       "buyer": "Sample Health Authority",
       "buyerType": "health-authority",
-      "region": "NL",
+      "regions": [
+        "NL"
+      ],
       "categoryCodes": [
         "medical-equipment-pharma"
       ],
@@ -652,7 +728,9 @@
       "title": "Patient Monitoring Systems for Emergency Departments",
       "buyer": "Sample Health Services",
       "buyerType": "health-authority",
-      "region": "AB",
+      "regions": [
+        "AB"
+      ],
       "categoryCodes": [
         "medical-equipment-pharma"
       ],
@@ -669,7 +747,9 @@
       "title": "Dental Equipment for Community Health Centres",
       "buyer": "Sample Indigenous Health Authority",
       "buyerType": "indigenous-government",
-      "region": "MB",
+      "regions": [
+        "MB"
+      ],
       "categoryCodes": [
         "medical-equipment-pharma"
       ],
@@ -686,7 +766,9 @@
       "title": "Janitorial Services for Municipal Buildings",
       "buyer": "Sample Town",
       "buyerType": "municipal",
-      "region": "ON",
+      "regions": [
+        "ON"
+      ],
       "categoryCodes": [
         "facilities-janitorial"
       ],
@@ -703,7 +785,9 @@
       "title": "Grounds Maintenance and Snow Removal",
       "buyer": "Sample School Board",
       "buyerType": "education",
-      "region": "AB",
+      "regions": [
+        "AB"
+      ],
       "categoryCodes": [
         "facilities-janitorial"
       ],
@@ -720,7 +804,9 @@
       "title": "Integrated Facilities Management for Office Portfolio",
       "buyer": "Sample Crown Corporation",
       "buyerType": "crown-utility",
-      "region": "CA",
+      "regions": [
+        "CA"
+      ],
       "categoryCodes": [
         "facilities-janitorial"
       ],
@@ -737,7 +823,9 @@
       "title": "Transit Station Cleaning Services",
       "buyer": "Sample Transit Commission",
       "buyerType": "transit",
-      "region": "BC",
+      "regions": [
+        "BC"
+      ],
       "categoryCodes": [
         "facilities-janitorial"
       ],
@@ -754,7 +842,9 @@
       "title": "Hospital Environmental Services",
       "buyer": "Sample Health Region",
       "buyerType": "health-authority",
-      "region": "NS",
+      "regions": [
+        "NS"
+      ],
       "categoryCodes": [
         "facilities-janitorial"
       ],
@@ -771,7 +861,9 @@
       "title": "Warehousing and Distribution of Medical Supplies",
       "buyer": "Sample Provincial Health Services",
       "buyerType": "provincial",
-      "region": "BC",
+      "regions": [
+        "BC"
+      ],
       "categoryCodes": [
         "logistics-freight-3pl"
       ],
@@ -788,7 +880,9 @@
       "title": "Freight Services to Northern Communities",
       "buyer": "Sample Territorial Government",
       "buyerType": "provincial",
-      "region": "NU",
+      "regions": [
+        "NU"
+      ],
       "categoryCodes": [
         "logistics-freight-3pl"
       ],
@@ -805,7 +899,9 @@
       "title": "Courier Services Standing Offer",
       "buyer": "Sample Federal Agency",
       "buyerType": "federal",
-      "region": "CA",
+      "regions": [
+        "CA"
+      ],
       "categoryCodes": [
         "logistics-freight-3pl"
       ],
@@ -822,7 +918,9 @@
       "title": "Fleet Logistics and Vehicle Relocation",
       "buyer": "Sample Crown Utility",
       "buyerType": "crown-utility",
-      "region": "ON",
+      "regions": [
+        "ON"
+      ],
       "categoryCodes": [
         "logistics-freight-3pl"
       ],
@@ -839,7 +937,9 @@
       "title": "Election Materials Distribution",
       "buyer": "Sample Provincial Elections Office",
       "buyerType": "provincial",
-      "region": "PE",
+      "regions": [
+        "PE"
+      ],
       "categoryCodes": [
         "logistics-freight-3pl"
       ],
@@ -856,7 +956,9 @@
       "title": "Digital Transformation Roadmap",
       "buyer": "Sample City",
       "buyerType": "municipal",
-      "region": "ON",
+      "regions": [
+        "ON"
+      ],
       "categoryCodes": [
         "management-consulting"
       ],
@@ -873,7 +975,9 @@
       "title": "Organizational Review of Public Safety Communications",
       "buyer": "Sample Regional Municipality",
       "buyerType": "defence-public-safety",
-      "region": "AB",
+      "regions": [
+        "AB"
+      ],
       "categoryCodes": [
         "management-consulting"
       ],
@@ -890,7 +994,9 @@
       "title": "Indigenous Procurement Strategy Development",
       "buyer": "Sample Provincial Ministry",
       "buyerType": "provincial",
-      "region": "BC",
+      "regions": [
+        "BC"
+      ],
       "categoryCodes": [
         "management-consulting"
       ],
@@ -907,7 +1013,9 @@
       "title": "Program Evaluation Services Standing Offer",
       "buyer": "Sample Federal Department",
       "buyerType": "federal",
-      "region": "CA",
+      "regions": [
+        "CA"
+      ],
       "categoryCodes": [
         "management-consulting"
       ],
@@ -924,7 +1032,9 @@
       "title": "Transit Fare Policy Review",
       "buyer": "Sample Regional Transit Authority",
       "buyerType": "transit",
-      "region": "YT",
+      "regions": [
+        "YT"
+      ],
       "categoryCodes": [
         "management-consulting"
       ],

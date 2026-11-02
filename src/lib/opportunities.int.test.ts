@@ -9,6 +9,7 @@ import { opportunitiesQuerySchema } from "@/lib/schemas/opportunities";
 import { scoreAll } from "@/lib/scoring/run";
 import { SAMPLE_TENDER_EXTERNAL_ID, seedFixtures } from "@/lib/seed/fixtures";
 import { SAMPLE_PROFILE } from "@/lib/seed/sample-profile";
+import { openTenderFilters } from "@/lib/tenders";
 import { getOpportunity, listOpportunities, type OpportunityItem } from "./opportunities";
 
 const databaseUrl = process.env.DATABASE_URL;
@@ -52,7 +53,7 @@ describe.skipIf(!databaseUrl)("listOpportunities sort=score against PostgreSQL",
 
   it("pages every eligible tender once, best score first, with the sample tender at 92 on top", async () => {
     const { items, pages } = await allPages();
-    const eligible = await prisma.score.count({ where: { profileId, eligible: true, tender: { closesAt: { gt: now } } } });
+    const eligible = await prisma.score.count({ where: { profileId, eligible: true, tender: { AND: openTenderFilters(now) } } });
 
     expect(pages).toBeGreaterThan(1);
     expect(items).toHaveLength(eligible);
@@ -82,8 +83,10 @@ describe.skipIf(!databaseUrl)("listOpportunities sort=score against PostgreSQL",
   it("appends tenders without a score row after the scored ones, each once", async () => {
     const scored = await prisma.score.findMany({ where: { profileId }, select: { id: true, tenderId: true }, take: 13, orderBy: { tenderId: "asc" } });
     await prisma.score.deleteMany({ where: { id: { in: scored.map((s) => s.id) } } });
-    const open = await prisma.tender.count({ where: { closesAt: { gt: now } } });
-    const ineligible = await prisma.score.count({ where: { profileId, eligible: false } });
+    // Counted with the list's own open-tender rules, so real CanadaBuys rows
+    // in the local database are included the same way the list includes them.
+    const open = await prisma.tender.count({ where: { AND: openTenderFilters(now) } });
+    const ineligible = await prisma.score.count({ where: { profileId, eligible: false, tender: { AND: openTenderFilters(now) } } });
 
     const { items } = await allPages();
     expect(items).toHaveLength(open - ineligible);

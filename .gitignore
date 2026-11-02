@@ -42,6 +42,8 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+# raw source files kept by the worker outside S3 (RAW_FILES_DIR)
+/.data
 # playwright
 /test-results
 /playwright-report

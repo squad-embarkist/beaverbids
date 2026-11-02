@@ -162,9 +162,9 @@ Nine tables carry phase 1, beside the ones Better Auth and `pg-boss` create for 
 | --- | --- | --- |
 | `draftProfile` | sessionToken, answers (JSON), instantScoreCache | Pre-signup answers; merged into `companyProfile` on signup |
 | `companyProfile` | userId, name, categories (array), regions (array), sizeMin, sizeMax, certifications (array), capacity, timelinePref, securityClearance, indigenousBusiness | The five questionnaire steps feed this. Clearance and the Indigenous-business flag were added in M3 (docs/plans/m2-category-cap.md) |
-| `source` | code (canadabuys at launch), name, baseUrl, active, lastSuccessAt | One row per data source; more rows only with written permission |
-| `ingestRun` | sourceId, startedAt, finishedAt, status, rowsFound, error | Drives the failure and zero-row alerts |
-| `tender` | sourceId, externalId, title, buyer, description, categoryCodes, region, valueMin, valueMax, publishedAt, closesAt, language, officialUrl, rawFileKey | Unique on sourceId plus externalId |
+| `source` | code (canadabuys at launch), name, baseUrl, active, lastSuccessAt | One row per data source, created by its adapter on the first run; `active` is set by hand and decides whether its notices are scored and listed; more rows only with written permission |
+| `ingestRun` | sourceId, startedAt, finishedAt, status, rowsFound, error, summary (JSON) | Drives the failure and zero-row alerts; the summary holds the counts, skipped rows by reason, unmapped values and the stored file's key and hash (M4) |
+| `tender` | sourceId, externalId, title, buyer, buyerType, description, categoryCodes, regions (array), valueMin, valueMax, publishedAt, closesAt, language, officialUrl, noticePageUrl, noticeType, noticeKind, solicitationNumber, withdrawnAt, rawFileKey | Unique on sourceId plus externalId. `regions` holds province codes or `["CA"]` (M4, several provinces per notice are common). `noticeKind` (BID, RFI, ACAN, DIRECTED, OTHER, UNKNOWN) and `withdrawnAt` (set when a notice leaves the source file) keep non-bids and withdrawn notices out of scoring and the list |
 | `score` | tenderId, profileId, total (0 to 100), band, eligible, factors (JSON), reasons (JSON), modelVersion, scoredAt | Unique on tenderId plus profileId |
 | `savedTender` | userId, tenderId, status | Phase 1 save and hide; status grows into pipeline stages later |
 | `digest` | userId, sentAt, tenderIds, status | Prevents duplicate sends |
@@ -193,6 +193,8 @@ Every tender gets a score out of 100 for a given company profile, made of five f
 **Category cap (decided Oct 24, 2026, threshold set Oct 26).** A tender with fewer than 10 points from category codes and keywords, not buyer type, has its total capped at 49, so it is always a Low fit. Without the cap, a tender with no category match could still reach 58 from location, size, timing and credentials alone and show as Medium; a right buyer says nothing about the work, so buyer-type points do not count towards the threshold. The cap changes the number itself, so the score and the band always agree. The five factor values are stored as computed; only the total is capped, and the stored reasons carry a `categoryCap` entry so the screen can say why. The golden set includes pairs that prove the cap, and any change to this rule updates the golden set, the brief and this guide together. The review of the fixture tenders under 10 and the decisions are in docs/plans/m2-category-cap.md; modelVersion rules-2.
 
 **Security clearance (rules-3, Oct 28, 2026).** The credentials step asks for the highest personnel security clearance held (Reliability, Secret, Top Secret or none). A clearance of any level satisfies a detected clearance requirement, because the text extractor only detects that one is required, not which level; the level is stored so a later rule can compare it. A held clearance earns the location check points and a `clearanceHeld` reason in your favour; without one the tender still shows `clearanceRequired` under "could rule you out". The golden set pins the difference with two program-evaluation pairs for the national consultancy.
+
+**Regions and code dedupe (rules-4, Oct 29, 2026).** A tender's regions are a list. The location check passes when the tender or the profile covers all of Canada or the two lists share a province; otherwise the gate rules the tender out and names the tender's provinces. Category codes are deduplicated on both sides before the share is taken, so several UNSPSC codes mapping to one category count once. No golden pair moved.
 
 **Bands:** 75 to 100 High, 50 to 74 Medium, under 50 Low. Chips and colours on the screens use these bands.
 
@@ -254,7 +256,7 @@ Phase 1 launches on one source: the CanadaBuys open tender file, which is publis
 
 | Source | Status | Method | Notes |
 | --- | --- | --- | --- |
-| CanadaBuys | Phase 1 | Daily CSV download, `csv-parse` | Open licence; the worker downloads it every morning |
+| CanadaBuys | Built (M4, Oct 29, 2026) | Daily CSV download at 14:00 UTC, `csv-parse` | Open licence; the worker downloads the open tender notices file every morning. Plan and acceptance report in docs/plans/m4-plan.md |
 | MERX | Later | Cheerio on the tender list | Its terms forbid copying data today; build only after written permission |
 | Bids&Tenders | Later | Lightpanda, a light headless browser | Its terms ban scraping for business today; build only after written permission |
 | BC Bid, SEAO, NBON, Alberta Purchasing Connection | Not planned | To be decided | Shown in the wireframes but not in the architecture PDF; check each one's terms and any data feed first |

@@ -14,5 +14,6 @@ export async function getReasonText() {
     tVocab: (key, values) => tVocab(key as "yes", values),
     hasVocab: (key) => tVocab.has(key as "yes"),
     listOr: (items) => format.list(items, { type: "disjunction" }),
+    listAnd: (items) => format.list(items, { type: "conjunction" }),
   });
 }

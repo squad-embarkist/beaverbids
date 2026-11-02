@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from "vitest";
 import { QUEUES, SCORE_ALL_SINGLETON_KEY, enqueueScoreProfile } from "@/lib/queues";
 
-const scoreAll = vi.hoisted(() => vi.fn(async () => ({ profiles: 1, tenders: 2, scored: 2, modelVersion: "rules-3" })));
+const scoreAll = vi.hoisted(() => vi.fn(async () => ({ profiles: 1, tenders: 2, scored: 2, modelVersion: "rules-4" })));
 vi.mock("@/lib/scoring/run", () => ({ scoreAll }));
 
 const captureException = vi.hoisted(() => vi.fn());
 vi.mock("@sentry/node", () => ({ captureException }));
 
-import { SCORE_ALL_CRON, SCORE_ALL_TZ, registerScoringJobs } from "./index";
+import { SCORING_QUEUE_OPTIONS, registerScoringJobs } from "./index";
 
 type Handler = (jobs: { id: string; data: unknown }[]) => Promise<void>;
 
@@ -16,7 +16,8 @@ function fakeBoss() {
   return {
     handlers,
     createQueue: vi.fn(async () => {}),
-    schedule: vi.fn(async () => {}),
+    updateQueue: vi.fn(async () => {}),
+    unschedule: vi.fn(async () => {}),
     send: vi.fn(async () => "job-id"),
     work: vi.fn(async (name: string, handler: Handler) => {
       handlers.set(name, handler);
@@ -28,32 +29,36 @@ function fakeBoss() {
 const db = {} as Parameters<typeof registerScoringJobs>[1];
 
 describe("registerScoringJobs", () => {
-  it("creates both queues with a stately policy and registers a worker for each", async () => {
+  it("creates both queues with a stately policy, reapplies the options and registers a worker for each", async () => {
     const boss = fakeBoss();
-    await registerScoringJobs(boss, db, { schedule: false, startupRun: false });
+    await registerScoringJobs(boss, db, { startupRun: false });
 
-    expect(boss.createQueue).toHaveBeenCalledWith(QUEUES.scoreAll, expect.objectContaining({ policy: "stately" }));
-    expect(boss.createQueue).toHaveBeenCalledWith(QUEUES.scoreProfile, expect.objectContaining({ policy: "stately" }));
+    const { policy, ...options } = SCORING_QUEUE_OPTIONS;
+    expect(policy).toBe("stately");
+    expect(boss.createQueue).toHaveBeenCalledWith(QUEUES.scoreAll, SCORING_QUEUE_OPTIONS);
+    expect(boss.createQueue).toHaveBeenCalledWith(QUEUES.scoreProfile, SCORING_QUEUE_OPTIONS);
+    // createQueue is a no-op on an existing queue, so the options go in again.
+    expect(boss.updateQueue).toHaveBeenCalledWith(QUEUES.scoreAll, options);
+    expect(boss.updateQueue).toHaveBeenCalledWith(QUEUES.scoreProfile, options);
     expect([...boss.handlers.keys()]).toEqual([QUEUES.scoreAll, QUEUES.scoreProfile]);
-    expect(boss.schedule).not.toHaveBeenCalled();
     expect(boss.send).not.toHaveBeenCalled();
   });
 
-  it("schedules the nightly run in Toronto time with the singleton key", async () => {
+  it("removes the old nightly placeholder schedule; the import chains the rescore now", async () => {
     const boss = fakeBoss();
-    await registerScoringJobs(boss, db, { schedule: true, startupRun: false });
-    expect(boss.schedule).toHaveBeenCalledWith(QUEUES.scoreAll, SCORE_ALL_CRON, { reason: "schedule" }, { tz: SCORE_ALL_TZ, singletonKey: SCORE_ALL_SINGLETON_KEY });
+    await registerScoringJobs(boss, db, { startupRun: false });
+    expect(boss.unschedule).toHaveBeenCalledWith(QUEUES.scoreAll);
   });
 
   it("enqueues one startup run when asked", async () => {
     const boss = fakeBoss();
-    await registerScoringJobs(boss, db, { schedule: false, startupRun: true });
+    await registerScoringJobs(boss, db, { startupRun: true });
     expect(boss.send).toHaveBeenCalledWith(QUEUES.scoreAll, { reason: "startup" }, { singletonKey: SCORE_ALL_SINGLETON_KEY });
   });
 
   it("runs scoreAll for the whole set and for one profile", async () => {
     const boss = fakeBoss();
-    await registerScoringJobs(boss, db, { schedule: false, startupRun: false });
+    await registerScoringJobs(boss, db, { startupRun: false });
 
     await boss.handlers.get(QUEUES.scoreAll)!([{ id: "j1", data: { reason: "manual" } }]);
     expect(scoreAll).toHaveBeenLastCalledWith(db);
@@ -64,7 +69,7 @@ describe("registerScoringJobs", () => {
 
   it("logs a failed job, reports it to Sentry and rethrows so pg-boss retries", async () => {
     const boss = fakeBoss();
-    await registerScoringJobs(boss, db, { schedule: false, startupRun: false });
+    await registerScoringJobs(boss, db, { startupRun: false });
     const error = new Error("database gone");
     scoreAll.mockRejectedValueOnce(error);
     const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
@@ -79,7 +84,7 @@ describe("registerScoringJobs", () => {
 
   it("fails a profile job without a profile id before scoring anything", async () => {
     const boss = fakeBoss();
-    await registerScoringJobs(boss, db, { schedule: false, startupRun: false });
+    await registerScoringJobs(boss, db, { startupRun: false });
     scoreAll.mockClear();
     const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
 
