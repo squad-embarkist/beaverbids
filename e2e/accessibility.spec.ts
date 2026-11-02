@@ -5,15 +5,16 @@ import { expectNoHorizontalOverflow, firstTitleLink, signIn } from "./helpers";
 // The accessibility checklist from docs/ui-ux-guide.md on the four screens:
 // axe (WCAG 2.2 AA) with no violations, keyboard paths, one H1, 375 px and
 // 200 percent zoom without horizontal scroll. Colour contrast runs as its
-// own check because the guide keeps two Figma values as drawn until design
-// confirms them: the muted mono labels and asphalt text on the signal
-// button. Any other contrast failure still fails here.
+// own check because the guide keeps one Figma value as drawn until design
+// confirms it: helper text in ink-muted. Any other contrast failure still
+// fails here.
 
 const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 
-// The two Figma values the UI guide keeps as drawn: muted mono labels
-// (text-ink-muted, label-mono) and asphalt text on the signal button.
-const KNOWN_CONTRAST_EXCEPTIONS = ".text-ink-muted, .label-mono, .bg-signal";
+// The one Figma value the UI guide keeps as drawn: muted helper text in
+// ink-muted. Mono labels moved to ink-strong and the signal button to white
+// text with the field and button states (docs/plans/form-states-plan.md).
+const KNOWN_CONTRAST_EXCEPTIONS = ".text-ink-muted";
 
 async function openListing(page: Page) {
   await page.goto("/opportunities");

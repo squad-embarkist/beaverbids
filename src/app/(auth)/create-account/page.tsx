@@ -21,7 +21,7 @@ export default async function CreateAccountPage() {
         <CreateAccountForm />
         <p className="text-sm leading-5 text-ink-muted">
           {t("haveAccount")}{" "}
-          <Link href="/sign-in" className="font-medium text-asphalt underline underline-offset-4">
+          <Link href="/sign-in" className="text-link">
             {t("signIn")}
           </Link>
         </p>

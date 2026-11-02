@@ -185,6 +185,7 @@
       "email": "Email",
       "password": "Password",
       "submit": "Sign in",
+      "working": "Signing you in",
       "noAccount": "New to BeaverBids?",
       "createAccount": "Create an account"
     },
@@ -195,8 +196,13 @@
       "password": "Password",
       "passwordHint": "At least 8 characters.",
       "submit": "Create account",
+      "working": "Creating your account",
       "haveAccount": "Already have an account?",
       "signIn": "Sign in"
+    },
+    "password": {
+      "show": "Show",
+      "hide": "Hide"
     },
     "errors": {
       "nameRequired": "Enter your name.",
