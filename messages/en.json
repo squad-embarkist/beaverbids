@@ -216,6 +216,38 @@
       "unknown": "We could not complete that. Try again in a minute."
     }
   },
+  "Email": {
+    "greeting": "Hello {name},",
+    "buttonNotWorking": "BUTTON NOT WORKING?",
+    "confirm": {
+      "subject": "Confirm your email",
+      "preheader": "One click and your five-question setup begins.",
+      "eyebrow": "NEW ACCOUNT",
+      "title": "CONFIRM YOUR EMAIL.",
+      "body": "Someone created a BeaverBids account with this address. Confirm it and we will take you straight to the five-question setup. About five minutes, and your first scored tenders land tomorrow morning.",
+      "button": "Confirm my email",
+      "expiresBold": "This link expires in 24 hours",
+      "expiresRest": "and works once. If it has run out, ask for a new one from the log in page.",
+      "ignore": "If you did not sign up for BeaverBids, ignore this email. Nothing is created until the link is used."
+    },
+    "reset": {
+      "subject": "Reset your BeaverBids password",
+      "preheader": "A one-time link, good for 60 minutes.",
+      "eyebrow": "PASSWORD RESET",
+      "title": "SET A NEW PASSWORD.",
+      "body": "Someone asked to reset the password on the BeaverBids account for this address. If that was you, set a new one here. Your tenders, answers and saved list are untouched.",
+      "button": "Set a new password",
+      "expiresBold": "This link expires in 60 minutes",
+      "expiresRest": "and works once. Saving a new password signs out every other device.",
+      "ignore": "If you did not ask for this, ignore the email and your password stays exactly as it is. Nobody can get in with this link alone. If it keeps happening, tell us at {supportEmail}.",
+      "securityNote": "This is a security email about your account, so it is sent whatever your notification settings say."
+    },
+    "footer": {
+      "brand": "BEAVERBIDS",
+      "tagline": "Canadian government tenders, filtered to your shop and delivered before they close.",
+      "copyright": "© {year} BEAVERBIDS · MADE IN CANADA"
+    }
+  },
   "Nav": {
     "label": "Main",
     "opportunities": "Opportunities",
