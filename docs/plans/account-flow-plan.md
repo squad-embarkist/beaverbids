@@ -1,6 +1,6 @@
 # Account flow: build plan
 
-Nov 2, 2026 · Status: approved Nov 2, 2026 with the decisions below. Slice 1 started Nov 2, 2026
+Nov 2, 2026 · Status: approved Nov 2, 2026 with the decisions below. Slice 1 (email plumbing) and the sign-up slice (plan slices 2, 3 and 4 below, built together on Nov 2, 2026 as the second pull request) are on branch feature/account-flow-email
 
 Source: Figma file "Beaver Bids UI" (`as6B9wxEHtLPQEHXbGopGN`), seven frames: Sign Up (30:135), Log in (32:505), Check inbox (32:1861), Forget Password (32:1377), set new password (34:3086), (email) confirm address (34:6784), (email) reset password (34:7183). States for every field, button and banner come from the page "Every state, once" (34:7640, built in docs/plans/form-states-plan.md).
 
@@ -497,17 +497,23 @@ Tests: template unit tests snapshot the subject, text and HTML for both emails i
 
 ### Slice 2: auth configuration, schema and limiter
 
+Built Nov 2, 2026, together with slices 3 and 4 (the sign-up flow cannot ship without them). Differences from the text below: none.
+
 `src/lib/auth.ts` options from section 3 wired to slice 1's enqueue helpers, the `RateLimit` model and migration with the `emailVerified` backfill, `src/lib/rate-limit.ts`, the IP helper, `PASSWORD_MIN` 12 and the new Zod schemas, the seed change, the `auth-cleanup` job. The existing screens keep working (sign-up now lands on an interim Check inbox page in the old card layout, restyled in slice 4).
 
 Tests: schema unit tests (12-character minimum, confirm mismatch, trim and lowercase on the forgot form). Rate limit integration test on the real table: N calls pass, N plus one returns the wait, the window resets, keys never contain the raw address. Auth integration tests against the local database: sign-up creates no session and enqueues one `send-email` job; sign-up with an existing unconfirmed address returns the same shape and enqueues one more confirmation job, and with a confirmed address enqueues nothing; sign-in on an unconfirmed user throws `EMAIL_NOT_VERIFIED` and enqueues a job; `verifyEmail` with the issued token sets `emailVerified` and returns a session; `requestPasswordReset` for an unknown address returns `status: true` and enqueues nothing; `resetPassword` consumes the token, a second use fails, and every other session row is gone. Cleanup job integration test with fixture rows. Migration applies on a copy of a seeded database and the dev account can still sign in afterwards.
 
 ### Slice 3: layout and Log in
 
+Built Nov 2, 2026 with the sign-up flow. Differences: the side panel is 360 px wide with 48 px gutters, not 315 px, because the rendered frame shows the sample card and the headline needing that room (the 315 px figure was the frame's flex basis). "FORGOT IT?" waits for slice 5, since it points at a page that does not exist yet. The checkbox is restyled here.
+
 `AuthShell`, side panel, fact rows, the token additions, the restyled Checkbox, the Log in screen with "FORGOT IT?" (pointing at a slice 5 route that 404s until then, so the link ships hidden behind the page existing), remember me, the unconfirmed redirect, the global counts card (D4), the header text "Log out" (D1).
 
 Tests: unit tests for the counts query (new since last successful ingest, closing within 7 days, active sources only). Playwright: log in on desktop and 375 px (no horizontal scroll, one H1, labels visible), wrong password shows one banner and no field hint about which half, unticked remember me yields a cookie without an expiry (read through `context.cookies()`), an unconfirmed account (created through the file transport without clicking the link) lands on Check inbox. Axe WCAG 2.2 AA on the screen in both projects, colour contrast against the guide's known exceptions. Keyboard: tab order lockup, email, password, SHOW, forgot, checkbox, button, create link.
 
 ### Slice 4: Sign up, Check inbox and the confirmation landing
+
+Built Nov 2, 2026. Differences: `/verify-email` is a redirect-only route handler (no screen); a dead link lands on `/check-inbox?error=link` with the attention banner above the drawn copy; an expired-token Playwright case is replaced by a tampered-token case, because the confirmation token is a signed JWT whose expiry cannot be forged without the secret from inside the suite.
 
 The restyled create-account form (without the website field, D3), the consent line, `/check-inbox` with the resend button, countdown and the expired-link banner, the `/verify-email` redirect route, the pending-email cookie.
 
