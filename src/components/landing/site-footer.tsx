@@ -2,7 +2,7 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { BrandLockup } from "./brand-lockup";
 
-// Footer: lockup and blurb left, the 80 × 96 photo and three anchors right,
+// Footer (Figma node 1:1348): logo, wordmark and blurb left, the 80 × 96 photo and three anchors right,
 // then a hairline and the copyright row with the demo address.
 export async function SiteFooter({ email }: { email: string }) {
   const t = await getTranslations("Landing.footer");
@@ -17,7 +17,7 @@ export async function SiteFooter({ email }: { email: string }) {
       <div className="mx-auto w-full max-w-[1240px] px-4 py-12 md:px-6">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div className="max-w-[320px]">
-            <BrandLockup brand={t("brand")} tag={t("tag")} size="lg" tone="dark" />
+            <BrandLockup brand={t("brand")} size="lg" tone="dark" />
             <p className="mt-3 text-footer text-ink-muted">{t("blurb")}</p>
           </div>
           <div className="flex items-start gap-4">

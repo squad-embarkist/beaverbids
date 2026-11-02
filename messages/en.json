@@ -13,7 +13,6 @@
     "skipToContent": "Skip to content",
     "header": {
       "brand": "BEAVERBIDS",
-      "tag": "· BIDDESK",
       "howItWorks": "How it works",
       "whoItsFor": "Who it's for",
       "portals": "Portals",
@@ -86,6 +85,9 @@
     "demo": {
       "label": "Demo · 1:30",
       "photoAlt": "Board-formed concrete with a single hard diagonal shadow",
+      "play": "Play the 90-second demo",
+      "comingSoon": "Demo video coming soon",
+      "videoLabel": "The 90-second BeaverBids demo",
       "eyebrow": "See it move",
       "title": "NUMBERS DO THE PERSUADING.",
       "lead": "Ninety seconds: overnight scraping, an AI RFP summary, and a first draft proposal, start to finish. No pitch, just the product doing the work you do by hand today.",
@@ -169,7 +171,6 @@
     },
     "footer": {
       "brand": "BEAVERBIDS",
-      "tag": "· BIDDESK",
       "blurb": "Bid it or bin it. Canadian government tenders, filtered to your shop and delivered before they close.",
       "photoAlt": "Hi-vis vests and hard hats hanging on a site trailer wall",
       "howItWorks": "How it works",

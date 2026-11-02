@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
 // Shared field chrome for the questionnaire: a mono uppercase label, an

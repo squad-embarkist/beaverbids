@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 // White card on paper, 1 px line border, 8 px radius, no shadow.
 function Card({

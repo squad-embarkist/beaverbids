@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { FitAssessment } from "@/components/opportunities/fit-assessment";
 import { NoticeLink } from "@/components/opportunities/notice-link";

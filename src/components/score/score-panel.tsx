@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { getReasonText } from "@/components/score/reason-text-server";
 import { BAND_FILL } from "@/components/score/score-chip";

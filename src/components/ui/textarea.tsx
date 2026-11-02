@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 // Same tokens as Input: paper fill, 1 px muted border at 40 percent, square
 // corners, 2 px asphalt outline on focus, signal border when invalid.
