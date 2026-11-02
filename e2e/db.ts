@@ -34,3 +34,29 @@ export async function deleteUserByEmail(email: string): Promise<void> {
     await client.end();
   }
 }
+
+// The server actions limit sign-ups and resends per address and per IP,
+// and on a laptop or in CI every request shares one address, so a run
+// that signs up more than a handful of times would start to be refused.
+// Clears the app's own rows (prefixed "app:"), never Better Auth's.
+export async function resetRateLimits(): Promise<void> {
+  const client = new Client({ connectionString: assertLocalDatabase() });
+  await client.connect();
+  try {
+    await client.query(`DELETE FROM "rateLimit" WHERE key LIKE 'app:%'`);
+  } finally {
+    await client.end();
+  }
+}
+
+// Marks an account confirmed without the email, for specs that only need a
+// working log in.
+export async function confirmUserByEmail(email: string): Promise<void> {
+  const client = new Client({ connectionString: assertLocalDatabase() });
+  await client.connect();
+  try {
+    await client.query('UPDATE "user" SET "emailVerified" = true WHERE email = $1', [email]);
+  } finally {
+    await client.end();
+  }
+}

@@ -1,5 +1,6 @@
 import { AxeBuilder } from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
+import { resetRateLimits } from "./db";
 import { expectNoHorizontalOverflow, firstTitleLink, signIn } from "./helpers";
 
 // The accessibility checklist from docs/ui-ux-guide.md on the four screens:
@@ -24,8 +25,9 @@ async function openListing(page: Page) {
 }
 
 const SCREENS: { name: string; open: (page: Page) => Promise<void>; signedIn: boolean }[] = [
-  { name: "sign in", signedIn: false, open: (page) => page.goto("/sign-in").then(() => undefined) },
+  { name: "log in", signedIn: false, open: (page) => page.goto("/sign-in").then(() => undefined) },
   { name: "create account", signedIn: false, open: (page) => page.goto("/create-account").then(() => undefined) },
+  { name: "check inbox", signedIn: false, open: (page) => page.goto("/check-inbox").then(() => undefined) },
   { name: "questionnaire", signedIn: true, open: (page) => page.goto("/questionnaire/work").then(() => page.getByRole("heading", { level: 1 }).waitFor()) },
   { name: "opportunities list", signedIn: true, open: (page) => page.goto("/opportunities").then(() => firstTitleLink(page).waitFor()) },
   { name: "listing detail", signedIn: true, open: openListing },
@@ -34,7 +36,12 @@ const SCREENS: { name: string; open: (page: Page) => Promise<void>; signedIn: bo
 for (const screen of SCREENS) {
   test.describe(screen.name, () => {
     test.beforeEach(async ({ page }) => {
-      if (screen.signedIn) await signIn(page);
+      // The suite logs in with the one dev account far more often than the
+      // per-address limit allows a person.
+      if (screen.signedIn) {
+        await resetRateLimits();
+        await signIn(page);
+      }
       await screen.open(page);
     });
 
@@ -81,6 +88,7 @@ for (const screen of SCREENS) {
 }
 
 test.describe("keyboard paths", () => {
+  test.beforeEach(resetRateLimits);
   test("tabs from the search box to the first title and opens it", async ({ page }, testInfo) => {
     test.skip(testInfo.project.name === "phone", "the filter form sits after the rows on phones");
     await signIn(page);
