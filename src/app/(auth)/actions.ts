@@ -170,6 +170,8 @@ export async function resendConfirmationAction(_previous: ResendFormState, formD
     return { formError: failure.kind === "error" ? failure.key : "unknown", values };
   }
 
-  await setPendingEmail(email);
-  return { sent: true, retryAfter: RATE_LIMITS.resendCooldown.windowSeconds, values };
+  // No cookie write here: the screen re-renders in this same request, and
+  // Next.js 16.4 cannot read cookies() in a page after an action set one.
+  // The address goes back in the state instead.
+  return { sent: true, retryAfter: RATE_LIMITS.resendCooldown.windowSeconds, values: { email } };
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_EMAIL_FILE_DIR, readEmailConfig } from "./config";
+import { DEFAULT_EMAIL_FILE_DIR, addressOf, readEmailConfig, readPublicEmailConfig } from "./config";
 
 const PRODUCTION = {
   NODE_ENV: "production",
@@ -61,5 +61,25 @@ describe("readEmailConfig", () => {
     expect(() => readEmailConfig({ NODE_ENV: "development", EMAIL_TRANSPORT: "ses" })).toThrow(/EMAIL_TRANSPORT/);
     expect(() => readEmailConfig({ NODE_ENV: "development", SUPPORT_EMAIL: "not-an-address" })).toThrow(/SUPPORT_EMAIL/);
     expect(() => readEmailConfig({ NODE_ENV: "development", BETTER_AUTH_URL: "app.beaverbids.ca" })).toThrow(/BETTER_AUTH_URL/);
+  });
+});
+
+describe("readPublicEmailConfig", () => {
+  it("gives the web app the two addresses without asking for SMTP", () => {
+    expect(readPublicEmailConfig({ NODE_ENV: "production", EMAIL_FROM: "BeaverBids <hello@beaverbids.ca>", SUPPORT_EMAIL: "support@beaverbids.ca" })).toEqual({
+      from: "BeaverBids <hello@beaverbids.ca>",
+      fromAddress: "hello@beaverbids.ca",
+      supportEmail: "support@beaverbids.ca",
+    });
+    expect(readPublicEmailConfig({ NODE_ENV: "development" }).fromAddress).toBe("hello@beaverbids.ca");
+  });
+
+  it("still names a missing address in production", () => {
+    expect(() => readPublicEmailConfig({ NODE_ENV: "production", EMAIL_FROM: "x <x@beaverbids.ca>" })).toThrow(/Set SUPPORT_EMAIL in the web app's environment/);
+  });
+
+  it("takes the address out of a display name", () => {
+    expect(addressOf("BeaverBids <hello@beaverbids.ca>")).toBe("hello@beaverbids.ca");
+    expect(addressOf("hello@beaverbids.ca")).toBe("hello@beaverbids.ca");
   });
 });

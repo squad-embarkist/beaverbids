@@ -22,6 +22,9 @@ export function CheckInbox({ email, retryAfter, linkExpired, supportEmail }: { e
   const tErrors = useTranslations("Auth.errors");
   const [state, action, pending] = useActionState(resendConfirmationAction, initialState);
   const secondsLeft = useCountdown(state.retryAfter ?? retryAfter, state);
+  // Opened cold, the address typed into the field stands in for the cookie
+  // once it has been sent to.
+  const shownEmail = email ?? (state.sent ? (state.values?.email ?? null) : null);
 
   return (
     <>
@@ -46,7 +49,7 @@ export function CheckInbox({ email, retryAfter, linkExpired, supportEmail }: { e
       <header className="flex flex-col gap-3">
         <h1 className="font-heading font-expanded text-auth-title font-extrabold text-asphalt">{t("title")}</h1>
         <p className="text-base leading-[26px] text-asphalt">
-          {email ? t.rich("lead", { email, strong: (chunks) => <strong className="font-bold">{chunks}</strong> }) : t("leadNoEmail")}
+          {shownEmail ? t.rich("lead", { email: shownEmail, strong: (chunks) => <strong className="font-bold">{chunks}</strong> }) : t("leadNoEmail")}
         </p>
       </header>
 
@@ -60,7 +63,7 @@ export function CheckInbox({ email, retryAfter, linkExpired, supportEmail }: { e
           ))}
         </ul>
         <div className="flex flex-col gap-4 border-t border-stone-light pt-4">
-          {email ? null : (
+          {shownEmail ? null : (
             <FormField
               id="resend-email"
               name="email"

@@ -55,12 +55,15 @@ describe.skipIf(!databaseUrl)("send-email queue against PostgreSQL", () => {
     const jobId = await enqueueSendEmail(boss, { template: "confirm-email", to, locale: "en", params: { name: "Integration", url: "http://localhost:3000/api/auth/verify-email?token=int&callbackURL=/verify-email" } });
     expect(jobId).toBeTruthy();
 
-    const [job] = await boss.fetch<unknown>(QUEUES.sendEmail);
+    // Read back by id rather than fetched: a local database may hold other
+    // send-email jobs (a worker that was stopped mid-run), and fetching would
+    // take whichever is first.
+    const job = await boss.getJobById<unknown>(QUEUES.sendEmail, jobId!);
     expect(job?.id).toBe(jobId);
     const consoleLog = vi.spyOn(console, "log").mockImplementation(() => {});
-    await handler!([{ id: job.id, data: job.data }]);
+    await handler!([{ id: job!.id, data: job!.data }]);
     consoleLog.mockRestore();
-    await boss.complete(QUEUES.sendEmail, job.id);
+    await boss.deleteJob(QUEUES.sendEmail, jobId!);
 
     const files = await readdir(dir);
     expect(files).toHaveLength(1);
