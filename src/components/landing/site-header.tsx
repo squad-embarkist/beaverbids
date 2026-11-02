@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { buttonVariants } from "@/components/ui/button";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { BrandLockup } from "./brand-lockup";
 
-// Sticky header: paper at 90 percent, hairline below, lockup left, three mono
-// anchors in the middle (hidden under 1024 px, where the three do not fit
+// Sticky header (Figma node 1:983): paper at 90 percent, hairline below, the
+// beaver logo and wordmark left (the wordmark is screen-reader only under
+// 640 px so the button fits), three mono anchors in the middle (hidden under 1024 px, where the three do not fit
 // beside the lockup and button; the footer carries them too),
 // and the red button right (40 px as drawn, 44 px on phones for touch).
 export async function SiteHeader() {
@@ -20,7 +21,7 @@ export async function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-line bg-paper/90">
       <div className="mx-auto flex w-full max-w-[1240px] items-center justify-between gap-3 px-4 py-4 md:px-6">
         <Link href="/" className="shrink-0">
-          <BrandLockup brand={t("brand")} tag={t("tag")} />
+          <BrandLockup brand={t("brand")} brandClassName="max-sm:sr-only" />
         </Link>
         <nav aria-label={t("brand")} className="hidden lg:block">
           <ul className="flex items-center gap-8">

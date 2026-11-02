@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Input as InputPrimitive } from "@base-ui/react/input"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 // 50 px tall, paper fill, 1 px muted border at 40 percent, square corners
 // (Figma frame 1:957). Focus: 2 px asphalt outline plus a visible ring.

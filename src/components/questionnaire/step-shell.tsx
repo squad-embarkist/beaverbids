@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { CheckIcon } from "lucide-react";
 import { QUESTIONNAIRE_STEPS, stepNumber, type QuestionnaireStep } from "@/lib/schemas/company-profile";

@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { getReasonText } from "@/components/score/reason-text-server";
 import type { ReasonSet } from "@/lib/scoring/reasons";

@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import type { QuestionnaireStep } from "@/lib/schemas/company-profile";
 import { FACTOR_KEYS, FACTOR_MAX, type FactorKey } from "@/lib/scoring/types";

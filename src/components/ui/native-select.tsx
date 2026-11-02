@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 import { ChevronDownIcon } from "lucide-react"
 
 // A native select styled like Input, for short option lists that must work

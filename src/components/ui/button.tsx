@@ -1,6 +1,6 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 // Specs from docs/ui-ux-guide.md (Figma frame 1:957): signal fill with
 // asphalt text in condensed bold uppercase, 56 px tall, square corners.

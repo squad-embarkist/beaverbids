@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { VariantProps } from "class-variance-authority"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
 // A navigation link that looks like a button and stays a link: the

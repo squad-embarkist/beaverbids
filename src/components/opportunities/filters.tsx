@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
