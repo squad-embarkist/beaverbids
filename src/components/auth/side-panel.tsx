@@ -5,12 +5,13 @@ import { cn } from "@/lib/utils";
 
 export type PanelTone = "asphalt" | "stone";
 
-// The side panel drawn on every account frame (about 360 px wide once the
-// frame is rendered; its flex basis says 315 but the sample card and the
-// headline need the room the screenshot shows): a 6 px signal rule on its
-// left edge, the lockup, a two-line expanded headline with its second
-// line on a signal block, a lead, an optional card, and the facts along the
-// bottom. Asphalt on Sign Up and Set new password, stone elsewhere. Under
+// The side panel drawn on every account frame: a 315 px content column
+// (the frames' heading, lead and card are all 315 px wide) inside 50 px
+// gutters and a 6 px signal rule on its left edge, so 421 px in all. It
+// holds the lockup, a two-line expanded headline with its second line on a
+// signal block, a lead, an optional card, and the facts along the bottom.
+// "WELCOME" is one 48 px word a few pixels wider than the column and runs
+// into the gutter, as it does in the frame. Asphalt on Sign Up and Set new password, stone elsewhere. Under
 // 1024 px only the lockup stays, as a band above the form (the frames are
 // desktop only; docs/plans/account-flow-plan.md, section 8, item 1).
 export function SidePanel({
@@ -35,7 +36,7 @@ export function SidePanel({
     <aside
       data-tone={tone}
       className={cn(
-        "flex shrink-0 flex-col gap-10 border-l-[6px] border-signal px-4 py-4 sm:px-12 lg:w-[360px] lg:px-12 lg:py-10",
+        "flex shrink-0 flex-col gap-10 border-l-[6px] border-signal px-4 py-4 sm:px-12 lg:w-[421px] lg:px-[50px] lg:py-10",
         dark ? "bg-asphalt text-paper" : "bg-stone text-asphalt",
       )}
     >

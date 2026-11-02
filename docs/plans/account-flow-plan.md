@@ -505,7 +505,7 @@ Tests: schema unit tests (12-character minimum, confirm mismatch, trim and lower
 
 ### Slice 3: layout and Log in
 
-Built Nov 2, 2026 with the sign-up flow. Differences: the side panel is 360 px wide with 48 px gutters, not 315 px, because the rendered frame shows the sample card and the headline needing that room (the 315 px figure was the frame's flex basis). "FORGOT IT?" waits for slice 5, since it points at a page that does not exist yet. The checkbox is restyled here.
+Built Nov 2, 2026 with the sign-up flow. Differences: the side panel is 421 px wide, since the 315 px in section 1 is its content column (the heading, lead and card are 315 px in every frame) and the frames add 50 px gutters and the 6 px rule. "FORGOT IT?" waits for slice 5, since it points at a page that does not exist yet. The checkbox is restyled here.
 
 `AuthShell`, side panel, fact rows, the token additions, the restyled Checkbox, the Log in screen with "FORGOT IT?" (pointing at a slice 5 route that 404s until then, so the link ships hidden behind the page existing), remember me, the unconfirmed redirect, the global counts card (D4), the header text "Log out" (D1).
 
