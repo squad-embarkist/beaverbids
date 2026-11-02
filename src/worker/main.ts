@@ -6,6 +6,7 @@ import { createEmailTransport } from "@/lib/email/transport";
 import { log } from "@/lib/log";
 import { QUEUES } from "@/lib/queues";
 import { createRawFileStore } from "@/lib/storage";
+import { registerAuthCleanupJob } from "./jobs/auth-cleanup";
 import { registerEmailJobs } from "./jobs/email";
 import { registerIngestJobs } from "./jobs/ingest";
 import { registerScoringJobs } from "./jobs/scoring";
@@ -53,6 +54,7 @@ export async function main() {
   await boss.send(QUEUES.heartbeat, { reason: "startup" });
 
   await registerEmailJobs(boss, { transport: email, config: emailConfig });
+  await registerAuthCleanupJob(boss, prisma);
 
   // Outside production a fresh database gets scores within seconds of the
   // worker starting; production waits for the import to chain a rescore.

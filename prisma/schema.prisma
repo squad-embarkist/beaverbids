@@ -270,3 +270,13 @@ model Score {
   @@index([profileId, total(sort: Desc)])
   @@map("score")
 }
+
+model RateLimit {
+  id          String @id
+  key         String
+  count       Int
+  lastRequest BigInt
+
+  @@unique([key])
+  @@map("rateLimit")
+}

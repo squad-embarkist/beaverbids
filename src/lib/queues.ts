@@ -11,6 +11,7 @@ export const QUEUES = {
   scoreProfile: "score-profile",
   ingest: "ingest",
   sendEmail: "send-email",
+  authCleanup: "auth-cleanup",
 } as const;
 
 export type QueueName = (typeof QUEUES)[keyof typeof QUEUES];

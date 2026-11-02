@@ -20,7 +20,7 @@ export default async function SignInPage() {
       <CardContent className="flex flex-col gap-6">
         <SignInForm />
         <p className="text-sm leading-5 text-ink-muted">
-          {t("noAccount")}{" "}
+          {t("newHere")}{" "}
           <Link href="/create-account" className="text-link">
             {t("createAccount")}
           </Link>

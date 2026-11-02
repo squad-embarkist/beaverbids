@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createAccountSchema, signInSchema } from "./auth";
+import { PASSWORD_MIN, createAccountSchema, resendConfirmationSchema, signInSchema } from "./auth";
 
 describe("signInSchema", () => {
   it("accepts a valid email and password, trimming and lowercasing the email", () => {
@@ -33,7 +33,7 @@ describe("createAccountSchema", () => {
     const result = createAccountSchema.safeParse({
       name: " Jo Beaver ",
       email: "jo@example.com",
-      password: "longenough",
+      password: "long-enough-password",
     });
     expect(result.success).toBe(true);
     if (result.success) {
@@ -45,7 +45,7 @@ describe("createAccountSchema", () => {
     const result = createAccountSchema.safeParse({
       name: "   ",
       email: "jo@example.com",
-      password: "longenough",
+      password: "long-enough-password",
     });
     expect(result.success).toBe(false);
     if (!result.success) {
@@ -53,11 +53,11 @@ describe("createAccountSchema", () => {
     }
   });
 
-  it("rejects passwords shorter than 8 characters", () => {
+  it("rejects passwords shorter than 12 characters", () => {
     const result = createAccountSchema.safeParse({
       name: "Jo",
       email: "jo@example.com",
-      password: "short",
+      password: "elevenchars",
     });
     expect(result.success).toBe(false);
     if (!result.success) {
@@ -75,5 +75,26 @@ describe("createAccountSchema", () => {
     if (!result.success) {
       expect(result.error.issues.map((i) => i.message)).toContain("passwordTooLong");
     }
+  });
+});
+
+describe("rememberMe on signInSchema", () => {
+  it("reads the checkbox: on means keep the session, nothing means end it with the browser", () => {
+    expect(signInSchema.parse({ email: "jo@example.com", password: "secret", rememberMe: "on" }).rememberMe).toBe(true);
+    expect(signInSchema.parse({ email: "jo@example.com", password: "secret", rememberMe: null }).rememberMe).toBe(false);
+    expect(signInSchema.parse({ email: "jo@example.com", password: "secret" }).rememberMe).toBe(false);
+  });
+});
+
+describe("resendConfirmationSchema", () => {
+  it("normalizes the address and rejects a bad one", () => {
+    expect(resendConfirmationSchema.parse({ email: " Jo@Example.com " })).toEqual({ email: "jo@example.com" });
+    expect(resendConfirmationSchema.safeParse({ email: "nope" }).success).toBe(false);
+  });
+});
+
+describe("PASSWORD_MIN", () => {
+  it("is the twelve characters the Figma checklist asks for", () => {
+    expect(PASSWORD_MIN).toBe(12);
   });
 });

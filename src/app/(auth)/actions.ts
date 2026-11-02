@@ -44,9 +44,6 @@ function errorKeyFrom(error: unknown): AuthErrorKey {
     if (code.includes("INVALID_EMAIL_OR_PASSWORD") || code.includes("INVALID_PASSWORD")) {
       return "invalidCredentials";
     }
-    if (code.includes("USER_ALREADY_EXISTS")) {
-      return "emailTaken";
-    }
     log.warn("auth api error", { status: error.status, code });
     return "unknown";
   }
