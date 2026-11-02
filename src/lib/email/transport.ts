@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { mkdir, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { createTransport, type Transporter } from "nodemailer";
+import { createTransport } from "nodemailer";
 import type { EmailConfig, EmailTransportKind, SmtpSettings } from "./config";
 
 // The two ways a rendered email leaves the worker. `smtp` is nodemailer on
@@ -27,7 +27,13 @@ export type EmailTransport = {
   close(): void;
 };
 
-export type SmtpSender = Pick<Transporter, "sendMail" | "verify" | "close">;
+// What the code needs from a nodemailer transporter, so a test can hand in
+// a fake without nodemailer's full SentMessageInfo.
+export type SmtpSender = {
+  sendMail(message: EmailMessage): Promise<{ messageId: string }>;
+  verify(): Promise<unknown>;
+  close(): void;
+};
 
 // The connection must be up and authenticated within ten seconds. On a
 // dead host the job fails fast and pg-boss retries it.
