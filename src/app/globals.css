@@ -27,6 +27,10 @@
   --color-ink-soft: var(--ink-soft);
   --color-hairline: var(--hairline);
   --color-field: var(--field);
+  /* Account screens: muted text and hairlines on the asphalt side panel
+     (Figma "Beaver Bids UI", Sign Up 30:135 and set new password 34:3086) */
+  --color-ink-on-dark: var(--ink-on-dark);
+  --color-line-on-dark: var(--line-on-dark);
 
   /* Score bands. Always shown with the number or band word, never alone. */
   --color-band-high: var(--band-high);
@@ -77,6 +81,9 @@
   /* Help and error lines under a field */
   --text-help: 0.8125rem;
   --text-help--line-height: 1.25rem;
+  /* The form heading on the account screens: 36 px expanded, solid leading */
+  --text-auth-title: 2.25rem;
+  --text-auth-title--line-height: 2.25rem;
 
   /* Landing page headlines (expanded ExtraBold) */
   --text-hero: 5.4rem;
@@ -200,6 +207,8 @@
   --ink-soft: #8c8880;
   --hairline: #b9b4ab;
   --field: #faf9f6;
+  --ink-on-dark: #a9a59d;
+  --line-on-dark: #4a4742;
   --band-high: #2e7d4f;
   --band-medium: #b7791f;
   --band-low: #8a867c;

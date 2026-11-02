@@ -7,9 +7,15 @@ const nextConfig: NextConfig = {
   output: "standalone",
   cacheComponents: true,
   partialPrefetching: true,
-  // The M0 dashboard became the opportunities list in M3.
   async redirects() {
-    return [{ source: "/dashboard", destination: "/opportunities", permanent: true }];
+    return [
+      // The M0 dashboard became the opportunities list in M3.
+      { source: "/dashboard", destination: "/opportunities", permanent: true },
+      // The consent line on Create account links here; the pages arrive with
+      // the M5 privacy work (docs/plans/account-flow-plan.md, section 8, item 18).
+      { source: "/terms", destination: "/", permanent: false },
+      { source: "/privacy", destination: "/", permanent: false },
+    ];
   },
   turbopack: {
     rules: {

@@ -226,6 +226,7 @@
       }
     },
     "createAccount": {
+      "pageTitle": "Create your account",
       "eyebrow": "STEP 1 OF 2 · YOUR ACCOUNT",
       "title": "CREATE YOUR ACCOUNT.",
       "lead": "Next comes the five-question setup. No sales call, and nothing to cancel.",
@@ -243,6 +244,7 @@
       "signIn": "Log in"
     },
     "signIn": {
+      "pageTitle": "Log in",
       "title": "LOG IN.",
       "lead": "Same account for your whole team.",
       "email": "WORK EMAIL",
@@ -257,6 +259,7 @@
       "createAccount": "Create an account"
     },
     "checkInbox": {
+      "pageTitle": "Check your inbox",
       "title": "CHECK YOUR INBOX.",
       "lead": "We sent a link to <strong>{email}</strong>. Open it and we will take you straight to the five-question setup.",
       "leadNoEmail": "We sent a link to your address. Open it and we will take you straight to the five-question setup.",

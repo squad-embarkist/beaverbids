@@ -107,3 +107,27 @@ function clean(env: EmailEnv): Record<string, string | undefined> {
   }
   return out;
 }
+
+// What the web app needs: the addresses shown on the account screens. The
+// web never opens an SMTP connection, so it is not asked for the SMTP
+// variables; production still needs the two addresses.
+export type PublicEmailConfig = { from: string; fromAddress: string; supportEmail: string };
+
+export function readPublicEmailConfig(env: EmailEnv = process.env): PublicEmailConfig {
+  const raw = clean(env);
+  if (raw.NODE_ENV === "production") {
+    const missing = (["EMAIL_FROM", "SUPPORT_EMAIL"] as const).filter((name) => raw[name] === undefined);
+    if (missing.length > 0) throw new Error(`Email is not configured for production. Set ${missing.join(", ")} in the web app's environment (see .env.example).`);
+  }
+  const from = raw.EMAIL_FROM ?? LAPTOP.from;
+  const supportEmail = z.email().safeParse(raw.SUPPORT_EMAIL ?? LAPTOP.supportEmail);
+  if (!supportEmail.success) throw new Error("Email settings are invalid: SUPPORT_EMAIL is not an email address");
+  return { from, fromAddress: addressOf(from), supportEmail: supportEmail.data };
+}
+
+// "BeaverBids <hello@beaverbids.ca>" shows as "hello@beaverbids.ca" on the
+// Check inbox screen's FROM row.
+export function addressOf(from: string): string {
+  const match = /<([^>]+)>/.exec(from);
+  return (match ? match[1] : from).trim();
+}
