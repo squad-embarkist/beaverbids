@@ -20,6 +20,7 @@ const TEXT_SIZES = [
   "footer",
   "h1",
   "h2",
+  "help",
   "hero",
   "hero-md",
   "hero-sm",

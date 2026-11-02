@@ -19,6 +19,9 @@ export function BasicsForm({ profile }: { profile: Profile | null }) {
   // already shows the saved answers before React hydrates.
   const defaults = basicsDefaults(profile);
   const form = useForm<BasicsFormValues, unknown, ReturnType<typeof basicsFormSchema.parse>>({
+    // Validate on blur and on submit, never on every keystroke (Figma node 34:7640).
+    mode: "onBlur",
+    reValidateMode: "onBlur",
     resolver: zodResolver(basicsFormSchema),
     defaultValues: defaults,
   });

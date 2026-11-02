@@ -3,6 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import type { FieldValues, UseFormReturn } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { Banner } from "@/components/ui/banner";
 import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
 import { stepAfter, stepBefore, type ProfileStepSave, type QuestionnaireStep } from "@/lib/schemas/company-profile";
@@ -18,8 +19,11 @@ type Props<TIn extends FieldValues, TOut extends ProfileStepSave["answers"]> = {
 };
 
 // The frame every step form shares: the form element, the server error
-// line, and the footer with Back, the note, Skip, Save and finish later and
-// the one primary button. On phones the footer sticks to the bottom.
+// banner, and the footer with Back, the note, Skip, Save and finish later and
+// the one primary button. On phones the footer sticks to the bottom. While a
+// save is in flight the primary button shows the working state and the
+// other actions wait through aria-disabled: the disabled look is only for a
+// cooldown, never for a form in progress (Figma node 34:7640).
 export function StepForm<TIn extends FieldValues, TOut extends ProfileStepSave["answers"]>({ step, form, skippable, children }: Props<TIn, TOut>) {
   const t = useTranslations("Questionnaire");
   const { save, pending, error } = useSaveStep(step);
@@ -34,9 +38,9 @@ export function StepForm<TIn extends FieldValues, TOut extends ProfileStepSave["
   return (
     <form onSubmit={onSubmit} noValidate aria-busy={pending} className="flex flex-col gap-8">
       {error ? (
-        <p role="alert" className="border border-signal bg-signal/5 px-4 py-3 text-base leading-6 text-asphalt">
+        <Banner variant="error" role="alert">
           {t(`errors.${error}`)}
-        </p>
+        </Banner>
       ) : null}
 
       <div className="flex flex-col gap-8">{children}</div>
@@ -53,8 +57,12 @@ export function StepForm<TIn extends FieldValues, TOut extends ProfileStepSave["
           variant="text"
           size="sm"
           className="h-11"
-          disabled={pending}
-          onClick={() => {
+          aria-disabled={pending || undefined}
+          onClick={(event) => {
+            if (pending) {
+              event.preventDefault();
+              return;
+            }
             destination.current = "list";
           }}
         >
@@ -66,8 +74,12 @@ export function StepForm<TIn extends FieldValues, TOut extends ProfileStepSave["
             variant="secondary"
             size="sm"
             className="h-11"
-            disabled={pending}
-            onClick={() => {
+            aria-disabled={pending || undefined}
+            onClick={(event) => {
+              if (pending) {
+                event.preventDefault();
+                return;
+              }
               destination.current = "next";
             }}
           >
@@ -78,7 +90,7 @@ export function StepForm<TIn extends FieldValues, TOut extends ProfileStepSave["
           type="submit"
           size="sm"
           className="h-11 min-w-40 flex-1 sm:flex-none"
-          disabled={pending}
+          busy={pending}
           onClick={() => {
             destination.current = "next";
           }}

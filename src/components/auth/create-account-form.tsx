@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { createAccountAction, type AuthFormState } from "@/app/(auth)/actions";
 import { FormField } from "@/components/auth/form-field";
+import { Banner } from "@/components/ui/banner";
 import { Button } from "@/components/ui/button";
 
 const initialState: AuthFormState = {};
@@ -16,12 +17,9 @@ export function CreateAccountForm() {
   return (
     <form action={action} noValidate className="flex flex-col gap-6">
       {state.formError ? (
-        <p
-          role="alert"
-          className="rounded-lg border border-signal bg-signal/5 px-3 py-2 text-sm leading-5 text-asphalt"
-        >
+        <Banner variant="error" role="alert">
           {tErrors(state.formError)}
-        </p>
+        </Banner>
       ) : null}
 
       <FormField
@@ -58,8 +56,10 @@ export function CreateAccountForm() {
         error={state.fieldErrors?.password ? tErrors(state.fieldErrors.password) : undefined}
       />
 
-      <Button type="submit" className="w-full" disabled={pending} aria-busy={pending}>
-        {t("submit")}
+      {/* Working state: the label becomes the verb in progress and the
+          button keeps focus; it is never shown as disabled. */}
+      <Button type="submit" className="w-full" busy={pending}>
+        {pending ? t("working") : t("submit")}
       </Button>
     </form>
   );

@@ -1,6 +1,6 @@
 # BeaverBids UI/UX and Brand Guide
 
-Oct 23, 2026 · @CJD · Updated Oct 28, 2026 to match the Figma file "Beaver bids website" (frame "beaverbids - direction 2 - updated with canada colors", node 1:957)
+Oct 23, 2026 · @CJD · Updated Oct 28, 2026 to match the Figma file "Beaver bids website" (frame "beaverbids - direction 2 - updated with canada colors", node 1:957) · Updated Nov 2, 2026 with the field and button states from the Figma file "Beaver Bids UI" (page "Every state, once", node 34:7640; decisions in docs/plans/form-states-plan.md)
 
 BeaverBids should feel like a sharp, trustworthy tool for Canadian suppliers: loud where it matters (the score), quiet everywhere else. This guide fixes the visual and interaction rules taken from the lo-fi wireframes so design and development build the same product.
 
@@ -21,7 +21,7 @@ Three brand colours carry the identity; the rest are neutrals and score bands th
 | Token | Hex | Role | Source |
 | --- | --- | --- | --- |
 | `--signal` | #D52B1E | Primary buttons, the score figure, headline highlight blocks, active nav, links on hover | Figma |
-| `--asphalt` | #23231F | Body text, headlines, dark panels, button text on red | Figma |
+| `--asphalt` | #23231F | Body text, headlines, dark panels, the secondary button border | Figma |
 | `--paper` | #F4F2ED | Page background, the request-a-demo form panel, input fill | Figma |
 | `--stone` | #CBC7BE | Landing hero, demo and request-a-demo backgrounds; body text on asphalt at 75 to 80 percent | Figma |
 | `--stone-light` | #DEDBD3 | Landing audience card fill | Figma |
@@ -29,20 +29,25 @@ Three brand colours carry the identity; the rest are neutrals and score bands th
 | `--line` | asphalt at 15 percent | Hairline borders and dividers on light backgrounds | Figma |
 | `--line-dark` | #7C7970 at 30 percent | Hairlines on asphalt (40 percent for the step rules) | Figma |
 | `--muted` | #7C7970 | Secondary text, mono labels, placeholders (at 60 percent) | Figma |
-| `--signal-press` | #B8251A | Hover and pressed state for red | Proposed |
+| `--signal-press` | #B32717 | Hover, pressed and working state for red. No lift, no shadow, no transform | Figma 34:7640 |
+| `--ink-strong` | #4F4C47 | Field labels, help text, field borders, the value of a disabled field | Figma 34:7640 |
+| `--ink-soft` | #8C8880 | Placeholders, disabled labels, disabled button text | Figma 34:7640 |
+| `--hairline` | #B9B4AB | Disabled borders, the password toggle divider, section rules | Figma 34:7640 |
+| `--field` | #FAF9F6 | Field fill | Figma 34:7640 |
 | `--band-high` | #2E7D4F | Score 75 to 100 | Proposed |
 | `--band-medium` | #B7791F | Score 50 to 74 | Proposed |
 | `--band-low` | #8A867C | Score under 50 | Proposed |
 
 **Rules**
 
-- Red is for one primary action per screen, for the score, and for the highlighted headline line on the landing page (a signal block with asphalt text, inset 6 px). It is never a body text colour or a large background wash.
+- Red is for one primary action per screen, for the score, for errors, and for the highlighted headline line on the landing page (a signal block with asphalt text, inset 6 px). It is never a body text colour or a large background wash.
+- There is no green outside the score bands: a success banner is asphalt, and red is kept for errors and for the one thing on a screen that needs attention.
 - No corner radius anywhere. Score chips are the one rounded shape.
 - Band colours appear only on score chips and breakdown bars, and always with the number or band word beside them, never colour alone.
 - Define every colour as a CSS variable in Tailwind's theme so the dev team never types a raw hex in a component.
 - Dark mode is out of the MVP. Build with tokens so it can be added later.
 
-**Contrast.** Asphalt on paper is about 14:1 and asphalt on stone about 9:1, both above the 4.5:1 minimum for body text. Two values from the Figma file are known to fall short and are kept as drawn until design confirms them: muted #7C7970 is about 3.9:1 on paper, 3.6:1 on asphalt and 2.6:1 on stone, under 4.5:1 for the 11 and 12 px mono labels; asphalt text on the signal button is about 3.2:1 at 16 px bold, which passes only the 3:1 large-text threshold. Check the three band colours on white before launch; amber and grey are the likeliest to fail for small text.
+**Contrast.** Asphalt on paper is about 14:1 and asphalt on stone about 9:1, both above the 4.5:1 minimum for body text. Field labels in ink-strong are about 7.6:1 on paper and white on the signal button about 5:1, so both pass. One value is kept as drawn until design confirms it: muted #7C7970 helper text is about 3.9:1 on paper, 3.6:1 on asphalt and 2.6:1 on stone. Placeholders in ink-soft are about 3.4:1 on the field fill, which is acceptable because the label carries the meaning. Check the three band colours on white before launch; amber and grey are the likeliest to fail for small text.
 
 ## Typography
 
@@ -107,11 +112,14 @@ Build on shadcn/ui and restyle it with the tokens above, so there is one compone
 
 | Component | Spec |
 | --- | --- |
-| Primary button | Signal red fill, asphalt text in condensed bold uppercase, 56 px tall with 28 px side padding, square. 40 px tall in the landing header (44 px on phones). One per screen |
-| Secondary button | No fill, 1 px asphalt border at 40 percent, asphalt text in condensed bold uppercase, same height |
-| Text button | Asphalt text, underline on hover. Used for Skip and Back |
-| Input and select | Paper fill, 1 px muted border at 40 percent, 50 px tall, square, mono uppercase label above. Focus: 2 px asphalt outline plus a visible ring |
-| Option card (questionnaire) | White card, 1 px line border; selected: 2 px asphalt border and a check mark |
+| Primary button | Signal red fill, white text in condensed bold uppercase, 56 px tall with 28 px side padding, square. 40 px tall in the landing header (44 px on phones). One per screen. Hover and pressed: signal-press, no lift, shadow or transform. Working: signal-press, a 14 px square white spinner (2 px border, one turn every 0.8 s) before the label, and the label becomes the verb in progress ("Creating your account"); the button keeps focus and announces `aria-busy`. Disabled: stone-light fill, 1 px hairline border, ink-soft text, no opacity; only for a cooldown, never to police a half-filled form |
+| Secondary button | No fill, 1 px asphalt border, asphalt text in condensed bold uppercase, same height. Hover: stone-light fill. Working and disabled as the primary |
+| Text button | Asphalt text, underline and signal on hover. Used for Skip and Back |
+| Text link | Inline link in bold asphalt, underline and signal on hover (`text-link`). Used for "Already have an account? Sign in" |
+| Input and select | Field fill (#FAF9F6), 1 px ink-strong border, 50 px tall, square, mono uppercase 11 px label above in ink-strong. Placeholder in ink-soft, value in asphalt. Focus: 2 px asphalt outline with a 3 px offset, never removed. Error: 2 px signal edge and an error line under the field in asphalt with an 8 px signal square before it; errors never sit only at the top of the form. Disabled: stone-light fill, hairline border, value in ink-strong, label in ink-soft, no opacity; used while a request is in flight. Validate on blur and on submit, never on every keystroke |
+| Password field | The border, fill and focus outline sit on a wrapper; a mono SHOW / HIDE toggle (`aria-pressed`) stands behind a hairline on the right |
+| Option card (questionnaire) | White card, 1 px line border; selected: 2 px asphalt border and a check mark. Focus and disabled as the input |
+| Banner | Four kinds, full width, 15 px text, square: error (signal fill, white text, warning icon), success (asphalt fill, paper text, check), quiet note (stone-light fill, 10 px ink-strong square), attention (field fill, 2 px signal border, one small primary action). A failed log in shows one error banner and never says which half was wrong |
 | Tag | Mono uppercase 12 px, 1 px border, square. Used for category, region, closing soon. Landing card tags: 10 px mono, signal on asphalt |
 | Score chip | Rounded, band colour fill, number in Archivo Expanded. See the next section |
 | Table row | 56 px tall, hairline divider, whole row is clickable, keyboard focusable |
@@ -119,7 +127,7 @@ Build on shadcn/ui and restyle it with the tokens above, so there is one compone
 | Top bar | Asphalt background, paper wordmark, red active item. Collapses to a menu on phones |
 | Toast | Asphalt fill, paper text, bottom left, auto closes in 5 seconds |
 
-**States every component needs:** default, hover, focus, disabled, loading and error. Focus rings are never removed.
+**States every component needs:** default, hover, focus, disabled, working and error, as drawn on the Figma page "Every state, once" (node 34:7640). Focus outlines are never removed. The page also draws fields at 46 px tall with 14 px padding and nav buttons at 48 px; the guide keeps 50 px, 16 px and 40 px until design confirms the change.
 
 ## Score display
 
@@ -199,7 +207,7 @@ All strings live in translation files from day one with next-intl. English ships
 
 Target WCAG 2.2 AA. These checks belong in each pull request that touches the interface.
 
-- [ ] Text contrast is at least 4.5:1; large text and icons at least 3:1 (two known exceptions from the Figma file are listed under Colour)
+- [ ] Text contrast is at least 4.5:1; large text and icons at least 3:1 (one known exception from the Figma file is listed under Colour)
 - [ ] Every control works by keyboard, with a visible focus ring
 - [ ] Touch targets are at least 44 px
 - [ ] Score and bands are never conveyed by colour alone
@@ -211,4 +219,4 @@ Target WCAG 2.2 AA. These checks belong in each pull request that touches the in
 - [ ] All colours and type come from tokens, no raw hex values in components
 - [ ] Copy uses Canadian spelling, no em dashes, and lives in translation files
 
-**Open items for design to confirm:** the band colours, the muted label contrast and the asphalt-on-red button contrast from the Figma file, and the exact five questionnaire steps against the final wireframes.
+**Open items for design to confirm:** the band colours, the muted helper text contrast, the 46 px field and 48 px nav button heights on the states page, and the exact five questionnaire steps against the final wireframes.

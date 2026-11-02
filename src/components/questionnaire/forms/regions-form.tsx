@@ -15,6 +15,9 @@ export function RegionsForm({ profile }: { profile: Profile | null }) {
   const errorText = useErrorText();
   const defaults = regionsDefaults(profile);
   const form = useForm<RegionsFormValues, unknown, ReturnType<typeof regionsFormSchema.parse>>({
+    // Validate on blur and on submit, never on every keystroke (Figma node 34:7640).
+    mode: "onBlur",
+    reValidateMode: "onBlur",
     resolver: zodResolver(regionsFormSchema),
     defaultValues: defaults,
   });

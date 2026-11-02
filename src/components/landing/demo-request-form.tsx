@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { buildDemoRequestMailto } from "@/lib/demo-request";
 import {
@@ -77,9 +78,7 @@ export function DemoRequestForm({ address }: { address: string }) {
               key={field.name}
               className={field.span === "full" ? "flex flex-col gap-3 sm:col-span-2" : "flex flex-col gap-3"}
             >
-              <label htmlFor={id} className="font-mono text-mono-xs uppercase text-ink-muted">
-                {t(field.name)}
-              </label>
+              <FieldLabel htmlFor={id}>{t(field.name)}</FieldLabel>
               <Input
                 id={id}
                 name={field.name}
@@ -91,11 +90,7 @@ export function DemoRequestForm({ address }: { address: string }) {
                 aria-invalid={error ? true : undefined}
                 aria-describedby={error ? errorId : undefined}
               />
-              {error ? (
-                <p id={errorId} role="alert" className="text-sm leading-5 font-medium text-signal">
-                  {tErrors(error)}
-                </p>
-              ) : null}
+              <FieldError id={errorId}>{error ? tErrors(error) : undefined}</FieldError>
             </div>
           );
         })}

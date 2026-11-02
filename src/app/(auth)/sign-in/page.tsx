@@ -21,7 +21,7 @@ export default async function SignInPage() {
         <SignInForm />
         <p className="text-sm leading-5 text-ink-muted">
           {t("noAccount")}{" "}
-          <Link href="/create-account" className="font-medium text-asphalt underline underline-offset-4">
+          <Link href="/create-account" className="text-link">
             {t("createAccount")}
           </Link>
         </p>

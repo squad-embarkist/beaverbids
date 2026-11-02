@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useTransition, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { loadMoreOpportunities } from "@/app/(app)/opportunities/actions";
+import { ButtonSpinner } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
 
 // "Show more" appends the next page under the rows already on screen, so
@@ -79,6 +80,7 @@ export function LoadMore({ baseSearch, cursor, fallbackHref }: { baseSearch: str
             if (!pending) load();
           }}
         >
+          {pending ? <ButtonSpinner /> : null}
           {pending ? t("loadingMore") : t("showMore")}
         </ButtonLink>
       ) : null}

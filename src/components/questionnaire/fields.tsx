@@ -3,12 +3,14 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { FieldError, FieldHint, fieldDescribedBy as describedBy } from "@/components/ui/field";
 
-// Shared field chrome for the questionnaire: a mono uppercase label, an
-// optional hint, and error text tied to the control through
-// aria-describedby. Option cards are native inputs inside a label, so they
-// register with React Hook Form directly and work with the keyboard and
-// screen readers without extra wiring.
+// Field chrome for the questionnaire. The label, hint and error line are
+// the shared ones from src/components/ui/field.tsx (Figma node 34:7640),
+// re-exported here so the step forms keep one import. Option cards are
+// native inputs inside a label, so they register with React Hook Form
+// directly and work with the keyboard and screen readers without extra
+// wiring.
 
 export function useErrorText() {
   const t = useTranslations("Questionnaire.errors");
@@ -19,35 +21,8 @@ export function useErrorText() {
   };
 }
 
-export function describedBy(id: string, hint?: string, error?: string): string | undefined {
-  const ids = [hint ? `${id}-hint` : null, error ? `${id}-error` : null].filter(Boolean);
-  return ids.length ? ids.join(" ") : undefined;
-}
-
-export function FieldLabel({ htmlFor, children, className }: { htmlFor?: string; children: React.ReactNode; className?: string }) {
-  return (
-    <label htmlFor={htmlFor} className={cn("font-sans text-sm leading-5 font-bold uppercase tracking-wide text-asphalt", className)}>
-      {children}
-    </label>
-  );
-}
-
-export function FieldHint({ id, children }: { id: string; children: React.ReactNode }) {
-  return (
-    <p id={id} className="text-sm leading-5 text-ink-muted">
-      {children}
-    </p>
-  );
-}
-
-export function FieldError({ id, children }: { id: string; children?: React.ReactNode }) {
-  if (!children) return null;
-  return (
-    <p id={id} role="alert" className="text-sm leading-5 font-medium text-signal">
-      {children}
-    </p>
-  );
-}
+export { FieldError, FieldHint, FieldLabel } from "@/components/ui/field";
+export { describedBy };
 
 // A group of option cards. `role="radiogroup"` lets aria-invalid apply; a
 // checkbox group stays a plain fieldset and relies on the error text.
@@ -76,7 +51,7 @@ export function OptionGroup({
       aria-describedby={describedBy(id, hint, error)}
       className="flex min-w-0 flex-col gap-3"
     >
-      <legend className="mb-3 font-sans text-sm leading-5 font-bold uppercase tracking-wide text-asphalt">{legend}</legend>
+      <legend className="mb-3 font-mono text-mono-xs font-medium uppercase text-ink-strong">{legend}</legend>
       {hint ? <FieldHint id={`${id}-hint`}>{hint}</FieldHint> : null}
       <div className={cn("grid gap-3 sm:grid-cols-2 lg:grid-cols-3", className)}>{children}</div>
       <FieldError id={`${id}-error`}>{error}</FieldError>
@@ -86,6 +61,8 @@ export function OptionGroup({
 
 // Selected: asphalt card with paper text and a 2 px inset ring, so the
 // state is colour, weight and the tick together (docs/ui-ux-guide.md).
+// Focus: 2 px asphalt outline, 3 px offset. Disabled: stone-light fill and
+// a hairline border, no opacity (Figma node 34:7640).
 export const OptionCard = React.forwardRef<HTMLInputElement, React.ComponentProps<"input"> & { label: React.ReactNode }>(
   function OptionCard({ label, className, ...input }, ref) {
     return (
@@ -93,7 +70,8 @@ export const OptionCard = React.forwardRef<HTMLInputElement, React.ComponentProp
         className={cn(
           "flex min-h-11 cursor-pointer items-center gap-3 border border-line bg-surface px-4 py-3 text-base leading-6 text-asphalt transition-colors",
           "hover:border-asphalt has-checked:border-asphalt has-checked:bg-asphalt has-checked:text-paper has-checked:ring-2 has-checked:ring-asphalt has-checked:ring-inset",
-          "has-focus-visible:outline-2 has-focus-visible:outline-asphalt has-focus-visible:outline-offset-2",
+          "has-focus-visible:outline-2 has-focus-visible:outline-asphalt has-focus-visible:outline-offset-3",
+          "has-disabled:cursor-not-allowed has-disabled:border-hairline has-disabled:bg-stone-light has-disabled:text-ink-strong",
           className,
         )}
       >
