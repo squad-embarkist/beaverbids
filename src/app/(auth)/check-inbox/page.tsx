@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { getTranslations } from "next-intl/server";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { CheckInbox } from "@/components/auth/check-inbox";
@@ -54,6 +55,10 @@ export default async function CheckInboxPage({ searchParams }: PageProps<"/check
 }
 
 async function CheckInboxContent({ searchParams, supportEmail }: { searchParams: PageProps<"/check-inbox">["searchParams"]; supportEmail: string }) {
+  // The cooldown peek reads the clock, which only a request-time render may
+  // do: without this, dev reports a prerender error on every render and the
+  // dev client answers it with a full reload.
+  await connection();
   const [{ error }, email] = await Promise.all([searchParams, getPendingEmail()]);
   const cooldown = email ? await peekRateLimit(prisma, { ...RATE_LIMITS.resendCooldown, subject: email }) : { allowed: true as const };
   return <CheckInbox email={email} retryAfter={cooldown.allowed ? 0 : cooldown.retryAfterSeconds} linkExpired={error === "link"} supportEmail={supportEmail} />;
