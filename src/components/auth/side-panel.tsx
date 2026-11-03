@@ -58,15 +58,16 @@ export function SidePanel({
 }
 
 // The "LABEL: value" rows along the bottom of a panel, each above a
-// hairline. 72 px label column on asphalt, 76 px on stone, as drawn.
-export function FactRows({ tone, rows }: { tone: PanelTone; rows: { label: string; value: string }[] }) {
+// hairline. 72 px label column on asphalt, 76 px on stone, as drawn. An
+// accented value is in signal ("Expires in 52 min").
+export function FactRows({ tone, rows }: { tone: PanelTone; rows: { label: string; value: string; accent?: boolean }[] }) {
   const dark = tone === "asphalt";
   return (
     <dl className="flex flex-col gap-3.5">
       {rows.map((row) => (
         <div key={row.label} className={cn("flex gap-3.5 border-t pt-3", dark ? "border-line-on-dark" : "border-hairline")}>
           <dt className={cn("shrink-0 font-mono text-mono-md leading-5 font-medium tracking-normal", dark ? "w-[72px] text-ink-on-dark" : "w-[76px] text-line-on-dark")}>{row.label}</dt>
-          <dd className={cn("font-mono text-mono-md leading-5 font-medium tracking-normal", dark ? "text-paper" : "text-asphalt")}>{row.value}</dd>
+          <dd className={cn("font-mono text-mono-md leading-5 font-medium tracking-normal", row.accent ? "text-signal" : dark ? "text-paper" : "text-asphalt")}>{row.value}</dd>
         </div>
       ))}
     </dl>
@@ -105,6 +106,19 @@ export function WaitingCard({ label, rows }: { label: string; rows: { label: str
           </div>
         ))}
       </dl>
+    </div>
+  );
+}
+
+// The "SIGNED IN AS" card on the Set new password panel (node 34:3107): the
+// address the link belongs to and the "Not you?" line. Static from the
+// token row; nobody is signed in on this screen.
+export function SignedInAsCard({ label, email, note }: { label: string; email: string; note: string }) {
+  return (
+    <div className="flex flex-col gap-2.5 border border-line-on-dark p-5">
+      <p className="font-mono text-tag font-medium text-ink-on-dark">{label}</p>
+      <p className="font-mono text-[15px] leading-normal font-medium tracking-normal break-all text-paper">{email}</p>
+      <p className="max-w-[273px] text-help leading-5 text-ink-on-dark">{note}</p>
     </div>
   );
 }

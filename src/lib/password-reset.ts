@@ -24,6 +24,15 @@ export function hashResetToken(raw: string): string {
   return createHash("sha256").update(raw).digest("hex");
 }
 
+// The web app's public origin for the link. Better Auth reads the same
+// variable; the worker requires it in production (src/lib/email/config.ts).
+export function appUrl(env: NodeJS.ProcessEnv = process.env): string {
+  const url = env.BETTER_AUTH_URL?.trim();
+  if (url) return url;
+  if (env.NODE_ENV === "production") throw new Error("BETTER_AUTH_URL is required to build the reset link");
+  return "http://localhost:3000";
+}
+
 export function resetLinkFor(appUrl: string, raw: string): string {
   const url = new URL(RESET_PASSWORD_PATH, appUrl);
   url.searchParams.set("token", raw);

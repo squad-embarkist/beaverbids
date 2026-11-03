@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { signInAction, type AuthFormState } from "@/app/(auth)/actions";
@@ -46,6 +47,11 @@ export function SignInForm() {
         placeholder={t("passwordPlaceholder")}
         autoComplete="current-password"
         required
+        labelAside={
+          <Link href="/forgot-password" className="font-mono text-mono-xs font-medium tracking-[0.12em] uppercase text-ink-strong underline-offset-4 hover:text-signal hover:underline focus-visible:underline">
+            {t("forgot")}
+          </Link>
+        }
         error={state.fieldErrors?.password ? tErrors(state.fieldErrors.password) : undefined}
       />
 

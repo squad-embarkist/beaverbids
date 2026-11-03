@@ -8,12 +8,14 @@ import { VERIFY_EMAIL_CALLBACK, auth } from "@/lib/auth";
 import { destinationFor } from "@/lib/auth-destination";
 import { prisma } from "@/lib/db";
 import { log } from "@/lib/log";
+import { queueAuthEmail } from "@/lib/email/enqueue";
+import { appUrl, holdUntil, issueResetToken, resetLinkFor, resetPasswordWithToken } from "@/lib/password-reset";
 import { getPendingEmail, setPendingEmail } from "@/lib/pending-email";
 import { RATE_LIMITS, hitRateLimit, type RateLimitResult } from "@/lib/rate-limit";
 import { clientIpFrom } from "@/lib/request-ip";
-import { createAccountSchema, isAuthErrorKey, resendConfirmationSchema, signInSchema, type AuthErrorKey } from "@/lib/schemas/auth";
+import { createAccountSchema, forgotPasswordSchema, isAuthErrorKey, resendConfirmationSchema, resetPasswordSchema, signInSchema, type AuthErrorKey } from "@/lib/schemas/auth";
 
-export type AuthField = "name" | "email" | "password";
+export type AuthField = "name" | "email" | "password" | "confirm";
 
 export type AuthFormState = {
   fieldErrors?: Partial<Record<AuthField, AuthErrorKey>>;
@@ -30,11 +32,19 @@ export type ResendFormState = AuthFormState & {
   retryAfter?: number;
 };
 
+export type ForgotFormState = AuthFormState & { sent?: boolean };
+
+// Where a saved password lands: Log in, with the success banner.
+const PASSWORD_SAVED_QUERY = "reset=done";
+// Every forgot password request takes at least this long, so one that
+// wrote a token and queued an email cannot be told from one that did not.
+const FORGOT_FLOOR_MS = 800;
+
 function fieldErrorsFrom(error: ZodError): AuthFormState["fieldErrors"] {
   const out: Partial<Record<AuthField, AuthErrorKey>> = {};
   for (const issue of error.issues) {
     const field = issue.path[0];
-    if ((field === "name" || field === "email" || field === "password") && !out[field] && isAuthErrorKey(issue.message)) {
+    if ((field === "name" || field === "email" || field === "password" || field === "confirm") && !out[field] && isAuthErrorKey(issue.message)) {
       out[field] = issue.message;
     }
   }
@@ -174,4 +184,75 @@ export async function resendConfirmationAction(_previous: ResendFormState, formD
   // Next.js 16.4 cannot read cookies() in a page after an action set one.
   // The address goes back in the state instead.
   return { sent: true, retryAfter: RATE_LIMITS.resendCooldown.windowSeconds, values: { email } };
+}
+
+// "Send me a link." Same banner and the same time for every address. A
+// confirmed account gets the drawn reset email; an unconfirmed one gets the
+// drawn confirmation email again instead (under the resend cooldown), so
+// no third email exists; an unknown address gets nothing.
+export async function forgotPasswordAction(_previous: ForgotFormState, formData: FormData): Promise<ForgotFormState> {
+  const startedAt = Date.now();
+  const values = { email: String(formData.get("email") ?? "") };
+  const parsed = forgotPasswordSchema.safeParse({ email: formData.get("email") });
+  if (!parsed.success) {
+    return { fieldErrors: fieldErrorsFrom(parsed.error), values };
+  }
+  const { email } = parsed.data;
+
+  for (const result of [
+    await hitRateLimit(prisma, { ...RATE_LIMITS.forgotPerIp, subject: await clientIp() }),
+    await hitRateLimit(prisma, { ...RATE_LIMITS.forgotCooldown, subject: email }),
+    await hitRateLimit(prisma, { ...RATE_LIMITS.forgotPerEmail, subject: email }),
+  ]) {
+    if (!result.allowed) return { formError: "tooManyAttempts", minutes: minutesOf(result), values };
+  }
+
+  try {
+    const user = await prisma.user.findUnique({ where: { email }, select: { id: true, email: true, name: true, emailVerified: true, language: true } });
+    if (user?.emailVerified) {
+      const { raw } = await issueResetToken(prisma, user.id);
+      await queueAuthEmail("reset-password", user, resetLinkFor(appUrl(), raw));
+    } else if (user) {
+      const cooldown = await hitRateLimit(prisma, { ...RATE_LIMITS.resendCooldown, subject: email });
+      if (cooldown.allowed) await auth.api.sendVerificationEmail({ body: { email, callbackURL: VERIFY_EMAIL_CALLBACK } });
+    }
+  } catch (error) {
+    // Logged, never shown: the screen says the same thing either way.
+    log.error("forgot password failed", { error: String(error) });
+  }
+
+  await holdUntil(startedAt, FORGOT_FLOOR_MS);
+  return { sent: true, values: { email } };
+}
+
+// Set new password. The token comes from the form body. A dead link gets
+// the attention banner; the old password again gets the error under the
+// first box and nothing is saved. On success every session is gone and the
+// person logs in with the new password; nothing signs them in here.
+export async function resetPasswordAction(_previous: AuthFormState, formData: FormData): Promise<AuthFormState> {
+  const parsed = resetPasswordSchema.safeParse({
+    token: formData.get("token"),
+    password: formData.get("password"),
+    confirm: formData.get("confirm"),
+  });
+  if (!parsed.success) {
+    const fieldErrors = fieldErrorsFrom(parsed.error);
+    if (parsed.error.issues.some((issue) => issue.path[0] === "token")) return { formError: "linkInvalid" };
+    return { fieldErrors };
+  }
+
+  const perIp = await hitRateLimit(prisma, { ...RATE_LIMITS.resetPerIp, subject: await clientIp() });
+  if (!perIp.allowed) return { formError: "tooManyAttempts", minutes: minutesOf(perIp) };
+
+  let outcome: Awaited<ReturnType<typeof resetPasswordWithToken>>;
+  try {
+    outcome = await resetPasswordWithToken(prisma, parsed.data.token, parsed.data.password);
+  } catch (error) {
+    log.error("reset password failed", { error: String(error) });
+    return { formError: "unknown" };
+  }
+  if (!outcome.ok) {
+    return outcome.reason === "sameAsOld" ? { fieldErrors: { password: "passwordSameAsOld" } } : { formError: "linkInvalid" };
+  }
+  redirect(`/sign-in?${PASSWORD_SAVED_QUERY}`);
 }

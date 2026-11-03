@@ -223,6 +223,27 @@
           "expires": "EXPIRES:",
           "expiresValue": "In 24 hours"
         }
+      },
+      "forgotPassword": {
+        "title": "IT",
+        "titleHighlight": "HAPPENS.",
+        "lead": "One email, one link, back in two minutes. Your list and your answers are exactly where you left them.",
+        "facts": {
+          "link": "LINK:",
+          "linkValue": "Good for 60 minutes",
+          "uses": "USES:",
+          "usesValue": "One, then it dies",
+          "stuck": "STUCK:"
+        }
+      },
+      "resetPassword": {
+        "title": "LAST",
+        "titleHighlight": "STEP.",
+        "lead": "Pick something you will actually remember. We will log you in straight after and drop you back on your list.",
+        "signedInAs": "SIGNED IN AS",
+        "notYou": "Not you? Close this tab and the link dies unused.",
+        "link": "LINK:",
+        "expiresIn": "Expires in {minutes} min"
       }
     },
     "createAccount": {
@@ -256,7 +277,42 @@
       "submit": "Log in",
       "working": "Logging you in",
       "newHere": "New here?",
-      "createAccount": "Create an account"
+      "createAccount": "Create an account",
+      "passwordSaved": "Password saved. Log in with your new password."
+    },
+    "forgotPassword": {
+      "pageTitle": "Send me a link",
+      "eyebrow": "PASSWORD RESET",
+      "title": "SEND ME A LINK.",
+      "lead": "Type the email you signed up with. If we have an account for it, a reset link is on its way.",
+      "email": "WORK EMAIL",
+      "emailPlaceholder": "jordan@prattsons.ca",
+      "submit": "Send reset link",
+      "working": "Sending your link",
+      "sameMessage": "We show this same message whether or not the address has an account. That keeps anyone from using this page to find out who banks with us.",
+      "remembered": "Remembered it?",
+      "backToLogIn": "Back to log in",
+      "sent": "If we have an account for {email}, a reset link is on its way."
+    },
+    "resetPassword": {
+      "pageTitle": "Set a new password",
+      "eyebrow": "PASSWORD RESET",
+      "title": "SET A NEW PASSWORD.",
+      "password": "NEW PASSWORD",
+      "passwordPlaceholder": "At least 12 characters",
+      "confirm": "TYPE IT AGAIN",
+      "confirmPlaceholder": "The same password",
+      "needs": "IT NEEDS TO BE",
+      "needsLength": "Twelve characters or more",
+      "needsDifferent": "Different from your last password",
+      "needsMatch": "Both boxes matching",
+      "needsMet": "Done",
+      "needsNotYet": "Not yet",
+      "submit": "Save and log me in",
+      "working": "Saving your password",
+      "signsOut": "Saving this signs out every other device using the old password.",
+      "expiredTitle": "That link has expired or was already used.",
+      "expiredAction": "Send me a new one"
     },
     "checkInbox": {
       "pageTitle": "Check your inbox",

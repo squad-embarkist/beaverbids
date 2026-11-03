@@ -7,6 +7,7 @@ import { getTranslations } from "next-intl/server";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { SidePanel, WaitingCard } from "@/components/auth/side-panel";
 import { SignInForm } from "@/components/auth/sign-in-form";
+import { Banner } from "@/components/ui/banner";
 import { getWaitingCounts } from "@/lib/auth-panel";
 import { prisma } from "@/lib/db";
 
@@ -15,9 +16,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("pageTitle") };
 }
 
-// Figma frame "Log in" (32:505). The "FORGOT IT?" link arrives with the
-// password reset screens.
-export default async function SignInPage() {
+// Figma frame "Log in" (32:505). After a password reset the person lands
+// here with the success banner (?reset=done), read behind Suspense.
+export default async function SignInPage({ searchParams }: PageProps<"/sign-in">) {
   const t = await getTranslations("Auth.signIn");
   const tSide = await getTranslations("Auth.side");
 
@@ -38,6 +39,10 @@ export default async function SignInPage() {
         </SidePanel>
       }
     >
+      <Suspense fallback={null}>
+        <PasswordSavedBanner searchParams={searchParams} />
+      </Suspense>
+
       <header className="flex flex-col gap-3">
         <h1 className="font-heading font-expanded text-auth-title font-extrabold text-asphalt">{t("title")}</h1>
         <p className="text-body-15 text-ink-strong">{t("lead")}</p>
@@ -52,6 +57,17 @@ export default async function SignInPage() {
         </Link>
       </p>
     </AuthShell>
+  );
+}
+
+async function PasswordSavedBanner({ searchParams }: { searchParams: PageProps<"/sign-in">["searchParams"] }) {
+  const { reset } = await searchParams;
+  if (reset !== "done") return null;
+  const t = await getTranslations("Auth.signIn");
+  return (
+    <Banner variant="success" role="status">
+      {t("passwordSaved")}
+    </Banner>
   );
 }
 
