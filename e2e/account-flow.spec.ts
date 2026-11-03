@@ -68,6 +68,25 @@ test.describe("account flow", () => {
     await page.waitForURL("**/questionnaire/basics");
   });
 
+  test("Check inbox moves on by itself once the link is opened in another tab", async ({ page, context }) => {
+    await signUp(page, { name: "E2E Two Tabs", email, password: PASSWORD });
+    const link = await waitForEmailLink(email);
+
+    // Same browser, second tab: the link confirms the address and starts
+    // the session there.
+    const other = await context.newPage();
+    await other.goto(link);
+    await other.waitForURL("**/questionnaire/basics");
+
+    // Back on the first tab, the page notices the session within one poll
+    // and lands where the link did, with the pending cookie gone.
+    await page.bringToFront();
+    await page.waitForURL("**/questionnaire/basics", { timeout: 15_000 });
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/tell us about your company/i);
+    expect((await context.cookies()).find((cookie) => cookie.name === "bb_pending_email")).toBeUndefined();
+    await other.close();
+  });
+
   test("a dead link lands on Check inbox with the banner and a working resend", async ({ page }) => {
     await signUp(page, { name: "E2E Dead", email, password: PASSWORD });
     const link = await waitForEmailLink(email);

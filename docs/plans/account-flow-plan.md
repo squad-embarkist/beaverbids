@@ -513,7 +513,7 @@ Tests: unit tests for the counts query (new since last successful ingest, closin
 
 ### Slice 4: Sign up, Check inbox and the confirmation landing
 
-Built Nov 2, 2026. Differences: `/verify-email` is a redirect-only route handler (no screen); a dead link lands on `/check-inbox?error=link` with the attention banner above the drawn copy; an expired-token Playwright case is replaced by a tampered-token case, because the confirmation token is a signed JWT whose expiry cannot be forged without the secret from inside the suite.
+Built Nov 2, 2026. Differences: `/verify-email` is a redirect-only route handler (no screen); a dead link lands on `/check-inbox?error=link` with the attention banner above the drawn copy; an expired-token Playwright case is replaced by a tampered-token case, because the confirmation token is a signed JWT whose expiry cannot be forged without the secret from inside the suite. Added Nov 3, 2026: Check inbox moves on by itself when the link is opened in another tab of the same browser. A client watcher (`src/components/auth/confirmation-watch.ts`) reads the session every 5 seconds while the tab is visible, once more the moment the tab regains focus, stops while hidden and after 30 minutes, and on a session sends the tab to `/verify-email`, so it lands exactly where the link does. No copy, no screen and no layout change; a two-tab Playwright case covers it.
 
 The restyled create-account form (without the website field, D3), the consent line, `/check-inbox` with the resend button, countdown and the expired-link banner, the `/verify-email` redirect route, the pending-email cookie.
 
