@@ -288,6 +288,9 @@
       "passwordRequired": "Enter your password.",
       "passwordTooShort": "Use at least 12 characters.",
       "passwordTooLong": "Use at most 128 characters.",
+      "passwordMismatch": "Both boxes need the same password.",
+      "passwordSameAsOld": "That is your last password. Pick a different one.",
+      "linkInvalid": "That link has expired or was already used. Send yourself a new one.",
       "invalidCredentials": "That email and password do not match. Check them and try again.",
       "tooManyAttempts": "Too many tries. Wait {minutes, plural, one {a minute} other {# minutes}} and try again.",
       "unknown": "We could not complete that. Try again in a minute."

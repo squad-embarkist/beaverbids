@@ -81,4 +81,12 @@ export const RATE_LIMITS = {
   // "AVAILABLE IN" countdown) and 5 per hour.
   resendCooldown: { scope: "resend:cooldown", limit: 1, windowSeconds: 60 },
   resendPerHour: { scope: "resend:hour", limit: 5, windowSeconds: 3600 },
+  // Forgot password: one per 60 seconds and 5 per hour per address, 20 per
+  // hour per IP. The same limits for every address, whether or not it has
+  // an account, so the answer never says.
+  forgotCooldown: { scope: "forgot:cooldown", limit: 1, windowSeconds: 60 },
+  forgotPerEmail: { scope: "forgot:email", limit: 5, windowSeconds: 3600 },
+  forgotPerIp: { scope: "forgot:ip", limit: 20, windowSeconds: 3600 },
+  // Set new password: 10 submits per hour per IP.
+  resetPerIp: { scope: "reset:ip", limit: 10, windowSeconds: 3600 },
 } as const satisfies Record<string, Omit<RateLimitRule, "subject">>;

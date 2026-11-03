@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PASSWORD_MIN, createAccountSchema, resendConfirmationSchema, signInSchema } from "./auth";
+import { PASSWORD_MIN, createAccountSchema, forgotPasswordSchema, resendConfirmationSchema, resetPasswordSchema, signInSchema } from "./auth";
 
 describe("signInSchema", () => {
   it("accepts a valid email and password, trimming and lowercasing the email", () => {
@@ -96,5 +96,50 @@ describe("resendConfirmationSchema", () => {
 describe("PASSWORD_MIN", () => {
   it("is the twelve characters the Figma checklist asks for", () => {
     expect(PASSWORD_MIN).toBe(12);
+  });
+});
+
+describe("forgotPasswordSchema", () => {
+  it("trims and lowercases the address", () => {
+    const result = forgotPasswordSchema.safeParse({ email: " Jo@Example.com " });
+    expect(result.success && result.data.email).toBe("jo@example.com");
+  });
+
+  it("rejects a bad address with the emailInvalid key", () => {
+    const result = forgotPasswordSchema.safeParse({ email: "nope" });
+    expect(!result.success && result.error.issues[0]?.message).toBe("emailInvalid");
+  });
+});
+
+describe("resetPasswordSchema", () => {
+  const valid = { token: "raw-token", password: "a-dozen-chars-at-least", confirm: "a-dozen-chars-at-least" };
+
+  it("accepts a matching pair with a token", () => {
+    expect(resetPasswordSchema.safeParse(valid).success).toBe(true);
+  });
+
+  it("puts the mismatch on the second box", () => {
+    const result = resetPasswordSchema.safeParse({ ...valid, confirm: "a-dozen-chars-at-leasT" });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues).toHaveLength(1);
+      expect(result.error.issues[0]?.path).toEqual(["confirm"]);
+      expect(result.error.issues[0]?.message).toBe("passwordMismatch");
+    }
+  });
+
+  it("rejects a short password on the first box", () => {
+    const result = resetPasswordSchema.safeParse({ ...valid, password: "x".repeat(PASSWORD_MIN - 1), confirm: "x".repeat(PASSWORD_MIN - 1) });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues.map((i) => [i.path[0], i.message])).toEqual([["password", "passwordTooShort"]]);
+    }
+  });
+
+  it("rejects a missing or blank token with the linkInvalid key", () => {
+    for (const token of ["", "   ", undefined]) {
+      const result = resetPasswordSchema.safeParse({ ...valid, token });
+      expect(!result.success && result.error.issues.map((i) => i.message)).toContain("linkInvalid");
+    }
   });
 });

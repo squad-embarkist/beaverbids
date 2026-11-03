@@ -19,6 +19,9 @@ export const AUTH_ERROR_KEYS = [
   "passwordRequired",
   "passwordTooShort",
   "passwordTooLong",
+  "passwordMismatch",
+  "passwordSameAsOld",
+  "linkInvalid",
   "invalidCredentials",
   "tooManyAttempts",
   "unknown",
@@ -49,6 +52,25 @@ export const signInSchema = z.object({
 // or, when the cookie is gone, from a field on the screen.
 export const resendConfirmationSchema = z.object({ email });
 
+const newPassword = z
+  .string({ error: "passwordRequired" })
+  .min(PASSWORD_MIN, { error: "passwordTooShort" })
+  .max(PASSWORD_MAX, { error: "passwordTooLong" });
+
+// "Send me a link." on Forgot password.
+export const forgotPasswordSchema = z.object({ email });
+
+// Set new password: the token travels in the form body, never in the
+// action's URL. "Both boxes matching" is the only cross-field rule; whether
+// the password differs from the last one is only known server side.
+export const resetPasswordSchema = z
+  .object({
+    token: z.string({ error: "linkInvalid" }).trim().min(1, { error: "linkInvalid" }),
+    password: newPassword,
+    confirm: z.string({ error: "passwordMismatch" }),
+  })
+  .refine((data) => data.password === data.confirm, { error: "passwordMismatch", path: ["confirm"] });
+
 export const createAccountSchema = z.object({
   name: z
     .string({ error: "nameRequired" })
@@ -56,12 +78,11 @@ export const createAccountSchema = z.object({
     .min(1, { error: "nameRequired" })
     .max(NAME_MAX, { error: "nameTooLong" }),
   email,
-  password: z
-    .string({ error: "passwordRequired" })
-    .min(PASSWORD_MIN, { error: "passwordTooShort" })
-    .max(PASSWORD_MAX, { error: "passwordTooLong" }),
+  password: newPassword,
 });
 
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
 export type SignInInput = z.infer<typeof signInSchema>;
 export type ResendConfirmationInput = z.infer<typeof resendConfirmationSchema>;
 export type CreateAccountInput = z.infer<typeof createAccountSchema>;

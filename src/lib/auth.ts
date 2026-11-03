@@ -12,14 +12,10 @@ import { PASSWORD_MAX, PASSWORD_MIN } from "@/lib/schemas/auth";
 // "EXPIRES: In 24 hours" on the Check inbox screen; the confirmation
 // token is a signed JWT, so this is the only place its life is set.
 export const CONFIRMATION_LINK_TTL_SECONDS = 24 * 60 * 60;
-// "LINK: Good for 60 minutes" on Forgot password; the reset token is a row
-// in the verification table, deleted when used.
-export const RESET_LINK_TTL_SECONDS = 60 * 60;
 // Where Better Auth sends the browser after the confirmation link: a
 // redirect-only route that lands a confirmed person on the questionnaire
 // and a dead link back on Check inbox.
 export const VERIFY_EMAIL_CALLBACK = "/verify-email";
-export const RESET_PASSWORD_CALLBACK = "/reset-password";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
@@ -32,13 +28,6 @@ export const auth = betterAuth({
     autoSignIn: true,
     minPasswordLength: PASSWORD_MIN,
     maxPasswordLength: PASSWORD_MAX,
-    sendResetPassword: async ({ user, url }) => {
-      await queueAuthEmail("reset-password", user, url);
-    },
-    resetPasswordTokenExpiresIn: RESET_LINK_TTL_SECONDS,
-    // "Saving this signs out every other device": every session row goes
-    // in the same transaction as the new hash.
-    revokeSessionsOnPasswordReset: true,
     // A sign-up with an address that already has an account: the HTTP
     // answer is identical either way. An unconfirmed owner gets the
     // confirmation email again (the screen stays true); a confirmed owner
@@ -61,6 +50,10 @@ export const auth = betterAuth({
     autoSignInAfterVerification: true,
     expiresIn: CONFIRMATION_LINK_TTL_SECONDS,
   },
+  // The password reset is ours (src/lib/password-reset.ts): the token is
+  // stored hashed, which Better Auth 1.7 does not do, so its request and
+  // reset endpoints answer 404 and can never send a link of their own.
+  disabledPaths: ["/request-password-reset", "/reset-password"],
   // Better Auth's limiter only sees HTTP calls to /api/auth/*; the server
   // actions apply their own limits on the same table (src/lib/rate-limit.ts).
   rateLimit: { enabled: true, storage: "database" },
