@@ -67,7 +67,15 @@ export function FactRows({ tone, rows }: { tone: PanelTone; rows: { label: strin
       {rows.map((row) => (
         <div key={row.label} className={cn("flex gap-3.5 border-t pt-3", dark ? "border-line-on-dark" : "border-hairline")}>
           <dt className={cn("shrink-0 font-mono text-mono-md leading-5 font-medium tracking-normal", dark ? "w-[72px] text-ink-on-dark" : "w-[76px] text-line-on-dark")}>{row.label}</dt>
-          <dd className={cn("font-mono text-mono-md leading-5 font-medium tracking-normal", row.accent ? "text-signal" : dark ? "text-paper" : "text-asphalt")}>{row.value}</dd>
+          <dd
+            className={cn("font-mono text-mono-md leading-5 font-medium tracking-normal", row.accent ? "text-signal" : dark ? "text-paper" : "text-asphalt")}
+            // Signal on asphalt is about 2.6:1, as drawn (frame 34:3086);
+            // a documented exception in docs/ui-ux-guide.md until design
+            // confirms it.
+            data-contrast-exception={row.accent ? "" : undefined}
+          >
+            {row.value}
+          </dd>
         </div>
       ))}
     </dl>
