@@ -1,9 +1,13 @@
 import * as Sentry from "@sentry/node";
 import { PgBoss } from "pg-boss";
 import { prisma } from "@/lib/db";
+import { readEmailConfig } from "@/lib/email/config";
+import { createEmailTransport } from "@/lib/email/transport";
 import { log } from "@/lib/log";
 import { QUEUES } from "@/lib/queues";
 import { createRawFileStore } from "@/lib/storage";
+import { registerAuthCleanupJob } from "./jobs/auth-cleanup";
+import { registerEmailJobs } from "./jobs/email";
 import { registerIngestJobs } from "./jobs/ingest";
 import { registerScoringJobs } from "./jobs/scoring";
 
@@ -20,6 +24,15 @@ export async function main() {
   const store = createRawFileStore();
   const sentry = process.env.SENTRY_DSN ? Sentry : undefined;
 
+  // Same idea for email: production exits here when an SMTP variable is
+  // missing, and verify() connects and logs in so a wrong host or password
+  // fails the deploy rather than the first sign-up.
+  const emailConfig = readEmailConfig();
+  const email = createEmailTransport(emailConfig);
+  if (process.env.NODE_ENV === "production") {
+    await email.verify();
+  }
+
   // pg-boss keeps its own tables in the "pgboss" schema. Prisma never models them.
   const boss = new PgBoss({ connectionString, schema: "pgboss" });
 
@@ -29,7 +42,7 @@ export async function main() {
   });
 
   await boss.start();
-  log.info("worker started", { node: process.version, queues: Object.values(QUEUES), rawFiles: store.kind });
+  log.info("worker started", { node: process.version, queues: Object.values(QUEUES), rawFiles: store.kind, email: email.kind });
 
   await boss.createQueue(QUEUES.heartbeat);
   await boss.schedule(QUEUES.heartbeat, HEARTBEAT_CRON);
@@ -39,6 +52,9 @@ export async function main() {
 
   // One beat right away so a fresh deploy shows life before the first cron tick.
   await boss.send(QUEUES.heartbeat, { reason: "startup" });
+
+  await registerEmailJobs(boss, { transport: email, config: emailConfig });
+  await registerAuthCleanupJob(boss, prisma);
 
   // Outside production a fresh database gets scores within seconds of the
   // worker starting; production waits for the import to chain a rescore.
@@ -65,6 +81,7 @@ export async function main() {
     log.info("worker stopping", { signal });
     try {
       await boss.stop({ graceful: true, timeout: 10_000 });
+      email.close();
       await prisma.$disconnect();
       await Sentry.flush(2_000);
     } finally {

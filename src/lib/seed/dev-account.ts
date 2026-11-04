@@ -26,6 +26,12 @@ export async function seedDevAccount(db: PrismaClient): Promise<{ userId: string
     user = await db.user.findUniqueOrThrow({ where: { email: DEV_ACCOUNT.email } });
   }
 
+  // Accounts must confirm their address before they can log in; the seed
+  // stands in for the click on the email link.
+  if (!user.emailVerified) {
+    user = await db.user.update({ where: { id: user.id }, data: { emailVerified: true } });
+  }
+
   const profile = await db.companyProfile.upsert({
     where: { userId: user.id },
     update: { ...SAMPLE_PROFILE, questionnaireStep: 5 },

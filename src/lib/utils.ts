@@ -7,6 +7,7 @@ import { createCn } from "cn/config"
 // and `size-control` would not yield to a later `size-20`. Import `cn` from
 // here, never from the `cn` package directly.
 const TEXT_SIZES = [
+  "auth-title",
   "body-15",
   "button",
   "button-sm",

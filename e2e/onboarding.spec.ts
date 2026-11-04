@@ -1,29 +1,37 @@
 import { expect, test } from "@playwright/test";
-import { deleteUserByEmail } from "./db";
-import { firstTitleLink } from "./helpers";
+import { deleteUserByEmail, resetRateLimits } from "./db";
+import { waitForEmailLink } from "./email";
+import { firstTitleLink, signUp } from "./helpers";
 
-// The M3 acceptance test: create an account, answer the five steps with
-// the sample profile's answers, land on the scored list, see the sample
-// tender at 92, and open it. The worker scores the profile after the last
-// save, so the list is polled until the score shows.
+// The M3 acceptance test: create an account, confirm it from the email,
+// answer the five steps with the sample profile's answers, land on the
+// scored list, see the sample tender at 92, and open it. The worker scores
+// the profile after the last save, so the list is polled until the score
+// shows.
 
 test.describe("onboarding", () => {
   let email = "";
 
-  test.beforeEach(() => {
+  test.beforeEach(async () => {
     email = `e2e+${Date.now()}-${Math.floor(Math.random() * 1e6)}@beaverbids.test`;
+    await resetRateLimits();
   });
 
   test.afterEach(async () => {
     await deleteUserByEmail(email);
   });
 
-  test("signs up, completes the questionnaire and opens a scored listing", async ({ page }) => {
-    await page.goto("/create-account");
-    await page.getByLabel("Your name").fill("E2E Tester");
-    await page.getByLabel("Work email").fill(email);
-    await page.getByLabel("Password", { exact: true }).fill("beaverbids-e2e");
-    await page.getByRole("button", { name: "Create account" }).click();
+  test("signs up, confirms the email, completes the questionnaire and opens a scored listing", async ({ page }) => {
+    await signUp(page, { name: "E2E Tester", email, password: "beaverbids-e2e" });
+
+    // Check inbox shows the address and the resend cooldown; the link
+    // itself comes from the file the worker wrote.
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/check your inbox/i);
+    await expect(page.getByText(email, { exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Send it again" })).toBeDisabled();
+    await expect(page.getByText(/available in \d:\d\d/i)).toBeVisible();
+
+    await page.goto(await waitForEmailLink(email, { subject: /confirm your email/i }));
     await page.waitForURL("**/questionnaire/basics");
 
     // Step 1

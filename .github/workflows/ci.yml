@@ -19,6 +19,8 @@ env:
   BETTER_AUTH_SECRET: ci-only-secret-not-used-anywhere-else-0123456789
   BETTER_AUTH_URL: http://localhost:3000
   NEXT_TELEMETRY_DISABLED: "1"
+  # No mail server in CI: the worker writes each email to a file.
+  EMAIL_TRANSPORT: file
 
 jobs:
   checks:

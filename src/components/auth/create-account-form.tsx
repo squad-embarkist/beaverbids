@@ -15,10 +15,10 @@ export function CreateAccountForm() {
   const [state, action, pending] = useActionState(createAccountAction, initialState);
 
   return (
-    <form action={action} noValidate className="flex flex-col gap-6">
+    <form action={action} noValidate className="flex flex-col gap-[26px]">
       {state.formError ? (
-        <Banner variant="error" role="alert">
-          {tErrors(state.formError)}
+        <Banner variant={state.formError === "tooManyAttempts" ? "note" : "error"} role="alert">
+          {tErrors(state.formError, { minutes: state.minutes ?? 1 })}
         </Banner>
       ) : null}
 
@@ -27,6 +27,7 @@ export function CreateAccountForm() {
         name="name"
         type="text"
         label={t("name")}
+        placeholder={t("namePlaceholder")}
         autoComplete="name"
         required
         defaultValue={state.values?.name}
@@ -38,6 +39,7 @@ export function CreateAccountForm() {
         name="email"
         type="email"
         label={t("email")}
+        placeholder={t("emailPlaceholder")}
         autoComplete="email"
         inputMode="email"
         required
@@ -50,6 +52,7 @@ export function CreateAccountForm() {
         name="password"
         type="password"
         label={t("password")}
+        placeholder={t("passwordPlaceholder")}
         hint={t("passwordHint")}
         autoComplete="new-password"
         required
