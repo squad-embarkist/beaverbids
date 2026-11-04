@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { connection } from "next/server";
 import { getTranslations } from "next-intl/server";
 import { AuthShell } from "@/components/auth/auth-shell";
-import { CheckInbox } from "@/components/auth/check-inbox";
+import { CheckInbox, CheckInboxSkeleton } from "@/components/auth/check-inbox";
 import { ConfirmationWatcher } from "@/components/auth/confirmation-watcher";
 import { FactRows, SidePanel } from "@/components/auth/side-panel";
 import { prisma } from "@/lib/db";
@@ -18,7 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // Figma frame "Check inbox" (32:1861). The panel and the copy are static;
 // the address, the cooldown and the error flag read the cookie and the
-// query, so they stream in behind Suspense. The watcher sits outside the
+// query, so they stream in behind Suspense, with a fallback that carries no
+// form (see CheckInboxSkeleton). The watcher sits outside the
 // boundary so it mounts once: it moves the tab on by itself once the link
 // has been opened elsewhere, with nothing on the page changing until then.
 export default async function CheckInboxPage({ searchParams }: PageProps<"/check-inbox">) {
@@ -47,7 +48,7 @@ export default async function CheckInboxPage({ searchParams }: PageProps<"/check
       }
     >
       <ConfirmationWatcher />
-      <Suspense fallback={<CheckInbox email={null} retryAfter={0} linkExpired={false} supportEmail={email.supportEmail} />}>
+      <Suspense fallback={<CheckInboxSkeleton supportEmail={email.supportEmail} />}>
         <CheckInboxContent searchParams={searchParams} supportEmail={email.supportEmail} />
       </Suspense>
     </AuthShell>
