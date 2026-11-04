@@ -11,14 +11,14 @@ const values = {
 
 describe("buildDemoRequestMailto", () => {
   it("targets the address and carries the subject", () => {
-    const link = buildDemoRequestMailto("demos@beaverbids.ca", "Live demo request: Pratt & Sons Contracting", values);
-    expect(link.startsWith("mailto:demos%40beaverbids.ca?")).toBe(true);
+    const link = buildDemoRequestMailto("support@beaverbids.ca", "Live demo request: Pratt & Sons Contracting", values);
+    expect(link.startsWith("mailto:support%40beaverbids.ca?")).toBe(true);
     const query = new URLSearchParams(link.slice(link.indexOf("?") + 1));
     expect(query.get("subject")).toBe("Live demo request: Pratt & Sons Contracting");
   });
 
   it("lists every answer in the body, decoded", () => {
-    const link = buildDemoRequestMailto("demos@beaverbids.ca", "Subject", values);
+    const link = buildDemoRequestMailto("support@beaverbids.ca", "Subject", values);
     const body = new URLSearchParams(link.slice(link.indexOf("?") + 1)).get("body");
     expect(body).toBe(
       [
@@ -32,7 +32,7 @@ describe("buildDemoRequestMailto", () => {
   });
 
   it("encodes an ampersand, a newline and spaces so they cannot break the link", () => {
-    const link = buildDemoRequestMailto("demos@beaverbids.ca", "A & B", {
+    const link = buildDemoRequestMailto("support@beaverbids.ca", "A & B", {
       ...values,
       company: "Smith & Co\nsecond line",
     });

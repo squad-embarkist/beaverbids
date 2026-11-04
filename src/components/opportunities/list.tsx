@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { ScoreChip } from "@/components/score/score-chip";
 import { getReasonText } from "@/components/score/reason-text-server";
@@ -51,7 +51,8 @@ export async function OpportunityList({ items, now, continued = false }: { items
     };
   };
 
-  const rows = items.map((item) => ({ item, text: textFor(item), region: tVocab(`regions.${item.region as "ON"}`) }));
+  const regionsOf = (item: OpportunityItem) => format.list(item.regions.map((code) => tVocab(`regions.${code as "ON"}`)), { type: "conjunction" });
+  const rows = items.map((item) => ({ item, text: textFor(item), region: regionsOf(item) }));
 
   return (
     <>

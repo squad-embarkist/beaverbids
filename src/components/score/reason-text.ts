@@ -3,7 +3,7 @@ import { REASON_CODES, renderReason, type Reason, type ReasonCode, type ReasonMe
 import type { CertificationCode } from "@/lib/scoring/requirements";
 
 // Renders a stored reason from the next-intl message keyed by its code.
-// Params carry codes (category, buyer type, region, team size band,
+// Params carry codes (category, buyer type, regions, team size band,
 // certification), so each one is labelled through the Vocab messages
 // first; list params are joined in the viewer's language. The stored
 // English text is only the fallback for a code with no message.
@@ -22,6 +22,8 @@ export type ReasonTextDeps = {
   hasVocab: (key: string) => boolean;
   // "a, b or c"
   listOr: (items: string[]) => string;
+  // "a, b and c"
+  listAnd: (items: string[]) => string;
 };
 
 export function createReasonText(deps: ReasonTextDeps): (reason: Reason) => string {
@@ -38,7 +40,7 @@ export function createReasonText(deps: ReasonTextDeps): (reason: Reason) => stri
     const out: Record<string, string | number> = {};
     for (const [key, value] of Object.entries(params)) {
       if (Array.isArray(value)) {
-        out[key] = value.join(", ");
+        out[key] = key === "regions" ? deps.listAnd(value.map((code) => label("regions", code))) : value.join(", ");
         continue;
       }
       switch (key) {
@@ -47,9 +49,6 @@ export function createReasonText(deps: ReasonTextDeps): (reason: Reason) => stri
           break;
         case "buyerType":
           out[key] = label("buyerTypes", String(value));
-          break;
-        case "region":
-          out[key] = label("regions", String(value));
           break;
         case "band":
           out[key] = label("teamSizes", String(value));

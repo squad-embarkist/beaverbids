@@ -2,26 +2,26 @@
 
 Oct 28, 2026 · Status: approved Oct 28, 2026, built on `feature/landing-page`
 
-Build the public landing page from the Figma file "Beaver bids website", frame "beaverbids - direction 2 - updated with canada colors" (node 1:957, 1549 × 4388 px): layout, colours, type, square corners, condensed buttons and copy, with no design changes. The brand tokens in `src/app/globals.css` and `docs/ui-ux-guide.md` are updated to match the file. The only copy change is removing em dashes. The demo form opens a plain email link. The play button is left out until there is a video. Tablet and phone follow the responsive rules in this plan, since the file holds no tablet or mobile frame.
+Build the public landing page from the Figma file "Beaver bids website", frame "beaverbids - direction 2 - updated with canada colors" (node 1:957, 1549 × 4388 px): layout, colours, type, square corners, condensed buttons and copy, with no design changes. The brand tokens in `src/app/globals.css` and `docs/ui-ux-guide.md` are updated to match the file. The only copy change is removing em dashes. The demo form opens a plain email link. The demo section is a video player (added Nov 2, 2026): the photo is the poster, the Figma play button (node 1:1151) sits on it, and `NEXT_PUBLIC_DEMO_VIDEO_URL` supplies the video; the button is disabled until that is set. Tablet and phone follow the responsive rules in this plan, since the file holds no tablet or mobile frame.
 
 Done when the page at `/` matches the Figma frame at 1549 px, holds at 375 px and at 200 percent zoom, lint, typecheck and tests pass, and the branch is merged into `development` and then `staging`. No pull request into `main` until the claims in the copy are approved.
 
-Not built: the demo video and play button, any email sending, the instant score, French copy, the sign-in link in the header (the Figma header has none).
+Not built: the demo video itself (the player is built, the file is not), any email sending, the instant score, French copy, the sign-in link in the header (the Figma header has none).
 
 ## What the Figma frame fixes
 
 | Section | Background | Layout at 1549 px |
 | --- | --- | --- |
-| Header, sticky | paper at 90 percent, 1 px asphalt 15 percent bottom rule | 72 px tall plus the rule. Wordmark "BEAVERBIDS" with the mono tag "· BIDDESK", three mono nav links, red button 166 × 40 |
+| Header, sticky | paper at 90 percent, 1 px asphalt 15 percent bottom rule | 72 px tall plus the rule. The 32 px beaver logo (`public/landing/logo.svg`) and the wordmark "BEAVERBIDS" 8 px apart, three mono nav links, red button 166 × 40. Header node 1:983 updated Nov 2, 2026: the logo replaced the "· BIDDESK" tag |
 | Hero | stone #CBC7BE | 1240 container, two columns 713 / 527. Left: 6 px signal left border, padding 80 top and bottom, 40 sides. Right: photo 527 × 817 |
 | Ticker | asphalt | 46 px row of mono labels with middle dots, 32 px gaps, inside the 1240 container with 24 px padding |
 | The problem | paper | padding 96 / 24. Columns 508 / 620, 64 px gap. Right: 2 × 2 stats, 32 px gaps, 2 px asphalt top rule per cell |
 | Three steps | asphalt | padding 96 / 24. Heading row space between. Three cells on a 1 px hairline grid (parent tinted #7C7970 at 30 percent, 1 px gaps), 32 px padding |
-| Demo | stone | 620 / 620 split. Left: photo 620 × 611 with the "Demo · 1:30" label bottom left. Right: padding 80 / 48 |
+| Demo | stone | 620 / 620 split. Left: video player 620 × 611, the photo as its poster with the "Demo · 1:30" label bottom left and the 80 px signal play button centred (32 px triangle, `public/landing/play.svg`). Right: padding 80 / 48 |
 | Who it is for | paper | padding 96 / 24. Three cards 381 wide, 24 px gap, 28 px padding, fill #DEDBD3, 1 px asphalt 15 percent border |
 | Coverage | asphalt | padding 80 / 24. Columns 461 / 691, 40 px gap. Right: 4 × 2 hairline grid, cells 92 px minimum, 16 px padding |
 | Request a demo | stone left, paper right | 670 / 570 split. Left: 6 px signal left border, padding 80 / 40. Right: padding 80 / 40, form 490 wide |
-| Footer | asphalt | padding 48 / 24. Left: wordmark, tag and a 320 px blurb. Right: photo 80 × 96 and three mono links. Hairline, then the copyright row |
+| Footer | asphalt | padding 48 / 24. Left: the 33 × 32 outlined beaver logo (`public/landing/logo-dark.svg`) and the wordmark 10 px apart (node 1:1348, updated Nov 2, 2026: no tag), then a 320 px blurb. Right: photo 80 × 96 and three mono links. Hairline, then the copyright row |
 
 Section heights are content driven; the pixel heights in the file are not fixed in code.
 
@@ -43,7 +43,7 @@ Section heights are content driven; the pixel heights in the file are not fixed 
 | Body small | 14 / 19.25 px; 16 / 26 px; 15 / 22.5 px; 14 / 22.75 px | | Stat captions; coverage lead; demo list; footer blurb |
 | Mono eyebrow | 12 / 18 px uppercase | 2.4 px (hero 2.64 px, steps 2.16 px) | Section labels |
 | Mono nav and ticker | 12 / 18 px uppercase | 1.68 px nav, 1.44 px ticker and footer links | Header, ticker, footer |
-| Mono small | 11 / 16.5 px uppercase | 1.98 px; 1.54 px copyright; 2.2 px tag | Form labels, demo label, copyright, BIDDESK tag |
+| Mono small | 11 / 16.5 px uppercase | 1.98 px; 1.54 px copyright | Form labels, demo label, copyright |
 | Mono facts | 13 / 19.5 px | 0.78 px | RE, TERR, RESP lines |
 | Mono step number | 14 / 20 px, signal | | 01, 02, 03 |
 | Mono card tag | 10 / 15 px uppercase, signal on asphalt | 2 px | PRIMARY, SET-ASIDE, MULTIPLIER |
@@ -112,7 +112,7 @@ The claims in the copy (eight portals, 70 percent, 3 days, 6 hours, scraping MER
 | `highlight.tsx` | The signal block behind a headline line |
 | `problem.tsx` | Eyebrow, H2 with highlight, the 2 × 2 stat grid |
 | `steps.tsx` (`#how-it-works`) | Heading row, three numbered cells on the hairline grid |
-| `demo.tsx` | Photo with the "Demo · 1:30" label and no play button, text column with the square-bullet list |
+| `demo.tsx` | The `demo-video.tsx` client player (poster photo, "Demo · 1:30" label, play button, then a native video with controls from `NEXT_PUBLIC_DEMO_VIDEO_URL`), text column with the square-bullet list |
 | `audience.tsx` (`#who-its-for`) | H2, three tagged cards |
 | `coverage.tsx` (`#portals`) | Eyebrow, H2 with highlight, lead, the 4 × 2 portal grid |
 | `demo-request.tsx` (`#request-a-demo`) | Left column with the RE, TERR and RESP lines; right column holds the form |
@@ -127,7 +127,7 @@ Five fields as drawn: Name, Company, Work email, Province, Trade / industry, eac
 
 Validation: `demoRequestSchema` in `src/lib/schemas/demo-request.ts` (Zod: name and company 1 to 120 characters, a valid email, province and trade 1 to 80 characters). On submit the client component parses the form data with it, shows errors tied to the fields by `aria-describedby`, and on success sets `window.location.href` to the result of `buildDemoRequestMailto(address, values)` from `src/lib/demo-request.ts`: a `mailto:` link with the subject "Live demo request: {company}" and a body listing the five answers, fully URL encoded. No request leaves the browser and nothing is stored. React Hook Form is not added; it arrives with the questionnaire in M3, and this form can move to it then.
 
-The address comes from `NEXT_PUBLIC_DEMO_REQUEST_EMAIL` (added to `.env.example`), and the same value renders in the "RE:" line and the footer, both as `mailto:` links, so the page works without JavaScript and the visible address never disagrees with the link. Your message shows the address as a placeholder; this plan assumes `demos@beaverbids.ca`, the value in the Figma copy, until you give another.
+The address comes from `NEXT_PUBLIC_DEMO_REQUEST_EMAIL` (added to `.env.example`), and the same value renders in the "RE:" line and the footer, both as `mailto:` links, so the page works without JavaScript and the visible address never disagrees with the link. The Figma copy shows `demos@beaverbids.ca`; the address was changed to `support@beaverbids.ca` on Nov 2, 2026.
 
 ## Images
 
@@ -183,7 +183,7 @@ Lint, typecheck and tests pass before the pull request.
 - Radius tokens go to 0 for the whole app, not only the landing page, because the brief says the tokens match Figma.
 - The default button and the input primitives change to the Figma spec, so the sign-in and create-account screens change with them.
 - `--signal-press` is derived, since the file has no hover state; hover and pressed states on the landing page use it on the red buttons and an asphalt border on the secondary button.
-- The demo address is `demos@beaverbids.ca` until you give another, read from `NEXT_PUBLIC_DEMO_REQUEST_EMAIL`.
+- The demo address is `support@beaverbids.ca` (changed from the Figma copy's demos@ on Nov 2, 2026), read from `NEXT_PUBLIC_DEMO_REQUEST_EMAIL`.
 - The form submits through the browser's `mailto:` handling; no route handler, no table.
 - Nav links hide under 768 px rather than opening a menu, because the file has no menu and the footer carries the same links.
 - The header button is 40 px tall on desktop as drawn and 44 px on phones for the touch target.

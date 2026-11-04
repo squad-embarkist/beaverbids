@@ -29,8 +29,10 @@ function keywordShare(code: CategoryCode, requirements: Requirements): number {
 }
 
 export function scoreCategory(tender: ScoringTender, profile: ScoringProfile, requirements: Requirements): CategoryResult {
-  const profileCodes = profile.categories as CategoryCode[];
-  const tenderCodes = [...tender.categoryCodes];
+  // Deduplicated on both sides (rules-4): a source can carry several codes
+  // that map to one category, and the code share must not halve for it.
+  const profileCodes = [...new Set(profile.categories)] as CategoryCode[];
+  const tenderCodes = [...new Set(tender.categoryCodes)];
   const matchedCodes = profileCodes.filter((code) => tenderCodes.includes(code));
 
   // The category whose keywords we count: the best matched code, or, when

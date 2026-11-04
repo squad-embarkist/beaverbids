@@ -22,6 +22,16 @@
   --color-line-dark: var(--line-dark);
   --color-ink-muted: var(--ink-muted);
 
+  /* Field and button states (Figma "Beaver Bids UI", node 34:7640) */
+  --color-ink-strong: var(--ink-strong);
+  --color-ink-soft: var(--ink-soft);
+  --color-hairline: var(--hairline);
+  --color-field: var(--field);
+  /* Account screens: muted text and hairlines on the asphalt side panel
+     (Figma "Beaver Bids UI", Sign Up 30:135 and set new password 34:3086) */
+  --color-ink-on-dark: var(--ink-on-dark);
+  --color-line-on-dark: var(--line-on-dark);
+
   /* Score bands. Always shown with the number or band word, never alone. */
   --color-band-high: var(--band-high);
   --color-band-medium: var(--band-medium);
@@ -68,6 +78,12 @@
   --text-score--line-height: 1;
   --text-score-sm: 2rem;
   --text-score-sm--line-height: 1;
+  /* Help and error lines under a field */
+  --text-help: 0.8125rem;
+  --text-help--line-height: 1.25rem;
+  /* The form heading on the account screens: 36 px expanded, solid leading */
+  --text-auth-title: 2.25rem;
+  --text-auth-title--line-height: 2.25rem;
 
   /* Landing page headlines (expanded ExtraBold) */
   --text-hero: 5.4rem;
@@ -164,11 +180,19 @@
   --spacing-control: 3.125rem;
   --spacing-button: 3.5rem;
   --spacing-header: 4.5625rem;
+
+  /* The working button's square spinner: 0.8 s, no easing */
+  --animate-spin-square: spin-square 0.8s linear infinite;
+  @keyframes spin-square {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }
 
 :root {
   --signal: #d52b1e;
-  --signal-press: #b8251a;
+  --signal-press: #b32717;
   --asphalt: #23231f;
   --paper: #f4f2ed;
   --stone: #cbc7be;
@@ -177,6 +201,14 @@
   --line: rgb(35 35 31 / 0.15);
   --line-dark: rgb(124 121 112 / 0.3);
   --ink-muted: #7c7970;
+  /* Field and button states: labels and help text, placeholders and
+     disabled text, hairline borders, field fill */
+  --ink-strong: #4f4c47;
+  --ink-soft: #8c8880;
+  --hairline: #b9b4ab;
+  --field: #faf9f6;
+  --ink-on-dark: #a9a59d;
+  --line-on-dark: #4a4742;
   --band-high: #2e7d4f;
   --band-medium: #b7791f;
   --band-low: #8a867c;
@@ -206,8 +238,9 @@
   body {
     @apply bg-background text-foreground text-base leading-6;
   }
+  /* Focus: 2 px asphalt outline, 3 px offset, never removed. */
   :focus-visible {
-    @apply outline-2 outline-asphalt outline-offset-0;
+    @apply outline-2 outline-asphalt outline-offset-3;
   }
 }
 
@@ -220,7 +253,12 @@
 }
 
 @utility label-mono {
-  @apply font-mono text-label uppercase font-medium text-ink-muted;
+  @apply font-mono text-label uppercase font-medium text-ink-strong;
+}
+
+/* An inline text link: bold, underlined on hover, turns signal. */
+@utility text-link {
+  @apply font-bold text-asphalt underline-offset-4 hover:text-signal hover:underline;
 }
 
 /* A headline line set on a signal block: asphalt text, block starts at the

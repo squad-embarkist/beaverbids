@@ -39,6 +39,20 @@ describe("scoreCategory (40)", () => {
       expected: 12 + 8,
     },
     {
+      name: "duplicate codes on the tender count once (rules-4)",
+      t: { categoryCodes: ["it-managed-services-cloud", "it-managed-services-cloud", "cybersecurity-data-protection"] },
+      p: {},
+      r: {},
+      expected: 12 + 8,
+    },
+    {
+      name: "duplicate codes on the profile count once (rules-4)",
+      t: { categoryCodes: ["it-managed-services-cloud"] },
+      p: { categories: ["it-managed-services-cloud", "it-managed-services-cloud"] },
+      r: {},
+      expected: 32,
+    },
+    {
       name: "no codes on the tender: keyword share drives the code points",
       t: { categoryCodes: [] },
       p: {},

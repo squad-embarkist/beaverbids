@@ -1,4 +1,5 @@
 import "dotenv/config";
+import path from "node:path";
 import { defineConfig, devices } from "@playwright/test";
 import { assertLocalDatabase } from "./e2e/db";
 
@@ -8,6 +9,13 @@ import { assertLocalDatabase } from "./e2e/db";
 assertLocalDatabase();
 
 const CI = Boolean(process.env.CI);
+
+// The worker below writes every email to a file so the specs can read the
+// confirmation link back (e2e/email.ts). Another worker running on the same
+// database with the SMTP transport would race it for the job, so stop one
+// before `npm run e2e`.
+const EMAIL_FILE_DIR = path.resolve(process.env.EMAIL_FILE_DIR || ".data/mail-e2e");
+process.env.EMAIL_FILE_DIR = EMAIL_FILE_DIR;
 
 export default defineConfig({
   testDir: "./e2e",
@@ -46,6 +54,7 @@ export default defineConfig({
       timeout: 60_000,
       stdout: "ignore",
       stderr: "pipe",
+      env: { EMAIL_TRANSPORT: "file", EMAIL_FILE_DIR },
     },
   ],
 });

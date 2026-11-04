@@ -11,8 +11,8 @@ import type { GateBlocker, GateResult, ScoringProfile, ScoringTender } from "./t
 export function checkGate(tender: ScoringTender, profile: ScoringProfile, requirements: Requirements): GateResult {
   const blockers: GateBlocker[] = [];
 
-  if (!regionMatches(tender.region, profile.regions)) {
-    blockers.push({ code: "regionMismatch", region: tender.region });
+  if (!regionMatches(tender.regions, profile.regions)) {
+    blockers.push({ code: "regionMismatch", regions: [...tender.regions] });
   }
   if (requirements.setAside) {
     blockers.push({ code: "setAside", group: requirements.setAside });

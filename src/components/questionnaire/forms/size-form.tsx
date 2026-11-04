@@ -14,6 +14,9 @@ export function SizeForm({ profile }: { profile: Profile | null }) {
   const errorText = useErrorText();
   const defaults = sizeDefaults(profile);
   const form = useForm<SizeFormValues, unknown, ReturnType<typeof sizeFormSchema.parse>>({
+    // Validate on blur and on submit, never on every keystroke (Figma node 34:7640).
+    mode: "onBlur",
+    reValidateMode: "onBlur",
     resolver: zodResolver(sizeFormSchema),
     defaultValues: defaults,
   });

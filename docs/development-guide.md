@@ -27,12 +27,12 @@ The MVP is one loop: sign in, take the questionnaire, get daily CanadaBuys tende
 
 | Milestone | What changes for the MVP |
 | --- | --- |
-| M0 Foundations | English only through next-intl, no language switcher. Email and password only: no Google or Microsoft sign-in, no email sending |
+| M0 Foundations | English only through next-intl, no language switcher. Email and password only: no Google or Microsoft sign-in. Updated Nov 2, 2026 (docs/plans/account-flow-plan.md): the address is confirmed by email before the first log in and passwords reset by email, two transactional emails sent by the worker through nodemailer over SMTP (TurboSMTP), not SES |
 | M1 Data model | Build only companyProfile, source, ingestRun, tender and score. Skip draftProfile, savedTender, digest and event |
 | M2 Scoring engine | Rules only. Reasons come from fixed templates in code. No AI wrapper and no MixRoute key yet |
 | M3 Core screens | Four screens: sign in, questionnaire, opportunities list, listing detail. No instant score, no saved or hidden tabs |
 | M4 CanadaBuys ingestion | Unchanged |
-| M5 Launch | Renamed Launch checks: privacy page, accessibility pass, import failure alert, one backup restore test. No digest, SES or consent work |
+| M5 Launch | Renamed Launch checks: privacy page, accessibility pass, import failure alert, one backup restore test. No digest or consent work |
 
 The API keeps auth, health, the opportunities list, the listing detail and the company profile. The instant score, save and hide, digest and unsubscribe endpoints wait for the later phase. Three open questions below (instant score, digest consent, French copy review) are parked until then.
 
@@ -48,7 +48,7 @@ Build in this order: each milestone unblocks the next, and the first three can b
 - [ ] GitHub Actions on every pull request: lint, type check, tests, `prisma validate` (not in the PDF; recommended)
 - [ ] Better Auth wired to Prisma; Sentry in the web app and the worker; `/api/health` checks the database, with Sentry Uptime watching it
 - [ ] `next-intl` set up for EN/FR before any screen is built
-- [ ] Request Amazon SES production access in us-east-1 now; AWS can take up to 96 hours to reply
+- [x] Email provider decided Nov 2, 2026: TurboSMTP over SMTP through nodemailer in the worker, no SES. Before staging: authenticate the sending domain in the TurboSMTP dashboard and set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `EMAIL_FROM`, `SUPPORT_EMAIL`, `EMAIL_POSTAL_ADDRESS` in the worker environment (`.env.example`)
 
 * **Done when:** a merge to `staging` deploys, and a signed-in user sees an empty dashboard in both languages.
 
@@ -89,7 +89,7 @@ Build in this order: each milestone unblocks the next, and the first three can b
 ### M5. Launch checks (MVP)
 
 - [ ] Signup that keeps the draft profile and instant score
-- [ ] Monday digest job sending through SES, with an unsubscribe link and a recorded consent date (Canada's anti-spam law)
+- [ ] Monday digest job sending through the worker's email transport (nodemailer, `src/lib/email`), with an unsubscribe link and a recorded consent date (Canada's anti-spam law)
 - [ ] Stripe billing if the pricing decision is made (open question)
 - [ ] Accessibility pass, French copy review, privacy page that states where data is stored
 - [ ] One real backup restore test before launch
@@ -105,14 +105,14 @@ One Next.js app serves the pages and the REST API, and a separate worker process
 | Framework | Next.js 16.4, React 19, TypeScript 6.0 | Landing page, web app and API in one project |
 | UI | shadcn/ui 4.22, Tailwind CSS 4.3 | Components we copy in and own; utility styling |
 | Forms and state | React Hook Form 7.90, Zod 4.6, Zustand 5.0 | Zod rules shared by form and API; Zustand keeps questionnaire answers across steps |
-| Auth | Better Auth 1.7.11 | Email and password or Google; sessions stored in our own database |
+| Auth | Better Auth 1.7.12 | Email and password, confirmed by email before the first log in; sessions stored in our own database. The password reset keeps a hashed token in Better Auth's verification table (`src/lib/password-reset.ts`), so Better Auth's own reset endpoints are disabled |
 | API | Next.js route handlers | One small file per endpoint under `src/app/api` |
 | Database | PostgreSQL 18 with Prisma 7.10.1 | Tables described once in `schema.prisma` |
 | Files | AWS S3, us-east-1 | Uploads, the raw daily CanadaBuys file, database backups |
 | Jobs | pg-boss 12.38 | Job queue inside Postgres; retries and schedules; runs in the worker |
 | Ingestion | csv-parse 7.0 now; Cheerio 1.2 and Lightpanda 1.0 later | The last two only after written permission from MERX and Bids&Tenders |
 | AI | MixRoute | One gateway for many models; one key per module with a spending cap |
-| Email | Amazon SES | Password and confirmation emails, and the digest |
+| Email | nodemailer 10 over SMTP: Mailpit on a laptop, a file transport in CI, TurboSMTP on staging and production | Confirmation and password reset emails now (`src/lib/email`, sent by the worker's `send-email` job), the digest later. Decided Nov 2, 2026; SES is not used |
 | Monitoring | Sentry 11.8, Sentry Uptime, Sentry Crons | Errors, outside health check, and a morning "did the import run" check |
 | Hosting | Hetzner CCX13 (Ashburn), Ubuntu 24.04, Coolify 4.4.6, Docker 29.9, Cloudflare | Existing server; Coolify builds and runs every container |
 | Runtime | Node.js 24 | Web app and worker |
@@ -129,8 +129,8 @@ beaverbids/
       jobs/
         ingest/       canadabuys.ts (merx.ts later)
         scoring/      rules runner and MixRoute reasons
-        email/        SES sends, digest
-    lib/              shared by web and worker: db, zod, s3, ses, auth, scoring
+        email/        send-email job (nodemailer), auth-cleanup; digest later
+    lib/              shared by web and worker: db, zod, s3, email, auth, scoring
     generated/prisma/ made by prisma generate (not in git)
   prisma/             schema.prisma, migrations/
   fixtures/           seed tenders and the golden test set
@@ -162,15 +162,15 @@ Nine tables carry phase 1, beside the ones Better Auth and `pg-boss` create for 
 | --- | --- | --- |
 | `draftProfile` | sessionToken, answers (JSON), instantScoreCache | Pre-signup answers; merged into `companyProfile` on signup |
 | `companyProfile` | userId, name, categories (array), regions (array), sizeMin, sizeMax, certifications (array), capacity, timelinePref, securityClearance, indigenousBusiness | The five questionnaire steps feed this. Clearance and the Indigenous-business flag were added in M3 (docs/plans/m2-category-cap.md) |
-| `source` | code (canadabuys at launch), name, baseUrl, active, lastSuccessAt | One row per data source; more rows only with written permission |
-| `ingestRun` | sourceId, startedAt, finishedAt, status, rowsFound, error | Drives the failure and zero-row alerts |
-| `tender` | sourceId, externalId, title, buyer, description, categoryCodes, region, valueMin, valueMax, publishedAt, closesAt, language, officialUrl, rawFileKey | Unique on sourceId plus externalId |
+| `source` | code (canadabuys at launch), name, baseUrl, active, lastSuccessAt | One row per data source, created by its adapter on the first run; `active` is set by hand and decides whether its notices are scored and listed; more rows only with written permission |
+| `ingestRun` | sourceId, startedAt, finishedAt, status, rowsFound, error, summary (JSON) | Drives the failure and zero-row alerts; the summary holds the counts, skipped rows by reason, unmapped values and the stored file's key and hash (M4) |
+| `tender` | sourceId, externalId, title, buyer, buyerType, description, categoryCodes, regions (array), valueMin, valueMax, publishedAt, closesAt, language, officialUrl, noticePageUrl, noticeType, noticeKind, solicitationNumber, withdrawnAt, rawFileKey | Unique on sourceId plus externalId. `regions` holds province codes or `["CA"]` (M4, several provinces per notice are common). `noticeKind` (BID, RFI, ACAN, DIRECTED, OTHER, UNKNOWN) and `withdrawnAt` (set when a notice leaves the source file) keep non-bids and withdrawn notices out of scoring and the list |
 | `score` | tenderId, profileId, total (0 to 100), band, eligible, factors (JSON), reasons (JSON), modelVersion, scoredAt | Unique on tenderId plus profileId |
 | `savedTender` | userId, tenderId, status | Phase 1 save and hide; status grows into pipeline stages later |
 | `digest` | userId, sentAt, tenderIds, status | Prevents duplicate sends |
 | `event` | userId or sessionToken, name, props (JSON) | Funnel analytics: score viewed, signup, digest opened |
 
-**Tables other tools create.** Better Auth generates its own user, session, account and verification tables; extend its user with language, `digestOptIn` and `digestConsentAt` rather than hand writing auth tables. `pg-boss` keeps its job tables in its own schema, so do not model them in Prisma.
+**Tables other tools create.** Better Auth generates its own user, session, account, verification and rateLimit tables; extend its user with language, `digestOptIn` and `digestConsentAt` rather than hand writing auth tables. The `rateLimit` table also carries the server actions' own limits (`src/lib/rate-limit.ts`, keys prefixed `app:` and hashed, so no address or IP is stored), and `verification` holds the hashed password reset tokens. `pg-boss` keeps its job tables in its own schema, so do not model them in Prisma.
 
 `score.factors` stores the five points as numbers, for example `{"category": 38, "location": 19, "size": 14, "timeline": 12, "credentials": 9}`, so the listing detail bars render without recomputing.
 
@@ -193,6 +193,8 @@ Every tender gets a score out of 100 for a given company profile, made of five f
 **Category cap (decided Oct 24, 2026, threshold set Oct 26).** A tender with fewer than 10 points from category codes and keywords, not buyer type, has its total capped at 49, so it is always a Low fit. Without the cap, a tender with no category match could still reach 58 from location, size, timing and credentials alone and show as Medium; a right buyer says nothing about the work, so buyer-type points do not count towards the threshold. The cap changes the number itself, so the score and the band always agree. The five factor values are stored as computed; only the total is capped, and the stored reasons carry a `categoryCap` entry so the screen can say why. The golden set includes pairs that prove the cap, and any change to this rule updates the golden set, the brief and this guide together. The review of the fixture tenders under 10 and the decisions are in docs/plans/m2-category-cap.md; modelVersion rules-2.
 
 **Security clearance (rules-3, Oct 28, 2026).** The credentials step asks for the highest personnel security clearance held (Reliability, Secret, Top Secret or none). A clearance of any level satisfies a detected clearance requirement, because the text extractor only detects that one is required, not which level; the level is stored so a later rule can compare it. A held clearance earns the location check points and a `clearanceHeld` reason in your favour; without one the tender still shows `clearanceRequired` under "could rule you out". The golden set pins the difference with two program-evaluation pairs for the national consultancy.
+
+**Regions and code dedupe (rules-4, Oct 29, 2026).** A tender's regions are a list. The location check passes when the tender or the profile covers all of Canada or the two lists share a province; otherwise the gate rules the tender out and names the tender's provinces. Category codes are deduplicated on both sides before the share is taken, so several UNSPSC codes mapping to one category count once. No golden pair moved.
 
 **Bands:** 75 to 100 High, 50 to 74 Medium, under 50 Low. Chips and colours on the screens use these bands.
 
@@ -218,7 +220,7 @@ The wireframe landing page takes a pasted tender link or PDF and a company websi
 
 ## API endpoints
 
-REST route handlers under `/api`, one small file per endpoint in `src/app/api`. Public routes work with a draft session token; the rest need a signed-in Better Auth session. Input is checked with the same Zod schemas the forms use. Errors use one shape: `{"error": {"code": "...", "message": "..."}}`. Better Auth owns `/api/auth/*`, so no custom route may live there.
+REST route handlers under `/api`, one small file per endpoint in `src/app/api`. Public routes work with a draft session token; the rest need a signed-in Better Auth session. Input is checked with the same Zod schemas the forms use. Errors use one shape: `{"error": {"code": "...", "message": "..."}}`. Better Auth owns `/api/auth/*`, so no custom route may live there; its `/request-password-reset` and `/reset-password` endpoints are disabled because the reset flow is page actions on `/forgot-password` and `/reset-password` with a hashed token (docs/plans/account-flow-plan.md). The account pages `/create-account`, `/sign-in`, `/check-inbox`, `/verify-email`, `/forgot-password` and `/reset-password` are server actions, not REST routes, and send email only by enqueuing the worker's `send-email` job.
 
 | Method and path | Auth | Purpose | Returns |
 | --- | --- | --- | --- |
@@ -254,7 +256,7 @@ Phase 1 launches on one source: the CanadaBuys open tender file, which is publis
 
 | Source | Status | Method | Notes |
 | --- | --- | --- | --- |
-| CanadaBuys | Phase 1 | Daily CSV download, `csv-parse` | Open licence; the worker downloads it every morning |
+| CanadaBuys | Built (M4, Oct 29, 2026) | Daily CSV download at 14:00 UTC, `csv-parse` | Open licence; the worker downloads the open tender notices file every morning. Plan and acceptance report in docs/plans/m4-plan.md |
 | MERX | Later | Cheerio on the tender list | Its terms forbid copying data today; build only after written permission |
 | Bids&Tenders | Later | Lightpanda, a light headless browser | Its terms ban scraping for business today; build only after written permission |
 | BC Bid, SEAO, NBON, Alberta Purchasing Connection | Not planned | To be decided | Shown in the wireframes but not in the architecture PDF; check each one's terms and any data feed first |

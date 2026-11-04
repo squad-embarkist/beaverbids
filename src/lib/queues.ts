@@ -9,6 +9,9 @@ export const QUEUES = {
   heartbeat: "heartbeat",
   scoreAll: "score-all",
   scoreProfile: "score-profile",
+  ingest: "ingest",
+  sendEmail: "send-email",
+  authCleanup: "auth-cleanup",
 } as const;
 
 export type QueueName = (typeof QUEUES)[keyof typeof QUEUES];
@@ -28,8 +31,34 @@ export const scoreProfileJobSchema = z.object({
   reason: z.enum(["profileUpdated", "manual"]),
 });
 
+// One ingest job imports one source. The code is checked against the
+// worker's adapter registry before anything runs, so a job for an unknown
+// source fails instead of doing nothing quietly.
+export const ingestJobSchema = z.object({
+  source: z.string().trim().min(1).max(50),
+});
+
+// One transactional email. The web app enqueues it from the Better Auth
+// callbacks (never sends in a request), the worker renders and sends it.
+// `locale` is the user's language column; `url` is the Better Auth link.
+export const EMAIL_TEMPLATES = ["confirm-email", "reset-password"] as const;
+export const EMAIL_JOB_LOCALES = ["en"] as const;
+
+export const sendEmailJobSchema = z.object({
+  template: z.enum(EMAIL_TEMPLATES),
+  to: z.string().trim().toLowerCase().pipe(z.email()),
+  locale: z.enum(EMAIL_JOB_LOCALES),
+  params: z.object({
+    name: z.string().trim().min(1).max(120),
+    url: z.url({ protocol: /^https?$/ }),
+  }),
+});
+
 export type ScoreAllJob = z.infer<typeof scoreAllJobSchema>;
 export type ScoreProfileJob = z.infer<typeof scoreProfileJobSchema>;
+export type IngestJob = z.infer<typeof ingestJobSchema>;
+export type SendEmailJob = z.infer<typeof sendEmailJobSchema>;
+export type EmailTemplate = SendEmailJob["template"];
 
 type Sender = Pick<PgBoss, "send">;
 
@@ -45,4 +74,20 @@ export async function enqueueScoreAll(boss: Sender, reason: ScoreAllJob["reason"
 export async function enqueueScoreProfile(boss: Sender, profileId: string, reason: ScoreProfileJob["reason"]) {
   const data = scoreProfileJobSchema.parse({ profileId, reason });
   return boss.send(QUEUES.scoreProfile, data, { singletonKey: data.profileId });
+}
+
+// One import per source at a time: the stately policy with the source code
+// as the key means a retry never runs beside the original, and a second
+// source's job is never blocked by the first.
+export async function enqueueIngest(boss: Sender, source: string) {
+  const data = ingestJobSchema.parse({ source });
+  return boss.send(QUEUES.ingest, data, { singletonKey: data.source });
+}
+
+// Emails are never deduplicated: two resends are two jobs. Retries and the
+// one-hour deletion are queue options set by the worker (the row carries a
+// link and must not sit in the archive for the default seven days).
+export async function enqueueSendEmail(boss: Sender, job: SendEmailJob) {
+  const data = sendEmailJobSchema.parse(job);
+  return boss.send(QUEUES.sendEmail, data);
 }

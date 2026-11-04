@@ -16,6 +16,9 @@ export function WorkForm({ profile }: { profile: Profile | null }) {
   const errorText = useErrorText();
   const defaults = workDefaults(profile);
   const form = useForm<WorkFormValues, unknown, ReturnType<typeof workFormSchema.parse>>({
+    // Validate on blur and on submit, never on every keystroke (Figma node 34:7640).
+    mode: "onBlur",
+    reValidateMode: "onBlur",
     resolver: zodResolver(workFormSchema),
     defaultValues: defaults,
   });

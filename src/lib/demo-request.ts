@@ -5,7 +5,7 @@ import type { DemoRequest } from "@/lib/schemas/demo-request";
 // at build time, and the same value renders in the page copy so the visible
 // address never disagrees with the link.
 
-export const DEFAULT_DEMO_REQUEST_EMAIL = "demos@beaverbids.ca";
+export const DEFAULT_DEMO_REQUEST_EMAIL = "support@beaverbids.ca";
 
 export function demoRequestEmail(): string {
   const value = process.env.NEXT_PUBLIC_DEMO_REQUEST_EMAIL?.trim();

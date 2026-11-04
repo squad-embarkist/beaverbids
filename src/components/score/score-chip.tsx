@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import type { ScoreSummary } from "@/lib/opportunities";
 import type { ScoreBand } from "@/lib/schemas/vocab";

@@ -1,19 +1,23 @@
 import { AxeBuilder } from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
-import { expectNoHorizontalOverflow, firstTitleLink, signIn } from "./helpers";
+import { issueResetLink, resetRateLimits } from "./db";
+import { DEV_ACCOUNT, expectNoHorizontalOverflow, firstTitleLink, signIn } from "./helpers";
 
 // The accessibility checklist from docs/ui-ux-guide.md on the four screens:
 // axe (WCAG 2.2 AA) with no violations, keyboard paths, one H1, 375 px and
 // 200 percent zoom without horizontal scroll. Colour contrast runs as its
-// own check because the guide keeps two Figma values as drawn until design
-// confirms them: the muted mono labels and asphalt text on the signal
-// button. Any other contrast failure still fails here.
+// own check because the guide keeps one Figma value as drawn until design
+// confirms it: helper text in ink-muted. Any other contrast failure still
+// fails here.
 
 const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 
-// The two Figma values the UI guide keeps as drawn: muted mono labels
-// (text-ink-muted, label-mono) and asphalt text on the signal button.
-const KNOWN_CONTRAST_EXCEPTIONS = ".text-ink-muted, .label-mono, .bg-signal";
+// The one Figma value the UI guide keeps as drawn: muted helper text in
+// ink-muted. Mono labels moved to ink-strong and the signal button to white
+// text with the field and button states (docs/plans/form-states-plan.md).
+// The guide's documented exceptions: muted helper text, and the red expiry
+// row on the asphalt reset panel, drawn in signal (docs/ui-ux-guide.md).
+const KNOWN_CONTRAST_EXCEPTIONS = ".text-ink-muted, [data-contrast-exception]";
 
 async function openListing(page: Page) {
   await page.goto("/opportunities");
@@ -23,8 +27,18 @@ async function openListing(page: Page) {
 }
 
 const SCREENS: { name: string; open: (page: Page) => Promise<void>; signedIn: boolean }[] = [
-  { name: "sign in", signedIn: false, open: (page) => page.goto("/sign-in").then(() => undefined) },
+  { name: "log in", signedIn: false, open: (page) => page.goto("/sign-in").then(() => undefined) },
   { name: "create account", signedIn: false, open: (page) => page.goto("/create-account").then(() => undefined) },
+  { name: "check inbox", signedIn: false, open: (page) => page.goto("/check-inbox").then(() => undefined) },
+  { name: "forgot password", signedIn: false, open: (page) => page.goto("/forgot-password").then(() => undefined) },
+  {
+    name: "set new password",
+    signedIn: false,
+    open: async (page) => {
+      await page.goto(await issueResetLink(DEV_ACCOUNT.email));
+      await page.getByLabel("NEW PASSWORD").waitFor();
+    },
+  },
   { name: "questionnaire", signedIn: true, open: (page) => page.goto("/questionnaire/work").then(() => page.getByRole("heading", { level: 1 }).waitFor()) },
   { name: "opportunities list", signedIn: true, open: (page) => page.goto("/opportunities").then(() => firstTitleLink(page).waitFor()) },
   { name: "listing detail", signedIn: true, open: openListing },
@@ -33,7 +47,12 @@ const SCREENS: { name: string; open: (page: Page) => Promise<void>; signedIn: bo
 for (const screen of SCREENS) {
   test.describe(screen.name, () => {
     test.beforeEach(async ({ page }) => {
-      if (screen.signedIn) await signIn(page);
+      // The suite logs in with the one dev account far more often than the
+      // per-address limit allows a person.
+      if (screen.signedIn) {
+        await resetRateLimits();
+        await signIn(page);
+      }
       await screen.open(page);
     });
 
@@ -42,7 +61,7 @@ for (const screen of SCREENS) {
       expect(results.violations.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.map((n) => n.target.join(" ")) }))).toEqual([]);
     });
 
-    test("has no contrast failures beyond the two documented exceptions", async ({ page }) => {
+    test("has no contrast failures beyond the documented exceptions", async ({ page }) => {
       const results = await new AxeBuilder({ page }).withRules(["color-contrast"]).analyze();
       const targets = results.violations.flatMap((v) => v.nodes.map((node) => node.target.join(" ")));
       const unexpected = await page.evaluate(
@@ -80,6 +99,7 @@ for (const screen of SCREENS) {
 }
 
 test.describe("keyboard paths", () => {
+  test.beforeEach(resetRateLimits);
   test("tabs from the search box to the first title and opens it", async ({ page }, testInfo) => {
     test.skip(testInfo.project.name === "phone", "the filter form sits after the rows on phones");
     await signIn(page);

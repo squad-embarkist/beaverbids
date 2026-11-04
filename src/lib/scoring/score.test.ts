@@ -10,15 +10,16 @@ describe("checkGate", () => {
   });
 
   it.each([
-    { name: "province outside the profile", t: { region: "BC" }, p: {}, r: {}, blockers: [{ code: "regionMismatch", region: "BC" }] },
+    { name: "province outside the profile", t: { regions: ["BC"] }, p: {}, r: {}, blockers: [{ code: "regionMismatch", regions: ["BC"] }] },
+    { name: "several provinces, none in the profile", t: { regions: ["BC", "AB"] }, p: {}, r: {}, blockers: [{ code: "regionMismatch", regions: ["BC", "AB"] }] },
     { name: "set-aside for a group", t: {}, p: {}, r: { setAside: "indigenous businesses" }, blockers: [{ code: "setAside", group: "indigenous businesses" }] },
     {
       name: "both at once",
-      t: { region: "QC" },
+      t: { regions: ["QC"] },
       p: {},
       r: { setAside: "small businesses" },
       blockers: [
-        { code: "regionMismatch", region: "QC" },
+        { code: "regionMismatch", regions: ["QC"] },
         { code: "setAside", group: "small businesses" },
       ],
     },
@@ -58,7 +59,7 @@ describe("scoreTender", () => {
     expect(result.band).toBe(bandForTotal(result.total));
     expect(result.eligible).toBe(true);
     expect(result.cap).toBeNull();
-    expect(MODEL_VERSION).toBe("rules-3");
+    expect(MODEL_VERSION).toBe("rules-4");
   });
 
   it("scores the sample shape at 92 with 38, 19, 14, 12 and 9 and no cap", () => {
@@ -86,11 +87,11 @@ describe("scoreTender", () => {
   });
 
   it("keeps the factor points but forces Low when the gate fails", () => {
-    const result = scoreTender(tender({ region: "BC" }), profile(), NOW);
+    const result = scoreTender(tender({ regions: ["BC"] }), profile(), NOW);
     expect(result.eligible).toBe(false);
     expect(result.band).toBe("LOW");
     expect(result.total).toBeGreaterThan(50);
-    expect(result.gate.blockers).toEqual([{ code: "regionMismatch", region: "BC" }]);
+    expect(result.gate.blockers).toEqual([{ code: "regionMismatch", regions: ["BC"] }]);
   });
 
   describe("category cap", () => {
@@ -157,7 +158,7 @@ describe("scoreTender", () => {
     });
 
     it("keeps the gate separate: a capped and gated tender is ineligible with a capped total", () => {
-      const result = scoreTender(tender({ ...offCategory, region: "BC" }), profile(), NOW);
+      const result = scoreTender(tender({ ...offCategory, regions: ["BC"] }), profile(), NOW);
       expect(result.eligible).toBe(false);
       expect(result.cap).not.toBeNull();
       expect(result.total).toBeLessThanOrEqual(49);

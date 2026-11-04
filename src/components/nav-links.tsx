@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 
 export type NavItem = { href: string; label: string; match?: string };
 

@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 
 // The BeaverBids wordmark: expanded Archivo, heavy weight.
 export function Wordmark({ className }: { className?: string }) {

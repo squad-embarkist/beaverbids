@@ -1,27 +1,19 @@
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { demoVideoUrl } from "@/lib/demo-video";
+import { DemoVideo } from "./demo-video";
 
 const ITEMS = ["feed", "summaries", "drafts"] as const;
 
-// "Numbers do the persuading": the demo photo at 620 × 611 with its mono
-// label (no play button until there is a video), text column on the right.
+// "Numbers do the persuading": the demo video player at 620 × 611 on the left
+// (poster photo, mono label and the signal play button), text column on the
+// right.
 export async function Demo() {
   const t = await getTranslations("Landing.demo");
 
   return (
     <section aria-labelledby="demo-title" className="border-b border-line bg-stone">
       <div className="mx-auto grid w-full max-w-[1240px] lg:grid-cols-2">
-        <div className="relative h-[320px] overflow-hidden bg-asphalt md:h-[480px] lg:h-auto lg:min-h-[611px]">
-          <Image
-            src="/landing/demo.jpg"
-            alt={t("photoAlt")}
-            width={620}
-            height={611}
-            sizes="(min-width: 1024px) 620px, 100vw"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <p className="absolute bottom-4 left-4 font-mono text-mono-xs uppercase text-paper">{t("label")}</p>
-        </div>
+        <DemoVideo src={demoVideoUrl()} />
         <div className="px-4 py-12 md:px-12 md:py-20">
           <p className="font-mono text-eyebrow uppercase text-ink-muted">{t("eyebrow")}</p>
           <h2

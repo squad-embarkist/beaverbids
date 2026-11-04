@@ -16,6 +16,9 @@ export function CredentialsForm({ profile }: { profile: Profile | null }) {
   const errorText = useErrorText();
   const defaults = credentialsDefaults(profile);
   const form = useForm<CredentialsFormValues, unknown, ReturnType<typeof credentialsFormSchema.parse>>({
+    // Validate on blur and on submit, never on every keystroke (Figma node 34:7640).
+    mode: "onBlur",
+    reValidateMode: "onBlur",
     resolver: zodResolver(credentialsFormSchema),
     defaultValues: defaults,
   });

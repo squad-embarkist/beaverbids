@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { CheckIcon } from "lucide-react";
 import { QUESTIONNAIRE_STEPS, stepNumber, type QuestionnaireStep } from "@/lib/schemas/company-profile";
@@ -34,7 +34,7 @@ export function StepShell({ step, children }: { step: QuestionnaireStep; childre
                   aria-hidden
                   className={cn(
                     "flex size-8 shrink-0 items-center justify-center border font-mono text-label font-medium",
-                    isCurrent ? "border-signal bg-signal text-asphalt" : isDone ? "border-asphalt bg-asphalt text-paper" : "border-ink-muted/60 text-ink-muted",
+                    isCurrent ? "border-signal bg-signal text-white" : isDone ? "border-asphalt bg-asphalt text-paper" : "border-ink-muted/60 text-ink-muted",
                   )}
                 >
                   {isDone && !isCurrent ? <CheckIcon className="size-4" /> : String(number).padStart(2, "0")}
